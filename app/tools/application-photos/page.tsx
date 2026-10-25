@@ -22,8 +22,10 @@ const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "sbi", tool: "sbi-photo" },
   { id: "ssc", tool: "ssc-photo" },
   { id: "neet", tool: "neet-photo" },
+  { id: "jee", tool: "jee-main-photo" },
   { id: "rrb", tool: "rrb-photo" },
   { id: "upsssc", tool: "upsssc-photo" },
+  { id: "upessc", tool: "upessc-photo" },
   { id: "dsssb", tool: "dsssb-photo" },
   { id: "upsc", tool: "upsc-photo" },
 ];

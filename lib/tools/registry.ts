@@ -49,7 +49,9 @@ export type ToolId =
   | "image-to-jpg"
   | "rrb-photo"
   | "upsssc-photo"
-  | "dsssb-photo";
+  | "dsssb-photo"
+  | "jee-main-photo"
+  | "upessc-photo";
 
 export type ToolCategory = "resize" | "compress" | "convert" | "edit" | "size" | "application" | "units" | "pdf";
 
@@ -415,8 +417,19 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Prepare a NEET (UG) photograph within 10–200 KB and a signature within 10–100 KB.",
     linkText: "Resize a photo for NEET",
     category: "application",
-    related: ["200kb-photo", "100kb-photo", "signature-resizer", "image-cropper", "image-compressor", "resize-image-to-kb"],
-    updated: "2026-10-07",
+    related: ["200kb-photo", "100kb-photo", "signature-resizer", "image-cropper", "jee-main-photo", "resize-image-to-kb"],
+    updated: "2026-10-25",
+  },
+  "jee-main-photo": {
+    id: "jee-main-photo",
+    path: "/tools/jee-main-photo",
+    name: "JEE Main Photo & Signature",
+    navLabel: "JEE Main photo",
+    summary: "Prepare the JEE (Main) 2027 photo as a 10–200 KB JPG and the signature as a 10–100 KB JPG, per NTA's bulletin.",
+    linkText: "Resize a photo for JEE Main",
+    category: "application",
+    related: ["neet-photo", "200kb-photo", "signature-resizer", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-10-25",
   },
   "passport-photo": {
     id: "passport-photo",
@@ -602,8 +615,19 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The UPSSSC OTR photo (50–100 KB) and signature with your name in Hindi below it (30–50 KB), as JPGs.",
     linkText: "Prepare your UPSSSC OTR photo and signature",
     category: "application",
-    related: ["signature-resizer", "100kb-photo", "50kb-photo", "rrb-photo", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-10-18",
+    related: ["signature-resizer", "100kb-photo", "50kb-photo", "upessc-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-10-25",
+  },
+  "upessc-photo": {
+    id: "upessc-photo",
+    path: "/tools/upessc-photo",
+    name: "UPESSC Photo & Signature",
+    navLabel: "UPESSC photo",
+    summary: "The UPESSC myOTR photo, signature and hand-written declaration (10–100 KB each) for UP TGT and every UPESSC exam.",
+    linkText: "Prepare your UPESSC OTR photo, signature and declaration",
+    category: "application",
+    related: ["upsssc-photo", "signature-resizer", "100kb-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-10-25",
   },
   "dsssb-photo": {
     id: "dsssb-photo",
@@ -673,8 +697,10 @@ export const toolOrder: ToolId[] = [
   "ibps-photo",
   "sbi-photo",
   "neet-photo",
+  "jee-main-photo",
   "rrb-photo",
   "upsssc-photo",
+  "upessc-photo",
   "dsssb-photo",
   "passport-photo",
 ];

@@ -1,4 +1,4 @@
-// End-to-end tests for the RRB NTPC and UPSSSC OTR pages in a real browser (Edge by default).
+// End-to-end tests for the RRB NTPC, UPSSSC, JEE Main, UPESSC and DSSSB pages in a real browser (Edge by default).
 // Usage: start the production server (npm run build && npx next start -p 3100), then
 //   node tests/e2e/rrb-upsssc.mjs
 import fs from "node:fs";
@@ -105,6 +105,41 @@ async function make(page, file, button, kindLabel) {
   await page.close();
 }
 
+// ---------- JEE (Main) ----------
+{
+  const page = await open("/tools/jee-main-photo");
+  const rules = await page.locator('section[aria-labelledby="requirements-heading"]').evaluate((el) => el.textContent ?? "");
+  check("JEE: 2027 bulletin linked", (await page.locator('a[href^="https://cdnbbsr.s3waas.gov.in/"]').count()) >= 1 && /JEE \(Main\) 2027/.test(rules));
+  check("JEE: photo 10–200 KB and signature 10–100 KB shown", /10 KB – 200 KB/.test(rules) && /10 KB – 100 KB/.test(rules));
+  check("JEE: 80% face rule and live photo note shown", /80% of the photo is the face/.test(rules) && /live photograph is also captured/.test(rules));
+  check("JEE: no live-photo-only alert (a photo is also uploaded)", (await page.getByText("The photo is captured live, not uploaded").count()) === 0);
+  const photo = await make(page, "portrait.jpg", "Create photo file", "Photograph");
+  check("JEE: photo is a JPG of 10–200 KB", photo.bytes[0] === 0xff && photo.bytes[1] === 0xd8 && photo.bytes.length >= 10 * KB && photo.bytes.length <= 200 * KB, `${(photo.bytes.length / KB).toFixed(1)} KB`);
+  check("JEE: checklist says no pixel size is specified", /no pixel size is specified/.test(photo.text));
+  await page.getByRole("button", { name: /Reset|Remove|Start over/ }).first().click().catch(() => undefined);
+  const sig = await make(page, "signature.jpg", "Create signature file", "Signature");
+  check("JEE: signature is 10–100 KB", sig.bytes.length >= 10 * KB && sig.bytes.length <= 100 * KB, `${(sig.bytes.length / KB).toFixed(1)} KB`);
+  await page.screenshot({ path: path.join(OUT, "jee.png") });
+  await page.close();
+}
+
+// ---------- UPESSC ----------
+{
+  const page = await open("/tools/upessc-photo");
+  const rules = await page.locator('section[aria-labelledby="requirements-heading"]').evaluate((el) => el.textContent ?? "");
+  check("UPESSC: myOTR manual linked on apply.upessc.org", (await page.locator('a[href^="https://apply.upessc.org/"]').count()) >= 1);
+  check("UPESSC: photo, signature and declaration each 10–100 KB, JPG or PNG", (rules.match(/10 KB – 100 KB/g) ?? []).length >= 3 && /JPG or PNG/.test(rules));
+  check("UPESSC: TGT 07/2026 named and certificate PDFs 20–200 KB noted", /07\/2026/.test(rules) && /20–200 KB/.test(rules));
+  check("UPESSC: tool offers the declaration", (await page.locator("#prepare").getByText("Declaration", { exact: true }).count()) === 1);
+  const photo = await make(page, "portrait.jpg", "Create photo file", "Photograph");
+  check("UPESSC: photo is 10–100 KB", photo.bytes.length >= 10 * KB && photo.bytes.length <= 100 * KB, `${(photo.bytes.length / KB).toFixed(1)} KB`);
+  await page.getByRole("button", { name: /Reset|Remove|Start over/ }).first().click().catch(() => undefined);
+  const decl = await make(page, "signature.jpg", "Create declaration file", "Declaration");
+  check("UPESSC: declaration is 10–100 KB", decl.bytes.length >= 10 * KB && decl.bytes.length <= 100 * KB, `${(decl.bytes.length / KB).toFixed(1)} KB`);
+  await page.screenshot({ path: path.join(OUT, "upessc.png") });
+  await page.close();
+}
+
 // ---------- DSSSB ----------
 {
   const page = await open("/tools/dsssb-photo");
@@ -126,7 +161,7 @@ async function make(page, file, button, kindLabel) {
 {
   const page = await open("/tools/application-photos");
   const table = await page.locator("table").first().innerText();
-  check("hub: comparison lists RRB, UPSSSC and DSSSB", /RRB/.test(table) && /UPSSSC/.test(table) && /DSSSB/.test(table));
+  check("hub: comparison lists RRB, UPSSSC, DSSSB, JEE Main and UPESSC", ["RRB", "UPSSSC", "DSSSB", "JEE Main", "UPESSC"].every((name) => table.includes(name)));
   await page.close();
 }
 

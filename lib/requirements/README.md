@@ -24,6 +24,9 @@ Don't bump `lastVerified` without re-reading the source. If a current requiremen
 | SBI PO 2026 (CRPD/PO/2026-27/09), Resolvers (CRPD/RS/2026-27/06) | sbi.bank.in advertisement PDFs | 2026-10-07 |
 | SSC CGL 2026, CHSL 2026 (live photo; signature 10–20 KB) | ssc.gov.in notices, paras 9.4–9.6 | 2026-10-07 |
 | NEET (UG) 2026 | NTA Information Bulletin | 2026-10-07 |
+| JEE (Main) 2027 (photo 10–200 KB, signature 10–100 KB, plus live photo) | NTA Information Bulletin, Step 2 (page 8), linked from jeemain.nta.nic.in | 2026-10-25 |
+| UPESSC myOTR (photo, signature, declaration: JPG/PNG 10–100 KB) | myOTR user manual §4.6 on apply.upessc.org (linked from upessc.up.gov.in); TGT 07/2026, 08/2026, 09/2026 form templates from the portal's public API | 2026-10-25 |
+| RRB NTPC CEN 06/2026, 07/2026; UPSSSC OTR; DSSSB 04/2026, 05/2026 | See `source` in applications.ts | 2026-10-18 |
 | UPSC | Not verified: public documents disagree; current instructions are inside the portal | checked 2026-10-07 |
 | India passport (printed, DPC/SPC/CSC) | Passport Seva instruction booklet V3.0 | 2026-10-07 |
 | UK digital / Canada digital and printed | gov.uk, canada.ca | 2026-10-07 |

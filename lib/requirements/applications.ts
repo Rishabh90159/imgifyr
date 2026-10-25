@@ -447,6 +447,78 @@ const NEET_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- JEE (Main)
+// The 2027 bulletin asks for both a live photograph and an uploaded scanned photograph, so the
+// photo spec stays and the live capture is described in the notes (as for NEET).
+
+const JEE_SETS: RequirementSet[] = [
+  {
+    id: "jee-main-2027",
+    name: "JEE (Main) 2027, Sessions 1 and 2",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      minKB: 10,
+      maxKB: 200,
+      rules: [
+        "Recent scanned passport-size photograph, in colour",
+        "White background",
+        "80% of the photo is the face, including ears, without a mask",
+        "Clearly legible",
+      ],
+    },
+    signature: { kind: "signature", format: "JPG/JPEG", minKB: 10, maxKB: 100, rules: ["Clearly legible"] },
+    notes: [
+      "The bulletin gives no pixel size for the photograph or the signature, only the format and file size.",
+      "A live photograph is also captured while you fill in the form, with your camera or webcam, or with a phone through the QR code if your device has no webcam: white background, proper lighting, 80% face visibility including ears, no mask.",
+      "The Class 10 (or equivalent) certificate or marksheet is uploaded as a PDF of 50–300 KB; so are a disability/UDID certificate and, for foreign nationals, the non-Indian passport, where they apply.",
+      "Carry 2 more passport-size photographs, the same as the uploaded one, to paste on the admit card and the attendance sheet at the exam.",
+      "The same application number is used for Session 2; uploads can't be changed after the correction window closes.",
+    ],
+    source: {
+      title: "Information Bulletin: Joint Entrance Examination (Main) – 2027",
+      url: "https://cdnbbsr.s3waas.gov.in/s3f8e59f4b2fe7c5705bf878bbd494ccdf/uploads/2026/10/202610241890224107.pdf",
+      publisher: "National Testing Agency (NTA)",
+      section: "Instructions for filling in the online application form, Step 2 (bulletin page 8)",
+      lastVerified: "2026-10-25",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- UPESSC
+// Uttar Pradesh Education Services Selection Commission (not UPSSSC). Every UPESSC exam is applied for
+// through the myOTR portal (apply.upessc.org, linked from upessc.up.gov.in). The photo, signature and
+// hand-written declaration are uploaded once in the OTR profile; exam applications only add certificate PDFs.
+
+const UPESSC_SETS: RequirementSet[] = [
+  {
+    id: "upessc-otr-2026",
+    name: "One Time Registration (myOTR), used for every UPESSC exam",
+    photo: { kind: "photo", format: "JPG or PNG", minKB: 10, maxKB: 100, rules: ["Passport-size photograph"] },
+    signature: { kind: "signature", format: "JPG or PNG", minKB: 10, maxKB: 100, rules: ["Upload your signature as an image"] },
+    declaration: {
+      kind: "declaration",
+      format: "JPG or PNG",
+      minKB: 10,
+      maxKB: 100,
+      rules: ["Write by hand the declaration the portal displays, then upload a photo or scan of it"],
+    },
+    notes: [
+      "The manual gives no pixel size for any of the three images, only the format and file size.",
+      "Creating the account also captures a live photograph with your camera (or a phone, through the “Live QR” option); the portal checks it for liveness and uses it as your photograph, including on the admit card. Keep the camera at eye level, use a plain, well-lit background, look straight at the camera, no cap, mask or dark glasses, face and both ears visible.",
+      "Other OTR documents (photo ID proof, 10th, 12th, graduation and post-graduation marksheets) are PDFs of 20–200 KB.",
+      "Exam applications reuse the OTR photo, signature and marksheets. The TGT (07/2026), Principal (08/2026) and Headmaster (09/2026) forms ask only for extra certificates, each a PDF of 20–200 KB (TGT advertisement para 2.14).",
+    ],
+    source: {
+      title: "User Manual: myOTR Candidate Portal (English)",
+      url: "https://apply.upessc.org/docs/OTR_User_Manual_English.pdf",
+      publisher: "Uttar Pradesh Education Services Selection Commission (UPESSC)",
+      section: "Section 2, Step-5 (live photograph) and section 4.6, Step-5: Documents",
+      lastVerified: "2026-10-25",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- Applications
 
 export const APPLICATIONS = {
@@ -468,9 +540,11 @@ export const APPLICATIONS = {
   ibps: { name: "IBPS", fullName: "Institute of Banking Personnel Selection", sets: IBPS_SETS },
   sbi: { name: "SBI", fullName: "State Bank of India", sets: SBI_SETS },
   neet: { name: "NEET", fullName: "National Eligibility cum Entrance Test (UG), conducted by NTA", sets: NEET_SETS },
+  jee: { name: "JEE Main", fullName: "Joint Entrance Examination (Main), conducted by NTA", sets: JEE_SETS },
   rrb: { name: "RRB", fullName: "Railway Recruitment Boards (Indian Railways)", sets: RRB_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },
   dsssb: { name: "DSSSB", fullName: "Delhi Subordinate Services Selection Board", sets: DSSSB_SETS },
+  upessc: { name: "UPESSC", fullName: "Uttar Pradesh Education Services Selection Commission", sets: UPESSC_SETS },
 } satisfies Record<string, ApplicationRequirements>;
 
 export type ApplicationId = keyof typeof APPLICATIONS;

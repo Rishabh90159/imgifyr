@@ -14,6 +14,10 @@ const OFFICIAL_HOSTS = [
   "rrb.indianrailways.gov.in",
   "upsssc.gov.in",
   "dsssb.delhi.gov.in",
+  // NTA's JEE Main bulletin is hosted on the government S3WaaS CDN and linked from jeemain.nta.nic.in.
+  "cdnbbsr.s3waas.gov.in",
+  // UPESSC's myOTR portal, linked from upessc.up.gov.in.
+  "apply.upessc.org",
   "www.passportindia.gov.in",
   "www.gov.uk",
   "www.canada.ca",
@@ -71,6 +75,18 @@ describe("requirement data", () => {
       expect(ssc.signature?.widthPx).toBeUndefined();
     }
 
+    const jee = APPLICATIONS.jee.sets[0];
+    expect(jee.photo).toMatchObject({ format: "JPG/JPEG", minKB: 10, maxKB: 200 });
+    expect(jee.signature).toMatchObject({ format: "JPG/JPEG", minKB: 10, maxKB: 100 });
+    expect(jee.photo?.widthPx, "the JEE (Main) 2027 bulletin gives no pixel size").toBeUndefined();
+    expect(jee.signature?.widthPx).toBeUndefined();
+
+    const upessc = APPLICATIONS.upessc.sets[0];
+    for (const spec of [upessc.photo, upessc.signature, upessc.declaration]) {
+      expect(spec, "UPESSC myOTR: photo, signature and declaration are each JPG or PNG, 10–100 KB").toMatchObject({ format: "JPG or PNG", minKB: 10, maxKB: 100 });
+      expect(spec?.widthPx).toBeUndefined();
+    }
+
     expect(APPLICATIONS.upsc.sets).toHaveLength(0);
     expect(APPLICATIONS.upsc.unverified?.reason).toBeTruthy();
 
@@ -106,6 +122,8 @@ describe("registry and freshness", () => {
     "rrb-photo": APPLICATIONS.rrb.sets,
     "upsssc-photo": APPLICATIONS.upsssc.sets,
     "dsssb-photo": APPLICATIONS.dsssb.sets,
+    "jee-main-photo": APPLICATIONS.jee.sets,
+    "upessc-photo": APPLICATIONS.upessc.sets,
     "passport-photo": PASSPORT_REQUIREMENTS,
   };
 
@@ -116,10 +134,10 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 46 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(46);
+  it("has 48 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(48);
     expect(toolsIn("size").map((t) => t.id)).toEqual(["20kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "mb-to-kb-converter"]);
-    expect(toolsIn("application")).toHaveLength(9);
+    expect(toolsIn("application")).toHaveLength(11);
     expect(toolsIn("image")).toHaveLength(17);
     expect(toolsIn("convert")).toHaveLength(10);
     expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "pdf-to-jpg"]);

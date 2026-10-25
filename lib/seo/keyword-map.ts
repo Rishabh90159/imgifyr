@@ -274,6 +274,22 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/200kb-photo", "/tools/100kb-photo", "/tools/application-photos"],
   },
   {
+    path: "/tools/jee-main-photo",
+    primary: "jee main photo",
+    // Google India autocomplete, 25 Oct 2026: "jee main photo size in kb / in pixels / converter", "jee main signature size converter".
+    secondary: ["jee main photo size", "jee main signature size", "jee mains photo and signature size", "jee main photo size in kb", "jee mains photo resizer"],
+    intent: "application",
+    supportedBy: ["/tools/neet-photo", "/tools/200kb-photo", "/tools/application-photos"],
+  },
+  {
+    path: "/tools/upessc-photo",
+    primary: "upessc photo",
+    // Google India autocomplete, 25 Oct 2026: "up tgt photo and signature size", "upessc hand written declaration", "upessc otr declaration".
+    secondary: ["up tgt photo and signature size", "upessc signature size", "upessc hand written declaration", "upessc otr declaration", "up tgt photo size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/upsssc-photo", "/tools/signature-resizer"],
+  },
+  {
     path: "/tools/image-upscaler",
     primary: "image upscaler",
     secondary: ["upscale image", "image upscaler free", "enlarge image", "upscale image 2x", "upscale image 4x", "increase image resolution"],

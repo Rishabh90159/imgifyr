@@ -131,6 +131,10 @@ export default function NeetPhotoPage() {
               Just need a file under 200 KB? The <Link href="/tools/200kb-photo">200KB photo resizer</Link> does that. For
               signatures, the <Link href="/tools/signature-resizer">signature resizer</Link> offers more clean-up options.
             </li>
+            <li>
+              Also applying for JEE Main? NTA&apos;s 2027 bulletin for it has its own limits, on the{" "}
+              <Link href="/tools/jee-main-photo">JEE Main photo and signature page</Link>.
+            </li>
           </ul>
 
           <h2>How we keep this page accurate</h2>

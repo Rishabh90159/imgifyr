@@ -111,6 +111,10 @@ export default function UpssscPhotoPage() {
               <Link href="/tools/50kb-photo">50KB photo resizer</Link>.
             </li>
             <li>
+              Applying for UP TGT or another teaching post? Those are recruited by UPESSC, a different commission with its own
+              OTR and limits: see the <Link href="/tools/upessc-photo">UPESSC photo, signature and declaration page</Link>.
+            </li>
+            <li>
               Comparing exams? The <Link href="/tools/application-photos">exam photo requirements</Link> page lists UPSSSC next
               to RRB, SSC, IBPS, SBI and NEET.
             </li>

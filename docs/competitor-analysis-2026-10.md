@@ -367,3 +367,48 @@ Tests: tests/e2e/size-limits.mjs (17 checks):
 - Mixed PNG/WebP/JPG fit a 100 KB limit at 99.0 KB.
 - 12.4 MB of PDFs merged to 495.9 KB under a 500 KB limit, with the image-pages caveat shown.
 - A 20–50 KB range was reached by padding, with the pixels unchanged.
+
+## 17. New Sarkari Result entries (25 Oct)
+
+Same rule as §14: one page per recruiting body, skip windows closing within ~10 days, official sources only.
+
+| Entry | Window (official) | Demand (Google India autocomplete) | Decision |
+|---|---|---|---|
+| **NTA JEE Main 2027, Session 1** | 24 Oct – 22 Nov 2026 (late fee to 26 Nov); Session 2: 5 Jan – 3 Feb 2027 | Strong: 10/10 suggestions are about size ("in kb", "in pixels", "converter", "signature size converter") | **Built /tools/jee-main-photo** |
+| **UPESSC UP TGT, Advt 07/2026 (17,735 posts)** | 24 Oct – 23 Nov 2026 (portal API); Principal 08/2026 and Headmaster 09/2026 close 22 Nov | Medium: "up tgt photo and signature size", "upessc hand written declaration", "upessc otr declaration" | **Built /tools/upessc-photo** |
+| BPSC TRE 4.0 | Fee closed 25 Oct, form closes 26 Oct | None | Skip (deadline; the photo is captured live) |
+
+### Official findings
+- **JEE (Main) 2027**, Information Bulletin (93 pages, linked as "Information Bulletin" on jeemain.nta.nic.in, hosted on
+  cdnbbsr.s3waas.gov.in), Step 2, bulletin page 8:
+  - A live photograph **and** an uploaded scanned photo.
+  - Uploaded photo: colour, 80% face including ears, no mask, white background, JPG/JPEG, 10–200 KB.
+  - Signature: JPG/JPEG, 10–100 KB.
+  - Class 10 certificate (and UDID certificate or foreign passport): PDF, 50–300 KB.
+  - No pixel or cm size. Competitors quote 4–30 KB or 10–200 KB for the signature, and 3.5 × 4.5 cm; none of these is in
+    the bulletin.
+- **UPESSC** (Education Services, not UPSSSC). upessc.up.gov.in links its "TGT आवेदन फॉर्म" (TGT application form)
+  button to the myOTR portal apply.upessc.org. The portal's English user manual, §4.6:
+  - Photograph, signature and hand-written declaration: each JPG or PNG, 10–100 KB.
+  - Other documents: PDF, 20–200 KB.
+  - Account creation also captures a live photo (with a liveness check); it is used on the admit card.
+  - The portal's public API (`/api/v1/upessc/exams/<slug>/application-template/active`) shows that the TGT,
+    Principal and Headmaster forms add only certificate PDFs (20–200 KB, "advertisement para 2.14"). So the OTR
+    files serve every exam.
+  - The portal's file check divides the size by 1024, so its "100 KB" is 102,400 bytes.
+  - Adda247's "photo 30–300 KB, signature 140 × 110 px" is wrong.
+  - The advertisement PDF itself isn't on upessc.up.gov.in yet, only aggregator copies; re-check when it is.
+
+### Code changes
+- New data and pages:
+  - Data: `APPLICATIONS.jee` and `APPLICATIONS.upessc`.
+  - Pages: /tools/jee-main-photo and /tools/upessc-photo, each with an OG image.
+  - Also added to the registry, keyword map and hub table, with cross-links from the NEET and UPSSSC pages.
+- Live photo: both bodies also take an uploaded photo, so the live photo is a note (as on NEET), not
+  `livePhotoCapture`.
+- JEE title: avoids "Signature Resizer", so it doesn't compete with /tools/signature-resizer.
+- Tests:
+  - Unit: official hosts and counts (48 tools, 11 application pages), plus regression guards.
+  - tests/e2e/rrb-upsssc.mjs: 34 checks. JEE photo 195.3 KB, signature 63.5 KB; UPESSC photo 99.7 KB, declaration
+    63.6 KB.
+  - seo.mjs: 954/954. phase3: 74/74. phase5: 40/40.
