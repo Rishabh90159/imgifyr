@@ -412,3 +412,27 @@ Same rule as §14: one page per recruiting body, skip windows closing within ~10
   - tests/e2e/rrb-upsssc.mjs: 34 checks. JEE photo 195.3 KB, signature 63.5 KB; UPESSC photo 99.7 KB, declaration
     63.6 KB.
   - seo.mjs: 954/954. phase3: 74/74. phase5: 40/40.
+
+## 18. Exam pages trimmed for readability (25 Oct)
+
+The owner asked for cleaner exam pages. All ten (SSC, UPSC, IBPS, SBI, NEET, JEE Main, RRB, UPSSSC, UPESSC, DSSSB) now
+follow one pattern:
+- **Intro:** one sentence, including "Not affiliated".
+- **Sections:** at most three short ones: the how-to, one section specific to that exam, and the key mistakes.
+- **Privacy note:** one line.
+- **FAQ:** five questions with 1–2 sentence answers.
+
+Removed:
+- "How we keep this page accurate": the summary already shows the source and verified date.
+- Size figures repeated across sections.
+- The SBI paragraph that wrongly said to use "Other" for the thumb impression and declaration.
+
+Effect:
+- Article text is down about 60%.
+- Rendered word count is down about 35% (e.g. SBI 1925 → 1221, NEET 1272 → 771).
+- Titles, descriptions, H1s, the tool and the summary are unchanged.
+
+Watch: shorter pages raise the share of common phrases. The duplicate check (6-word overlap < 15%) caught NEET ~ JEE at
+19.1%, fixed by rewording. The highest pair now is IBPS ~ SBI at 12.1%. Write each page's steps in its own words.
+
+Tests: seo 954/954, rrb-upsssc 34/34, phase3 74/74, phase5 40/40, unit 137/137.

@@ -23,33 +23,27 @@ export const metadata: Metadata = pageMetadata({
 const faqs: FaqItem[] = [
   {
     question: "What is the UPSSSC photo size?",
-    answer:
-      "The commission's OTR notice of 14 July 2026 asks for a recent colour photograph, taken within the last six months, as a JPEG/JPG between 50 KB and 100 KB. It doesn't set pixel dimensions, so any clear passport-style crop works as long as the file size is right.",
+    answer: "A recent colour photo (within 6 months) as a JPEG/JPG of 50–100 KB. The OTR notice gives no pixel size.",
   },
   {
     question: "What is the UPSSSC signature size?",
     answer:
-      "A JPEG/JPG between 30 KB and 50 KB. You can sign in Hindi or English, but you must also write your name in Hindi in your own handwriting below the signature, and a signature in English capital letters is invalid. Crop the image so both the signature and your name are inside it.",
+      "A JPEG/JPG of 30–50 KB. Sign in Hindi or English and write your name in Hindi below it; English capital letters are invalid.",
   },
   {
-    question: "Do I need to upload a new photo for the Inter Level or other mains applications?",
+    question: "Do I upload a new photo for the Inter Level or other mains?",
     answer:
-      "Not for the Inter (12th) Level exam under advertisement 26-Exam/2026: the photo and signature you uploaded for PET-2025 are shown automatically and can't be changed there. New photos are uploaded in the One Time Registration, which the commission has made compulsory for PET and every later exam.",
+      "No. For Inter Level (26-Exam/2026) the PET-2025 photo and signature are reused and can't be changed. New uploads go in the OTR.",
   },
   {
     question: "Can I change my OTR photo later?",
     answer:
-      "The OTR launch notice says details can't be modified once the OTR number is issued, but a later notice of 31 July 2026 allows changes through “Modify OTR Form Details” on upsssc.gov.in. The mobile number can't be changed, and if you registered with your PET-2025 registration number, your name and date of birth can't either. Make any change before registering for the next PET.",
+      "The 31 July 2026 notice allows changes through “Modify OTR Form Details”, except the mobile number (and name and date of birth if you registered with a PET-2025 number).",
   },
   {
-    question: "What pixel size should the UPSSSC photo be?",
+    question: "Is UPSSSC the same as UPESSC?",
     answer:
-      "None is stated, only the file size. If the file comes out below 50 KB, enlarge it with the image size increaser rather than adding blur or borders; if it is above 100 KB, this tool reduces it.",
-  },
-  {
-    question: "Where can I check the official UPSSSC requirement?",
-    answer:
-      "In the commission's OTR notice (No. 45, dated 14 July 2026, points 8 and 9), on upsssc.gov.in under notifications. The link on this page goes to that notice, which is in Hindi, and shows when we last read it.",
+      "No. UPESSC recruits teachers (such as UP TGT) through its own OTR with different limits; see the UPESSC page.",
   },
 ];
 
@@ -60,76 +54,44 @@ export default function UpssscPhotoPage() {
       h1="UPSSSC OTR Photo and Signature Size"
       intro={
         <p>
-          Every UPSSSC exam now starts with One Time Registration, and that is where your photo and signature are uploaded.
-          Here are the limits from the commission&apos;s own notice, and a tool that makes both files to match. Not affiliated
-          with the Uttar Pradesh Subordinate Services Selection Commission.
+          Every UPSSSC exam uses the photo and signature from your One Time Registration. Not affiliated with the Uttar Pradesh
+          Subordinate Services Selection Commission.
         </p>
       }
       schemaDescription={description}
       faqs={faqs}
       content={
         <>
-          <h2>Preparing the OTR photograph</h2>
+          <h2>Make your UPSSSC files</h2>
           <ol>
-            <li>Use a colour photo taken within the last six months, with your face clearly lit and looking at the camera.</li>
             <li>
-              Pick <strong>Photograph</strong> in the tool, add the picture and crop from just above the head to the shoulders.
+              Pick <strong>Photograph</strong>, add a colour photo from the last six months, crop head to shoulders and create a
+              50–100 KB file.
             </li>
             <li>
-              Select <strong>Create photo file</strong> and check the result is between 50 KB and 100 KB, JPG.
+              Under your signature, write your name in Hindi by hand, in dark ink on white paper. Photograph both lines
+              together.
+            </li>
+            <li>
+              Pick <strong>Signature</strong>, crop around both lines, keep the clean-up on and create a 30–50 KB file.
             </li>
           </ol>
 
-          <h2>The signature with your name in Hindi</h2>
-          <p>
-            UPSSSC&apos;s signature image is different from most exams: under your usual signature, write your name in Hindi
-            in your own hand, and upload both lines as one image. Use dark ink on white paper so the writing stays sharp when
-            the file is compressed. In the tool, choose <strong>Signature</strong>, crop around both lines with a small margin,
-            keep the paper clean-up on, and create a file of 30–50 KB. Never sign in English capital letters; the notice
-            treats that as invalid.
-          </p>
-
-          <h2>Which UPSSSC applications use these files</h2>
-          <p>
-            The OTR started on 14 July 2026. From then on the commission uses the OTR number for its Preliminary Eligibility
-            Test and its mains recruitments, so you upload the photo and signature once instead of in every form. Mains
-            advertisements reuse what you gave for PET: the Inter (12th) Level advertisement (26-Exam/2026), for example,
-            shows the PET-2025 photo and signature automatically. Check your own advertisement for anything it adds, such as
-            certificates.
-          </p>
-
-          <h2>Fixing a file that is too small or too large</h2>
+          <h2>Avoid these mistakes</h2>
           <ul>
+            <li>Leaving out the Hindi name, or signing in English capital letters.</li>
             <li>
-              <strong>Below the minimum</strong> (under 50 KB for the photo or 30 KB for the signature): use the{" "}
-              <Link href="/tools/image-size-increase">image size increaser</Link>, which adds bytes without changing the
-              picture.
+              A file under the minimum. Use the <Link href="/tools/image-size-increase">image size increaser</Link> rather than
+              adding blur or borders.
             </li>
             <li>
-              <strong>Above the maximum:</strong> this tool reduces it automatically; for a single size limit you can also use
-              the <Link href="/tools/100kb-photo">100KB photo resizer</Link> or the{" "}
-              <Link href="/tools/50kb-photo">50KB photo resizer</Link>.
-            </li>
-            <li>
-              Applying for UP TGT or another teaching post? Those are recruited by UPESSC, a different commission with its own
-              OTR and limits: see the <Link href="/tools/upessc-photo">UPESSC photo, signature and declaration page</Link>.
-            </li>
-            <li>
-              Comparing exams? The <Link href="/tools/application-photos">exam photo requirements</Link> page lists UPSSSC next
-              to RRB, SSC, IBPS, SBI and NEET.
+              Confusing UPSSSC with UPESSC. For UP TGT and other teaching posts, use the{" "}
+              <Link href="/tools/upessc-photo">UPESSC photo page</Link>.
             </li>
           </ul>
 
-          <h2>How we keep this page accurate</h2>
-          <p>
-            The limits come from the commission&apos;s OTR notice, read in the original Hindi on the date shown above. When
-            UPSSSC issues a new notice about the OTR or an advertisement changes the upload rules, we re-read it and update the
-            page. If an advertisement says something different, follow the advertisement. See{" "}
-            <Link href="/methodology">how the tools work</Link>.
-          </p>
-
           <PrivacyNote>
-            <p>Your photo and signature are prepared on your device and not sent to this site. Upload them only on upsssc.gov.in.</p>
+            <p>Nothing you add for your OTR leaves this device.</p>
           </PrivacyNote>
         </>
       }

@@ -24,31 +24,25 @@ const faqs: FaqItem[] = [
   {
     question: "What is the NEET photo size?",
     answer:
-      "The NEET (UG) 2026 Information Bulletin asks for a recent passport-size photograph in JPG/JPEG format between 10 KB and 200 KB, in colour or black & white, against a white background, with the face (without mask, ears visible) covering about 80% of the image. It does not specify pixel dimensions.",
+      "A JPG/JPEG of 10–200 KB: a recent passport-size photo on a white background, face about 80% of the image, ears visible, no mask. The NEET (UG) 2026 bulletin gives no pixel size.",
   },
   {
     question: "What is the NEET signature size?",
-    answer: "A JPG/JPEG file between 10 KB and 100 KB, according to the NEET (UG) 2026 bulletin.",
+    answer: "A JPG/JPEG between 10 KB and 100 KB.",
   },
   {
     question: "Do NEET photo requirements change every year?",
-    answer:
-      "They can. NTA publishes a new information bulletin for each cycle. This page shows the requirement from the latest bulletin we've verified and the date we checked it. When a new bulletin is published, follow it, and we update the data here.",
+    answer: "They can: NTA publishes a new bulletin each cycle. This page shows the latest one we've verified and when we checked it.",
   },
   {
-    question: "Can I resize my NEET photo online?",
+    question: "Can I edit my NEET photo?",
     answer:
-      "Yes. Add your photo, crop it so your face fills about 80% of the frame with ears visible, and create the file. The tool keeps it within 10–200 KB as a JPG, entirely in your browser. It only crops and resizes; it doesn't alter your face, which matters because computer-generated photos are not acceptable.",
+      "Cropping and resizing are fine. Polaroid or computer-generated photos are not accepted, and fabricated photos are treated as unfair means, so avoid filters and background replacement.",
   },
   {
-    question: "What happens if my NEET photo is rejected?",
+    question: "Do I need printed photos for NEET?",
     answer:
-      "The bulletin says applications that don't follow the instructions, or with unclear photographs, are liable to be rejected, and applications without photographs are rejected. Fabricated or someone else's photographs are treated as unfair means.",
-  },
-  {
-    question: "Where can I verify the official NEET requirement?",
-    answer:
-      "In the Information Bulletin on neet.nta.nic.in, in the section on uploading scanned images. The link and the date we last checked it are shown on this page.",
+      "Yes. Use the same photo for the form and the attendance sheet, and keep 6–8 passport-size and 4–6 postcard-size (4\" × 6\") prints with a white background.",
   },
 ];
 
@@ -57,98 +51,32 @@ export default function NeetPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="NEET Photo Resizer"
-      intro={
-        <p>
-          Prepare the photograph and signature for your NEET (UG) application, based on the requirements in NTA&apos;s
-          information bulletin. The tool keeps your files in the stated KB ranges and in JPG format. Not affiliated with NTA.
-        </p>
-      }
+      intro={<p>Make your NEET (UG) photo and signature within NTA&apos;s limits, as JPGs. Not affiliated with NTA.</p>}
       schemaDescription={description}
       faqs={faqs}
       content={
         <>
-          <h2>How to Resize Your NEET Photo</h2>
+          <h2>Make your NEET photo and signature</h2>
           <ol>
-            <li>Take a recent photo against a white wall, in good light, without a mask, with both ears visible.</li>
-            <li>Add it to the tool with <strong>Photograph</strong> selected.</li>
-            <li>Crop so your face fills about 80% of the frame, as the bulletin requires.</li>
-            <li>Select <strong>Create photo file</strong>. The checklist confirms the size is within 10–200 KB, then download.</li>
+            <li>Take a recent photo against a white wall in good light, without a mask, ears showing.</li>
+            <li>
+              With <strong>Photograph</strong> selected, crop so your face fills about 80% of the frame and create the file.
+            </li>
+            <li>Switch to <strong>Signature</strong>, add your signed paper, crop tightly and create the second file.</li>
           </ol>
 
-          <h2>How to Resize Your NEET Signature</h2>
-          <ol>
-            <li>Sign on white paper, photograph or scan it, and switch the tool to <strong>Signature</strong>.</li>
-            <li>Crop tightly around the signature so the strokes fill the image.</li>
-            <li>Create the file; the checklist confirms it&apos;s within 10–100 KB. Download it.</li>
-          </ol>
-          <p>
-            Preparing images for other forms as well? The <Link href="/tools/image-resizer">image resizer</Link>,{" "}
-            <Link href="/tools/image-compressor">image compressor</Link> and{" "}
-            <Link href="/tools/100kb-photo">100KB photo resizer</Link> cover the usual limits.
-          </p>
-
-          <h2>No pixel size? What that means</h2>
-          <p>
-            The 2026 bulletin specifies the format, file size and what the photo must show, but not a width and height in
-            pixels. So the tool doesn&apos;t force one: it keeps your cropped area and only reduces it if that&apos;s needed to stay
-            under 200 KB. Don&apos;t rely on a pixel size from a website that isn&apos;t NTA&apos;s; if a future bulletin adds one,
-            we&apos;ll add it here with the source.
-          </p>
-
-          <h2>Common mistakes</h2>
+          <h2>Avoid these mistakes</h2>
           <ul>
+            <li>A half-body photo: the face must fill about 80% of the image.</li>
+            <li>A photo taken before 1 January 2026, or spectacles you don&apos;t usually wear.</li>
             <li>
-              <strong>Face too small.</strong> A full-length or half-body photo doesn&apos;t meet the 80% face rule. Crop in.
-            </li>
-            <li>
-              <strong>Ears hidden or mask on.</strong> The bulletin asks for the face without a mask, ears visible.
-            </li>
-            <li>
-              <strong>Coloured background.</strong> Use white.
-            </li>
-            <li>
-              <strong>Edited or filtered photos.</strong> Polaroid and computer-generated photos are not acceptable, and
-              fabricated photos are treated as unfair means. Cropping and resizing are fine; beauty filters and background
-              replacement are not.
-            </li>
-            <li>
-              <strong>An old photo.</strong> The 2026 bulletin asks for a photograph taken after 1 January 2026.
-            </li>
-          </ul>
-
-          <h2>NEET-specific tips</h2>
-          <ul>
-            <li>
-              Use the same photo everywhere: the bulletin says the same passport-size photo is used on the form and pasted on
-              the attendance sheet, and asks you to keep 6–8 passport-size and 4–6 postcard-size (4&quot; × 6&quot;) prints.
-            </li>
-            <li>
-              A live photo is also captured during the application and matched with your Aadhaar record, so look like your
-              photo.
-            </li>
-            <li>Spectacles are allowed only if you wear them regularly.</li>
-            <li>
-              Just need a file under 200 KB? The <Link href="/tools/200kb-photo">200KB photo resizer</Link> does that. For
-              signatures, the <Link href="/tools/signature-resizer">signature resizer</Link> offers more clean-up options.
-            </li>
-            <li>
-              Also applying for JEE Main? NTA&apos;s 2027 bulletin for it has its own limits, on the{" "}
+              Looking different from the live photo, which is matched with your Aadhaar. Applying for JEE Main too? See the{" "}
               <Link href="/tools/jee-main-photo">JEE Main photo and signature page</Link>.
             </li>
           </ul>
 
-          <h2>How we keep this page accurate</h2>
-          <p>
-            The values above come from the NEET (UG) 2026 Information Bulletin, linked with the date we read it. Because NTA
-            publishes a new bulletin each cycle, the requirement is stored as data we can update as soon as a new bulletin is
-            out, without guessing in between. See <Link href="/methodology">how the tools work</Link>.
-          </p>
-
           <PrivacyNote>
-            <p>
-              Your NEET photo and signature are prepared on your own device. They aren&apos;t uploaded to this site, and nothing
-              is kept once you close the page.
-            </p>
+            <p>Your NEET photo and signature are prepared on your device and never uploaded here.</p>
           </PrivacyNote>
         </>
       }
