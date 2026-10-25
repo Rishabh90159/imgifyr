@@ -22,40 +22,31 @@ const faqs: FaqItem[] = [
   {
     question: "What size is a passport photo?",
     answer:
-      "There is no single size. Each country, and often each application type, sets its own rules: the UK asks for 35 × 45 mm printed photos while Canada asks for 50 × 70 mm, and online applications usually specify pixel dimensions and a file size range instead. Always use the numbers in the official instructions for your application.",
+      "There is no single size: a UK print is 35 × 45 mm, a Canadian one 50 × 70 mm, and online forms usually give pixels and a KB range. Use the numbers in your application's official instructions.",
   },
   {
     question: "Does this tool guarantee my photo will be accepted?",
     answer:
-      "No. It sets the dimensions, file type and file size you choose. Authorities also check things a resizing tool can't judge, such as lighting, expression, glasses, head position, background and how recent the photo is. Requirements vary by country and application, so verify the final image against the official requirements before submitting.",
+      "No. It sets the dimensions, file type and file size you choose; authorities also judge lighting, expression, glasses, head position, background and recency. Check the final image against the official requirements before submitting.",
   },
   {
     question: "How do I convert millimetres to pixels for a passport photo?",
-    answer: `Pixels = millimetres ÷ 25.4 × DPI. At ${PRINT_DPI} DPI, the common print resolution, 35 × 45 mm is 413 × 531 pixels. Choose Millimetres in Custom size and the tool does the conversion, and records the DPI in the JPG so it prints at the right physical size.`,
+    answer: `Pixels = millimetres ÷ 25.4 × DPI, so at ${PRINT_DPI} DPI, 35 × 45 mm is 413 × 531 pixels. Choose Millimetres in Custom size and the tool converts it and records the DPI in the JPG.`,
   },
   {
     question: "My form needs the photo under 50 KB. Can this do that?",
     answer:
-      "Yes. Enter 50 as the maximum file size. The tool keeps the exact pixel dimensions and finds the highest JPG quality that fits. If it can't get under the limit at that size, it tells you instead of silently shrinking the photo.",
+      "Yes. Enter 50 as the maximum file size and the tool finds the highest JPG quality that fits at your exact pixel size. If that's impossible, it tells you rather than silently shrinking the photo.",
   },
   {
     question: "Can it change the background to white?",
     answer:
-      "No. Replacing a background reliably needs person-detection technology, and many authorities don't allow edited photos. Take the photo against a plain, evenly lit wall in the colour your application asks for.",
-  },
-  {
-    question: "Why are only a few countries listed?",
-    answer:
-      "A preset is only added after its numbers are checked against the issuing government's own website, with the source and the date shown. For other countries and applications, copy the size from the official instructions into Custom size.",
+      "No. Reliable background replacement needs person detection, and many authorities reject edited photos. Shoot against a plain, evenly lit wall in the colour your application asks for.",
   },
   {
     question: "Can I print several passport photos on one sheet?",
     answer:
-      "Yes. After creating a photo with a size in millimetres, choose 4 × 6 in photo paper or A4 below the result. A 35 × 45 mm photo fits 8 times on 4 × 6 in and 30 times on A4. Download the JPG for a photo shop, or the PDF to print at home at 100% scale.",
-  },
-  {
-    question: "Is my photo uploaded?",
-    answer: "No. Cropping, resizing and compression all run in your browser. Your photo is never sent to a server.",
+      "Yes, for millimetre sizes. Pick a sheet below the result: a 35 × 45 mm photo fits 8 times on 4 × 6 in and 30 times on A4. Take the JPG to a photo shop, or print the PDF at home at 100%.",
   },
 ];
 
@@ -74,44 +65,22 @@ export default function PassportPhotoResizerPage() {
       faqs={faqs}
       content={
         <>
-          <h2>How to prepare a passport photo</h2>
+          <h2>How the passport photo resizer works</h2>
           <ol>
-            <li>Find the photo requirements in the official instructions for your application.</li>
             <li>
-              Choose a matching preset, or select <strong>Custom size</strong> and enter the width, height, unit and any file
-              size limits.
+              Choose a preset, or select <strong>Custom size</strong> and enter the width, height, unit and any KB limits from
+              your official instructions.
             </li>
-            <li>Add your photo. The crop box is locked to the required shape.</li>
-            <li>Move and zoom so your head is centred and sized as the rules describe; use the dashed oval as a guide.</li>
+            <li>Add your photo; the crop box is locked to the required shape.</li>
+            <li>Move and zoom until your head is centred and sized as the rules describe, using the dashed oval.</li>
             <li>Select Create photo, check the result, and download the JPG.</li>
           </ol>
 
-          <h2>Requirements differ by country and application</h2>
-          <p>
-            A printed photo for one country&apos;s passport, a digital photo for the same country&apos;s online renewal, and a
-            visa photo for another country can all have different dimensions, head-size rules, backgrounds and file limits.
-            That&apos;s why this tool doesn&apos;t assume a universal &ldquo;passport size&rdquo;. Typical requirements include:
-          </p>
-          <ul>
-            <li>
-              <strong>Dimensions</strong>, either physical (mm or inches) for printed photos or in pixels for online forms.
-            </li>
-            <li>
-              <strong>File size</strong> limits for uploads, sometimes with a minimum as well as a maximum.
-            </li>
-            <li>
-              <strong>Head size and position</strong>, for example the distance from chin to crown as a share of the photo
-              height.
-            </li>
-            <li>
-              <strong>Background</strong> colour and evenness, lighting, expression and recency.
-            </li>
-          </ul>
-
           <h2>Presets checked against official sources</h2>
           <p>
-            Each preset quotes the issuing government&apos;s website and shows when it was last checked. Rules change, so
-            follow the link and confirm before you apply.
+            A printed passport, an online renewal and a visa can each need different dimensions, head size and file limits, so
+            no universal &ldquo;passport size&rdquo; is assumed. Each preset links to the issuing government&apos;s page with
+            the date it was last checked.
           </p>
           <table>
             <thead>
@@ -145,50 +114,31 @@ export default function PassportPhotoResizerPage() {
             </tbody>
           </table>
 
-          <h2>Background and lighting guidance</h2>
-          <ul>
-            <li>Stand about half a metre in front of a plain wall in the colour your application asks for, often white, cream or light grey.</li>
-            <li>Face a window or use soft, even light so there are no shadows on your face or behind you.</li>
-            <li>Keep a neutral expression, look straight at the camera, and keep hair away from your eyes.</li>
-            <li>Ask someone else to take the photo from head height; selfies distort facial proportions.</li>
-          </ul>
-          <p>This tool doesn&apos;t retouch or replace backgrounds, because many authorities reject edited photos.</p>
-
           <p>
             Not sure of your country&apos;s rules? <Link href="/tools/passport-photo">Compare passport photo requirements by
             country</Link>, each with its official source.
           </p>
 
-          <h2>Print sheets: 8 passport photos on 4 × 6 in paper</h2>
-          <p>
-            When the size is in millimetres, the finished photo can be laid out several times on one sheet: 8 copies of a 35 ×
-            45 mm photo fit on 4 × 6 in photo paper, and 30 on A4, with 2 mm gaps and light cutting guides. The JPG sheet is
-            for photo shops and photo printers; the PDF is for printing at home at actual size. Custom sizes work too, and the
-            tool says how many fit.
-          </p>
+          <h2>Background and lighting</h2>
+          <ul>
+            <li>Stand about half a metre from a plain wall in the required colour, often white, cream or light grey.</li>
+            <li>Face a window or soft, even light so no shadows fall on your face or behind you.</li>
+            <li>Keep a neutral expression and have someone else shoot from head height; selfies distort proportions.</li>
+          </ul>
+          <p>There is no retouching or background replacement, because many authorities reject edited photos.</p>
 
-          <h2>Printed vs digital photos</h2>
+          <h2>Print sheets and online uploads</h2>
           <p>
-            For printed photos, the tool records the resolution ({PRINT_DPI} DPI by default) in the JPG, so a 35 × 45 mm photo
-            prints at that size when you choose &ldquo;actual size&rdquo; or 100% in the print dialog. For online applications,
-            the pixel dimensions and file size are what matter. If you only need to hit a file size, use{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to KB</Link>; for general framing, the{" "}
-            <Link href="/tools/image-cropper">image cropper</Link> offers free and fixed ratios; and to simply make a photo
-            smaller, <Link href="/tools/image-compressor">compress the image</Link>.
-          </p>
-          <p>
-            Most online applications ask for a signature alongside the photo. The{" "}
-            <Link href="/tools/signature-resizer">signature resizer</Link> crops and cleans a signed sheet to the pixel and KB
-            limits forms use. When the instructions only give a maximum file size, the{" "}
-            <Link href="/tools/20kb-photo">20KB photo resizer</Link> and{" "}
-            <Link href="/tools/50kb-photo">50KB photo resizer</Link> handle the two most common limits in one step.
+            For millimetre sizes, the JPG carries {PRINT_DPI} DPI, so it prints true to size at &ldquo;actual size&rdquo; or
+            100%. A 4 × 6 in sheet holds 8 copies of a 35 × 45 mm photo and A4 holds 30, with cutting guides. For online
+            forms, pixels and KB are what count: the{" "}
+            <Link href="/tools/20kb-photo">20KB photo resizer</Link> and <Link href="/tools/50kb-photo">50KB photo
+            resizer</Link> cover common limits, <Link href="/tools/resize-image-to-kb">resize image to KB</Link> any other, and
+            the <Link href="/tools/signature-resizer">signature resizer</Link> prepares the signature.
           </p>
 
           <PrivacyNote>
-            <p>
-              Identity photos are sensitive. Your photo is cropped, resized and compressed by your own browser and is never
-              uploaded or stored by us.
-            </p>
+            <p>Identity photos are sensitive, so cropping, resizing and compression all happen on your device.</p>
           </PrivacyNote>
         </>
       }

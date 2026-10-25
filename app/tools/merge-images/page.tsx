@@ -21,27 +21,27 @@ const faqs: FaqItem[] = [
   {
     question: "How do I combine two photos into one image?",
     answer:
-      "Add both photos, choose Horizontal to place them side by side or Vertical to stack them, and select Merge. The preview shows the result before you create it, and you can download it as JPG or PNG.",
+      "Add both photos, choose Horizontal for side by side or Vertical to stack them, and select Merge. The preview shows the result first, and you can download it as JPG or PNG.",
   },
   {
     question: "What happens when the images are different sizes?",
     answer:
-      "You choose. Smallest scales the bigger images down so they line up with the smallest one (nothing gets blurry from enlarging). Largest enlarges the smaller ones instead. Keep sizes leaves every image as it is and centres them. Images are always scaled in proportion, never stretched.",
+      "You choose: Smallest scales bigger images down, Largest enlarges smaller ones, and Keep sizes leaves each as it is, centred. Images are always scaled in proportion, never stretched.",
   },
   {
     question: "How do I make a grid or collage?",
     answer:
-      "Choose Grid and set the number of columns. Every cell gets the same size and each image is fitted inside its cell, so mixed portrait and landscape photos line up neatly with the background colour filling the gaps.",
+      "Choose Grid and set the number of columns. Every cell gets the same size and each image is fitted inside it, so mixed portrait and landscape photos line up with the background filling the gaps.",
   },
   {
     question: "Can the background be transparent?",
     answer:
-      "Yes. Choose Transparent and the merged image is saved as PNG, so spacing and gaps stay see-through. JPG can't store transparency, so JPG results always have a solid background.",
+      "Yes. Choose Transparent and the merged image is saved as PNG, so spacing stays see-through. JPG can't store transparency, so JPG results always have a solid background.",
   },
   {
     question: "How many images can I merge?",
     answer:
-      "Up to 30. If the combined picture would be larger than browsers can create (about 50 megapixels, or 16,384 pixels on a side), it's scaled down to fit and the tool tells you by how much.",
+      "Up to 30. If the combined picture would exceed what browsers can create (about 50 megapixels, or 16,384 pixels on a side), it's scaled down to fit and the tool tells you by how much.",
   },
   {
     question: "Are my photos uploaded?",
@@ -56,8 +56,8 @@ export default function MergeImagesPage() {
       h1="Merge Images: Combine Photos into One"
       intro={
         <p>
-          Join two or more pictures into one image: stacked, side by side or in a grid. Choose how differently sized
-          images line up, add spacing and a background, and download a JPG or PNG. Everything happens in your browser.
+          Join two or more pictures into one image: stacked, side by side or in a grid. Add spacing and a background, then
+          download a JPG or PNG, all in your browser.
         </p>
       }
       schemaDescription={description}
@@ -68,67 +68,51 @@ export default function MergeImagesPage() {
           <ol>
             <li>Add your images; JPG, PNG, WebP and HEIC can be mixed.</li>
             <li>Put them in order with the arrow buttons.</li>
-            <li>Choose Vertical, Horizontal or Grid, how sizes should match, and the spacing and background.</li>
+            <li>Choose Vertical, Horizontal or Grid, how sizes match, and the spacing and background.</li>
             <li>Check the live preview, select <strong>Merge</strong>, then download.</li>
           </ol>
+          <p>
+            Use this image combiner to merge photos for before-and-after pairs, a strip of screenshots, a product grid, or the
+            front and back of a card in one upload.
+          </p>
 
           <h2>Lining up images of different sizes</h2>
           <p>
-            Photos from different cameras and screenshots rarely share a size. In a vertical stack, every image is scaled to the
-            same width; side by side, to the same height. Matching the <strong>smallest</strong> keeps everything sharp because
-            nothing is enlarged. Matching the <strong>largest</strong> keeps the most detail from the big images but softens
-            the small ones. <strong>Keep sizes</strong> is useful for screenshots that should stay at 100%.
+            A vertical stack scales every image to the same width; side by side, to the same height. Matching the{" "}
+            <strong>smallest</strong> keeps everything sharp, the <strong>largest</strong> keeps detail but softens small
+            images, and <strong>Keep sizes</strong> suits screenshots. For a gap-free grid, first crop each photo to one shape
+            with the{" "}
+            <Link href="/tools/image-cropper">image cropper</Link>.
           </p>
 
           <h2>Supported files and limits</h2>
           <ul>
             <li>
-              <strong>Input:</strong> JPG, PNG, WebP and iPhone HEIC photos, mixed freely, from 2 up to 30 images of up to 50 MB
-              each.
+              <strong>Input:</strong> JPG, PNG, WebP and iPhone HEIC, mixed freely; 2 to 30 images, up to 50 MB each.
             </li>
             <li>
-              <strong>Output:</strong> one JPG, with a quality setting for a smaller file, or one PNG, which can keep a
-              transparent background.
+              <strong>Output:</strong> one JPG with a quality setting, or one PNG that can keep a transparent background.
             </li>
             <li>
-              <strong>Size:</strong> browsers can create images of about 50 megapixels (16,384 pixels on a side). A larger
-              combination is scaled down to fit, and the tool says by how much.
+              <strong>Size:</strong> about 50 megapixels (16,384 pixels on a side) at most; larger results are scaled down to
+              fit.
             </li>
           </ul>
+          <p>
+            Shrink a large result with the <Link href="/tools/image-resizer">image resizer</Link> or{" "}
+            <Link href="/tools/image-compressor">image compressor</Link>. Want each picture on its own page? Use{" "}
+            <Link href="/tools/photo-to-pdf">Photo to PDF</Link>. To combine PDF files instead, use{" "}
+            <Link href="/tools/merge-pdf">Merge PDF</Link>.
+          </p>
 
           <h2>Join a photo and signature into one image</h2>
           <p>
-            Some application forms ask for the photo and signature in a single file. Add the photo first and the signature
+            Some application forms want the photo and signature in a single file. Add the photo first and the signature
             second, choose <strong>Vertical</strong>, set <strong>Match widths</strong> to <strong>Keep sizes</strong> so the
-            signature isn&apos;t stretched to the photo&apos;s width, and keep a <strong>White</strong> background. Save as JPG.
-            If the form also sets a file size, bring the result to{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to KB</Link>; to prepare the signature itself, use the{" "}
-            <Link href="/tools/signature-resizer">signature resizer</Link>. Always follow the layout your form describes.
+            signature isn&apos;t stretched, keep a <strong>White</strong> background and save as JPG. Prepare the signature with
+            the <Link href="/tools/signature-resizer">signature resizer</Link>, and meet a file-size limit with{" "}
+            <Link href="/tools/resize-image-to-kb">resize image to KB</Link>. Always follow the layout your form describes.
           </p>
-
-          <h2>What people combine photos for</h2>
-          <ul>
-            <li>Before-and-after pairs, side by side.</li>
-            <li>A long vertical strip of phone screenshots to share a conversation or a set of steps.</li>
-            <li>A grid of product photos or a small photo collage.</li>
-            <li>Front and back of a card or document in one image, for forms that take a single upload.</li>
-          </ul>
-
-          <h2>Tips for a clean result</h2>
-          <ul>
-            <li>
-              Crop each photo first with the <Link href="/tools/image-cropper">image cropper</Link> so they share a shape; the
-              grid then has no gaps.
-            </li>
-            <li>
-              The merged image can be large. Shrink its dimensions with the <Link href="/tools/image-resizer">image resizer</Link>{" "}
-              or its file size with the <Link href="/tools/image-compressor">image compressor</Link>.
-            </li>
-            <li>
-              Want each picture on its own page instead? Make a PDF with <Link href="/tools/photo-to-pdf">Photo to PDF</Link>.
-              Combining PDF files rather than pictures? Use <Link href="/tools/merge-pdf">Merge PDF</Link>.
-            </li>
-          </ul>
 
           <PrivacyNote>
             <p>Your images are decoded and combined on your device. None of them is uploaded.</p>

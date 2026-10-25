@@ -19,13 +19,9 @@ export default function ContactPage() {
       intro={<p>Questions, bug reports and suggestions are all welcome.</p>}
     >
       <h2>Get in touch</h2>
-      {email ? (
-        <p>
-          Email <a href={`mailto:${email}`}>{email}</a>. We read every message and aim to reply within a few working days.
-        </p>
-      ) : (
-        <p>A contact email address will be published here shortly.</p>
-      )}
+      <p>
+        Email <a href={`mailto:${email}`}>{email}</a>. We read every message and aim to reply within a few working days.
+      </p>
 
       <h2>Reporting a problem</h2>
       <p>To help us fix an issue quickly, please include:</p>

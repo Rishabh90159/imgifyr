@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
 import { allTools, NAV_GROUPS, toolsIn } from "@/lib/tools/registry";
+import { CurrentToolGroup } from "./current-tool-group";
 import { DisclosureMenu } from "./disclosure-menu";
 import { Logo } from "./logo";
 import { ToolSearch } from "./tool-search";
@@ -8,9 +9,9 @@ import { ToolSearch } from "./tool-search";
 // Built once on the server and passed to the client search box.
 const searchItems = allTools.map((tool) => ({ name: tool.name, path: tool.path, keywords: `${tool.linkText} ${tool.summary}` }));
 
-function Chevron() {
+function Chevron({ className = "group-open:rotate-180" }: { className?: string }) {
   return (
-    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className="transition-transform group-open:rotate-180">
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className={`shrink-0 transition-transform ${className}`}>
       <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   );
@@ -81,29 +82,39 @@ export function SiteHeader() {
           </summary>
           <nav
             aria-label="Image tools"
-            className="absolute right-0 z-30 mt-2 max-h-[75vh] w-72 overflow-y-auto rounded-lg border border-line bg-canvas p-2 text-ink shadow-lg"
+            data-mobile-tools=""
+            className="absolute right-0 z-30 mt-2 max-h-[75vh] w-60 overflow-y-auto rounded-lg border border-line bg-canvas p-1.5 text-ink shadow-lg"
           >
             {/* Search first: most visitors on a phone know which size or format they need. */}
-            <div className="px-1 pb-2 pt-1">
+            <div className="p-1 pb-1.5">
               <ToolSearch items={searchItems} />
             </div>
+            {/* Categories collapse so the menu fits on a phone screen. The shared `name` makes them an exclusive
+                accordion (one open at a time) without JavaScript; older browsers simply allow several open. */}
             {NAV_GROUPS.map((group) => (
-              <div key={group.id} className="mb-1">
-                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-muted">{group.label}</p>
-                <ul>
+              <details key={group.id} name="mobile-tool-groups" className="group/cat">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-md px-3 text-[0.9375rem] font-medium text-ink hover:bg-surface group-open/cat:text-accent-ink [&::-webkit-details-marker]:hidden">
+                  {group.label}
+                  <Chevron className="text-muted group-open/cat:rotate-180" />
+                </summary>
+                <ul className="pb-1">
                   {toolsIn(group.id).map((tool) => (
                     <li key={tool.id}>
-                      <Link href={tool.path} className="block rounded-md px-3 py-2.5 text-[0.9375rem] text-ink hover:bg-accent-soft hover:text-accent-ink">
+                      <Link
+                        href={tool.path}
+                        className="block rounded-md py-2 pl-6 pr-3 text-sm text-ink-soft hover:bg-accent-soft hover:text-accent-ink aria-[current=page]:bg-accent-soft aria-[current=page]:font-medium aria-[current=page]:text-accent-ink"
+                      >
                         {tool.name}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </details>
             ))}
-            <Link href="/tools" className="block rounded-md px-3 py-2.5 text-[0.9375rem] font-medium text-accent hover:bg-surface">
+            <Link href="/tools" className="mt-1 block rounded-md border-t border-line px-3 py-2.5 text-[0.9375rem] font-medium text-accent hover:bg-surface">
               All image tools
             </Link>
+            <CurrentToolGroup />
           </nav>
         </DisclosureMenu>
       </div>

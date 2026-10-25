@@ -146,8 +146,9 @@ export default function PrivacyPage() {
       <p>
         Depending on where you live, you may have rights to access, correct, delete or object to the processing of personal
         data about you. Because we don&apos;t collect personal data through the tools, there is usually nothing to access or
-        delete, but you&apos;re welcome to <Link href="/contact">contact us</Link> with any question or request and
-        we&apos;ll respond.
+        delete, but you&apos;re welcome to email{" "}
+        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a> or <Link href="/contact">contact us</Link>{" "}
+        with any question or request and we&apos;ll respond.
       </p>
 
       <h2>Children</h2>

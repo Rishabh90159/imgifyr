@@ -22,47 +22,32 @@ const faqs: FaqItem[] = [
   {
     question: "How do I resize an image for Instagram?",
     answer:
-      "Add your photo, pick the format you're posting (square, portrait, landscape, Story or Reel cover), then either drag the crop box to choose what to keep or switch to Fit to keep the whole photo. Select Create Instagram image, check the preview and download the file, then upload it to Instagram as usual.",
+      "Add your photo, pick the format you're posting, then drag the crop box or switch to Fit to keep the whole photo. Select Create Instagram image, check the preview and download.",
   },
   {
     question: "What is the best size for an Instagram post?",
     answer:
-      "For most photos, a 1080 × 1350 px portrait (4:5) is the best choice because it fills more of the screen in the feed than a square. Use 1080 × 1080 px when the picture is naturally square or you want a uniform grid, and 1080 × 566 px for wide landscape shots.",
+      "A 1080 × 1350 px portrait (4:5) suits most photos because it fills more of the feed. Use 1080 × 1080 px for square pictures or a uniform grid, and 1080 × 566 px for wide landscapes.",
   },
   {
     question: "What size should an Instagram Story be?",
     answer:
-      "1080 × 1920 pixels, a 9:16 vertical frame that fills a phone screen. Instagram's profile name and reply bar sit over the top and bottom of a Story, so the Story preset shows a guide to keep text and faces in the middle area.",
+      "1080 × 1920 pixels, a 9:16 vertical frame. Your profile name and the reply bar cover the top and bottom, so the Story preset shows a guide for keeping text and faces in the middle.",
   },
   {
     question: "What dimensions should I use for a Reel cover?",
     answer:
-      "Make the cover 1080 × 1920 pixels to match the 9:16 Reel. Your profile grid shows only a cropped middle part of it, currently a 3:4 area, so keep the title and the main subject inside the guide the Reel cover preset shows.",
+      "1080 × 1920 pixels, matching the 9:16 Reel. The profile grid shows only a cropped middle part, currently 3:4, so keep the title and subject inside the preset's guide.",
   },
   {
     question: "Can I resize an Instagram image without cropping it?",
     answer:
-      "Yes. Choose Fit whole photo: the entire picture is scaled into the frame and the space around it is filled with white, black, a colour you choose or a blurred copy of the photo. You can move the photo within the frame and add an even border.",
+      "Yes. Choose Fit whole photo: the picture is scaled into the frame and the space around it is filled with white, black, a colour you choose or a blurred copy of the photo.",
   },
   {
-    question: "How do I resize a photo to 1080 × 1080?",
+    question: "Is this Instagram image resizer free?",
     answer:
-      "Select the Square post preset. If your photo isn't square, drag the crop box to choose the square you want to keep, or switch to Fit to place the whole photo on a square background. The download is exactly 1080 × 1080 pixels.",
-  },
-  {
-    question: "Will resizing reduce image quality?",
-    answer:
-      "Scaling a large phone photo down to 1080 px wide keeps it sharp. Quality suffers when a small image or a small crop is enlarged, and the tool warns you when that happens. Save as JPG at around 90% quality so Instagram's own compression has good material to work from.",
-  },
-  {
-    question: "Are my images uploaded to a server?",
-    answer:
-      "No. Cropping, resizing and saving all happen in your web browser on your own device. Your photo isn't sent to Imgifyr or anyone else, and nothing is kept after you close the page.",
-  },
-  {
-    question: "Can I resize images for Instagram for free?",
-    answer:
-      "Yes. The tool is free with no account, no limit on how many images you resize and no watermark on the result.",
+      "Yes. There is no account, no limit on how many images you resize and no watermark. Everything happens in your browser, so your photo is never uploaded.",
   },
 ];
 
@@ -73,9 +58,8 @@ export default function InstagramImageResizerPage() {
       h1="Instagram Image Resizer"
       intro={
         <p>
-          Resize and crop photos to the right size for Instagram posts, Stories and Reel covers, or fit the whole photo
-          into the frame without cropping. Preview the result and download an image at the exact dimensions, made right in
-          your browser.
+          Crop or fit photos to the exact size for Instagram posts, Stories and Reel covers. Preview the result and download
+          it, all made in your browser.
         </p>
       }
       schemaDescription={description}
@@ -84,31 +68,15 @@ export default function InstagramImageResizerPage() {
         <>
           <h2>How to resize an image for Instagram</h2>
           <ol>
-            <li>Choose, drop or paste a photo. JPG, PNG, WebP and iPhone HEIC photos all work.</li>
-            <li>Pick the Instagram size: a feed post shape, a Story or a Reel cover. Each shows its pixel size and ratio.</li>
+            <li>Add a JPG, PNG, WebP or iPhone HEIC photo.</li>
+            <li>Pick a feed post shape, a Story or a Reel cover; each shows its pixel size and ratio.</li>
             <li>
-              Decide what happens when the shapes differ. <strong>Crop to fill</strong> lets you drag the frame to the part
-              you want; <strong>Fit whole photo</strong> keeps everything and adds a background.
+              Use <strong>Crop to fill</strong> and drag the frame, or <strong>Fit whole photo</strong> to keep everything.
             </li>
-            <li>Choose JPG, PNG or WebP and the quality, then select <strong>Create Instagram image</strong>.</li>
-            <li>Compare the original and the result, including the new dimensions and file size, and download.</li>
+            <li>
+              Choose the format and quality, select <strong>Create Instagram image</strong>, and download.
+            </li>
           </ol>
-
-          <h2>Choosing the right Instagram size</h2>
-          <h3>Feed posts</h3>
-          <p>
-            Feed posts can be square, portrait or landscape. A <strong>4:5 portrait</strong> (1080 × 1350) is usually the best
-            pick for photos of people, products and food, because it takes up the most room as people scroll. Use the{" "}
-            <strong>square</strong> preset when a consistent grid matters, and <strong>landscape</strong> for scenery and group
-            shots. The <strong>3:4</strong> preset matches the taller previews on profile grids, but older apps and some
-            publishing tools may still trim it to 4:5, so check it after posting.
-          </p>
-          <h3>Stories and Reels</h3>
-          <p>
-            Stories and Reels fill the screen with a 9:16 vertical frame of 1080 × 1920. They follow different rules from feed
-            posts: buttons, captions and your profile name are drawn over the picture, and a Reel cover appears in your
-            profile grid as a cropped middle section. Turn on the guide to see which areas to keep clear.
-          </p>
 
           <h2>Instagram image size reference</h2>
           <table>
@@ -134,56 +102,38 @@ export default function InstagramImageResizerPage() {
             </tbody>
           </table>
           <p>
-            These are the sizes most creators use. Instagram re-compresses every upload and can change how it displays each
-            format, so treat them as reliable starting points rather than fixed rules. Feed images wider than 1080 pixels are
-            scaled down when posted, so there is little benefit in uploading larger files.
+            A <strong>4:5 portrait</strong> is usually the best feed pick, as it takes up the most room while scrolling. The{" "}
+            <strong>3:4</strong> preset matches taller profile-grid previews, but some apps still trim it to 4:5, so check it
+            after posting. Stories
+            and Reels use a full-screen 9:16 frame where buttons and captions sit on top, so turn on the guide. Feed images
+            wider than 1080 pixels are scaled down when posted, so larger uploads gain little.
           </p>
 
           <h2>Crop or fit: which should you use?</h2>
           <p>
-            <strong>Cropping</strong> fills the whole frame with your photo and cuts off whatever falls outside it. It looks
-            cleanest in the feed, and you choose exactly which part stays by dragging the frame, zooming with a pinch or Ctrl +
-            scroll, or using the arrow keys.
-          </p>
-          <p>
-            <strong>Fitting</strong> keeps every pixel of the photo and fills the empty space instead. A white or black
-            background gives a gallery look, a blurred copy of the photo looks seamless, and a border adds the same margin on
-            every side. Use it to resize a photo for Instagram without cropping a panorama, a screenshot or a group shot where
-            no one should be cut out. The image is never stretched in either mode.
+            <strong>Cropping</strong> fills the frame and cuts off the rest; drag, pinch or use the arrow keys to choose what
+            stays. <strong>Fitting</strong> keeps every pixel and fills the empty space with white, black, a colour or a
+            blurred copy, ideal for panoramas, screenshots and group shots. Neither mode stretches the image.
           </p>
 
-          <h2>Tips for sharp results and no surprise cropping</h2>
+          <h2>Tips and other tools</h2>
           <ul>
-            <li>Start from the original photo, not a screenshot or a copy saved from a messaging app, which are often reduced.</li>
+            <li>Start from the original photo; copies saved from messaging apps are often reduced.</li>
             <li>
-              If the tool says your photo will be enlarged, choose a larger crop area or a higher-resolution original. A
-              blurry-looking upload is usually an enlarged one.
-            </li>
-            <li>Keep text and faces away from the edges of Stories and inside the grid area of Reel covers.</li>
-            <li>
-              Save as JPG at around 90% quality. If you need a smaller file afterwards, the{" "}
-              <Link href="/tools/image-compressor">image compressor</Link> shrinks it without changing the dimensions.
+              Need a lighter file? The <Link href="/tools/image-compressor">image compressor</Link> keeps the dimensions.
             </li>
             <li>
-              Got an iPhone photo in HEIC format, or a WebP saved from a website? They open here directly, or you can convert
-              them first with <Link href="/tools/heic-to-jpg">HEIC to JPG</Link> and{" "}
+              Other sizes: the <Link href="/tools/image-resizer">image resizer</Link> or the{" "}
+              <Link href="/tools/image-cropper">image cropper</Link> for ratios like 16:9.
+            </li>
+            <li>
+              Convert first if you prefer: <Link href="/tools/heic-to-jpg">HEIC to JPG</Link> or{" "}
               <Link href="/tools/webp-to-jpg">WebP to JPG</Link>.
             </li>
           </ul>
 
-          <h2>Other sizes and formats</h2>
-          <p>
-            For any other dimensions, use the general <Link href="/tools/image-resizer">image resizer</Link>, which resizes by
-            pixels or percentage. To crop freely or to ratios such as 16:9 for other sites, use the{" "}
-            <Link href="/tools/image-cropper">image cropper</Link>. Need a lossless copy for editing or a transparent
-            background? <Link href="/tools/jpg-to-png">Convert JPG to PNG</Link>.
-          </p>
-
           <PrivacyNote>
-            <p>
-              Your photo is decoded, cropped or fitted, and saved by your own browser, usually in a background thread so the
-              page stays responsive. It is never uploaded, and no copy is stored once you close the page.
-            </p>
+            <p>Your photo is cropped or fitted and saved by your own browser, and never uploaded or stored.</p>
           </PrivacyNote>
         </>
       }

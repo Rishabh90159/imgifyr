@@ -33,6 +33,7 @@ export function organizationSchema() {
     name: siteConfig.name,
     url: absoluteUrl("/"),
     logo: absoluteUrl("/logo-512.png"),
+    email: siteConfig.contactEmail,
     sameAs: [...siteConfig.brandProfiles],
   };
 }

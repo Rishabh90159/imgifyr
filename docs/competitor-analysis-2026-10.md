@@ -436,3 +436,48 @@ Watch: shorter pages raise the share of common phrases. The duplicate check (6-w
 19.1%, fixed by rewording. The highest pair now is IBPS ~ SBI at 12.1%. Write each page's steps in its own words.
 
 Tests: seo 954/954, rrb-upsssc 34/34, phase3 74/74, phase5 40/40, unit 137/137.
+
+## 19. All tool pages trimmed (25 Oct)
+
+The owner asked to apply the §18 clean-up to every page without hurting SEO or performance.
+
+Scope:
+- **Changed:** the 38 non-exam tool pages and one sentence on the exam hub.
+- **Unchanged:** home (its structure is tested and it's mostly tool cards), the /tools and PDF hubs (listings),
+  About, Methodology and the legal pages. Those are reference and trust pages people open on purpose.
+
+Rules applied to each page. Only the intro, the article JSX and the FAQ array changed; titles, descriptions, H1s,
+schema and tools did not.
+- **Intro:** 2 sentences or fewer.
+- **Sections:** at most 3–4 H2 sections, each about 70 words or less.
+- **Privacy note:** one sentence.
+- **FAQs:** 5–6, each answer 45 words or fewer.
+- **Merged:** keyword-variant sections such as "Compress an Image to 100KB", "Reduce JPG…", "Reduce PNG…",
+  "Photo Size Reducer" and "Resize Image Without Losing Quality" became one section each. The merged section keeps
+  the phrases.
+- **Removed:**
+  - "Features" lists that repeat the UI, and "Related tools" H2s that duplicate the related cards (their best links
+    were folded into the text).
+  - Repeated "Typical uses" and "Tips" sections.
+- **Kept:**
+  - Every §3 Search Console fix: JPG↔PNG↔WebP links, 50KB→200KB link, the 200KB minimum-size section and FAQ,
+    Merge Images limits and the "Join…" intro, Passport links to the hub and Signature Resizer.
+  - Reference tables, honest limitation notes, and the SVG safety note.
+
+Results:
+| Measure | Before | After |
+|---|---|---|
+| Article text (38 tool pages) | 195–1,029 words | 156–418 words (−30 to −65%; Image Resizer 1029 → 418, Compressor 751 → 257) |
+| FAQ text per page | 190–400 words | 150–220 words |
+| Keyword-map phrases on their page (guard script) | 160/324 | 162/324, **none lost** |
+| Highest 6-word overlap between pages | 12.1% | 12.1% (limit 15%) |
+| HTML, all 56 pages | 1,407 KB gzip | 1,348 KB gzip (heavy pages −7 to −10% raw) |
+| JavaScript | — | Unchanged |
+
+Tests: every e2e suite passes. seo 954, run 64, phase2 79, phase3 74, phase4 77, phase5 40, webp 11, instagram 61,
+pdf-tools 94, pdf-image-tools 29, print-and-convert 19, size-limits 17, rrb-upsssc 34, exam-documents 17. Unit tests:
+137. Note: run every suite with `EXPECTED_SITE_URL=https://www.imgifyr.com` against a normal build, or the Instagram
+canonical and sitemap checks fail.
+
+Watch in Search Console over the next 2–4 weeks: impressions and positions for the pages that already had them (§2).
+Only if a page clearly drops should a cut section come back. Use git history for this commit.

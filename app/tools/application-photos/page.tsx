@@ -245,10 +245,8 @@ export default function ApplicationPhotosPage() {
 
         <h2>How this table is kept accurate</h2>
         <p>
-          Every value comes from the examining body&apos;s own notification or website, never from coaching or photo-service
-          sites. Values the source doesn&apos;t state are shown as &ldquo;not stated&rdquo; rather than filled in, and the
-          date shows when we last read the source. See <Link href="/methodology">how the tools work</Link> for the full
-          process.
+          Every value comes from the examining body&apos;s own notification, never from coaching sites; anything the source
+          doesn&apos;t state shows as &ldquo;not stated&rdquo;. See <Link href="/methodology">how the tools work</Link>.
         </p>
       </div>
     </div>

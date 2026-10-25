@@ -29,37 +29,27 @@ const faqs: FaqItem[] = [
   {
     question: "How do I combine several photos into one PDF?",
     answer:
-      "Add all the photos at once, or add more with Add images. Put them in order with the up and down arrows; each photo becomes one page, in that order. Then select Create PDF and download it.",
+      "Add all the photos at once, or more later with Add images. Each photo becomes one page in the order shown, which you can change with the arrow buttons. Then select Create PDF.",
   },
   {
     question: "Can I mix JPG, PNG, WebP and HEIC photos in one PDF?",
     answer:
-      "Yes. Every supported image becomes a page. iPhone HEIC photos are decoded in your browser first. PNG and WebP images with transparent areas are placed on white, like a printed page.",
+      "Yes. iPhone HEIC photos are decoded in your browser first, and transparent areas in PNG and WebP images are placed on white, like a printed page.",
   },
   {
     question: "Will my photos lose quality in the PDF?",
     answer:
-      "With Best quality, JPG photos are placed in the PDF exactly as they are, with no recompression. Other formats are saved as high-quality JPG (92%), which looks the same at normal viewing size. Smaller file reduces large images and compresses more, which you'll notice only when zooming in.",
-  },
-  {
-    question: "Why is my PDF so large?",
-    answer:
-      "A PDF of photos is about as big as the photos inside it, and phone photos are often 3–5 MB each. Set a Maximum PDF size, such as 200 KB or 1 MB, and the tool makes the whole PDF fit; or choose Smaller file to reduce each image to 2000 pixels.",
+      "With Best quality, JPG photos go in untouched and other formats are saved as 92% JPG, which looks the same at normal size. Smaller file reduces large images, which you'll notice only when zooming in.",
   },
   {
     question: "Can I make a photo PDF under 100 KB or 200 KB?",
     answer:
-      "Yes. Choose the limit under Maximum PDF size. The images are re-encoded together, at the best quality that keeps the PDF within the limit, and reduced in pixels only when needed. With a limit, up to 40 photos fit in one PDF.",
-  },
-  {
-    question: "What do Fit and Fill mean?",
-    answer:
-      "Fit shows the whole photo on the page, leaving white space where the shapes differ. Fill covers the page edge to edge (inside the margin) and crops whatever doesn't fit. The layout preview shows the result before you create the PDF.",
+      "Yes. Choose the cap under Maximum PDF size and all photos are re-encoded together at the best quality that fits, reduced in pixels only when needed. Up to 40 photos fit in one PDF with a cap.",
   },
   {
     question: "Does it work on a phone?",
     answer:
-      "Yes. Pick photos from your gallery or camera roll, reorder them with the arrow buttons and download the PDF. Very large batches are limited to 100 images to keep memory use reasonable.",
+      "Yes. Pick photos from your gallery or camera roll, reorder them and download the PDF. Batches are limited to 100 images to keep memory use reasonable.",
   },
   {
     question: "Are my photos uploaded?",
@@ -74,82 +64,56 @@ export default function PhotoToPdfPage() {
       h1="Photo to PDF Converter"
       intro={
         <p>
-          Turn photos, scans and screenshots into one PDF: JPG, PNG, WebP or iPhone HEIC, in any mix. Put the pages in order,
-          choose the page size and layout, and download. The PDF is created in your browser.
+          Turn photos, scans and screenshots into one PDF: JPG, PNG, WebP or iPhone HEIC, in any mix. This photo to PDF
+          converter works entirely in your browser.
         </p>
       }
       schemaDescription={description}
       faqs={faqs}
       content={
         <>
-          <h2>How to convert photos to PDF</h2>
+          <h2>How to convert images to PDF</h2>
           <ol>
             <li>Choose or drop your photos. You can add more later.</li>
-            <li>Reorder them with the arrow buttons and remove any you don&apos;t want. Each photo becomes one page.</li>
-            <li>Pick A4 or US Letter, the orientation, Fit or Fill, and a margin. The preview shows each page.</li>
-            <li>Select <strong>Create PDF</strong> and download it.</li>
+            <li>Reorder them with the arrow buttons; each photo becomes one page.</li>
+            <li>Set the page size, orientation, layout and margin, then check each page in the preview.</li>
+            <li>
+              Select <strong>Create PDF</strong> and download it.
+            </li>
           </ol>
 
           <h2>Page settings explained</h2>
           <ul>
             <li>
-              <strong>Orientation: Auto</strong> turns each page to suit its photo, so a landscape photo gets a landscape page
-              in the same PDF as portrait ones.
+              <strong>Orientation: Auto</strong> gives a landscape photo a landscape page, even among portrait ones.
             </li>
             <li>
               <strong>Fit</strong> keeps the whole photo visible; <strong>Fill</strong> covers the page and crops the overflow.
             </li>
             <li>
-              <strong>Margins</strong> leave white space round the photo, which matters if the PDF will be printed: most home
-              printers can&apos;t print to the very edge.
+              <strong>Margins</strong> matter for printing, since most home printers can&apos;t reach the edge.
+            </li>
+            <li>
+              Several photos on one page? <Link href="/tools/merge-images">Merge the images</Link> first.
             </li>
           </ul>
 
           <h2>Supported formats</h2>
           <p>
-            JPG/JPEG, PNG, WebP and HEIC/HEIF. Transparent areas in PNG and WebP become white. GIF, TIFF and BMP aren&apos;t
-            supported; convert them first. If every file you have is a JPG, the{" "}
-            <Link href="/tools/jpg-to-pdf">JPG to PDF converter</Link> explains how JPGs are embedded without any quality loss
-            and what to do about rotated or CMYK JPGs.
+            JPG/JPEG, PNG, WebP and HEIC/HEIF; GIF, TIFF and BMP need converting first. If every file is a JPG, the{" "}
+            <Link href="/tools/jpg-to-pdf">JPG to PDF converter</Link> embeds them with no quality loss.
           </p>
 
           <h2>Photo to PDF under a size limit</h2>
           <p>
-            Forms that want certificates or documents as a single PDF usually cap its size. Pick the cap, from 100 KB to 1 MB,
-            under <strong>Maximum PDF size</strong>; the tool balances quality across all pages so the finished PDF fits. Take
-            photos of documents in good light and crop them to the page first: less background leaves more detail for the
-            writing within the same size.
+            Forms that want certificates as one PDF usually cap its size. Pick a cap from 100 KB to 1 MB under{" "}
+            <strong>Maximum PDF size</strong> and quality is balanced across every page so the file fits. Shoot documents in
+            good light and trim them with the <Link href="/tools/image-cropper">image cropper</Link>: less background leaves
+            more detail for the writing.
           </p>
 
-          <h2>Common uses</h2>
-          <ul>
-            <li>Sending photographed documents, receipts or ID pages as one attachment.</li>
-            <li>Uploading certificates or mark sheets to forms that only accept PDF.</li>
-            <li>Turning a set of whiteboard or homework photos into a single file to share.</li>
-            <li>A simple printable album of screenshots or pictures.</li>
-          </ul>
-
-          <h2>Tips</h2>
-          <ul>
-            <li>
-              Crop photos of documents to the paper edge first with the <Link href="/tools/image-cropper">image cropper</Link>,
-              so each page shows only the document.
-            </li>
-            <li>
-              Want several photos on one page instead of one per page? <Link href="/tools/merge-images">Merge the images</Link>{" "}
-              into one picture first, then convert that.
-            </li>
-            <li>
-              Need individual image files rather than a PDF? Use <Link href="/tools/png-to-jpg">PNG to JPG</Link> or{" "}
-              <Link href="/tools/jpg-to-png">JPG to PNG</Link>.
-            </li>
-          </ul>
-
           <PrivacyNote>
-            <p>
-              Your photos are read and the PDF is assembled entirely by your browser. Photos of documents and IDs stay on your
-              device.
-            </p>
+            <p>Photos of documents and IDs stay on your device, because the PDF is assembled by your browser.</p>
           </PrivacyNote>
         </>
       }

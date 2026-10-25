@@ -23,31 +23,27 @@ const faqs: FaqItem[] = [
   {
     question: "How do I convert a PDF to JPG?",
     answer:
-      "Choose your PDF, pick a resolution and select Convert to JPG. A one-page PDF downloads as a single JPG; a longer PDF downloads as a ZIP file with one JPG per page, numbered in page order.",
+      "Choose your PDF, pick a resolution and select Convert to JPG. A one-page PDF downloads as a single JPG; a longer one downloads as a ZIP with one JPG per page, numbered in page order.",
   },
   {
     question: "Which resolution should I choose?",
     answer:
-      "150 DPI suits most uses: it's sharp on screen and readable when printed. Choose 72 DPI for small files to send in chat or email, and 300 DPI when the image will be printed or you need to zoom into small text. Higher resolution means larger files.",
+      "150 DPI suits most uses: sharp on screen and readable when printed. Choose 72 DPI for small files to send in chat, and 300 DPI for printing or zooming into small text.",
   },
   {
     question: "Can I convert a PDF to a JPG under 100 KB?",
     answer:
-      "Yes. Set Maximum size per image to 100 KB. Each page is saved at the highest quality that fits, and its pixel size is reduced only if quality alone can't reach the limit. If a page still can't fit at the smallest readable size, the result says so.",
+      "Yes. Set Maximum size per image to 100 KB. Each page is saved at the highest quality that fits, with pixel size reduced only if needed; if a page still can't fit, the result says so.",
   },
   {
     question: "Does it work with scanned PDFs?",
     answer:
-      "Yes. Scanned pages are already images, so they convert just like any other page. This tool doesn't read the text (there's no OCR); to get editable text from a PDF that has real text, use PDF to Word.",
+      "Yes. Scanned pages are already images, so they convert like any other page. There's no OCR here; to get editable text from a PDF that has real text, use PDF to Word.",
   },
   {
     question: "Can I convert only some pages?",
     answer:
-      "Every page is converted. In the ZIP, the files are named by page number, so you can keep the pages you need and delete the rest.",
-  },
-  {
-    question: "Can I convert a password-protected PDF?",
-    answer: "PDFs that need a password to open can't be converted; remove the password in a PDF reader first, then try again.",
+      "Every page is converted. The files in the ZIP are named by page number, so you can keep the pages you need and delete the rest.",
   },
   {
     question: "Are my PDFs uploaded?",
@@ -62,8 +58,8 @@ export default function PdfToJpgPage() {
       h1="PDF to JPG: Convert PDF Pages to JPG Images"
       intro={
         <p>
-          Turn each page of a PDF into a JPG image, for forms that want an image, for sharing a page in a chat, or for
-          slides. Choose the resolution and, if you need it, a maximum size per image. Your PDF isn&apos;t uploaded.
+          Convert PDF to JPG images, one per page, for forms, chats or slides. Choose the resolution and, if you need it, a
+          maximum size per image; your PDF isn&apos;t uploaded.
         </p>
       }
       schemaDescription={description}
@@ -81,47 +77,29 @@ export default function PdfToJpgPage() {
 
           <h2>Resolution and file size</h2>
           <p>
-            DPI sets how many pixels each inch of the page gets. An A4 page becomes about 595 × 842 pixels at 72 DPI, 1240 ×
-            1754 at 150 DPI, and 2480 × 3508 at 300 DPI. The resolution is also written into each JPG, so it prints at the
-            original page size.
-          </p>
-          <p>
-            With a size limit, the tool first lowers JPG quality, and only reduces the pixel size if quality alone isn&apos;t
-            enough, the same approach as <Link href="/tools/resize-image-to-kb">resizing an image to KB</Link>. Pages with
-            photos need more space than pages of text.
+            An A4 page becomes about 595 × 842 pixels at 72 DPI, 1240 × 1754 at 150 DPI and 2480 × 3508 at 300 DPI. With a
+            size limit, this PDF to JPG converter lowers JPG quality first and pixel size only if needed, like{" "}
+            <Link href="/tools/resize-image-to-kb">resizing an image to KB</Link>.
           </p>
 
           <h2>Supported files and limits</h2>
           <ul>
             <li>
-              PDFs up to {formatBytes(DOC_LIMITS.pdfToJpgMaxBytes)} and {DOC_LIMITS.pdfToJpgMaxPages} pages, including scans
-              and pages of different sizes.
+              PDFs up to {formatBytes(DOC_LIMITS.pdfToJpgMaxBytes)} and {DOC_LIMITS.pdfToJpgMaxPages} pages, including scans.
             </li>
-            <li>Very large pages are drawn at up to 25 megapixels so the browser doesn&apos;t run out of memory.</li>
+            <li>Very large pages are drawn at up to 25 megapixels to save memory.</li>
             <li>Transparent areas become white, since JPG has no transparency.</li>
+            <li>PDFs that need a password to open must be unlocked first.</li>
           </ul>
-
-          <h2>Common uses</h2>
-          <ul>
-            <li>An application form asks for a certificate or ID as a JPG, but you have it as a PDF.</li>
-            <li>Sharing one page of a document in a messaging app that previews images but not PDFs.</li>
-            <li>Putting a page of a report into a presentation or a document as a picture.</li>
-          </ul>
-
-          <h2>Related tools</h2>
           <p>
-            Going the other way? <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> turns images back into a PDF. To keep a
-            PDF as a PDF but make it smaller, <Link href="/tools/compress-pdf">compress the PDF</Link> to a size such as 200
-            KB. Need the text rather than an image? Use <Link href="/tools/pdf-to-word">PDF to Word</Link>. Shrink a JPG
-            further with the <Link href="/tools/image-compressor">image compressor</Link>, or see all{" "}
-            <Link href="/tools/pdf-tools">PDF tools</Link>.
+            Want to keep it a PDF but smaller? <Link href="/tools/compress-pdf">Compress the PDF</Link> instead. Going the
+            other way? <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> turns images back into a PDF.
           </p>
 
           <section aria-labelledby="privacy-heading">
             <h2 id="privacy-heading">Privacy: your PDF stays on your device</h2>
             <p>
-              The PDF is opened and each page is drawn in your browser. Nothing is uploaded or stored by Imgifyr. Read the{" "}
-              <Link href="/privacy">privacy policy</Link> for details.
+              Each page is drawn in your browser and nothing is uploaded; see the <Link href="/privacy">privacy policy</Link>.
             </p>
           </section>
         </>

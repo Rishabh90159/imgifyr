@@ -24,37 +24,32 @@ const faqs: FaqItem[] = [
   {
     question: "What is the passport photo size?",
     answer:
-      "It depends on the country and on whether you need a printed or a digital photo. For example, India and the United Kingdom use 35 × 45 mm printed photos, Canada uses 50 × 70 mm, and online applications in the UK and Canada set minimum pixel sizes and file-size ranges instead. The table on this page lists each requirement with its official source.",
+      "It depends on the country and on printed versus digital. India and the UK use 35 × 45 mm printed photos and Canada 50 × 70 mm, while online applications set minimum pixel sizes and file-size ranges instead.",
   },
   {
     question: "What is a passport size photo in pixels?",
     answer:
-      "Printed passport photos are defined in millimetres, so the pixel size depends on the print resolution. At the 300 DPI this tool uses, a 35 × 45 mm photo (India and the UK) is 413 × 531 pixels, and Canada's 50 × 70 mm photo is 591 × 827 pixels. Online applications state pixel sizes directly instead, such as at least 600 × 750 pixels for a UK digital photo.",
+      "At 300 DPI, a 35 × 45 mm photo (India, UK) is 413 × 531 pixels and Canada's 50 × 70 mm is 591 × 827. Online applications give pixels directly, such as at least 600 × 750 for a UK digital photo.",
   },
   {
     question: "Do I need a photo for an Indian passport application?",
     answer:
-      "Not if you submit the application at a Passport Seva Kendra (PSK) or Post Office Passport Seva Kendra (POPSK): the photo is taken there. According to the Passport Seva instruction booklet, a printed 4.5 cm × 3.5 cm colour photo with a plain white background is needed for applications submitted at other collection centres (DPC, SPC or CSC).",
+      "Not at a Passport Seva Kendra (PSK) or Post Office Passport Seva Kendra (POPSK), where it's taken for you. Other collection centres (DPC, SPC or CSC) need a printed 4.5 cm × 3.5 cm colour photo with a plain white background.",
   },
   {
     question: "Can I print a passport photo at home?",
     answer:
-      "Check your country's rules. The Indian instruction booklet says photographs in computer print will not be accepted and should be printed on good-quality photo paper. In general, a photo lab print at 100% scale is the safest option: after making a printed-photo size, download the print sheet (8 photos of 35 × 45 mm on 4 × 6 in paper) and have it printed at a photo shop.",
+      "Check your country's rules: India's instruction booklet says computer prints won't be accepted and photo paper should be used. A photo lab print of the 4 × 6 in sheet at 100% scale is the safest option.",
   },
   {
     question: "What's the difference between this page and the passport photo resizer?",
     answer:
-      "This page starts from the requirements: compare countries, see the official source for each, and then make a matching photo. The passport photo resizer starts from the tool: it's for any size you already know, including custom millimetre or pixel sizes and file limits.",
-  },
-  {
-    question: "Why isn't the United States or Australia listed?",
-    answer:
-      "We only list a country after reading its official government page. We couldn't complete that check for the US Department of State or the Australian Passport Office, so we link to their official pages instead of quoting numbers.",
+      "This page starts from verified country requirements, each with its official source. The passport photo resizer is for any size you already know, including custom millimetre or pixel sizes and file limits.",
   },
   {
     question: "Will a photo made here be accepted?",
     answer:
-      "The tool sets the size, file type and file size. Acceptance also depends on pose, lighting, expression, background and how recent the photo is, which officials check. Requirements vary by country and application; verify the final image against the official requirements before submitting.",
+      "The tool sets size, file type and file size. Officials also check pose, lighting, expression, background and recency, so verify the final image against the official requirements before submitting.",
   },
 ];
 
@@ -159,86 +154,57 @@ export default function PassportPhotoPage() {
       h1="Passport Size Photo: Official Sizes by Country"
       intro={
         <p>
-          A passport size photo isn&apos;t one size: every country sets its own, and online applications often use pixel
-          and file-size limits instead of millimetres. Compare the requirements we&apos;ve verified from official government
-          sources, then pick your country and make a photo that matches. Your photo stays on your device.
+          A passport size photo isn&apos;t one size: every country sets its own, often in pixels and KB for online
+          applications. Compare officially verified requirements, then make a matching photo that never leaves your device.
         </p>
       }
       schemaDescription={description}
       faqs={faqs}
       content={
         <>
-          <h2>How to make a passport photo for your country</h2>
+          <h2>How to use the passport size photo maker</h2>
           <ol>
-            <li>Pick your country, then the type of application (printed photo or online application).</li>
-            <li>Read the requirement summary and open the official source if anything is unclear.</li>
+            <li>Pick your country, then printed photo or online application, and check the official source if unsure.</li>
             <li>Add a photo taken against a plain background in even light, and frame your head with the crop box.</li>
-            <li>Create the photo. The checklist confirms the pixel size and file size.</li>
+            <li>Create the photo; the checklist confirms pixel size and file size.</li>
             <li>For printed photos, have the JPG printed at a photo lab at 100% scale, on photo paper.</li>
           </ol>
 
-          <h2>Printed photos vs digital photos</h2>
+          <h2>Passport photo size: printed vs digital</h2>
           <p>
-            <strong>Printed photos</strong> are defined in millimetres. The tool turns millimetres into pixels at 300 DPI and
-            writes that resolution into the JPG, so a 35 × 45 mm photo prints at 35 × 45 mm when printed at actual size.{" "}
-            <strong>Digital photos</strong> for online applications are defined in pixels and file size: for example, the UK
-            asks for at least 600 × 750 pixels and 50 KB–10 MB, and Canada for a 3:2 portrait JPEG of at least 1,200 × 1,800
-            pixels and 200 KB–5 MB. The tool produces exactly the minimum pixel size and checks the file size.
+            <strong>Printed photos</strong> are set in millimetres; the tool converts them to pixels at 300 DPI and stores that
+            in the JPG, so 35 × 45 mm prints at 35 × 45 mm at actual size. <strong>Digital photos</strong> are set in pixels
+            and file size: the UK asks for at least 600 × 750 pixels and 50 KB–10 MB, Canada for a 3:2 portrait JPEG of at least
+            1,200 × 1,800 pixels and 200 KB–5 MB.
           </p>
-
-          <h2>Printing several photos on one sheet</h2>
           <p>
-            Applications that take printed photos often need more than one copy. After you make a printed-photo size, the tool
-            offers a print sheet: <strong>8 photos of 35 × 45 mm on 4 × 6 in photo paper</strong> (the standard photo-shop
-            print) or 30 on A4, with light guides to cut along. Canada&apos;s 50 × 70 mm photos fit 2 to a 4 × 6 in sheet, or
-            12 on A4. Download the JPG for a photo shop or the PDF to print at home at actual size (100%, not &ldquo;fit to
-            page&rdquo;), and check the printed size with a ruler before cutting.
+            <strong>Print sheet:</strong> 8 photos of 35 × 45 mm fit on 4 × 6 in photo paper, or 30 on A4; Canada&apos;s 50 ×
+            70 mm photos fit 2 per 4 × 6 in sheet, or 12 on A4. Print at 100%, not &ldquo;fit to page&rdquo;.
           </p>
 
           <h2>Country notes</h2>
           <ul>
             <li>
-              <strong>India:</strong> no photo is needed if you apply at a Passport Seva Kendra or Post Office Passport Seva
-              Kendra, where your photo is taken. Other collection centres need a printed colour photo with a plain white
-              background; computer prints aren&apos;t accepted.
+              <strong>India:</strong> no photo is needed at a Passport Seva Kendra or Post Office Passport Seva Kendra; other
+              centres need a printed colour photo on plain white, not a computer print.
             </li>
             <li>
-              <strong>United Kingdom:</strong> GOV.UK asks for digital photos to be &ldquo;unaltered by computer software&rdquo;.
-              This tool only crops and resizes; it doesn&apos;t retouch or replace backgrounds.
+              <strong>United Kingdom:</strong> digital photos must be &ldquo;unaltered by computer software&rdquo;; this tool
+              only crops and resizes.
             </li>
             <li>
-              <strong>Canada:</strong> the head (chin to crown) must be 31–36 mm on printed photos, or 45–50% of the photo
-              height on digital ones. Use the crop box to size your head accordingly.
+              <strong>Canada:</strong> head (chin to crown) 31–36 mm on printed photos, or 45–50% of the height on digital
+              ones.
             </li>
           </ul>
 
-          <h2>Common mistakes</h2>
-          <ul>
-            <li>Using one country&apos;s size for another country&apos;s application.</li>
-            <li>Printing with &ldquo;fit to page&rdquo;, which changes the physical size.</li>
-            <li>Shadows on the face or background, or a background that isn&apos;t the required colour.</li>
-            <li>Filters, retouching or background replacement apps.</li>
-          </ul>
-
-          <h2>More tools</h2>
+          <h2>Exam photos, signatures and other sizes</h2>
           <p>
-            Already know the exact size you need, in millimetres or pixels, with or without a KB limit? Use the{" "}
-            <Link href="/tools/passport-photo-resizer">passport photo resizer</Link>. To adjust framing only, use the{" "}
-            <Link href="/tools/image-cropper">image cropper</Link>; to hit a file-size limit, use{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to KB</Link> or the{" "}
-            <Link href="/tools/image-compressor">image compressor</Link>.
-          </p>
-          <p>
-            Applying for an exam or a job rather than a passport? Those forms usually want a photo and a signature in set
-            sizes: see the <Link href="/tools/application-photos">exam photo and signature requirements</Link> for IBPS, SBI,
-            SSC, NEET and UPSC, and use the <Link href="/tools/signature-resizer">signature resizer</Link> for the signature.
-          </p>
-
-          <h2>How we keep this page accurate</h2>
-          <p>
-            We add a country only after reading its official government page, record the link and the date, and re-check before
-            changing any value. Pages we couldn&apos;t check are listed as not yet verified, with a link, rather than filled in from
-            unofficial sites. See <Link href="/methodology">how the tools work</Link>.
+            Applying for an exam or a job? See the <Link href="/tools/application-photos">exam photo and signature
+            requirements</Link> for IBPS, SBI, SSC, NEET and UPSC, and use the{" "}
+            <Link href="/tools/signature-resizer">signature resizer</Link> for the signature. For a size you already know, use
+            the <Link href="/tools/passport-photo-resizer">passport photo resizer</Link>; to hit a KB limit, use{" "}
+            <Link href="/tools/resize-image-to-kb">resize image to KB</Link>.
           </p>
 
           <PrivacyNote>

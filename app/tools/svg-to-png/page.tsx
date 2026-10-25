@@ -21,7 +21,7 @@ const faqs: FaqItem[] = [
   {
     question: "What size should my PNG be?",
     answer:
-      "Use the size it will be displayed at, multiplied by 2 for sharp results on high-density (Retina) screens. For example, a logo shown at 200 × 60 pixels on a website looks crisp as a 400 × 120 PNG. The quick-size buttons multiply the SVG's own size by 1–4.",
+      "The size it will be displayed at, doubled for sharp results on Retina screens: a logo shown at 200 × 60 pixels looks crisp as a 400 × 120 PNG. The quick-size buttons multiply the SVG's own size by 1–4.",
   },
   {
     question: "Will the PNG keep the transparent background?",
@@ -31,17 +31,17 @@ const faqs: FaqItem[] = [
   {
     question: "Why does my PNG look different from the SVG in my design app?",
     answer:
-      "The PNG is rendered by your browser. Custom fonts that aren't embedded in the SVG, external images, and some editor-specific effects can't be used, so text may fall back to a different font. Convert text to outlines (paths) in your design tool before exporting the SVG for an exact match.",
+      "Your browser renders the PNG, so fonts not embedded in the SVG, external images and some editor-specific effects can't be used. Convert text to outlines in your design tool before exporting for an exact match.",
   },
   {
     question: "Is it safe to open an SVG from someone else?",
     answer:
-      "SVG files can contain scripts and links. This tool never inserts your SVG into the page: it removes scripts, event handlers, embedded HTML and external links, then renders it as an image, a mode in which browsers don't run scripts at all. Anything removed is listed.",
+      "SVG files can contain scripts and links. This tool removes scripts, event handlers, embedded HTML and external links, then renders the file as an image, where browsers run no scripts. Anything removed is listed.",
   },
   {
     question: "Can I convert PNG back to SVG?",
     answer:
-      "Not by simply changing the format: a PNG has no shapes, only pixels. The PNG to SVG converter traces the pixels into vector paths, which works well for logos and icons but not for photos.",
+      "Not by changing the format: a PNG has pixels, not shapes. The PNG to SVG converter traces the pixels into vector paths, which suits logos and icons but not photos.",
   },
   {
     question: "Is my SVG uploaded?",
@@ -66,69 +66,33 @@ export default function SvgToPngPage() {
         <>
           <h2>How to convert SVG to PNG</h2>
           <ol>
-            <li>Choose or drop an .svg file. It&apos;s checked, cleaned and converted at its own size right away.</li>
+            <li>Choose or drop an .svg file. It&apos;s checked, cleaned and rendered at its own size right away.</li>
             <li>Set the output width and height, or use a quick size such as 2× or 4×.</li>
-            <li>Keep the background transparent, or pick white or any colour.</li>
-            <li>Convert and download the PNG.</li>
+            <li>Keep the background transparent or pick a colour, then download the PNG.</li>
           </ol>
 
-          <h2>Vector vs raster: why the size matters</h2>
+          <h2>Vector vs raster: choosing the size</h2>
           <p>
-            An SVG is a <strong>vector</strong> image: it describes shapes, lines and curves mathematically, so it can be
-            drawn sharply at any size. A PNG is a <strong>raster</strong> image: a fixed grid of pixels. Converting means
-            choosing that grid once, so pick the largest size you&apos;ll need. Enlarging the PNG later makes it blurry, but you
-            can always come back and render the SVG again at a bigger size.
+            An SVG is a <strong>vector</strong> image that can be drawn sharply at any size; a PNG is a{" "}
+            <strong>raster</strong> grid of pixels fixed when you convert. Render at the final display size, or 2× for
+            high-resolution screens, since enlarging the PNG later blurs it. Keep &ldquo;Maintain aspect ratio&rdquo; on, or use
+            &ldquo;Fit inside&rdquo; to add transparent space instead of stretching. Large PNGs can be{" "}
+            <Link href="/tools/image-compressor">compressed</Link> or <Link href="/tools/image-resizer">resized</Link> later.
           </p>
-
-          <h2>Why convert SVG to PNG?</h2>
-          <ul>
-            <li>
-              <strong>Apps that don&apos;t accept SVG:</strong> many social networks, email clients, office documents and
-              marketplaces only take raster images.
-            </li>
-            <li>
-              <strong>Consistent display:</strong> a PNG looks the same everywhere, while SVG rendering can vary slightly
-              between programs.
-            </li>
-            <li>
-              <strong>App icons and favicons</strong> often need PNGs at several exact sizes.
-            </li>
-            <li>
-              <strong>Thumbnails and previews</strong> of vector artwork.
-            </li>
-          </ul>
-
-          <h2>Getting the best quality</h2>
-          <ul>
-            <li>Render at the final display size, or 2× for high-resolution screens. Very large renders only add file size.</li>
-            <li>
-              Keep &ldquo;Maintain aspect ratio&rdquo; on. If you need a different shape, such as a square icon from a wide logo,
-              choose &ldquo;Fit inside&rdquo; to add transparent space instead of stretching the artwork.
-            </li>
-            <li>Outline text in your design tool so the right font is used.</li>
-            <li>
-              The PNG can be large for big dimensions. <Link href="/tools/image-compressor">Compress the PNG</Link> to reduce
-              colours and size, or <Link href="/tools/image-resizer">resize it</Link> later for smaller copies.
-            </li>
-          </ul>
 
           <h2>How unsafe SVG content is handled</h2>
           <p>
-            Unlike a PNG, an SVG file is code. It can include JavaScript, event handlers like <code>onload</code>, embedded
-            web pages and links to files on other servers. Before your SVG is displayed, the tool parses it without running
-            anything, removes those elements and links, and blocks XML tricks that can freeze a browser. The cleaned SVG is
-            then only shown through an image element, where browsers disable scripts entirely. If anything was removed,
-            you&apos;ll see a short notice.
-          </p>
-          <p>
-            Have a PNG logo you need as a vector? Try the <Link href="/tools/png-to-svg">PNG to SVG converter</Link>, which
-            traces it into real paths.
+            An SVG file is code: it can include JavaScript, event handlers like <code>onload</code>, embedded web pages and
+            links to other servers. The tool parses it without running anything, removes those, blocks XML tricks that can
+            freeze a browser, and shows the result only as an image, where scripts are disabled. You&apos;ll see a notice if
+            anything was removed. Need the reverse? The <Link href="/tools/png-to-svg">PNG to SVG converter</Link> traces a
+            PNG into paths.
           </p>
 
           <PrivacyNote>
             <p>
-              Your SVG is read, cleaned and rendered to PNG by your own browser. Nothing is uploaded, and the site&apos;s
-              security policy blocks requests to other servers, so even a hostile SVG can&apos;t call home.
+              Nothing is uploaded, and the site&apos;s security policy blocks requests to other servers, so even a hostile SVG
+              can&apos;t call home.
             </p>
           </PrivacyNote>
         </>

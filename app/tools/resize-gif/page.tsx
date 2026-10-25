@@ -21,32 +21,32 @@ const faqs: FaqItem[] = [
   {
     question: "Will my GIF still be animated after resizing?",
     answer:
-      "Yes. Every frame is decoded, resized and written into a new animated GIF with the original frame delays and loop setting. Frames that turn out identical are merged into one longer frame, which plays the same and saves space.",
+      "Yes. Every frame is decoded, resized and written into a new animated GIF with the original delays and loop setting. Frames that end up identical are merged, which plays the same and saves space.",
   },
   {
     question: "Why do other image tools turn my GIF into a still picture?",
     answer:
-      "Browsers only give web pages the first frame of an animated GIF when it is drawn to a canvas, which is how most online image tools work. This tool reads the GIF file itself, frame by frame, and writes a new GIF with its own encoder, so the animation is kept.",
+      "Browsers hand web pages only the first frame when a GIF is drawn to a canvas. This tool reads the GIF file itself, frame by frame, and writes a new GIF with its own encoder.",
   },
   {
     question: "Should I choose Smooth or Sharp pixels?",
     answer:
-      "Smooth blends neighbouring pixels and suits GIFs made from videos or photos. Sharp pixels copies the nearest original pixel, keeping hard edges and the exact colours of pixel art, emoji and simple graphics. Sharp pixels looks best at whole steps such as 50% or 200%.",
+      "Smooth blends pixels and suits GIFs made from videos or photos. Sharp pixels copies the nearest original pixel, keeping the hard edges of pixel art and emoji; it looks best at steps such as 50% or 200%.",
   },
   {
     question: "How do I make a GIF file smaller?",
     answer:
-      "Reducing the dimensions has the biggest effect: half the width and height leaves a quarter of the pixels in every frame. A GIF of 480 pixels or less is a common choice for chat apps and forums. Animations with few changes between frames also compress better, because only the changed areas are stored.",
+      "Shrink the dimensions: half the width and height leaves a quarter of the pixels in every frame. 480 pixels wide or less is a common choice for chat apps and forums.",
   },
   {
     question: "Does the resized GIF keep transparency?",
     answer:
-      "Yes. GIF transparency is on or off per pixel, so soft edges become either fully transparent or fully visible. Transparent areas stay transparent in every frame.",
+      "Yes. GIF transparency is on or off per pixel, so soft edges become fully transparent or fully visible, and transparent areas stay transparent in every frame.",
   },
   {
     question: "Are there any limits?",
     answer:
-      "GIFs up to 50 MB and 1,000 frames, with output up to 4,096 pixels per side. Very long or very large animations take more memory, so a desktop browser handles them more comfortably than a phone.",
+      "GIFs up to 50 MB and 1,000 frames, with output up to 4,096 pixels per side. Long or large animations need more memory, so a desktop browser copes better than a phone.",
   },
 ];
 
@@ -57,8 +57,8 @@ export default function ResizeGifPage() {
       h1="Resize Animated GIFs Online"
       intro={
         <p>
-          Make a GIF smaller or larger without losing the animation. Every frame is resized and the timing and looping stay
-          exactly as they were. The work is done on your device, so the GIF is never uploaded.
+          Resize GIF online without losing the animation: every frame is scaled and the timing and loop stay the same. This
+          GIF resizer runs on your device, so nothing is uploaded.
         </p>
       }
       schemaDescription={description}
@@ -67,7 +67,7 @@ export default function ResizeGifPage() {
         <>
           <h2>How to resize a GIF</h2>
           <ol>
-            <li>Choose, drop or paste a .gif file. The tool shows how many frames it has and how long it plays.</li>
+            <li>Choose, drop or paste a .gif file; its frame count and play time are shown.</li>
             <li>
               Enter a new width or height, choose a common GIF width, or switch to <strong>Percentage</strong>.
             </li>
@@ -76,26 +76,17 @@ export default function ResizeGifPage() {
               icons.
             </li>
             <li>
-              Select <strong>Resize GIF</strong>. The preview plays the new animation; download it when you&apos;re happy.
+              Select <strong>Resize GIF</strong>, watch the preview play, and download.
             </li>
           </ol>
 
-          <h2>How the GIF resizer keeps the animation</h2>
+          <h2>How to resize animated GIF files and keep the motion</h2>
           <p>
-            A GIF is a stack of frames, each of which may only cover part of the picture and depend on the frames before it.
-            The resizer rebuilds every full frame exactly as a browser would display it, scales it, chooses the best 256
-            colours for that frame, and writes it into a new GIF with the original delay. Unchanged areas between frames are
-            stored as transparent so the new file stays compact, and frames that become identical are joined.
+            Each GIF frame may cover only part of the picture and depend on earlier ones. The resizer rebuilds every full
+            frame as a browser shows it, scales it, picks the best 256 colours for it and writes it with the original delay.
+            Frame count, loop setting and transparency are kept, and unchanged areas are stored as transparent so the file
+            stays compact.
           </p>
-          <ul>
-            <li>Keeps frame count, frame timing and the loop setting (forever, a set number of times, or once).</li>
-            <li>Keeps transparent backgrounds in every frame.</li>
-            <li>Two scaling modes: smooth resampling, or nearest-neighbour for crisp pixel art.</li>
-            <li>Shows original and new dimensions, file size, size change and frame count side by side.</li>
-            <li>Works with still, single-frame GIFs too.</li>
-          </ul>
-
-          <h2>Smooth or sharp pixels</h2>
           <table>
             <thead>
               <tr>
@@ -107,24 +98,23 @@ export default function ResizeGifPage() {
             <tbody>
               <tr>
                 <td>Smooth</td>
-                <td>Lanczos resampling blends pixels for a natural look, then each frame gets a new palette.</td>
-                <td>Screen recordings, clips from videos, photographic GIFs</td>
+                <td>Lanczos resampling for a natural look, then a new palette per frame</td>
+                <td>Screen recordings, video clips, photographic GIFs</td>
               </tr>
               <tr>
                 <td>Sharp pixels</td>
-                <td>Nearest-neighbour scaling keeps hard edges and the exact original colours.</td>
-                <td>Pixel art, emoji, game sprites, simple animated icons</td>
+                <td>Nearest-neighbour scaling with the exact original colours</td>
+                <td>Pixel art, emoji, game sprites, animated icons</td>
               </tr>
             </tbody>
           </table>
 
           <h2>Making a GIF smaller in KB</h2>
           <p>
-            GIF compression is lossless within its 256-colour limit, so dimensions are what really drive the file size.
-            Reducing a 1000-pixel-wide GIF to 500 pixels typically cuts it to around a quarter. If a site limits GIF uploads,
-            try 480 or 320 pixels wide. For a still image, a PNG or JPG is usually far smaller than a GIF: resize it with the{" "}
-            <Link href="/tools/resize-png">PNG resizer</Link> or the <Link href="/tools/image-resizer">image resizer</Link>{" "}
-            instead.
+            GIF compression is lossless within its 256-colour limit, so dimensions drive the file size: a GIF resize from
+            1000 to 500 pixels wide typically cuts it to around a quarter. If a site limits uploads, try 480 or 320 pixels.
+            For a still image, PNG or JPG is far smaller; use the <Link href="/tools/resize-png">PNG resizer</Link> or the{" "}
+            <Link href="/tools/image-resizer">image resizer</Link> instead.
           </p>
 
           <h2>Supported files and limits</h2>
@@ -134,27 +124,8 @@ export default function ResizeGifPage() {
             pictures into one image, use <Link href="/tools/merge-images">merge images</Link>.
           </p>
 
-          <h2>What people resize GIFs for</h2>
-          <ul>
-            <li>
-              <strong>Chat apps and forums</strong> that reject GIFs over a size or width limit.
-            </li>
-            <li>
-              <strong>Email signatures and newsletters</strong>, where small animations load reliably.
-            </li>
-            <li>
-              <strong>Websites and documentation</strong>, to scale a screen recording to the content width.
-            </li>
-            <li>
-              <strong>Pixel art and emoji</strong>, scaled up 2× or 4× with sharp edges for display.
-            </li>
-          </ul>
-
           <PrivacyNote>
-            <p>
-              The GIF is decoded and re-encoded by code running in your browser, in a background worker so the page stays
-              responsive. No frame is uploaded, and the new GIF is created on your device.
-            </p>
+            <p>The GIF is decoded and re-encoded in a background worker in your browser, and no frame is uploaded.</p>
           </PrivacyNote>
         </>
       }

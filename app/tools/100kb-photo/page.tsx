@@ -19,40 +19,35 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I reduce a photo to 100KB?",
+    question: "How do I resize an image to 100KB?",
     answer:
-      "Add the photo. The target is set to 100 KB, so select Resize to 100 KB. The tool first tries the photo at full size and high quality, then lowers quality, and only if needed reduces the dimensions. The result card shows the original size, the result and the percentage saved.",
+      "Add the photo and select Resize to 100 KB, which is preset. It is tried at full size and high quality first, then at lower quality, and the dimensions are reduced only if needed.",
   },
   {
     question: "Why isn't the result exactly 100KB?",
     answer:
-      "Image encoders work in quality steps, and each step changes the file size by an amount that depends on the picture. So the tool aims for the best result at or below 100 KB, for example 97.8 KB, and shows the exact byte count. It never displays a rounded-down number: a file shown as 100.0 KB is at most 102,400 bytes.",
+      "Encoders work in quality steps whose effect on size depends on the picture, so you get the best result at or below 100 KB, for example 97.8 KB. Sizes are never rounded down: 100.0 KB means at most 102,400 bytes.",
   },
   {
     question: "Will my photo keep its full resolution at 100KB?",
     answer:
-      "Smaller photos usually do. A full 12-megapixel phone photo doesn't: in our tests a detailed 4000 × 3000 photo fitted 100 KB at about 1245 × 933 pixels, which is still plenty for screens and most forms. Turn off “Allow smaller dimensions” if you must keep the original size; quality then drops instead.",
+      "Smaller photos usually do. A detailed 4000 × 3000 test photo fitted at about 1245 × 933 pixels, still plenty for screens and most forms. Turn off “Allow smaller dimensions” to keep the original size; quality drops instead.",
   },
   {
     question: "How do I reduce photo size without losing too much quality?",
     answer:
-      "Let the tool reduce dimensions rather than forcing quality down. Crop away unneeded background, avoid noisy low-light photos, and don't upscale small images. For most uses, a 1000–1500 pixel wide image at 75–85% quality looks clean at 100 KB.",
-  },
-  {
-    question: "The application rejected my 100KB photo. What should I check?",
-    answer:
-      "Check the four things forms usually validate: file size (some count 1 KB as 1,000 bytes, so try 97 KB), format (most want JPG), pixel dimensions (some require an exact size), and content rules such as background colour or a recent photo. This tool handles the first two; the requirements page of the specific application tells you the rest.",
+      "Let the dimensions shrink rather than forcing quality down, crop away spare background and avoid noisy low-light shots. A 1000–1500 pixel wide image at 75–85% quality looks clean at 100 KB.",
   },
   {
     question: "Is 100KB good quality for a photo?",
     answer:
-      "For viewing on screens, yes: 100 KB holds a sharp image around 1000–1200 pixels wide. It's not enough for large prints. For printing, keep the original.",
+      "For screens, yes: 100 KB holds a sharp image around 1000–1200 pixels wide. It isn't enough for large prints, so keep the original for printing.",
   },
   {
     question: "Should I compress or resize to get under 100KB?",
     answer:
-      "Let the tool decide unless the form fixes the pixel size. It tries compression first and keeps the quality level high (around 78% or more) by also reducing the dimensions when needed: our 12-megapixel test photo became about 1245 × 933 pixels. If the dimensions must stay the same, turn off Allow smaller dimensions and the tool only compresses.",
-  }
+      "Leave it to the tool unless the form fixes the pixel size. It compresses first and holds quality around 78% or more by trimming dimensions too. If the dimensions must stay, switch off Allow smaller dimensions.",
+  },
 ];
 
 export default function HundredKbPhotoPage() {
@@ -62,9 +57,8 @@ export default function HundredKbPhotoPage() {
       h1="Resize Image to 100KB Online"
       intro={
         <p>
-          100 KB is a popular upload limit for profile pictures, job portals and application forms, and it&apos;s a comfortable
-          size: big enough for a sharp photo, small enough to upload quickly. Add your image and get the best version under 100
-          KB with a clear before-and-after comparison. Nothing is uploaded.
+          100 KB is a common limit on job portals, profile pictures and application forms, and roomy enough for a sharp
+          100KB photo. Add your image and compare before and after; nothing is uploaded.
         </p>
       }
       schemaDescription={description}
@@ -75,35 +69,19 @@ export default function HundredKbPhotoPage() {
           <ol>
             <li>Add, drop or paste a JPG, PNG or WebP photo. 100 KB is preselected.</li>
             <li>
-              Leave <strong>Allow smaller dimensions</strong> on for the best-looking result, or turn it off if the pixel size
-              must stay the same.
+              Leave <strong>Allow smaller dimensions</strong> on, or turn it off if the pixel size must stay the same.
             </li>
             <li>
-              Optional: open <strong>More options</strong> to set a maximum width or a quality ceiling.
+              Optional: set a maximum width or a quality ceiling under <strong>More options</strong>.
             </li>
-            <li>Select <strong>Resize to 100 KB</strong>.</li>
-            <li>
-              Compare before and after: original size, target, result, saving, dimensions and quality are all shown. Then
-              download.
-            </li>
+            <li>Select <strong>Resize to 100 KB</strong>, compare size, dimensions and quality, then download.</li>
           </ol>
 
-          <h2>Compress an Image to 100KB</h2>
+          <h2>Reduce a JPG or PNG to 100KB</h2>
           <p>
-            You can&apos;t ask a JPG encoder for &ldquo;exactly 100 KB&rdquo;. You choose a quality level, and the file size follows
-            from the picture: smooth skies compress tiny, while grass, hair and low-light noise produce big files. So the tool
-            searches. It encodes the photo, measures the real file, adjusts, and repeats, up to about 20 times, keeping the best
-            version that is at or below your target. That&apos;s why two photos with the same dimensions can end at 96 KB and
-            99.6 KB. If no setting can reach 100 KB, for example with dimensions locked on a very detailed photo, the tool says
-            so and shows the closest achievable size.
-          </p>
-
-          <h2>How dimensions affect file size</h2>
-          <p>
-            File size grows roughly with the number of pixels. A 4000 × 3000 photo has 12 million pixels; at 1000 × 750 it has
-            under a million, about 1/16th, and the file shrinks in proportion. That&apos;s why the tool prefers to reduce
-            dimensions modestly rather than crush quality. Results from our test images (deliberately detailed, so real photos
-            often keep more):
+            No encoder can be asked for &ldquo;exactly 100 KB&rdquo;, so the tool encodes, measures the real file and adjusts,
+            up to about 20 times, keeping the best version at or below the target. It prefers modestly smaller dimensions to
+            crushed quality. PNGs and screenshots become JPG, with transparency filled white. From our detailed test images:
           </p>
           <table>
             <thead>
@@ -118,10 +96,6 @@ export default function HundredKbPhotoPage() {
                 <td>about 1245 × 933 px at 78% quality</td>
               </tr>
               <tr>
-                <td>Photo (1600 × 1200)</td>
-                <td>about 938 × 703 px at 78% quality</td>
-              </tr>
-              <tr>
                 <td>Portrait (1200 × 1600)</td>
                 <td>about 862 × 1149 px at 78% quality</td>
               </tr>
@@ -132,80 +106,35 @@ export default function HundredKbPhotoPage() {
             </tbody>
           </table>
 
-          <h2>How to keep the quality high</h2>
-          <ul>
-            <li>
-              <strong>Crop before compressing.</strong> Cutting away empty background gives the remaining pixels more of the
-              budget. The <Link href="/tools/image-cropper">image cropper</Link> does this in seconds.
-            </li>
-            <li>
-              <strong>Start from the original,</strong> not a photo that&apos;s already been compressed by a messaging app;
-              repeated compression adds artefacts.
-            </li>
-            <li>
-              <strong>Don&apos;t enlarge small images</strong> to look &ldquo;bigger&rdquo;: it adds file size without detail.
-            </li>
-            <li>
-              <strong>Want a smaller file but no fixed target?</strong> The <Link href="/tools/image-compressor">image
-              compressor</Link> lets you choose quality directly.
-            </li>
-          </ul>
-
-          <h2>Reduce JPG Image Size to 100KB</h2>
-          <p>
-            100 KB is roomy for a JPG: a photo can stay well over 1000 pixels wide, which is plenty for profile pictures,
-            listings and most document uploads. If you need to keep the exact pixel size, turn off{" "}
-            <strong>Allow smaller dimensions</strong>; the tool then only lowers the quality and tells you if 100 KB can&apos;t
-            be reached that way.
-          </p>
-
-          <h2>Reduce PNG Image Size to 100KB</h2>
-          <p>
-            Screenshots and PNG exports become a JPG under 100 KB, with transparency filled white. For a screenshot full of
-            small text, check the preview closely: JPG can blur letter edges, and reducing the width a little is often better
-            than lowering the quality further.
-          </p>
-
-          <h2>Image Requirements for Online Forms</h2>
-          <p>
-            A 100 KB maximum is common on job portals and application forms. Read the form&apos;s instructions for a minimum
-            size, pixel dimensions and accepted formats as well; a file can be rejected for any of them.
-          </p>
-
-          <h3>If an application rejects your image</h3>
+          <h2>If a form rejects your 100KB photo</h2>
           <ol>
             <li>
-              <strong>Size:</strong> some systems use 1 KB = 1,000 bytes, so 100 KB to them is 97.6 KB here. Choose Custom and
-              enter 97.
+              <strong>Size:</strong> some systems use 1 KB = 1,000 bytes, so choose Custom and enter 97.
             </li>
             <li>
-              <strong>Format:</strong> most forms want JPG. Don&apos;t rename a PNG to .jpg; convert it, which this tool does.
+              <strong>Format:</strong> most want JPG. Don&apos;t rename a PNG to .jpg; this tool converts it properly.
             </li>
             <li>
-              <strong>Pixel size:</strong> if the form specifies width and height, set them first with the{" "}
-              <Link href="/tools/image-resizer">image resizer</Link>, then come back with &ldquo;Allow smaller dimensions&rdquo; off.
+              <strong>Pixel size:</strong> set it with the <Link href="/tools/image-resizer">image resizer</Link>, then come
+              back with &ldquo;Allow smaller dimensions&rdquo; off.
             </li>
             <li>
-              <strong>Content rules:</strong> background colour, a recent photo, no glasses and so on. Exam and passport pages
-              such as <Link href="/tools/neet-photo">NEET photo</Link> and{" "}
-              <Link href="/tools/passport-photo">passport photo requirements</Link> list those rules with their official
-              sources.
+              <strong>Content rules:</strong> <Link href="/tools/neet-photo">NEET photo</Link> and{" "}
+              <Link href="/tools/passport-photo">passport photo requirements</Link> list them with official sources.
             </li>
           </ol>
 
           <h2>Other common sizes</h2>
           <p>
             Tighter limit? Use the <Link href="/tools/50kb-photo">50KB photo resizer</Link> or the{" "}
-            <Link href="/tools/20kb-photo">20KB photo resizer</Link>. More room, for higher-resolution uploads? Try the{" "}
+            <Link href="/tools/20kb-photo">20KB photo resizer</Link>. More room? Try the{" "}
             <Link href="/tools/200kb-photo">200KB photo resizer</Link>. Any other number works with{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to an exact KB size</Link>.
+            <Link href="/tools/resize-image-to-kb">resize image to an exact KB size</Link>, and the{" "}
+            <Link href="/tools/image-compressor">image compressor</Link> lets you choose quality directly.
           </p>
 
           <PrivacyNote>
-            <p>
-              Every encode in the size search happens in your browser on your device. Your photo is never uploaded, and nothing
-              is kept after you close the page.
-            </p>
+            <p>Every encode in the size search happens on your device; your photo is never uploaded or kept.</p>
           </PrivacyNote>
         </>
       }

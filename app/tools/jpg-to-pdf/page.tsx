@@ -28,32 +28,22 @@ const faqs: FaqItem[] = [
   {
     question: "Does converting JPG to PDF reduce quality?",
     answer:
-      "Not with Best quality selected. A PDF can store JPEG data directly, so each JPG's original bytes are copied into the PDF unchanged: no decoding, no re-saving and no extra compression. The result tells you how many images were embedded this way.",
+      "Not with Best quality selected. Each JPG's original bytes are copied into the PDF unchanged, with no decoding or re-saving, and the result tells you how many images were embedded this way.",
   },
   {
     question: "My phone photos are sideways in other converters. Will they be here?",
     answer:
-      "No. Phones often save a photo sideways and add a note (EXIF orientation) saying how to turn it. This converter reads that note and turns the page content to match, while still embedding the original JPG unchanged.",
-  },
-  {
-    question: "Why does the PDF have about the same size as my JPGs?",
-    answer:
-      "Because the JPGs are inside it unchanged, plus a few hundred bytes per page for the PDF structure. To make it smaller, choose a Maximum PDF size such as 200 KB, or Smaller file, which reduces each photo to 2000 pixels on the long side.",
-  },
-  {
-    question: "Are .jpeg and .jfif files accepted?",
-    answer:
-      "Yes. The tool checks the content of each file rather than its name, so any real JPEG works, whatever its extension. Files that aren't JPEG are skipped with a message; use Photo to PDF for PNG, WebP or HEIC images.",
-  },
-  {
-    question: "Are any JPGs re-encoded?",
-    answer:
-      "Only when you choose Smaller file or a Maximum PDF size, and for rare CMYK JPGs (usually from print workflows), which are converted to normal RGB so every PDF viewer shows the colours correctly.",
+      "No. Phones often store a photo sideways with an EXIF orientation note. This converter reads that note and turns the page content to match, while still embedding the original JPG unchanged.",
   },
   {
     question: "How do I convert JPG to PDF under 200 KB?",
     answer:
-      "Add your JPGs and set Maximum PDF size to 200 KB. The tool searches for the highest image quality that keeps the whole PDF within 200 KB, and makes the pictures smaller in pixels only if quality alone isn't enough. It works for one JPG or several, up to 40 with a limit.",
+      "Add your JPGs and set Maximum PDF size to 200 KB. The tool finds the highest image quality that keeps the whole PDF within 200 KB, shrinking pixel dimensions only if needed. Up to 40 JPGs work with a limit.",
+  },
+  {
+    question: "Are .jpeg and .jfif files accepted?",
+    answer:
+      "Yes. Each file's content is checked rather than its name, so any real JPEG works. Files that aren't JPEG are skipped with a message.",
   },
   {
     question: "How many JPGs can I put in one PDF?",
@@ -73,8 +63,8 @@ export default function JpgToPdfPage() {
       h1="JPG to PDF Converter"
       intro={
         <p>
-          Convert JPG photos and scans to a PDF without losing quality: each JPG goes into the PDF exactly as it is, one image
-          per page, in the order you choose. Works with .jpg, .jpeg and .jfif files, in your browser.
+          Convert JPG to PDF without losing quality: each JPG goes into the PDF exactly as it is, one image per page. Works with
+          .jpg, .jpeg and .jfif files, in your browser.
         </p>
       }
       schemaDescription={description}
@@ -85,65 +75,45 @@ export default function JpgToPdfPage() {
           <ol>
             <li>Choose or drop your JPG files.</li>
             <li>Arrange them with the up and down arrows; page 1 is at the top.</li>
-            <li>Choose A4 or US Letter, orientation, Fit or Fill and a margin, and check the layout preview.</li>
+            <li>Choose A4 or US Letter, orientation, Fit or Fill and a margin, and check the preview.</li>
             <li>
-              Keep <strong>Best quality</strong> to embed the JPGs unchanged, or pick a <strong>Maximum PDF size</strong> if a form
-              sets one, then select <strong>Create PDF</strong>.
+              Keep <strong>Best quality</strong> or pick a <strong>Maximum PDF size</strong>, then select{" "}
+              <strong>Create PDF</strong>.
             </li>
           </ol>
 
-          <h2>Why there&apos;s no quality loss</h2>
+          <h2>Why this JPG to PDF converter keeps full quality</h2>
           <p>
-            A JPG is already compressed. Many converters decode it and compress it again when building the PDF, which adds a
-            second round of JPEG artefacts and can blur text in scanned documents. PDF supports JPEG data natively (the
-            &ldquo;DCTDecode&rdquo; filter), so this tool copies each file&apos;s bytes straight into the PDF. What you see in
-            the PDF is pixel-for-pixel your original photo, just placed and scaled on a page.
+            Many converters re-compress each JPG, adding artefacts that can blur scanned text. PDF stores JPEG data natively
+            (the &ldquo;DCTDecode&rdquo; filter), so this tool copies each file&apos;s bytes straight in, pixel-for-pixel.
           </p>
 
           <h2>JPG details the converter handles</h2>
           <ul>
             <li>
-              <strong>Rotation:</strong> portrait phone photos stored sideways are turned upright using their EXIF
-              orientation, without re-encoding.
+              <strong>Rotation:</strong> sideways phone photos are turned upright from their EXIF orientation.
             </li>
             <li>
-              <strong>Greyscale JPGs</strong> from document scanners stay greyscale.
+              <strong>Greyscale</strong> scanner JPGs stay greyscale.
             </li>
             <li>
-              <strong>Progressive JPGs</strong>, common on the web, are embedded as they are.
+              <strong>Progressive JPGs</strong> are embedded as they are.
             </li>
             <li>
-              <strong>CMYK JPGs</strong> are converted to RGB, because some PDF viewers display CMYK JPEGs with inverted or
-              wrong colours.
+              <strong>CMYK JPGs</strong> are converted to RGB, since some viewers show them with wrong colours.
             </li>
           </ul>
 
           <h2>JPG to PDF under 100 KB, 200 KB or 500 KB</h2>
           <p>
-            Application portals often ask for one PDF below a size limit. Choose the limit under <strong>Maximum PDF size</strong>{" "}
-            before creating the PDF: every page is re-encoded together until the file fits, so you don&apos;t have to convert
-            and then compress separately. If the limit can&apos;t be reached without making the images unreadable, the tool
-            gives you the smallest version and says so. Already have a PDF that is too big?{" "}
-            <Link href="/tools/compress-pdf">Compress the PDF</Link> instead.
-          </p>
-
-          <h2>Typical uses</h2>
-          <ul>
-            <li>Scanned pages or phone photos of documents that a portal only accepts as one PDF.</li>
-            <li>Photos of receipts or invoices for expense claims.</li>
-            <li>A set of exported JPG slides or designs to share as a single file.</li>
-          </ul>
-
-          <h2>Related tools</h2>
-          <p>
-            Mixing JPG with PNG, WebP or iPhone HEIC images? Use <Link href="/tools/photo-to-pdf">Photo to PDF</Link>, which
-            accepts all of them. Need the extension changed from .jpeg to .jpg for a form instead? Use{" "}
-            <Link href="/tools/jpeg-to-jpg">JPEG to JPG</Link>. If the PDF must be under an upload limit, reduce the photos
-            first with the <Link href="/tools/image-compressor">image compressor</Link> or choose Smaller file.
+            Pick the portal&apos;s limit under <strong>Maximum PDF size</strong>: all pages are re-encoded together until the
+            file fits. If it can&apos;t fit while staying readable, you get the smallest version and a note. Already have a PDF that&apos;s too big?{" "}
+            <Link href="/tools/compress-pdf">Compress the PDF</Link>. Mixing in PNG, WebP or HEIC? Use{" "}
+            <Link href="/tools/photo-to-pdf">Photo to PDF</Link>.
           </p>
 
           <PrivacyNote>
-            <p>Your JPGs are read and the PDF is built on your device. Scans of documents never leave your browser.</p>
+            <p>Your JPGs are read and the PDF is built on your device, so scans never leave your browser.</p>
           </PrivacyNote>
         </>
       }

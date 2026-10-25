@@ -21,32 +21,32 @@ const faqs: FaqItem[] = [
   {
     question: "How do I compress a photo to 200KB?",
     answer:
-      "Add the photo; 200 KB is already selected. Select Resize to 200 KB. With this much room, many photos keep their full dimensions and only the quality is adjusted. Large phone photos are reduced to a resolution that still looks sharp on any screen.",
+      "Add the photo; 200 KB is already selected. Select Resize to 200 KB. With this much room many photos keep their full dimensions and only quality is adjusted, while large phone photos drop to a still-sharp resolution.",
   },
   {
     question: "Why is my photo a few KB under 200KB?",
     answer:
-      "The tool picks the highest quality that keeps the file at or below 200 KB. Quality comes in steps, so the result usually lands slightly under the limit, such as 196 KB. The exact size is always the size of the file you download.",
+      "The tool picks the highest quality that keeps the file at or below 200 KB. Quality moves in steps, so the result usually lands just under, such as 196 KB, and that is the size you download.",
   },
   {
     question: "Will a 12MP photo still look good at 200KB?",
     answer:
-      "Yes, for screens. In our tests a detailed 4000 × 3000 photo fitted 200 KB at about 1670 × 1250 pixels with 78% quality, larger than most laptop displays. It won't keep all 12 megapixels; for large prints, keep the original.",
+      "Yes, for screens. A detailed 4000 × 3000 test photo fitted at about 1670 × 1250 pixels with 78% quality, larger than most laptop displays. For large prints, keep the original.",
   },
   {
     question: "Does reducing dimensions help reach 200KB?",
     answer:
-      "Yes. Size scales with pixel count, so a slightly smaller image saves a lot. If your form doesn't fix the pixel size, leave “Allow smaller dimensions” on so the tool can balance size and quality.",
+      "Yes. Size scales with pixel count, so a slightly smaller image saves a lot. Unless your form fixes the pixel size, leave “Allow smaller dimensions” on to balance size and quality.",
   },
   {
     question: "My photo is already smaller than 200KB. What happens?",
     answer:
-      "If it's already a JPG under 200 KB, the tool returns your original file unchanged rather than re-compressing it, and tells you so. A PNG or WebP under 200 KB is converted to JPG because you asked for a JPG output. If the form also sets a minimum, such as 100–200 KB, and your photo is below it, compressing can't help: use the Image Size Increase tool to make the file bigger in KB.",
+      "A JPG under 200 KB is returned unchanged; PNG or WebP is converted to JPG. If the form also sets a minimum, such as 100–200 KB, and your photo is below it, use the Image Size Increase tool instead.",
   },
   {
     question: "What format works best at 200KB?",
     answer:
-      "JPG for photos. It's widely accepted and efficient. WebP gives slightly smaller files at the same quality, but check that the site you're uploading to accepts it.",
+      "JPG for photos: it's widely accepted and efficient. WebP is slightly smaller at the same quality, but check that the site you're uploading to accepts it.",
   },
 ];
 
@@ -57,9 +57,8 @@ export default function TwoHundredKbPhotoPage() {
       h1="Resize Image to 200KB Online"
       intro={
         <p>
-          200 KB gives you room for a detailed, high-resolution photo, about the right size for portals that accept larger
-          images, online listings, email and shared albums. Add a photo and get the sharpest version under 200 KB, with the
-          real file size shown. Your image stays on your device.
+          200 KB leaves room for a detailed, high-resolution photo for portals with larger limits, listings and email. Add a
+          photo and get the sharpest 200KB photo, with the real file size shown.
         </p>
       }
       schemaDescription={description}
@@ -70,17 +69,16 @@ export default function TwoHundredKbPhotoPage() {
           <ol>
             <li>Add your photo. JPG, PNG and WebP are supported; 200 KB is preselected.</li>
             <li>
-              If the photo must not exceed a certain width (some sites list a maximum, such as 1920 px), set it under{" "}
-              <strong>More options</strong>.
+              If the site lists a maximum width, such as 1920 px, set it under <strong>More options</strong>.
             </li>
             <li>Select <strong>Resize to 200 KB</strong>.</li>
             <li>Check the dimensions and quality in the comparison, then download.</li>
           </ol>
 
-          <h2>Compress an Image to 200KB</h2>
+          <h2>Compress a JPG or PNG to 200KB</h2>
           <p>
-            At 200 KB the tool rarely has to compromise much. It can usually keep quality around 70–90% and either the full size
-            or a large share of it. From our test images (deliberately detailed and noisy):
+            At 200 KB the tool rarely compromises much: quality usually stays around 70–90%, with the full size or a large
+            share of it. From our deliberately detailed test images:
           </p>
           <table>
             <thead>
@@ -105,75 +103,42 @@ export default function TwoHundredKbPhotoPage() {
             </tbody>
           </table>
           <p>
-            Notice the portrait: with dimensions that are already moderate, the tool kept every pixel and lowered quality a
-            little instead. That&apos;s the balance it looks for: full size when a reasonable quality fits, smaller dimensions
-            when it doesn&apos;t.
+            A JPG already under the limit is returned exactly as it is, with no pointless re-save. Large PNG exports are saved
+            as JPG with transparency filled white; if it must stay a PNG, the{" "}
+            <Link href="/tools/image-compressor">image compressor</Link> shrinks it with a colour palette, though not to an
+            exact size.
           </p>
 
-          <h2>Reduce JPG Image Size to 200KB</h2>
-          <p>
-            Many JPGs from older phones or messaging apps are already near 200 KB. The tool checks first: a JPG that&apos;s
-            already under the limit is returned exactly as it is, so you don&apos;t lose quality to a pointless re-save.
-            Larger originals are compressed at a high quality first and only reduced in size if that isn&apos;t enough.
-          </p>
-
-          <h2>Reduce PNG Image Size to 200KB</h2>
-          <p>
-            Large PNG exports, such as a design or a screenshot of a full web page, are saved as a JPG under 200 KB with any
-            transparency filled white. If the PNG has to stay a PNG, the{" "}
-            <Link href="/tools/image-compressor">image compressor</Link> can shrink it with a colour palette instead, though
-            it can&apos;t aim at an exact size.
-          </p>
-
-          <h2>Image Requirements for Online Forms</h2>
-          <p>Forms that allow 200 KB usually want a clear photo or scan rather than a tiny one. Typical places include:</p>
+          <h2>Where a 200KB limit applies</h2>
           <ul>
             <li>
-              <strong>Application portals with generous limits.</strong> For example, the NEET (UG) 2026 information bulletin
-              allows a photograph of 10–200 KB. The <Link href="/tools/neet-photo">NEET photo resizer</Link> applies that range
-              and lists the source.
+              <strong>Generous application portals:</strong> the NEET (UG) 2026 bulletin allows a 10–200 KB photograph; the{" "}
+              <Link href="/tools/neet-photo">NEET photo resizer</Link> applies it and lists the source.
             </li>
             <li>
-              <strong>Listings and marketplaces</strong> where large photos slow pages down.
+              <strong>Listings, email and albums:</strong> the <Link href="/tools/bulk-image-resizer">bulk image resizer</Link>{" "}
+              handles many photos, then fine-tune any still over 200 KB here.
             </li>
             <li>
-              <strong>Email and messaging</strong>, so several photos fit under attachment limits.
+              <strong>Exact pixels matter more?</strong> Start with the <Link href="/tools/image-resizer">image resizer</Link>.
+            </li>
+            <li>
+              <strong>Tighter limit?</strong> Use the <Link href="/tools/100kb-photo">100KB</Link> or{" "}
+              <Link href="/tools/50kb-photo">50KB photo resizer</Link>, or{" "}
+              <Link href="/tools/resize-image-to-kb">resize image to an exact KB size</Link> for 150 KB or 1 MB.
             </li>
           </ul>
-
-          <h2>Tips for large originals</h2>
-          <ul>
-            <li>
-              Very large files (20–50 MB) are fine: decoding happens on your device, and images up to 100 megapixels are
-              accepted.
-            </li>
-            <li>
-              Resizing a whole album? The <Link href="/tools/bulk-image-resizer">bulk image resizer</Link> resizes many photos to
-              a width at once; then fine-tune any that are still over 200 KB here.
-            </li>
-            <li>
-              If the exact pixel size matters more than the KB value, start with the{" "}
-              <Link href="/tools/image-resizer">image resizer</Link>.
-            </li>
-          </ul>
-
-          <h2>Smaller targets</h2>
-          <p>
-            For tighter limits use the <Link href="/tools/100kb-photo">100KB photo resizer</Link> or{" "}
-            <Link href="/tools/50kb-photo">50KB photo resizer</Link>. For any other value, such as 150 KB or 1 MB, use{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to an exact KB size</Link>.
-          </p>
 
           <h2>When the form sets a minimum size too</h2>
           <p>
-            Some forms give a range, such as &ldquo;photo size 100–200 KB&rdquo;. A photo that is too small is rejected just
-            like one that is too big, and compressing only makes it smaller. If your file is below the minimum,{" "}
-            <Link href="/tools/image-size-increase">increase the image size in KB</Link> instead: it makes the file larger
-            without changing how the photo looks.
+            Some forms give a range, such as &ldquo;photo size 100–200 KB&rdquo;, and reject a file that is too small just
+            like one that is too big. Compressing only makes it smaller, so{" "}
+            <Link href="/tools/image-size-increase">increase the image size in KB</Link> instead: the file grows without
+            changing how the photo looks.
           </p>
 
           <PrivacyNote>
-            <p>Large personal photos never leave your device: decoding, resizing and every compression attempt happen locally.</p>
+            <p>Decoding, resizing and every compression attempt happen locally, so large personal photos never leave your device.</p>
           </PrivacyNote>
         </>
       }

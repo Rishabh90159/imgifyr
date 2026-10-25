@@ -352,7 +352,21 @@ async function makeFile(page, fileName, kindLabel) {
   await page.screenshot({ path: path.join(OUT, "ibps-mobile.png"), fullPage: true });
   const menu = await openPage("/tools/neet-photo", mobile);
   await menu.locator("header summary >> visible=true").tap();
-  check("mobile: menu groups tools into five sections", (await menu.locator("header nav >> visible=true").locator("p").allInnerTexts()).join("|") === "IMAGE TOOLS|CONVERT|PHOTO SIZE|EXAM & PASSPORT|PDF");
+  const mnav = menu.locator("header nav[data-mobile-tools]");
+  const categories = (await mnav.locator("details > summary").allInnerTexts()).map((t) => t.trim());
+  check("mobile: menu is narrow (no wider than 240 px)", (await mnav.evaluate((el) => el.getBoundingClientRect().width)) <= 241);
+  check("mobile: menu groups tools into five collapsible categories", categories.join("|") === "Image tools|Convert|Photo size|Exam & passport|PDF", categories.join("|"));
+  check(
+    "mobile: the current page's category opens with its link marked",
+    (await mnav.locator("details[open]").count()) === 1 && (await mnav.locator('a[aria-current="page"]').innerText()) === "NEET Photo Resizer",
+  );
+  check("mobile: other categories stay collapsed", !(await mnav.getByRole("link", { name: "Image Cropper" }).isVisible()));
+  await mnav.locator("summary", { hasText: "Photo size" }).tap();
+  check(
+    "mobile: tapping a category shows its tools and closes the previous one",
+    (await mnav.getByRole("link", { name: "100KB Photo Resizer" }).isVisible()) && !(await mnav.getByRole("link", { name: "NEET Photo Resizer" }).isVisible()),
+  );
+  check("mobile: menu fits the screen without scrolling the category list", await mnav.evaluate((el) => el.scrollHeight <= el.clientHeight + 1));
   await menu.screenshot({ path: path.join(OUT, "menu-mobile.png") });
   await menu.close();
   await mobile.close();

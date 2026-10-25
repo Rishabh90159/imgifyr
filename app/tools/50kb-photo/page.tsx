@@ -21,38 +21,33 @@ const faqs: FaqItem[] = [
   {
     question: "How do I make my photo less than 50KB?",
     answer:
-      "Add the photo; the target is already 50 KB. Select Resize to 50 KB. The tool keeps the full size if a good quality level fits, and otherwise reduces the dimensions slightly while keeping the face sharp. You see the final KB before downloading.",
+      "Add the photo; the target is already 50 KB. Select Resize to 50 KB. The full size is kept if a good quality level fits; otherwise the dimensions shrink slightly so the face stays sharp.",
   },
   {
     question: "My form says “between 20 KB and 50 KB”. Will the result be above 20 KB?",
     answer:
-      "In almost every case. The tool uses as much of the 50 KB as it can, so a normal photo usually lands between about 40 and 50 KB. Check the size shown on the result card. If a very plain image ends up below the minimum, choose a larger, more detailed photo.",
+      "In almost every case. The tool uses as much of the 50 KB as it can, so a normal photo lands around 40–50 KB. If a very plain image ends up below 20 KB, pick a larger, more detailed photo.",
   },
   {
     question: "Does reducing the dimensions reduce the file size?",
     answer:
-      "Yes, strongly. File size grows roughly with the number of pixels, so halving the width and height cuts the size to about a quarter. That's why a 12-megapixel phone photo can't stay full size at 50 KB without heavy blockiness.",
+      "Yes, strongly. Halving the width and height cuts the size to about a quarter, which is why a 12-megapixel phone photo can't stay full size at 50 KB without heavy blockiness.",
   },
   {
     question: "Why does my 50KB photo look blurry?",
     answer:
-      "Usually because the face is small in the frame, so most of the 50 KB is spent on background. Crop to head and shoulders first, then resize. Blur can also come from the original photo itself; reducing size can't add sharpness.",
+      "Usually the face is small in the frame, so most of the budget goes on background. Crop to head and shoulders, then resize. A blurry original stays blurry; reducing size can't add sharpness.",
   },
   {
     question: "The form needs 200 × 230 pixels and under 50 KB. What do I do?",
     answer:
-      "Use a tool that applies both at once: the IBPS and SBI photo pages crop to that shape, output exactly 200 × 230 pixels and keep the file within 20–50 KB, as their current notifications specify.",
-  },
-  {
-    question: "Which format should I choose?",
-    answer:
-      "JPG, unless the form asks for something else. It's accepted almost everywhere and compresses photos efficiently. WebP is smaller still but many government and recruitment portals don't accept it.",
+      "Use the IBPS or SBI photo page: each crops to that shape, outputs exactly 200 × 230 pixels and keeps the file within 20–50 KB, as their current notifications specify.",
   },
   {
     question: "Is compressing an image to 50KB the same as resizing it to 50KB?",
     answer:
-      "Here they're the same job. The tool first lowers the JPG quality, which is compression, and only reduces the pixel dimensions if quality alone can't reach 50 KB at a level that still looks good. A signature scan usually stays full size, while a 12-megapixel photo in our tests came down to about 991 × 743 pixels.",
-  }
+      "Here it is one job. JPG quality is lowered first, and pixel dimensions drop only if quality alone can't reach 50 KB at a good level. Our 12-megapixel test photo came down to about 991 × 743 pixels.",
+  },
 ];
 
 export default function FiftyKbPhotoPage() {
@@ -62,9 +57,8 @@ export default function FiftyKbPhotoPage() {
       h1="Resize Image to 50KB Online"
       intro={
         <p>
-          Under 50 KB is a common limit for photos on recruitment, exam and admission forms. It&apos;s enough for a clear,
-          passport-style photo if the image is prepared well. Add your photo and the tool finds the best version under 50 KB,
-          entirely in your browser.
+          A photo under 50KB is a common requirement on recruitment, exam and admission forms. Add your photo and the tool
+          finds the best version under 50 KB, entirely in your browser.
         </p>
       }
       schemaDescription={description}
@@ -74,19 +68,19 @@ export default function FiftyKbPhotoPage() {
           <h2>How to Resize an Image to 50KB</h2>
           <ol>
             <li>
-              <Link href="/tools/image-cropper">Crop the photo</Link> to head and shoulders. A larger face means a clearer
-              result at the same file size.
+              <Link href="/tools/image-cropper">Crop the photo</Link> to head and shoulders; a larger face stays clearer.
             </li>
-            <li>Add it here. 50 KB is preselected; quick picks of 30, 40, 75 and 100 KB are next to it.</li>
-            <li>Select <strong>Resize to 50 KB</strong>.</li>
-            <li>Check the result card: the result size, how much was saved, and whether the dimensions changed.</li>
+            <li>Add it here. 50 KB is preselected, with quick picks of 30, 40, 75 and 100 KB.</li>
+            <li>
+              Select <strong>Resize to 50 KB</strong> and check the result size, the saving and any change in dimensions.
+            </li>
             <li>Download the JPG and upload it to your form.</li>
           </ol>
 
-          <h2>Compress an Image to 50KB</h2>
+          <h2>Compress a JPG or PNG to a 50KB Photo</h2>
           <p>
-            With 50 KB, quality stays high and only large photos need to shrink. Results from our test images (detailed and
-            noisy, so a harder case than most real photos):
+            At 50 KB the quality stays around 78% or higher and only large photos lose pixels. A PNG is converted to JPG,
+            with any transparent background filled white. Results from our detailed, noisy test images:
           </p>
           <table>
             <thead>
@@ -111,72 +105,40 @@ export default function FiftyKbPhotoPage() {
             </tbody>
           </table>
           <p>
-            Forms that ask for a 50 KB photo rarely need more than a few hundred pixels across, so these sizes are more than
-            enough for a face to be recognisable. If you&apos;d rather pick the quality yourself without a fixed target, use the{" "}
-            <Link href="/tools/image-compressor">image compressor</Link>; for a limit other than 50 KB, use{" "}
+            Forms rarely need more than a few hundred pixels across, so a face is easily recognisable. To pick the quality
+            yourself, use the <Link href="/tools/image-compressor">image compressor</Link>; for another limit,{" "}
             <Link href="/tools/resize-image-to-kb">resize image to KB</Link>.
           </p>
 
           <h2>Common problems with 50KB uploads</h2>
           <ul>
             <li>
-              <strong>&ldquo;File size should be between 20 KB and 50 KB&rdquo; but the form still rejects it:</strong> check the
-              format (JPG) and any pixel size the form also requires. Some portals count 1 KB as 1,000 bytes; set a custom
-              target of 48 KB to leave a margin.
+              <strong>Form still rejects it:</strong> check it&apos;s a JPG with any required pixel size. Some portals count 1
+              KB as 1,000 bytes, so set a custom 48 KB.
             </li>
             <li>
-              <strong>The photo is sideways:</strong> phones store rotation separately. The tool applies it automatically, so
-              the downloaded file is the right way up.
+              <strong>Photo is sideways:</strong> the phone&apos;s rotation is applied, so the download is the right way up.
             </li>
             <li>
-              <strong>Transparent PNG turned white:</strong> JPG has no transparency, so transparent areas become white,
-              which is what most forms want for photos anyway.
+              <strong>Face looks soft:</strong> shoot in daylight against a plain light wall; noise and patterns cost bytes.
             </li>
             <li>
-              <strong>Result shows &ldquo;Closest achievable size&rdquo;:</strong> dimension changes are switched off and the image is
-              too large to fit. Turn them on, or crop first.
+              <strong>&ldquo;Closest achievable size&rdquo;:</strong> dimension changes are off; turn them on, or crop first.
             </li>
           </ul>
 
-          <h2>Quality tips for a face at 50KB</h2>
-          <ul>
-            <li>Shoot in daylight facing a window; noise from dim light costs a lot of bytes.</li>
-            <li>A plain white or light wall compresses much better than a patterned one.</li>
-            <li>Don&apos;t use beauty filters or heavy sharpening; they add detail the encoder must store.</li>
-            <li>
-              Use &ldquo;More options&rdquo; to cap the width (for example 600 px) if the form prefers a small image; the
-              remaining budget then goes to quality.
-            </li>
-          </ul>
-
-          <h2>Reduce JPG Image Size to 50KB</h2>
-          <p>
-            For a JPG portrait, 50 KB is enough to keep a face sharp at the few hundred pixels most forms display. The tool
-            holds the quality around 78% or higher and trims the dimensions only as far as needed. A scanned document page
-            with fine text is harder: if letters look soft, crop away the margins first so more of the 50 KB goes to the text.
-          </p>
-
-          <h2>Reduce PNG Image Size to 50KB</h2>
-          <p>
-            A PNG photo or screenshot is converted to JPG on the way, since a lossless PNG of a photo is usually many times
-            larger than 50 KB. Any transparent background is filled with white. Choose WebP as the output format only if the
-            site you&apos;re uploading to accepts it.
-          </p>
-
-          <h2>Image Requirements for Online Forms</h2>
+          <h2>50KB photo rules on exam forms</h2>
           <p>
             Current IBPS Common Recruitment Process notifications and SBI recruitment advertisements ask for a photo of 20–50
             KB at 200 × 230 pixels (preferred). The <Link href="/tools/ibps-photo">IBPS photo resizer</Link> and{" "}
-            <Link href="/tools/sbi-photo">SBI photo resizer</Link> apply those exact values and cite the notification. Need
-            something smaller, such as a signature? Use the <Link href="/tools/20kb-photo">20KB photo resizer</Link>. Allowed
-            more room? The <Link href="/tools/100kb-photo">100KB photo resizer</Link> keeps more detail, and the{" "}
+            <Link href="/tools/sbi-photo">SBI photo resizer</Link> apply those values and cite the notification. For a
+            signature, use the <Link href="/tools/20kb-photo">20KB photo resizer</Link>; with more room, the{" "}
+            <Link href="/tools/100kb-photo">100KB photo resizer</Link> keeps more detail, and the{" "}
             <Link href="/tools/200kb-photo">200KB photo resizer</Link> suits forms that accept up to 200 KB.
           </p>
 
           <PrivacyNote>
-            <p>
-              Your photo is compressed by your own browser. It isn&apos;t uploaded, stored or seen by anyone else.
-            </p>
+            <p>Your photo is compressed by your own browser and is never uploaded, stored or seen by anyone else.</p>
           </PrivacyNote>
         </>
       }

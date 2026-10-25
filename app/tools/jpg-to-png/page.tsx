@@ -28,17 +28,17 @@ const faqs: FaqItem[] = [
   {
     question: "Does converting JPG to PNG improve image quality?",
     answer:
-      "No. JPG compression permanently removes some detail when the JPG is saved. Converting to PNG keeps the image exactly as it is now and prevents any further loss when you edit and re-save it, but it can't bring back detail that's already gone.",
+      "No. JPG compression has already removed some detail. The PNG keeps the image exactly as it is now and prevents further loss when you edit and re-save, but it can't bring back what's gone.",
   },
   {
     question: "Will the PNG have a transparent background?",
     answer:
-      "No. JPG images have no transparency, so the converted PNG has the same solid background as the original. Removing a background is a separate editing step; once removed, PNG can store the transparency.",
+      "No. A JPG has no transparency, so the PNG keeps the same solid background. Removing a background is a separate editing step; afterwards, PNG can store the transparent areas.",
   },
   {
     question: "Why is the PNG file bigger than the JPG?",
     answer:
-      "PNG uses lossless compression, which stores every pixel exactly. Photos contain lots of subtle variation that lossless compression can't shrink much, so a photo as PNG is often several times larger than the same photo as JPG. That's normal.",
+      "PNG compression is lossless and stores every pixel exactly. Photos have lots of subtle variation that it can't shrink much, so a photo as PNG is often several times larger. That's normal.",
   },
   {
     question: "What's the difference between JPG and JPEG?",
@@ -48,7 +48,7 @@ const faqs: FaqItem[] = [
   {
     question: "Can I convert several JPGs at once?",
     answer:
-      "This converter handles one image at a time: select the next image after downloading and it converts immediately. To convert a whole batch, the bulk image resizer can save many images as PNG in one go and download them as a ZIP.",
+      "This page converts one image at a time: pick the next one after downloading. For a whole batch, the bulk image resizer can save many images as PNG and download them as a ZIP.",
   },
   {
     question: "Is my image uploaded during conversion?",
@@ -65,7 +65,7 @@ export default function JpgToPngPage() {
       intro={
         <p>
           Convert JPG and JPEG images to PNG in one step. The PNG keeps every pixel of your JPG exactly, with no further
-          compression loss. Conversion happens in your browser, so your image is never uploaded.
+          compression loss, and your image is never uploaded.
         </p>
       }
       schemaDescription={description}
@@ -115,46 +115,28 @@ export default function JpgToPngPage() {
           <h2>When to convert JPG to PNG</h2>
           <ul>
             <li>
-              <strong>Editing in several rounds:</strong> each JPG re-save loses a little more detail. Working in PNG stops
-              that generational loss.
+              <strong>Editing in several rounds:</strong> each JPG re-save loses a little more detail; PNG stops that.
             </li>
             <li>
-              <strong>Software or forms that require PNG:</strong> some design tools, app stores and upload forms only
-              accept PNG.
+              <strong>Software or forms that require PNG</strong>, such as some design tools and app stores.
             </li>
             <li>
-              <strong>Preparing for transparency:</strong> if you plan to remove the background later, PNG can store the
-              transparent areas; JPG can&apos;t.
+              <strong>Preparing for transparency:</strong> converting adds none, but PNG can store it once you remove the
+              background.
             </li>
             <li>
-              <strong>Graphics saved as JPG by mistake:</strong> converting keeps them from getting worse with further edits.
+              <strong>Graphics saved as JPG by mistake</strong>, so further edits don&apos;t make them worse.
             </li>
           </ul>
-
-          <h2>Transparency</h2>
           <p>
-            Converting doesn&apos;t make any part of the image transparent. A JPG always has a solid background, and the PNG
-            will look exactly the same. PNG simply makes transparency possible for later edits.
-          </p>
-
-          <h2>Quality and file size</h2>
-          <p>
-            The PNG is a pixel-perfect copy of the decoded JPG. It won&apos;t look sharper, and any JPG artefacts (blockiness or
-            halos around edges) stay as they are. Because PNG stores every pixel without lossy compression, expect the file
-            to be larger, often much larger for photos. If file size matters more than lossless editing, keep the JPG or{" "}
-            <Link href="/tools/image-compressor">compress the image</Link> instead.
-          </p>
-          <p>
-            Going the other way? <Link href="/tools/png-to-jpg">Convert PNG to JPG</Link> to get a smaller file from a PNG.
-            Only need a .jpeg file renamed to .jpg? Use <Link href="/tools/jpeg-to-jpg">JPEG to JPG</Link>; to put JPGs in a
-            document, <Link href="/tools/jpg-to-pdf">JPG to PDF</Link>.
+            The PNG won&apos;t look sharper: JPG artefacts stay as they are, and the file is larger. If size matters more,{" "}
+            <Link href="/tools/image-compressor">compress the image</Link> instead. Going the other way?{" "}
+            <Link href="/tools/png-to-jpg">Convert PNG to JPG</Link>. Just renaming .jpeg to .jpg? Use{" "}
+            <Link href="/tools/jpeg-to-jpg">JPEG to JPG</Link>; for documents, <Link href="/tools/jpg-to-pdf">JPG to PDF</Link>.
           </p>
 
           <PrivacyNote>
-            <p>
-              The JPG is decoded and saved as PNG by your own browser. No copy of your image is sent to a server, and the
-              converted file is created on your device.
-            </p>
+            <p>The JPG is decoded and saved as PNG by your own browser; no copy is sent to a server.</p>
           </PrivacyNote>
         </>
       }

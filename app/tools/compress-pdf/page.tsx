@@ -24,30 +24,25 @@ const faqs: FaqItem[] = [
   {
     question: "How do I compress a PDF to 200 KB?",
     answer:
-      "Choose your PDF, select 200 KB as the target and select Compress. The tool returns a PDF of 200 KB or less and shows its exact size before you download it. If the PDF is already under 200 KB, you get the original file back unchanged.",
+      "Choose your PDF, select 200 KB as the target and select Compress. You get a PDF of 200 KB or less with its exact size shown; a PDF already under 200 KB comes back unchanged.",
   },
   {
     question: "Will the text in my PDF still be selectable?",
     answer:
-      "Only if the PDF could be made small enough without changing its content. When it can't, each page is saved as an image, which looks the same but whose text can't be selected, searched or copied, and links and fillable fields are removed. The result tells you which of the two happened.",
+      "Yes, if re-saving was enough. If pages had to be saved as images, they look the same but text can't be selected or searched, and links and fillable fields are removed. The result says which happened.",
   },
   {
     question: "Why can't my PDF reach the size I chose?",
-    answer: `A target can be too small for the number of pages: every page needs some space to stay readable. The tool goes down to about ${COMPRESS_MIN_DPI} DPI before it stops, and then gives you the smallest version it could make. Try a larger target, remove pages you don't need, or split the PDF and upload the parts separately if the form allows it.`,
+    answer: `Every page needs some space to stay readable, so a small target may not fit many pages. The tool stops at about ${COMPRESS_MIN_DPI} DPI and gives you the smallest version it made; try a larger target or fewer pages.`,
   },
   {
     question: "Does compressing reduce the quality?",
-    answer: `Re-saving without changes loses nothing. Saving pages as images does lose some sharpness: the tool starts at ${COMPRESS_BASE_DPI} DPI and the highest JPG quality that fits, and lowers resolution step by step only as far as your target requires. Zoom in on the result before uploading to check small print.`,
+    answer: `Re-saving loses nothing. Saving pages as images starts at ${COMPRESS_BASE_DPI} DPI and the highest JPG quality that fits, lowering resolution only as far as your target requires. Zoom in to check small print before uploading.`,
   },
   {
     question: "Is 1 KB 1,000 or 1,024 bytes?",
     answer:
-      "This tool uses 1 KB = 1,024 bytes, as Windows and most upload forms do. A few systems count 1,000 bytes. If a form rejects a file that looks right, choose a slightly lower target, such as 190 KB for a 200 KB limit.",
-  },
-  {
-    question: "Can I compress a password-protected PDF?",
-    answer:
-      "PDFs that need a password to open can't be compressed; remove the password in a PDF reader first. PDFs that open without a password but restrict editing or printing are compressed, and the result doesn't keep those restrictions.",
+      "This tool uses 1 KB = 1,024 bytes, as Windows and most upload forms do. If a form rejects a file that looks right, choose a slightly lower target, such as 190 KB for a 200 KB limit.",
   },
   {
     question: "Are my PDFs uploaded?",
@@ -62,20 +57,20 @@ export default function CompressPdfPage() {
       h1="Compress PDF: Reduce PDF Size to 100KB, 200KB or Any Size"
       intro={
         <p>
-          Make a PDF small enough for an upload form. Choose a target such as 100 KB, 200 KB, 500 KB or 1 MB, and the tool
-          returns the most readable PDF at or under that size. It runs in your browser: your PDF isn&apos;t uploaded.
+          Compress a PDF to the size an upload form allows: 100 KB, 200 KB, 500 KB, 1 MB or your own target. This PDF size
+          reducer runs in your browser, so your PDF isn&apos;t uploaded.
         </p>
       }
       schemaDescription={description}
       faqs={faqs}
       content={
         <>
-          <h2>How to compress a PDF to a specific size</h2>
+          <h2>How to compress PDF to 100KB or any size</h2>
           <ol>
             <li>Choose or drop your PDF.</li>
             <li>Pick the size the form allows, or enter your own in KB or MB.</li>
             <li>
-              Select <strong>Compress</strong>, check the size shown with the result, then <strong>Download PDF</strong>.
+              Select <strong>Compress</strong>, check the size shown, then <strong>Download PDF</strong>.
             </li>
           </ol>
 
@@ -86,68 +81,39 @@ export default function CompressPdfPage() {
               <strong>Already small enough:</strong> you get the original file back, untouched.
             </li>
             <li>
-              <strong>Re-saved:</strong> the PDF is written again in a more compact form. Nothing on the page changes, and text
-              stays selectable. This helps most with PDFs exported by older software.
+              <strong>Re-saved:</strong> the PDF is written in a more compact form; text stays selectable.
             </li>
             <li>
-              <strong>Pages as images:</strong> each page is drawn at {COMPRESS_BASE_DPI} DPI and saved as a JPG inside a new
-              PDF of the same page size. The tool searches for the highest quality that fits and lowers the resolution only if
-              it has to, down to about {COMPRESS_MIN_DPI} DPI. This is what makes large scans and photo-heavy PDFs small.
+              <strong>Pages as images:</strong> each page becomes a JPG at {COMPRESS_BASE_DPI} DPI, lowered only if needed to
+              about {COMPRESS_MIN_DPI} DPI. This is what shrinks large scans.
             </li>
           </ol>
 
           <h2>What changes when pages become images</h2>
           <p>
-            The pages look the same, but they are now pictures of the original pages. Text can&apos;t be selected, searched or
-            copied, links stop working, and fillable fields become part of the page image. For an application
-            upload this rarely matters, since the reviewer only views the pages. For a document someone needs to edit or
-            search, keep the original as well.
+            The pages look the same, but text can&apos;t be selected or searched, links stop working and fillable fields become
+            part of the image. That&apos;s fine for an application upload; keep the original if someone needs to edit it.
           </p>
 
           <h2>Supported files and limits</h2>
           <ul>
             <li>
-              PDFs up to {formatBytes(DOC_LIMITS.compressMaxBytes)} and {DOC_LIMITS.compressMaxPages} pages, including scans,
-              exported documents and mixed page sizes.
+              PDFs up to {formatBytes(DOC_LIMITS.compressMaxBytes)} and {DOC_LIMITS.compressMaxPages} pages, including scans
+              and mixed page sizes.
             </li>
-            <li>Targets from 10 KB to 50 MB. The result is always a standard PDF that opens in any reader.</li>
+            <li>Targets from 10 KB to 50 MB. The result is always a standard PDF.</li>
             <li>PDFs that need a password to open must be unlocked first.</li>
           </ul>
-
-          <h2>Tips for a small, readable PDF</h2>
-          <ul>
-            <li>
-              <strong>Remove pages the form doesn&apos;t need.</strong> Every page takes space, so fewer pages leave more room
-              for each one.
-            </li>
-            <li>
-              <strong>Scanning from photos?</strong> Crop each photo to the page first with the{" "}
-              <Link href="/tools/image-cropper">image cropper</Link>, then build the PDF with{" "}
-              <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> using its <em>Smaller file</em> setting before compressing.
-            </li>
-            <li>
-              <strong>Need one PDF from several?</strong> <Link href="/tools/merge-pdf">Merge the PDFs</Link> first, then
-              compress the merged file, so the limit applies to the file you actually upload.
-            </li>
-            <li>
-              <strong>Form wants an image, not a PDF?</strong> Use <Link href="/tools/pdf-to-jpg">PDF to JPG</Link>, which can
-              keep each image under a size such as 100 KB, or <Link href="/tools/resize-image-to-kb">resize an image to KB</Link>
-              .
-            </li>
-          </ul>
-
-          <h2>Related tools</h2>
           <p>
-            Turn a Word file into a PDF with <Link href="/tools/word-to-pdf">Word to PDF</Link>, make a PDF from phone photos
-            with <Link href="/tools/photo-to-pdf">Photo to PDF</Link>, or see all <Link href="/tools/pdf-tools">PDF tools</Link>
-            .
+            To reduce PDF size further, delete pages the form doesn&apos;t need. Uploading several files as one?{" "}
+            <Link href="/tools/merge-pdf">Merge the PDFs</Link> first, then compress. Form wants an image instead? Use{" "}
+            <Link href="/tools/pdf-to-jpg">PDF to JPG</Link>.
           </p>
 
           <section aria-labelledby="privacy-heading">
             <h2 id="privacy-heading">Privacy: your PDF stays on your device</h2>
             <p>
-              Certificates, ID documents and statements are often what people compress, so nothing is uploaded: the PDF is
-              read, redrawn and saved in your browser. Read the <Link href="/privacy">privacy policy</Link> for details.
+              Your PDF is compressed in your browser and never uploaded; see the <Link href="/privacy">privacy policy</Link>.
             </p>
           </section>
         </>

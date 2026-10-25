@@ -24,7 +24,8 @@ export const siteConfig = {
     "Free online image tools to resize, crop, compress and convert JPG, PNG, WebP, HEIC and SVG images. Everything runs in your browser, so your images are never uploaded.",
   url: resolveSiteUrl(),
   locale: "en_US",
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || null,
+  /** Official brand inbox; NEXT_PUBLIC_CONTACT_EMAIL can override it. */
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@imgifyr.com",
   /** Social profiles linked from the footer. */
   social: {
     instagram: "https://www.instagram.com/rishabh073153/",

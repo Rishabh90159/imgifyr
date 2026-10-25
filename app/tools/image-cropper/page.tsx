@@ -21,32 +21,27 @@ const faqs: FaqItem[] = [
   {
     question: "Does cropping reduce image quality?",
     answer:
-      "Cropping itself removes pixels outside the selection but doesn't change the ones you keep. Saving as PNG keeps them exactly; JPG and WebP re-compress them slightly at the quality you choose. The cropped image has fewer pixels, so it can look softer if you then display it larger.",
+      "No. Cropping removes the pixels outside the selection and leaves the rest unchanged. PNG keeps them exactly; JPG and WebP re-compress them slightly at the quality you choose.",
   },
   {
     question: "How do I crop an image to a square?",
     answer:
-      "Choose the 1:1 aspect ratio. The crop box becomes the largest square that fits, and it stays square as you move or resize it from the corners.",
+      "Choose the 1:1 aspect ratio. The crop box becomes the largest square that fits and stays square as you move or resize it.",
   },
   {
     question: "Can I crop to an exact pixel size, like 1080 × 1080?",
     answer:
-      "Choose the matching ratio (1:1), frame the crop, then turn on “Resize the cropped image” and enter 1080 as the width. The output is exactly 1080 × 1080. For a size with an unusual ratio, use Custom and enter the width and height as the ratio.",
+      "Choose 1:1, frame the crop, then turn on “Resize the cropped image” and enter 1080 as the width. For an unusual size, use Custom and enter the width and height as the ratio.",
   },
   {
     question: "Does it work on a phone?",
     answer:
-      "Yes. Drag the box with one finger, drag a corner to resize, and pinch to zoom in for precise framing. When zoomed in, drag outside the box to look around the photo.",
-  },
-  {
-    question: "Can I crop with the keyboard?",
-    answer:
-      "Yes. Tab to the crop area, then use the arrow keys to move it and Shift with the arrow keys to resize it. Hold Alt for finer steps.",
+      "Yes. Drag the box with one finger, drag a corner to resize, and pinch to zoom. On a computer you can also use the arrow keys, with Shift to resize.",
   },
   {
     question: "What's the difference between cropping and resizing?",
     answer:
-      "Cropping cuts away part of the picture to change what's shown and its shape. Resizing keeps the whole picture but changes how many pixels it has. You often need both: crop to the right framing and ratio, then resize to the required dimensions.",
+      "Cropping cuts away part of the picture, changing what's shown and its shape. Resizing keeps the whole picture but changes its pixel count. Often you need both: crop first, then resize.",
   },
   {
     question: "Are my photos uploaded?",
@@ -61,8 +56,8 @@ export default function ImageCropperPage() {
       h1="Crop Image Online"
       intro={
         <p>
-          Crop a photo freely or to a fixed ratio such as 1:1, 4:3, 3:2 or 16:9. Zoom in for precision, rotate or mirror,
-          and download the result in the format you need. Works with touch, mouse and keyboard, and nothing is uploaded.
+          Crop a photo freely or to a fixed ratio such as 1:1, 4:3 or 16:9, with zoom, rotate and mirror. Works with touch,
+          mouse and keyboard, and nothing is uploaded.
         </p>
       }
       schemaDescription={description}
@@ -71,82 +66,61 @@ export default function ImageCropperPage() {
         <>
           <h2>How to crop an image</h2>
           <ol>
-            <li>Choose, drop or paste an image (JPG, PNG, WebP or iPhone HEIC).</li>
+            <li>Choose, drop or paste a JPG, PNG, WebP or iPhone HEIC image.</li>
             <li>Pick an aspect ratio, or keep Free to crop any shape.</li>
-            <li>Drag the box to frame your subject; drag the corners to resize it. Pinch or use the zoom slider for detail.</li>
-            <li>Rotate or mirror if needed, choose the output format, and select Crop image.</li>
-            <li>Check the result and download.</li>
+            <li>Drag the box and its corners to frame your subject; zoom in for detail.</li>
+            <li>Rotate or mirror if needed, choose a format, select Crop image and download.</li>
           </ol>
 
-          <h2>Aspect ratios explained</h2>
-          <p>
-            An aspect ratio is the proportion between width and height. It describes shape, not size: a 1200 × 900 photo and
-            a 400 × 300 photo are both 4:3.
-          </p>
+          <h2>Aspect ratios for an image crop</h2>
           <table>
             <thead>
               <tr>
                 <th scope="col">Ratio</th>
-                <th scope="col">Shape</th>
                 <th scope="col">Typical uses</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>1:1</td>
-                <td>Square</td>
-                <td>Profile pictures, avatars, product thumbnails, square social posts</td>
+                <td>Profile pictures, avatars, square social posts</td>
               </tr>
               <tr>
                 <td>4:3 / 3:4</td>
-                <td>Classic photo</td>
-                <td>Most phone and compact camera photos, presentations, tablets</td>
+                <td>Most phone photos, presentations</td>
               </tr>
               <tr>
                 <td>3:2 / 2:3</td>
-                <td>Standard print</td>
-                <td>DSLR and mirrorless photos, 6 × 4 inch prints</td>
+                <td>DSLR photos, 6 × 4 inch prints</td>
               </tr>
               <tr>
                 <td>16:9 / 9:16</td>
-                <td>Widescreen / vertical</td>
-                <td>Video thumbnails, website banners, desktop wallpapers; stories and reels in portrait</td>
+                <td>Video thumbnails, banners; stories and reels</td>
               </tr>
             </tbody>
           </table>
           <p>
             Use <strong>Landscape</strong> or <strong>Portrait</strong> to flip a ratio, and <strong>Custom</strong> for
-            anything else, for example 5:4 or 2.35:1.
+            anything else, such as 5:4.
           </p>
 
-          <h2>Cropping vs resizing</h2>
+          <h2>Crop photo first, then resize</h2>
           <p>
-            Cropping changes <em>what</em> is in the picture and its shape. <Link href="/tools/image-resizer">Resizing</Link>{" "}
-            changes <em>how many pixels</em> it has without cutting anything. If you resize a photo to a different shape without
-            cropping, it gets stretched. So for an exact size such as 1080 × 1080, crop to the ratio first, then scale; this
-            tool can do both in one step.
+            Cropping changes <em>what</em> is in the picture; <Link href="/tools/image-resizer">resizing</Link> changes{" "}
+            <em>how many pixels</em> it has. Resizing to a new shape without cropping stretches the photo, so crop to the ratio
+            first. This image cropper can do both in one step, and you can{" "}
+            <Link href="/tools/image-compressor">compress the image</Link> afterwards if a site limits upload size.
           </p>
 
-          <h2>Tips for social media and profile photos</h2>
-          <ul>
-            <li>Leave some space around faces; many sites show profile pictures in a circle that cuts off the corners.</li>
-            <li>Use the grid lines to place eyes or the horizon about a third of the way from the edge.</li>
-            <li>Check the platform&apos;s current recommended size in its help pages; they change over time.</li>
-            <li>
-              After cropping, <Link href="/tools/image-compressor">compress the image</Link> if the site limits upload size.
-            </li>
-          </ul>
+          <h2>Photos for official forms</h2>
           <p>
-            Preparing a photo for an official form? The <Link href="/tools/passport-photo-resizer">passport photo resizer</Link>{" "}
-            crops to a required size in pixels or millimetres, and the <Link href="/tools/signature-resizer">signature
-            resizer</Link> cleans up and sizes a signature scan.
+            The <Link href="/tools/passport-photo-resizer">passport photo resizer</Link> crops to a required size in pixels or
+            millimetres, and the <Link href="/tools/signature-resizer">signature resizer</Link> cleans up and sizes a
+            signature scan.
           </p>
 
           <PrivacyNote>
-            <p>
-              Cropping happens in your browser, using the image features built into it. Your photo isn&apos;t uploaded, and
-              the cropped file doesn&apos;t include location or camera metadata.
-            </p>
+            <p>Cropping happens in your browser; the cropped file isn&apos;t uploaded and has no location or camera metadata.</p>
           </PrivacyNote>
         </>
       }
