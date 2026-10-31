@@ -14,22 +14,31 @@ import { outputFileName, sizeBucket } from "@/lib/utils/format";
 import { useObjectUrl, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
 
-const TOOL = "background-remover" as const;
-
 type Backdrop = "transparent" | "white" | "custom";
 type Edges = "soft" | "crisp";
 type Output = "image/png" | "image/jpeg";
 
 let modelReady = false;
 
-export function BackgroundRemoverTool() {
+interface BackgroundRemoverToolProps {
+  tool?: "background-remover" | "white-background-photo";
+  /** Background chosen when the page opens (the white background page starts on white, saved as JPG). */
+  initialBackdrop?: Backdrop;
+  initialOutput?: Output;
+}
+
+export function BackgroundRemoverTool({
+  tool: TOOL = "background-remover",
+  initialBackdrop = "transparent",
+  initialOutput = "image/png",
+}: BackgroundRemoverToolProps = {}) {
   useToolOpen(TOOL);
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
   const colorId = useId();
-  const [backdrop, setBackdrop] = useState<Backdrop>("transparent");
+  const [backdrop, setBackdrop] = useState<Backdrop>(initialBackdrop);
   const [customColor, setCustomColor] = useState("#3b82f6");
   const [edges, setEdges] = useState<Edges>("soft");
-  const [output, setOutput] = useState<Output>("image/png");
+  const [output, setOutput] = useState<Output>(initialOutput);
   const [quality, setQuality] = useState(0.92);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -93,7 +102,7 @@ export function BackgroundRemoverTool() {
     cancel();
     clear();
     setResult(null);
-    setBackdrop("transparent");
+    setBackdrop(initialBackdrop);
     setEdges("soft");
   };
 
@@ -192,7 +201,7 @@ export function BackgroundRemoverTool() {
             original={source}
             output={current.image}
             growthExpected
-            fileName={outputFileName(source.name, "no-background", FORMATS[current.image.mime].extension)}
+            fileName={outputFileName(source.name, TOOL === "white-background-photo" && background === "#ffffff" ? "white-background" : "no-background", FORMATS[current.image.mime].extension)}
             downloadLabel={`Download ${FORMATS[current.image.mime].label}`}
             status={
               subjectWarning ?? (

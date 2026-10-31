@@ -481,3 +481,22 @@ canonical and sitemap checks fail.
 
 Watch in Search Console over the next 2–4 weeks: impressions and positions for the pages that already had them (§2).
 Only if a page clearly drops should a cut section come back. Use git history for this commit.
+
+## 20. Form-photo features from the competitor gap (30–31 Oct)
+
+Gap: Pi7 and imresizer.com had four form-preparation features Imgifyr lacked. Demand was checked in Google India
+autocomplete on 30 Oct (10/10 suggestions for each). Built as five pages, each reusing the existing pipeline:
+
+| Page | Owns (keyword map) | How it works |
+|---|---|---|
+| /tools/merge-photo-and-signature | merge photo and signature, photo signature joiner | Signature cleaned to white (threshold 190), scaled to the photo's width (new `match: "first"` merge layout), merged as lossless PNG, then compressed once to an optional width / max KB |
+| /tools/add-name-and-date-on-photo | add name and date on photo, kerala psc photo with name and date | Crop above a caption strip (`lib/image-processing/caption.ts`), text auto-shrinks to fit, one JPG encode. **Kerala PSC preset: 150 × 200 px, ≤ 30 KB**, from keralapsc.gov.in Notification 880/2025 (name and photo date "printed legibly at the bottom") and the 2019 photo specification; checked 30 Oct 2026. UPSC's name/date rule is disputed in third-party sources and is not cited |
+| /tools/change-image-dpi | change dpi of image, dpi converter, dpi checker | Header-only edit (`lib/image-processing/dpi.ts`): JFIF **and EXIF** in JPG (Windows reads EXIF first; verified in Explorer: 72 → 300 dpi), pHYs in PNG. Image data byte-identical. WebP/HEIC → JPG at the same pixels |
+| /tools/resize-image-in-cm | resize image in cm / mm / inches, photo resize in mm (moved from the passport resizer) | The passport tool, now configurable: cm unit, no presets, thirds guide; switching units keeps the real size |
+| /tools/white-background-photo | white background photo, change photo background to white | The background remover opening on White + JPG; the model still loads only on use |
+
+Merge Images' "join a photo and signature" section became a one-line link to the new page, to avoid two pages
+competing for the same intent. The exam hub links all four tools.
+
+Tests: unit 150 (new dpi.test.ts); seo 1035/1035 (42 pages in the 6-word overlap check, all < 15%);
+form-photo-tools 38/38 (new); print-and-convert 19, phase3 79, phase4 77, phase5 40 all pass.

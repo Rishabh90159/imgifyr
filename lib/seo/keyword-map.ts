@@ -205,7 +205,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/passport-photo-resizer",
     primary: "passport photo resizer",
-    secondary: ["resize passport photo", "visa photo resizer", "photo resize in mm", "custom photo size in pixels and kb"],
+    secondary: ["resize passport photo", "visa photo resizer", "custom photo size in pixels and kb"],
     intent: "tool",
     supportedBy: ["/tools/passport-photo", "/tools/image-cropper", "/tools/application-photos"],
   },
@@ -337,6 +337,46 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     secondary: ["combine images", "merge photos", "combine photos into one image", "combine photos online", "photo joiner", "image joiner", "image combiner", "join images online"],
     intent: "tool",
     supportedBy: ["/tools/photo-to-pdf", "/tools/image-cropper"],
+  },
+  {
+    path: "/tools/merge-photo-and-signature",
+    primary: "merge photo and signature",
+    // Google India autocomplete, 30 Oct 2026: "merge photo and signature online / jpg / passport size", "photo signature joiner online free".
+    secondary: ["photo and signature joiner", "photo signature joiner", "merge photo and signature online", "photo and signature in one image", "combine photo and signature", "join photo and signature"],
+    intent: "tool",
+    supportedBy: ["/tools/merge-images", "/tools/signature-resizer", "/tools/application-photos"],
+  },
+  {
+    path: "/tools/add-name-and-date-on-photo",
+    primary: "add name and date on photo",
+    // Google India autocomplete, 30 Oct 2026: "add name and date on photo for psc", "kerala psc photo name and date".
+    secondary: ["name and date on photo", "photo with name and date", "add name and date on photo online", "kerala psc photo with name and date", "kerala psc photo size", "photo with name and date for psc"],
+    intent: "tool",
+    supportedBy: ["/tools/merge-photo-and-signature", "/tools/passport-photo-resizer", "/tools/application-photos"],
+  },
+  {
+    path: "/tools/change-image-dpi",
+    primary: "change dpi of image",
+    // Google India autocomplete, 30 Oct 2026: "change dpi to 200", "300 dpi converter", "change dpi and size of image online".
+    secondary: ["change image dpi", "dpi converter", "300 dpi converter", "change dpi to 300", "change dpi to 200", "check image dpi", "dpi checker"],
+    intent: "tool",
+    supportedBy: ["/tools/resize-image-in-cm", "/tools/resize-jpg", "/tools/passport-photo-resizer"],
+  },
+  {
+    path: "/tools/resize-image-in-cm",
+    primary: "resize image in cm",
+    // Google India autocomplete, 30 Oct 2026: "resize image in cm and kb", "photo size 3.5 x 4.5 cm 50 kb", "resize image in cm 6cm x 2cm".
+    secondary: ["resize image in mm", "resize image in inches", "resize image in cm and kb", "photo resize in mm", "photo size in cm", "3.5 x 4.5 cm photo"],
+    intent: "tool",
+    supportedBy: ["/tools/change-image-dpi", "/tools/image-resizer", "/tools/passport-photo-resizer"],
+  },
+  {
+    path: "/tools/white-background-photo",
+    primary: "white background photo",
+    // Google India autocomplete, 30 Oct 2026: "change photo background to white online free", "white background photo editor free".
+    secondary: ["change photo background to white", "white background photo editor", "change background to white", "photo background white", "white background photo online"],
+    intent: "tool",
+    supportedBy: ["/tools/background-remover", "/tools/passport-photo", "/tools/add-name-and-date-on-photo"],
   },
   {
     path: "/tools/jpeg-to-jpg",

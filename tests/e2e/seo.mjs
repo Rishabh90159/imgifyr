@@ -54,6 +54,11 @@ const toolPages = [
   "/tools/dsssb-photo",
   "/tools/jee-main-photo",
   "/tools/upessc-photo",
+  "/tools/merge-photo-and-signature",
+  "/tools/add-name-and-date-on-photo",
+  "/tools/change-image-dpi",
+  "/tools/resize-image-in-cm",
+  "/tools/white-background-photo",
 ];
 // Pages with overlapping intent whose text must stay distinct.
 const overlapPages = [
@@ -74,6 +79,15 @@ const overlapPages = [
   "/tools/png-to-jpg",
   "/tools/webp-to-jpg",
   "/tools/heic-to-jpg",
+  // Added 30 Oct 2026 next to the tools they specialise: merge-images, background-remover, passport-photo-resizer.
+  "/tools/merge-images",
+  "/tools/merge-photo-and-signature",
+  "/tools/background-remover",
+  "/tools/white-background-photo",
+  "/tools/passport-photo-resizer",
+  "/tools/resize-image-in-cm",
+  "/tools/change-image-dpi",
+  "/tools/add-name-and-date-on-photo",
 ];
 const kbPages = ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
@@ -196,7 +210,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 34 && worst.score < 0.15,
+    entries.length === 42 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
@@ -210,7 +224,7 @@ for (const route of toolPages) {
 }
 
 // Heavy tool libraries must not load on pages that don't need them.
-for (const route of ["/", "/tools", "/tools/image-resizer", "/tools/background-remover", "/tools/photo-to-pdf", "/tools/image-upscaler"]) {
+for (const route of ["/", "/tools", "/tools/image-resizer", "/tools/background-remover", "/tools/white-background-photo", "/tools/photo-to-pdf", "/tools/image-upscaler"]) {
   const html = await (await fetch(BASE + route)).text();
   const srcs = [...new Set([...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]))];
   let heavy = false;

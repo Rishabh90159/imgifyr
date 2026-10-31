@@ -51,7 +51,12 @@ export type ToolId =
   | "upsssc-photo"
   | "dsssb-photo"
   | "jee-main-photo"
-  | "upessc-photo";
+  | "upessc-photo"
+  | "merge-photo-and-signature"
+  | "add-name-and-date-on-photo"
+  | "change-image-dpi"
+  | "resize-image-in-cm"
+  | "white-background-photo";
 
 export type ToolCategory = "resize" | "compress" | "convert" | "edit" | "size" | "application" | "units" | "pdf";
 
@@ -126,7 +131,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Change width and height in pixels or by percentage, with aspect ratio locked by default.",
     linkText: "Resize an image to new dimensions",
     category: "resize",
-    related: ["image-compressor", "50kb-photo", "100kb-photo", "bulk-image-resizer", "image-cropper", "jpg-to-png"],
+    related: ["image-compressor", "50kb-photo", "100kb-photo", "bulk-image-resizer", "image-cropper", "resize-image-in-cm"],
     updated: "2026-10-08",
   },
   "resize-jpg": {
@@ -138,7 +143,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Resize a JPG image",
     category: "resize",
     parent: "image-resizer",
-    related: ["image-compressor", "resize-image-to-kb", "jpg-to-png", "resize-png", "resize-webp", "bulk-image-resizer"],
+    related: ["image-compressor", "resize-image-to-kb", "jpg-to-png", "resize-png", "resize-webp", "change-image-dpi"],
     updated: "2026-10-18",
   },
   "resize-png": {
@@ -296,7 +301,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop and resize a photo to a passport or application size in pixels, millimetres and KB.",
     linkText: "Resize a photo for a passport or visa application",
     category: "edit",
-    related: ["passport-photo", "signature-resizer", "20kb-photo", "50kb-photo", "image-cropper", "resize-image-to-kb"],
+    related: ["passport-photo", "resize-image-in-cm", "signature-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-10-07",
   },
   "signature-resizer": {
@@ -307,7 +312,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop, clean up and resize a signature image to the pixel and KB limits of online forms.",
     linkText: "Resize a signature for an online form",
     category: "edit",
-    related: ["image-cropper", "20kb-photo", "resize-image-to-kb", "passport-photo-resizer", "50kb-photo", "image-compressor"],
+    related: ["image-cropper", "20kb-photo", "resize-image-to-kb", "passport-photo-resizer", "50kb-photo", "merge-photo-and-signature"],
     updated: "2026-10-06",
   },
   "bulk-image-resizer": {
@@ -439,7 +444,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Officially sourced passport photo sizes by country, with a tool to make a photo that matches.",
     linkText: "Check passport photo size by country",
     category: "application",
-    related: ["passport-photo-resizer", "signature-resizer", "image-cropper", "image-compressor", "resize-image-to-kb"],
+    related: ["passport-photo-resizer", "signature-resizer", "white-background-photo", "image-cropper", "image-compressor", "resize-image-to-kb"],
     updated: "2026-10-18",
   },
   "image-upscaler": {
@@ -461,7 +466,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Cut out the main subject of a photo and download it as a transparent PNG or on a new background colour.",
     linkText: "Remove the background from an image",
     category: "edit",
-    related: ["image-compressor", "image-resizer", "png-to-jpg", "image-cropper"],
+    related: ["white-background-photo", "image-compressor", "image-resizer", "png-to-jpg", "image-cropper"],
     updated: "2026-10-07",
   },
   "photo-to-pdf": {
@@ -483,8 +488,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine several images into one, side by side, stacked or in a grid, with optional spacing and background.",
     linkText: "Merge several images into one",
     category: "edit",
-    related: ["photo-to-pdf", "image-resizer", "image-compressor", "image-cropper"],
-    updated: "2026-10-18",
+    related: ["merge-photo-and-signature", "photo-to-pdf", "image-resizer", "image-compressor", "image-cropper"],
+    updated: "2026-10-30",
   },
   "jpeg-to-jpg": {
     id: "jpeg-to-jpg",
@@ -651,6 +656,61 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["png-to-jpg", "webp-to-jpg", "heic-to-jpg", "resize-image-to-kb", "image-compressor"],
     updated: "2026-10-18",
   },
+  "merge-photo-and-signature": {
+    id: "merge-photo-and-signature",
+    path: "/tools/merge-photo-and-signature",
+    name: "Photo and Signature Joiner",
+    navLabel: "Photo + signature",
+    summary: "Join a photo and a signature into one JPG, signature below or beside the photo, under a KB limit.",
+    linkText: "Merge a photo and signature into one image",
+    category: "edit",
+    related: ["signature-resizer", "add-name-and-date-on-photo", "merge-images", "resize-image-to-kb", "passport-photo-resizer", "20kb-photo"],
+    updated: "2026-10-30",
+  },
+  "add-name-and-date-on-photo": {
+    id: "add-name-and-date-on-photo",
+    path: "/tools/add-name-and-date-on-photo",
+    name: "Name and Date on Photo",
+    navLabel: "Name & date on photo",
+    summary: "Print your name and the date the photo was taken below it, with a Kerala PSC 150 × 200 px, 30 KB preset.",
+    linkText: "Add your name and date on a photo",
+    category: "edit",
+    related: ["merge-photo-and-signature", "white-background-photo", "passport-photo-resizer", "image-cropper", "resize-image-to-kb", "20kb-photo"],
+    updated: "2026-10-30",
+  },
+  "change-image-dpi": {
+    id: "change-image-dpi",
+    path: "/tools/change-image-dpi",
+    name: "Change Image DPI",
+    navLabel: "Change DPI",
+    summary: "Check the DPI of a JPG or PNG and change it to 300, 200 or any value without touching its pixels or quality.",
+    linkText: "Change the DPI of an image",
+    category: "edit",
+    related: ["resize-image-in-cm", "resize-jpg", "image-resizer", "passport-photo-resizer", "pdf-to-jpg", "image-upscaler"],
+    updated: "2026-10-30",
+  },
+  "resize-image-in-cm": {
+    id: "resize-image-in-cm",
+    path: "/tools/resize-image-in-cm",
+    name: "Resize Image in CM",
+    navLabel: "Resize in cm / mm",
+    summary: "Resize a photo to an exact size in centimetres, millimetres or inches at the DPI you need, with an optional KB limit.",
+    linkText: "Resize an image in cm or mm",
+    category: "resize",
+    related: ["change-image-dpi", "passport-photo-resizer", "image-resizer", "resize-image-to-kb", "image-cropper", "passport-photo"],
+    updated: "2026-10-30",
+  },
+  "white-background-photo": {
+    id: "white-background-photo",
+    path: "/tools/white-background-photo",
+    name: "White Background Photo",
+    navLabel: "White background",
+    summary: "Replace the background of a photo with plain white, or any colour, and save it as a JPG or PNG.",
+    linkText: "Change a photo background to white",
+    category: "edit",
+    related: ["background-remover", "passport-photo-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb", "png-to-jpg"],
+    updated: "2026-10-30",
+  },
 };
 
 /** Display order used across the site. */
@@ -662,7 +722,10 @@ export const toolOrder: ToolId[] = [
   "image-size-increase",
   "image-quality-enhancer",
   "background-remover",
+  "white-background-photo",
   "merge-images",
+  "merge-photo-and-signature",
+  "add-name-and-date-on-photo",
   "image-to-jpg",
   "jpg-to-png",
   "png-to-jpg",
@@ -673,6 +736,8 @@ export const toolOrder: ToolId[] = [
   "resize-webp",
   "resize-gif",
   "instagram-image-resizer",
+  "resize-image-in-cm",
+  "change-image-dpi",
   "image-cropper",
   "passport-photo-resizer",
   "signature-resizer",

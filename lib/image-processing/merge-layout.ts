@@ -6,8 +6,8 @@ import { LIMITS } from "./formats";
  * uniformly and never stretched.
  */
 export type MergeDirection = "vertical" | "horizontal" | "grid";
-/** How differently sized images are matched: shrink to the smallest, enlarge to the largest, or leave as they are. */
-export type MergeMatch = "smallest" | "largest" | "original";
+/** How differently sized images are matched: shrink to the smallest, enlarge to the largest, match the first image, or leave as they are. */
+export type MergeMatch = "smallest" | "largest" | "first" | "original";
 
 export interface MergeLayoutOptions {
   direction: MergeDirection;
@@ -36,6 +36,7 @@ export interface MergeLayout {
 type Size = { width: number; height: number };
 
 function pick(values: number[], match: MergeMatch): number {
+  if (match === "first") return values[0];
   return match === "largest" ? Math.max(...values) : Math.min(...values);
 }
 

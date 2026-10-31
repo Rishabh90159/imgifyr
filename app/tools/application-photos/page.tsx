@@ -240,7 +240,11 @@ export default function ApplicationPhotosPage() {
           the <Link href="/tools/signature-resizer">signature resizer</Link> for signatures, or{" "}
           <Link href="/tools/resize-image-to-kb">resize image to KB</Link> when only a file size is given. For the most
           common limits there are one-step pages for <Link href="/tools/20kb-photo">20KB</Link> and{" "}
-          <Link href="/tools/50kb-photo">50KB</Link> photos.
+          <Link href="/tools/50kb-photo">50KB</Link> photos. Sizes given in centimetres go into{" "}
+          <Link href="/tools/resize-image-in-cm">resize image in cm</Link>. If the notice asks for a{" "}
+          <Link href="/tools/white-background-photo">white background</Link>, your{" "}
+          <Link href="/tools/add-name-and-date-on-photo">name and date on the photo</Link>, or the{" "}
+          <Link href="/tools/merge-photo-and-signature">photo and signature in one image</Link>, there&apos;s a tool for each.
         </p>
 
         <h2>How this table is kept accurate</h2>

@@ -38,7 +38,10 @@ export type AnalyticsEvent =
   | "jpeg_converted"
   | "size_increase_completed"
   | "enhance_completed"
-  | "unit_converted";
+  | "unit_converted"
+  | "dpi_changed"
+  | "photo_signature_merged"
+  | "name_date_added";
 
 export interface AnalyticsProps {
   tool?: string;

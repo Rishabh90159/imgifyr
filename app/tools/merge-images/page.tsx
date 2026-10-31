@@ -102,16 +102,9 @@ export default function MergeImagesPage() {
             Shrink a large result with the <Link href="/tools/image-resizer">image resizer</Link> or{" "}
             <Link href="/tools/image-compressor">image compressor</Link>. Want each picture on its own page? Use{" "}
             <Link href="/tools/photo-to-pdf">Photo to PDF</Link>. To combine PDF files instead, use{" "}
-            <Link href="/tools/merge-pdf">Merge PDF</Link>.
-          </p>
-
-          <h2>Join a photo and signature into one image</h2>
-          <p>
-            Some application forms want the photo and signature in a single file. Add the photo first and the signature
-            second, choose <strong>Vertical</strong>, set <strong>Match widths</strong> to <strong>Keep sizes</strong> so the
-            signature isn&apos;t stretched, keep a <strong>White</strong> background and save as JPG. Prepare the signature with
-            the <Link href="/tools/signature-resizer">signature resizer</Link>, and meet a file-size limit with{" "}
-            <Link href="/tools/resize-image-to-kb">resize image to KB</Link>. Always follow the layout your form describes.
+            <Link href="/tools/merge-pdf">Merge PDF</Link>. For an application that wants your photo and signature in one file,
+            the <Link href="/tools/merge-photo-and-signature">photo and signature joiner</Link> cleans and sizes the signature
+            and keeps the result under a KB limit.
           </p>
 
           <PrivacyNote>

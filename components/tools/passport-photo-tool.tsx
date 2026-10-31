@@ -18,9 +18,10 @@ import { PrintSheet } from "./print-sheet";
 import { runSpec } from "./spec-runner";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
 
-const TOOL = "passport-photo-resizer" as const;
+type Unit = "cm" | "mm" | "in" | "px";
 
-type Unit = "mm" | "in" | "px";
+/** Length of one inch in each physical unit. */
+const PER_INCH: Record<Exclude<Unit, "px">, number> = { cm: 2.54, mm: 25.4, in: 1 };
 
 interface PhotoSpec {
   widthPx: number;
@@ -30,7 +31,7 @@ interface PhotoSpec {
   maxKB?: number;
 }
 
-interface CustomState {
+export interface CustomState {
   unit: Unit;
   width: string;
   height: string;
@@ -58,9 +59,8 @@ function customSpec(c: CustomState): { spec: PhotoSpec | null; error: string | n
   if (c.unit !== "px") {
     dpi = Number(c.dpi.trim());
     if (!Number.isInteger(dpi) || dpi < 72 || dpi > 1200) return { spec: null, error: "Enter a resolution between 72 and 1200 DPI." };
-    const inches = c.unit === "mm" ? 25.4 : 1;
-    widthPx = Math.round((w / inches) * dpi);
-    heightPx = Math.round((h / inches) * dpi);
+    widthPx = Math.round((w / PER_INCH[c.unit]) * dpi);
+    heightPx = Math.round((h / PER_INCH[c.unit]) * dpi);
   } else if (!Number.isInteger(w) || !Number.isInteger(h)) {
     return { spec: null, error: "Pixel sizes must be whole numbers." };
   }
@@ -87,13 +87,30 @@ interface PassportResult {
   underMin: boolean;
 }
 
-export function PassportPhotoTool() {
-  useToolOpen(TOOL);
-  const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
+interface PassportPhotoToolProps {
+  tool?: "passport-photo-resizer" | "resize-image-in-cm";
+  /** Units offered for a custom size. */
+  units?: Unit[];
+  defaultCustom?: CustomState;
+  /** Offer the officially sourced passport and visa presets. */
+  presets?: boolean;
+  /** Crop overlay: a centred head outline for portraits, or a plain rule-of-thirds grid. */
+  guide?: "portrait" | "thirds";
+}
+
+export function PassportPhotoTool({
+  tool = "passport-photo-resizer",
+  units = ["mm", "in", "px"],
+  defaultCustom = DEFAULT_CUSTOM,
+  presets = true,
+  guide = "portrait",
+}: PassportPhotoToolProps = {}) {
+  useToolOpen(tool);
+  const { source, loading, error, select, clear, setError } = useSourceImage({ tool, accept: RASTER_INPUT_FORMATS });
   const runner = useJobRunner();
   const presetSelectId = useId();
   const [presetId, setPresetId] = useState<string>("custom");
-  const [custom, setCustom] = useState<CustomState>(DEFAULT_CUSTOM);
+  const [custom, setCustom] = useState<CustomState>(defaultCustom);
   const [result, setResult] = useState<PassportResult | null>(null);
 
   const preset = getPreset(presetId);
@@ -132,7 +149,7 @@ export function PassportPhotoTool() {
         underMin,
       });
       track("passport_photo_completed", {
-        tool: TOOL,
+        tool,
         input_format: FORMATS[image.mime].label,
         output_format: "JPG",
         size_bucket: sizeBucket(image.size),
@@ -142,11 +159,13 @@ export function PassportPhotoTool() {
     } catch (caught) {
       const normalized = toImageToolError(caught);
       setError(normalized);
-      track("processing_failed", { tool: TOOL, error_code: normalized.code });
+      track("processing_failed", { tool, error_code: normalized.code });
     }
   };
 
-  const requirementPicker = (
+  const requirementPicker = !presets ? (
+    <CustomFields value={custom} onChange={setCustom} error={specError} units={units} />
+  ) : (
     <div className="space-y-4">
       <div>
         <FieldLabel htmlFor={presetSelectId}>Photo requirement</FieldLabel>
@@ -172,7 +191,7 @@ export function PassportPhotoTool() {
         </p>
       </div>
 
-      {preset ? <PresetDetails preset={preset} /> : <CustomFields value={custom} onChange={setCustom} error={specError} />}
+      {preset ? <PresetDetails preset={preset} /> : <CustomFields value={custom} onChange={setCustom} error={specError} units={units} />}
     </div>
   );
 
@@ -245,12 +264,14 @@ export function PassportPhotoTool() {
             aspect={aspect}
             crop={cropState.crop}
             onChange={cropState.setCrop}
-            guide="portrait"
+            guide={guide}
             label="Photo crop area"
           />
-          <p className="text-xs text-muted">
-            The dashed oval is only a centring aid, not an official template. Check the head-size rule for your application.
-          </p>
+          {guide === "portrait" ? (
+            <p className="text-xs text-muted">
+              The dashed oval is only a centring aid, not an official template. Check the head-size rule for your application.
+            </p>
+          ) : null}
         </div>
       }
       controls={controls}
@@ -258,7 +279,7 @@ export function PassportPhotoTool() {
         current ? (
           <>
           <ResultPanel
-            tool={TOOL}
+            tool={tool}
             heading="Your photo is ready"
             original={source}
             output={current.image}
@@ -270,7 +291,7 @@ export function PassportPhotoTool() {
                     {
                       label: "Print size",
                       before: "—",
-                      after: `${((current.spec.widthPx / current.spec.dpi) * 25.4).toFixed(1)} × ${((current.spec.heightPx / current.spec.dpi) * 25.4).toFixed(1)} mm at ${current.spec.dpi} DPI`,
+                      after: printSizeLabel(current.spec.widthPx, current.spec.heightPx, current.spec.dpi, preset || tool !== "resize-image-in-cm" ? "mm" : custom.unit),
                     },
                   ]
                 : []
@@ -292,13 +313,13 @@ export function PassportPhotoTool() {
                     The size and file limits you chose are met.
                   </Alert>
                 )}
-                <VerifyNotice />
+                {presets ? <VerifyNotice /> : null}
               </>
             }
           />
           {current.spec.dpi ? (
             <PrintSheet
-              tool={TOOL}
+              tool={tool}
               photo={current.image.blob}
               widthPx={current.spec.widthPx}
               heightPx={current.spec.heightPx}
@@ -311,6 +332,13 @@ export function PassportPhotoTool() {
       }
     />
   );
+}
+
+/** Printed size in the unit the user worked in (millimetres when they entered pixels). */
+function printSizeLabel(widthPx: number, heightPx: number, dpi: number, unit: Unit): string {
+  const shown = unit === "px" ? "mm" : unit;
+  const size = (px: number) => ((px / dpi) * PER_INCH[shown]).toFixed(shown === "mm" ? 1 : 2);
+  return `${size(widthPx)} × ${size(heightPx)} ${shown} at ${dpi} DPI`;
 }
 
 function VerifyNotice() {
@@ -357,20 +385,30 @@ function PresetDetails({ preset }: { preset: PhotoPreset }) {
   );
 }
 
-function CustomFields({ value, onChange, error }: { value: CustomState; onChange: (next: CustomState) => void; error: string | null }) {
+const UNIT_LABELS: Record<Unit, string> = { cm: "Centimetres", mm: "Millimetres", in: "Inches", px: "Pixels" };
+
+function CustomFields({ value, onChange, error, units }: { value: CustomState; onChange: (next: CustomState) => void; error: string | null; units: Unit[] }) {
   const set = (patch: Partial<CustomState>) => onChange({ ...value, ...patch });
   const unitLabel = value.unit === "in" ? "inches" : value.unit;
+  // Switching between physical units keeps the same real size instead of reinterpreting the numbers.
+  const changeUnit = (unit: Unit) => {
+    if (unit === "px" || value.unit === "px") return set({ unit });
+    const factor = PER_INCH[unit] / PER_INCH[value.unit];
+    // Precision per unit (0.1 mm, 0.01 cm, 0.001 in) keeps round trips exact: 35 mm → 1.378 in → 35 mm.
+    const decimals = { mm: 1, cm: 2, in: 3 }[unit];
+    const convert = (text: string) => {
+      const n = Number(text.trim());
+      return Number.isFinite(n) && n > 0 ? String(Number((n * factor).toFixed(decimals))) : text;
+    };
+    set({ unit, width: convert(value.width), height: convert(value.height) });
+  };
   return (
     <div className="space-y-4">
       <Segmented<Unit>
         legend="Size unit"
         value={value.unit}
-        onChange={(unit) => set({ unit })}
-        options={[
-          { value: "mm", label: "Millimetres" },
-          { value: "in", label: "Inches" },
-          { value: "px", label: "Pixels" },
-        ]}
+        onChange={changeUnit}
+        options={units.map((unit) => ({ value: unit, label: UNIT_LABELS[unit] }))}
       />
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div>
