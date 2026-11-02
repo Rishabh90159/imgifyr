@@ -70,7 +70,8 @@ export default function MergePhotoAndSignaturePage() {
           <p>
             Sign in black or dark blue ink on plain white paper and photograph it in daylight. Crop it tightly with the{" "}
             <Link href="/tools/signature-resizer">signature resizer</Link> first so there&apos;s little empty paper around it;
-            a tight crop makes the signature larger and clearer in the joined image.
+            a tight crop makes the signature larger and clearer in the joined image. Signing a document rather than a form?
+            Make a <Link href="/tools/transparent-signature">transparent signature</Link> PNG instead.
           </p>
 
           <h2>Sizes and file limits</h2>

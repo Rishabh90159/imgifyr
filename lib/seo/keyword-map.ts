@@ -142,7 +142,8 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/png-to-jpg",
     primary: "png to jpg",
-    secondary: ["png to jpg converter", "convert png to jpg", "png to jpeg"],
+    // Google India autocomplete, 31 Oct 2026: all ten "png to jpg under …" suggestions are size limits.
+    secondary: ["png to jpg converter", "convert png to jpg", "png to jpeg", "png to jpg under 50kb", "png to jpg under 100kb", "png to jpg under 200kb", "png to jpg under 20kb", "convert png to jpg under 50kb"],
     intent: "tool",
     supportedBy: ["/tools/jpg-to-png", "/tools/image-compressor", "/tools/webp-to-jpg"],
   },
@@ -434,6 +435,49 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     secondary: ["pdf to jpg converter", "convert pdf to jpg", "pdf to image", "pdf to jpg converter 100 kb", "pdf to jpg high quality"],
     intent: "tool",
     supportedBy: ["/tools/pdf-tools", "/tools/jpg-to-pdf", "/tools/compress-pdf", "/tools/pdf-to-word"],
+  },
+  // Added 31 Oct 2026 from Google India autocomplete (docs/competitor-analysis-2026-10.md §21).
+  {
+    path: "/tools/pdf-to-png",
+    primary: "pdf to png",
+    secondary: ["pdf to png converter", "convert pdf to png", "pdf to png high quality", "pdf to png converter online"],
+    intent: "tool",
+    supportedBy: ["/tools/pdf-tools", "/tools/pdf-to-jpg"],
+  },
+  {
+    path: "/tools/transparent-signature",
+    primary: "transparent signature",
+    secondary: ["transparent signature maker", "transparent signature png", "transparent signature online", "remove background from signature", "signature background remover", "signature png maker"],
+    intent: "tool",
+    supportedBy: ["/tools/signature-resizer", "/tools/merge-photo-and-signature"],
+  },
+  {
+    path: "/tools/circle-crop",
+    primary: "circle crop",
+    secondary: ["circle crop image", "crop image in circle", "round image crop", "circle cropper", "round image png", "circle crop image with border"],
+    intent: "tool",
+    supportedBy: ["/tools/image-cropper"],
+  },
+  {
+    path: "/tools/jpg-to-webp",
+    primary: "jpg to webp",
+    secondary: ["jpg to webp converter", "png to webp", "png to webp converter", "convert image to webp", "jpg to webp without losing quality", "jpg to webp compressor"],
+    intent: "tool",
+    supportedBy: ["/tools/webp-to-png", "/tools/jpg-to-png", "/tools/png-to-jpg"],
+  },
+  {
+    path: "/tools/webp-to-png",
+    primary: "webp to png",
+    secondary: ["webp to png converter", "convert webp to png", "webp to png online", "webp to png transparent"],
+    intent: "tool",
+    supportedBy: ["/tools/webp-to-jpg", "/tools/jpg-to-webp"],
+  },
+  {
+    path: "/tools/heic-to-png",
+    primary: "heic to png",
+    secondary: ["heic to png converter", "convert heic to png", "heic to png without losing quality", "iphone photo to png"],
+    intent: "tool",
+    supportedBy: ["/tools/heic-to-jpg"],
   },
 ];
 

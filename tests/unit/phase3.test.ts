@@ -134,13 +134,13 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 53 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(53);
+  it("has 59 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(59);
     expect(toolsIn("size").map((t) => t.id)).toEqual(["20kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "mb-to-kb-converter"]);
     expect(toolsIn("application")).toHaveLength(11);
-    expect(toolsIn("image")).toHaveLength(22);
-    expect(toolsIn("convert")).toHaveLength(10);
-    expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "pdf-to-jpg"]);
+    expect(toolsIn("image")).toHaveLength(24);
+    expect(toolsIn("convert")).toHaveLength(13);
+    expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "pdf-to-jpg", "pdf-to-png"]);
     const ids = new Set(allTools.map((t) => t.id));
     for (const tool of allTools) {
       expect(tool.related.length, tool.id).toBeGreaterThanOrEqual(3);

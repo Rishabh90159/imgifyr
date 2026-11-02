@@ -93,7 +93,8 @@ export default function PdfToJpgPage() {
           </ul>
           <p>
             Want to keep it a PDF but smaller? <Link href="/tools/compress-pdf">Compress the PDF</Link> instead. Going the
-            other way? <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> turns images back into a PDF.
+            other way? <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> turns images back into a PDF. For text and diagrams
+            with perfectly sharp edges, <Link href="/tools/pdf-to-png">convert the PDF to PNG</Link>.
           </p>
 
           <section aria-labelledby="privacy-heading">

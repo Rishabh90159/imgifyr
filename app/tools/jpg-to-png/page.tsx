@@ -132,7 +132,8 @@ export default function JpgToPngPage() {
             The PNG won&apos;t look sharper: JPG artefacts stay as they are, and the file is larger. If size matters more,{" "}
             <Link href="/tools/image-compressor">compress the image</Link> instead. Going the other way?{" "}
             <Link href="/tools/png-to-jpg">Convert PNG to JPG</Link>. Just renaming .jpeg to .jpg? Use{" "}
-            <Link href="/tools/jpeg-to-jpg">JPEG to JPG</Link>; for documents, <Link href="/tools/jpg-to-pdf">JPG to PDF</Link>.
+            <Link href="/tools/jpeg-to-jpg">JPEG to JPG</Link>; for documents, <Link href="/tools/jpg-to-pdf">JPG to PDF</Link>;
+            for a smaller file on a website, <Link href="/tools/jpg-to-webp">JPG to WebP</Link>.
           </p>
 
           <PrivacyNote>

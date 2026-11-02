@@ -1,4 +1,5 @@
 import type * as PdfJs from "pdfjs-dist/legacy/build/pdf.mjs";
+import { setImageDpi } from "@/lib/image-processing/dpi";
 import { setJpegDpi } from "@/lib/image-processing/jpeg-dpi";
 import { QUALITY, searchTargetSize } from "@/lib/image-processing/target-size";
 import { encodeJpeg, openRenderablePdf } from "./pdf-render";
@@ -9,10 +10,11 @@ import { assertPdf, documentFileName, DOC_LIMITS } from "./validate";
  * JPG. With a size limit, each page uses the shared target-size search, so a
  * page is only made smaller (quality first, then pixels) when it has to be.
  * One page gives one .jpg; more pages give a .zip of numbered JPGs.
+ * With format "png" (PDF to PNG) each page is a lossless PNG instead, with no size limit.
  */
 export interface PdfToJpgResult {
   bytes: Uint8Array;
-  kind: "jpg" | "zip";
+  kind: "jpg" | "png" | "zip";
   fileName: string;
   pages: number;
   /** Largest single JPG, in bytes. */
@@ -32,9 +34,11 @@ const DEFAULT_QUALITY = QUALITY.max;
 export async function convertPdfToJpg(
   pdfjs: typeof PdfJs,
   bytes: Uint8Array,
-  options: { dpi: number; maxBytes?: number; title: string; onProgress?: (fraction: number) => void },
+  options: { dpi: number; maxBytes?: number; format?: "jpg" | "png"; title: string; onProgress?: (fraction: number) => void },
 ): Promise<PdfToJpgResult> {
-  const { dpi, maxBytes, onProgress } = options;
+  const { dpi, onProgress } = options;
+  const format = options.format ?? "jpg";
+  const maxBytes = format === "jpg" ? options.maxBytes : undefined;
   assertPdf(bytes, DOC_LIMITS.pdfToJpgMaxBytes);
   const pdf = await openRenderablePdf(pdfjs, bytes, DOC_LIMITS.pdfToJpgMaxPages);
   const pages = pdf.pageCount;
@@ -63,16 +67,18 @@ export async function convertPdfToJpg(
         blob = search.attempt.blob;
         usedDpi = rendered.dpi * search.attempt.scale;
         if (search.outcome !== "met") overLimit++;
+      } else if (format === "png") {
+        blob = await canvas.convertToBlob({ type: "image/png" });
       } else {
         blob = await encodeJpeg(canvas, canvas.width, canvas.height, DEFAULT_QUALITY);
       }
       if (usedDpi < dpi - 0.5) reduced++;
       canvas.width = 0;
       canvas.height = 0;
-      const withDpi = await setJpegDpi(blob, Math.max(1, Math.round(usedDpi)));
-      const data = new Uint8Array(await withDpi.arrayBuffer());
+      const pageDpi = Math.max(1, Math.round(usedDpi));
+      const data = format === "png" ? setImageDpi(new Uint8Array(await blob.arrayBuffer()), pageDpi) : new Uint8Array(await (await setJpegDpi(blob, pageDpi)).arrayBuffer());
       largest = Math.max(largest, data.length);
-      files.push({ name: documentFileName(options.title, "jpg", pages === 1 ? "" : `page-${String(index + 1).padStart(digits, "0")}`), data });
+      files.push({ name: documentFileName(options.title, format, pages === 1 ? "" : `page-${String(index + 1).padStart(digits, "0")}`), data });
       onProgress?.((index + 1) / pages);
     }
   } finally {
@@ -80,12 +86,12 @@ export async function convertPdfToJpg(
   }
 
   if (files.length === 1) {
-    return { bytes: files[0].data, kind: "jpg", fileName: files[0].name, pages, largest, overLimit, reduced };
+    return { bytes: files[0].data, kind: format, fileName: files[0].name, pages, largest, overLimit, reduced };
   }
   const { default: JSZip } = await import("jszip");
   const zip = new JSZip();
-  // JPGs are already compressed; storing them avoids slow, pointless deflate.
+  // JPGs and PNGs are already compressed; storing them avoids slow, pointless deflate.
   for (const file of files) zip.file(file.name, file.data, { compression: "STORE" });
   const zipped = await zip.generateAsync({ type: "uint8array" });
-  return { bytes: zipped, kind: "zip", fileName: documentFileName(options.title, "zip", "jpg"), pages, largest, overLimit, reduced };
+  return { bytes: zipped, kind: "zip", fileName: documentFileName(options.title, "zip", format), pages, largest, overLimit, reduced };
 }

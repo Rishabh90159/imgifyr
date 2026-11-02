@@ -29,9 +29,9 @@ const faqs: FaqItem[] = [
       "It depends on the form. Most portals state a width and height in pixels (or centimetres at a given DPI) and a file size range; use exactly those numbers, as this tool doesn't assume a standard size.",
   },
   {
-    question: "How do I make a signature background transparent?",
+    question: "Can the signature have a transparent background?",
     answer:
-      "Choose Transparent as the background: paper and shadows disappear and the ink keeps smooth edges. Transparent images must be PNG, while most application forms want a white background instead.",
+      "Yes: choose Transparent and it's saved as a PNG without paper. Most application forms want a white background, though; a see-through signature is mainly for signing documents.",
   },
   {
     question: "Parts of my signature disappeared. What should I do?",
@@ -80,7 +80,8 @@ export default function SignatureResizerPage() {
           <p>
             Phone photos of paper have grey tones, shadows and noise that look dirty and bloat the file. Clean-up turns light
             pixels pure white (or transparent) and keeps the ink with smooth edges, often making the file several times
-            smaller.
+            smaller. Ink colour can also make faint strokes solid black or blue. To sign PDFs and letters, the{" "}
+            <Link href="/tools/transparent-signature">transparent signature maker</Link> starts with a see-through PNG.
           </p>
 
           <h2>Signature resize to a KB limit</h2>

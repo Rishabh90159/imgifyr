@@ -116,7 +116,8 @@ export default function HeicToJpgPage() {
             iPhone photos are often 3–8 MB as JPG. For a form with a limit, <Link href="/tools/image-compressor">compress the JPG</Link>,{" "}
             <Link href="/tools/image-resizer">resize it</Link> or use{" "}
             <Link href="/tools/resize-image-to-kb">resize an image to a target size in KB</Link>. Converting a whole camera
-            roll? The <Link href="/tools/bulk-image-resizer">bulk image resizer</Link> also accepts HEIC and saves JPGs.
+            roll? The <Link href="/tools/bulk-image-resizer">bulk image resizer</Link> also accepts HEIC and saves JPGs. For
+            further editing without extra loss, convert <Link href="/tools/heic-to-png">HEIC to PNG</Link> instead.
           </p>
 
           <PrivacyNote>

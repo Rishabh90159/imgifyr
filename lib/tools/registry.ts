@@ -56,7 +56,13 @@ export type ToolId =
   | "add-name-and-date-on-photo"
   | "change-image-dpi"
   | "resize-image-in-cm"
-  | "white-background-photo";
+  | "white-background-photo"
+  | "transparent-signature"
+  | "circle-crop"
+  | "jpg-to-webp"
+  | "webp-to-png"
+  | "heic-to-png"
+  | "pdf-to-png";
 
 export type ToolCategory = "resize" | "compress" | "convert" | "edit" | "size" | "application" | "units" | "pdf";
 
@@ -224,8 +230,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Convert JPG and JPEG photos to PNG without adding further compression loss.",
     linkText: "Convert JPG to PNG",
     category: "convert",
-    related: ["png-to-jpg", "heic-to-jpg", "image-resizer", "image-compressor"],
-    updated: "2026-10-07",
+    related: ["png-to-jpg", "jpg-to-webp", "heic-to-jpg", "image-resizer", "image-compressor"],
+    updated: "2026-10-31",
   },
   "png-to-jpg": {
     id: "png-to-jpg",
@@ -235,8 +241,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn PNG images into smaller JPG files, with a background of your choice for transparency.",
     linkText: "Convert PNG to JPG",
     category: "convert",
-    related: ["jpg-to-png", "webp-to-jpg", "image-to-jpg", "image-compressor", "resize-image-to-kb"],
-    updated: "2026-10-18",
+    related: ["jpg-to-png", "webp-to-jpg", "jpg-to-webp", "image-to-jpg", "image-compressor", "resize-image-to-kb"],
+    updated: "2026-10-31",
   },
   "webp-to-jpg": {
     id: "webp-to-jpg",
@@ -246,8 +252,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Convert WebP images saved from websites into JPG files that every app and upload form accepts.",
     linkText: "Convert WebP to JPG",
     category: "convert",
-    related: ["png-to-jpg", "image-to-jpg", "image-compressor", "resize-image-to-kb", "image-resizer"],
-    updated: "2026-10-18",
+    related: ["png-to-jpg", "webp-to-png", "image-to-jpg", "image-compressor", "resize-image-to-kb", "image-resizer"],
+    updated: "2026-10-31",
   },
   "heic-to-jpg": {
     id: "heic-to-jpg",
@@ -257,8 +263,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Convert iPhone HEIC and HEIF photos to JPG that opens everywhere, right in your browser.",
     linkText: "Convert HEIC photos to JPG",
     category: "convert",
-    related: ["image-to-jpg", "image-resizer", "image-compressor", "jpg-to-png"],
-    updated: "2026-10-18",
+    related: ["image-to-jpg", "heic-to-png", "image-resizer", "image-compressor", "jpg-to-png"],
+    updated: "2026-10-31",
   },
   "svg-to-png": {
     id: "svg-to-png",
@@ -290,8 +296,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop photos freely or to 1:1, 4:3, 16:9, 3:2 or a custom ratio, with zoom and rotation.",
     linkText: "Crop an image to any aspect ratio",
     category: "edit",
-    related: ["image-resizer", "image-compressor", "passport-photo-resizer", "signature-resizer", "merge-images", "photo-to-pdf"],
-    updated: "2026-10-18",
+    related: ["image-resizer", "circle-crop", "image-compressor", "passport-photo-resizer", "signature-resizer", "merge-images"],
+    updated: "2026-10-31",
   },
   "passport-photo-resizer": {
     id: "passport-photo-resizer",
@@ -312,8 +318,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop, clean up and resize a signature image to the pixel and KB limits of online forms.",
     linkText: "Resize a signature for an online form",
     category: "edit",
-    related: ["image-cropper", "20kb-photo", "resize-image-to-kb", "passport-photo-resizer", "50kb-photo", "merge-photo-and-signature"],
-    updated: "2026-10-06",
+    related: ["image-cropper", "transparent-signature", "20kb-photo", "resize-image-to-kb", "passport-photo-resizer", "merge-photo-and-signature"],
+    updated: "2026-10-31",
   },
   "bulk-image-resizer": {
     id: "bulk-image-resizer",
@@ -598,8 +604,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn every page of a PDF into a JPG image at 72, 150 or 300 DPI, with an optional size limit per image.",
     linkText: "Convert PDF pages to JPG images",
     category: "pdf",
-    related: ["jpg-to-pdf", "compress-pdf", "pdf-to-word", "resize-image-to-kb", "image-compressor"],
-    updated: "2026-10-18",
+    related: ["pdf-to-png", "jpg-to-pdf", "compress-pdf", "pdf-to-word", "resize-image-to-kb", "image-compressor"],
+    updated: "2026-10-31",
   },
   "rrb-photo": {
     id: "rrb-photo",
@@ -665,7 +671,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Merge a photo and signature into one image",
     category: "edit",
     related: ["signature-resizer", "add-name-and-date-on-photo", "merge-images", "resize-image-to-kb", "passport-photo-resizer", "20kb-photo"],
-    updated: "2026-10-30",
+    updated: "2026-10-31",
   },
   "add-name-and-date-on-photo": {
     id: "add-name-and-date-on-photo",
@@ -711,6 +717,72 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["background-remover", "passport-photo-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb", "png-to-jpg"],
     updated: "2026-10-30",
   },
+  "transparent-signature": {
+    id: "transparent-signature",
+    path: "/tools/transparent-signature",
+    name: "Transparent Signature Maker",
+    navLabel: "Transparent signature",
+    summary: "Turn a photo of your signature into a PNG with a see-through background, in its own ink or solid black or blue.",
+    linkText: "Make a transparent signature PNG",
+    category: "edit",
+    related: ["signature-resizer", "merge-photo-and-signature", "background-remover", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-10-31",
+  },
+  "circle-crop": {
+    id: "circle-crop",
+    path: "/tools/circle-crop",
+    name: "Circle Crop Image",
+    navLabel: "Circle crop",
+    summary: "Crop a photo or logo into a circle and save it as a transparent PNG, or a JPG with filled corners, with an optional border.",
+    linkText: "Crop an image into a circle",
+    category: "edit",
+    related: ["image-cropper", "background-remover", "resize-png", "image-resizer", "merge-images"],
+    updated: "2026-10-31",
+  },
+  "jpg-to-webp": {
+    id: "jpg-to-webp",
+    path: "/tools/jpg-to-webp",
+    name: "JPG to WebP Converter",
+    navLabel: "JPG to WebP",
+    summary: "Convert JPG or PNG images to WebP for faster web pages, keeping PNG transparency, with an optional size limit.",
+    linkText: "Convert JPG or PNG to WebP",
+    category: "convert",
+    related: ["webp-to-png", "webp-to-jpg", "image-compressor", "resize-webp", "png-to-jpg"],
+    updated: "2026-10-31",
+  },
+  "webp-to-png": {
+    id: "webp-to-png",
+    path: "/tools/webp-to-png",
+    name: "WebP to PNG Converter",
+    navLabel: "WebP to PNG",
+    summary: "Convert WebP images to lossless PNG files that keep transparent backgrounds and open in any editor.",
+    linkText: "Convert WebP to PNG",
+    category: "convert",
+    related: ["webp-to-jpg", "jpg-to-webp", "jpg-to-png", "resize-png", "image-to-jpg"],
+    updated: "2026-10-31",
+  },
+  "heic-to-png": {
+    id: "heic-to-png",
+    path: "/tools/heic-to-png",
+    name: "HEIC to PNG Converter",
+    navLabel: "HEIC to PNG",
+    summary: "Convert iPhone HEIC photos to lossless PNG files for editing, cut-outs and apps that don't open HEIC.",
+    linkText: "Convert HEIC to PNG",
+    category: "convert",
+    related: ["heic-to-jpg", "jpg-to-png", "image-to-jpg", "image-resizer", "background-remover"],
+    updated: "2026-10-31",
+  },
+  "pdf-to-png": {
+    id: "pdf-to-png",
+    path: "/tools/pdf-to-png",
+    name: "PDF to PNG Converter",
+    navLabel: "PDF to PNG",
+    summary: "Turn every page of a PDF into a sharp, lossless PNG image at 72, 150 or 300 DPI.",
+    linkText: "Convert PDF pages to PNG images",
+    category: "pdf",
+    related: ["pdf-to-jpg", "jpg-to-pdf", "compress-pdf", "pdf-to-word", "merge-pdf"],
+    updated: "2026-10-31",
+  },
 };
 
 /** Display order used across the site. */
@@ -730,6 +802,8 @@ export const toolOrder: ToolId[] = [
   "jpg-to-png",
   "png-to-jpg",
   "webp-to-jpg",
+  "jpg-to-webp",
+  "webp-to-png",
   "bulk-image-resizer",
   "resize-jpg",
   "resize-png",
@@ -739,9 +813,12 @@ export const toolOrder: ToolId[] = [
   "resize-image-in-cm",
   "change-image-dpi",
   "image-cropper",
+  "circle-crop",
   "passport-photo-resizer",
   "signature-resizer",
+  "transparent-signature",
   "heic-to-jpg",
+  "heic-to-png",
   "svg-to-png",
   "png-to-svg",
   "jpeg-to-jpg",
@@ -752,6 +829,7 @@ export const toolOrder: ToolId[] = [
   "merge-pdf",
   "compress-pdf",
   "pdf-to-jpg",
+  "pdf-to-png",
   "20kb-photo",
   "50kb-photo",
   "100kb-photo",

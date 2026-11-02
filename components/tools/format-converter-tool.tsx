@@ -10,7 +10,7 @@ import { toImageToolError } from "@/lib/image-processing/errors";
 import { FORMATS, type ImageMime, type OutputMime } from "@/lib/image-processing/formats";
 import type { ToolId } from "@/lib/tools/registry";
 import { formatBytes, KB, outputFileName, sizeBucket } from "@/lib/utils/format";
-import { useJobRunner, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
+import { useEncodeSupport, useJobRunner, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
 
 /**
@@ -48,6 +48,8 @@ export function FormatConverterTool({ config }: { config: ConverterConfig }) {
 
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool, accept: from, wrongFormatMessage });
   const runner = useJobRunner();
+  // Some browsers (older Safari) can read WebP but not create it.
+  const encodable = useEncodeSupport(to) !== false;
   const colorId = useId();
   const [quality, setQuality] = useState(DEFAULT_QUALITY);
   const [background, setBackground] = useState<BackgroundChoice>("white");
@@ -62,6 +64,7 @@ export function FormatConverterTool({ config }: { config: ConverterConfig }) {
     JSON.stringify([image.id, target.lossy && !limitBytes ? quality : null, limitBytes, needsBackground(image) ? fillColor : null]);
 
   const convert = async (image: SourceImage) => {
+    if (!encodable) return;
     setError(null);
     try {
       if (limitBytes && (to === "image/jpeg" || to === "image/webp")) {
@@ -129,6 +132,11 @@ export function FormatConverterTool({ config }: { config: ConverterConfig }) {
 
   const controls = source ? (
     <>
+      {!encodable ? (
+        <Alert tone="warning" title={`This browser can't create ${target.label} files`}>
+          Open this page in Chrome, Edge or Firefox to convert to {target.label}. Your image stays on your device.
+        </Alert>
+      ) : null}
       {needsBackground(source) ? (
         <>
           <Alert tone="info" title="This image has transparent areas">
@@ -198,7 +206,7 @@ export function FormatConverterTool({ config }: { config: ConverterConfig }) {
         </p>
       )}
 
-      <ActionButton onClick={() => convert(source)} busy={runner.busy} busyLabel="Converting…">
+      <ActionButton onClick={() => convert(source)} busy={runner.busy} busyLabel="Converting…" disabled={!encodable}>
         {currentResult ? `Convert to ${target.label} again` : `Convert to ${target.label}`}
       </ActionButton>
     </>

@@ -15,10 +15,13 @@ import { formatBytes, formatDimensions, KB, outputFileName, sizeBucket } from "@
 import { useJobRunner, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
 
-const TOOL = "signature-resizer" as const;
 const QUALITY = 0.92;
 
 type BackgroundChoice = "keep" | "white" | "transparent";
+type InkChoice = "original" | "black" | "blue";
+
+/** Ballpoint-style blue; forms that ask for a blue or black ink signature accept either solid colour. */
+const INK: Record<Exclude<InkChoice, "original">, [number, number, number]> = { black: [0, 0, 0], blue: [16, 46, 160] };
 type FormatChoice = "image/jpeg" | "image/png";
 
 function parseWhole(value: string): number | null {
@@ -32,13 +35,20 @@ interface SignatureResult {
   overMax: boolean;
 }
 
-export function SignatureResizerTool() {
+export function SignatureResizerTool({
+  tool: TOOL = "signature-resizer",
+  initialBackground = "white",
+}: {
+  tool?: "signature-resizer" | "transparent-signature";
+  initialBackground?: BackgroundChoice;
+} = {}) {
   useToolOpen(TOOL);
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
   const runner = useJobRunner();
   const thresholdId = useId();
 
-  const [background, setBackground] = useState<BackgroundChoice>("white");
+  const [background, setBackground] = useState<BackgroundChoice>(initialBackground);
+  const [ink, setInk] = useState<InkChoice>("original");
   const [threshold, setThreshold] = useState(190);
   const [format, setFormat] = useState<FormatChoice>("image/jpeg");
   const [width, setWidth] = useState("");
@@ -64,7 +74,8 @@ export function SignatureResizerTool() {
     runner.cancel();
     clear();
     setResult(null);
-    setBackground("white");
+    setBackground(initialBackground);
+    setInk("original");
     setThreshold(190);
     setFormat("image/jpeg");
     setWidth("");
@@ -106,7 +117,8 @@ export function SignatureResizerTool() {
       : null;
   const useTarget = mime === "image/jpeg" && maxKBValue !== null && !kbError;
 
-  const cleanup: BackgroundCleanup | undefined = background === "keep" ? undefined : { threshold, to: background };
+  const cleanup: BackgroundCleanup | undefined =
+    background === "keep" ? undefined : { threshold, to: background, ...(ink === "original" ? {} : { ink: INK[ink] }) };
   const settingsKey = JSON.stringify([source.id, cropState.transform, w, h, mime, cleanup, useTarget ? maxKBValue : null]);
   const current = result?.key === settingsKey ? result : null;
 
@@ -197,6 +209,19 @@ export function SignatureResizerTool() {
           </div>
           <p className="mt-1 text-xs text-muted">If parts of the signature disappear, move the slider left. If grey shadows remain, move it right.</p>
         </div>
+      ) : null}
+      {background !== "keep" ? (
+        <Segmented<InkChoice>
+          legend="Ink colour"
+          value={ink}
+          onChange={setInk}
+          options={[
+            { value: "original", label: "As written" },
+            { value: "black", label: "Black" },
+            { value: "blue", label: "Blue" },
+          ]}
+          hint="Black or Blue makes faint or uneven pen strokes one solid, darker colour."
+        />
       ) : null}
 
       <OrientationControls onRotate={cropState.rotate} onFlip={cropState.flip} flipped={cropState.flipH} />
@@ -310,7 +335,7 @@ export function SignatureResizerTool() {
             heading="Your signature image"
             original={source}
             output={current.image}
-            fileName={outputFileName(source.name, `signature-${current.image.width}x${current.image.height}`, FORMATS[current.image.mime].extension)}
+            fileName={outputFileName(source.name, `${TOOL === "transparent-signature" && background === "transparent" ? "transparent-" : ""}signature-${current.image.width}x${current.image.height}`, FORMATS[current.image.mime].extension)}
             downloadLabel={`Download ${FORMATS[current.image.mime].label}`}
             status={
               <>

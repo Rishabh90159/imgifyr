@@ -24,8 +24,8 @@ interface ImageCropperProps {
   aspect: number | null;
   crop: CropRect;
   onChange: (crop: CropRect) => void;
-  /** Overlay guide: rule-of-thirds grid, or a centred head outline for portrait photos. */
-  guide?: "thirds" | "portrait";
+  /** Overlay guide: rule-of-thirds grid, a centred head outline for portrait photos, or the circle a round crop keeps. */
+  guide?: "thirds" | "portrait" | "circle";
   /** Accessible name, e.g. "Crop area for your photo". */
   label?: string;
 }
@@ -328,7 +328,15 @@ function handlePosition(handle: Handle): React.CSSProperties {
   return { left: x, top: y };
 }
 
-function CropGuide({ guide }: { guide: "thirds" | "portrait" }) {
+function CropGuide({ guide }: { guide: "thirds" | "portrait" | "circle" }) {
+  if (guide === "circle") {
+    // The part a round crop keeps; the corners outside it become transparent or the background colour.
+    return (
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="50" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="0.8" strokeDasharray="2 1.5" vectorEffect="non-scaling-stroke" />
+      </svg>
+    );
+  }
   if (guide === "portrait") {
     // A neutral head-and-shoulders outline to help centre the face. It is not an official template.
     return (

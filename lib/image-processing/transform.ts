@@ -161,7 +161,7 @@ export function estimatePaper(lum: Float32Array, width: number, height: number):
  * `threshold` are background; pixels well below it are ink; a narrow band in
  * between is blended so anti-aliased pen strokes keep smooth edges.
  */
-export function cleanBackground(data: Uint8ClampedArray, width: number, height: number, { threshold, to }: BackgroundCleanup): void {
+export function cleanBackground(data: Uint8ClampedArray, width: number, height: number, { threshold, to, ink: inkColor }: BackgroundCleanup): void {
   const t = Math.min(255, Math.max(1, threshold));
   const band = Math.min(SOFT_BAND, t);
   const count = width * height;
@@ -186,7 +186,11 @@ export function cleanBackground(data: Uint8ClampedArray, width: number, height: 
     const r = Math.min(255, (data[i] * a + 255 * (1 - a)) * gain);
     const g = Math.min(255, (data[i + 1] * a + 255 * (1 - a)) * gain);
     const b = Math.min(255, (data[i + 2] * a + 255 * (1 - a)) * gain);
-    if (to === "white") {
+    if (inkColor) {
+      // One solid ink colour; the ink strength still gives smooth, anti-aliased strokes.
+      for (let c = 0; c < 3; c++) data[i + c] = to === "white" ? inkColor[c] * ink + 255 * (1 - ink) : ink === 0 ? 255 : inkColor[c];
+      data[i + 3] = to === "white" ? 255 : 255 * ink;
+    } else if (to === "white") {
       data[i] = r + (255 - r) * (1 - ink);
       data[i + 1] = g + (255 - g) * (1 - ink);
       data[i + 2] = b + (255 - b) * (1 - ink);

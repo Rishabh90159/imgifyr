@@ -221,6 +221,21 @@ describe("signature background clean-up", () => {
     expect(img.at(60, 29)[3]).toBe(255);
     expect(img.at(105, 30)[3]).toBe(255); // ink inside the shadow
   });
+
+  it("recolours the ink to solid blue on a transparent background", () => {
+    const img = photo();
+    cleanBackground(img.data, img.w, img.h, { threshold: 190, to: "transparent", ink: [16, 46, 160] });
+    expect(img.at(2, 2)[3]).toBe(0);
+    expect(img.at(60, 29)).toEqual([16, 46, 160, 255]);
+    expect(img.at(105, 30)).toEqual([16, 46, 160, 255]);
+  });
+
+  it("recolours the ink to black on white", () => {
+    const img = photo();
+    cleanBackground(img.data, img.w, img.h, { threshold: 190, to: "white", ink: [0, 0, 0] });
+    expect(img.at(117, 57)).toEqual([255, 255, 255, 255]);
+    expect(img.at(60, 29)).toEqual([0, 0, 0, 255]);
+  });
 });
 
 describe("photo presets", () => {

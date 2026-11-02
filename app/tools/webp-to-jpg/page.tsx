@@ -93,8 +93,8 @@ export default function WebpToJpgPage() {
             Forms often pair a JPG requirement with a size limit. <Link href="/tools/resize-image-to-kb">Resize image to KB</Link>{" "}
             reaches limits such as 50 KB or 100 KB and accepts WebP directly, or change dimensions with the{" "}
             <Link href="/tools/image-resizer">image resizer</Link>. To keep transparency, the{" "}
-            <Link href="/tools/image-compressor">image compressor</Link> can shrink it as WebP. PNG files? Try{" "}
-            <Link href="/tools/png-to-jpg">PNG to JPG</Link>.
+            <Link href="/tools/image-compressor">image compressor</Link> can shrink it as WebP, or use{" "}
+            <Link href="/tools/webp-to-png">WebP to PNG</Link>. PNG files? Try <Link href="/tools/png-to-jpg">PNG to JPG</Link>.
           </p>
 
           <PrivacyNote>

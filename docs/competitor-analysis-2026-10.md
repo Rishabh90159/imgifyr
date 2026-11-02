@@ -500,3 +500,27 @@ competing for the same intent. The exam hub links all four tools.
 
 Tests: unit 150 (new dpi.test.ts); seo 1035/1035 (42 pages in the 6-word overlap check, all < 15%);
 form-photo-tools 38/38 (new); print-and-convert 19, phase3 79, phase4 77, phase5 40 all pass.
+
+## 21. Six SEO pages from Google India autocomplete (31 Oct)
+
+Demand checked in Google India autocomplete on 31 Oct; top results checked for each. Every page reuses an existing
+pipeline, and each keyword is owned by one page only (lib/seo/keyword-map.ts, enforced by the unit test).
+
+| Page | Owns (keyword map) | Evidence | How it works |
+|---|---|---|---|
+| /tools/transparent-signature | transparent signature, transparent signature maker / png, remove background from signature | 10/10 suggestions, incl. "signature maker for ssc" | The signature tool opening on Transparent (PNG). New **Ink colour** (as written / black / blue) recolours kept ink and keeps soft edges (`BackgroundCleanup.ink`), also on the signature resizer, whose defaults are unchanged |
+| /tools/circle-crop | circle crop, circle crop image, round image png, circle crop with border | Top results thin (Fotor, Watermarkly, imageonline) | Square crop with a circle guide, masked with "destination-in" (anti-aliased), optional border; transparent PNG or JPG with filled corners |
+| /tools/jpg-to-webp | jpg to webp, png to webp, jpg to webp compressor | Very high volume, strong competitors | Converter, JPG and PNG in, optional 50–500 KB limit; Safari without WebP encoding gets a clear message |
+| /tools/webp-to-png | webp to png, webp to png transparent | Very high volume | Converter, lossless, transparency kept |
+| /tools/heic-to-png | heic to png, heic to png without losing quality | High volume | Converter; HEIC decoder still lazy-loaded |
+| /tools/pdf-to-png | pdf to png, pdf to png high quality | High volume | PDF renderer gained `format: "png"` (pHYs DPI written); no KB limit, which stays on PDF to JPG |
+
+Also: PNG to JPG got the 20–500 KB limit ("png to jpg under 50kb / 100kb / 200kb" were all ten suggestions).
+Siblings link to each new page; the signature resizer's transparency FAQ was reworded so the two pages don't compete.
+
+Not built: PAN card, voter ID and Aadhaar photo pages (no official spec; third-party sites disagree, e.g. PAN
+213×213 px ≤ 30 KB vs 197×276 px ≤ 50 KB vs 10–200 KB); more fixed-KB pages (would be near-duplicates).
+
+Tests: unit 152; seo 1134/1134 (51 pages in the 6-word overlap check, max 12.1%, an older pair);
+new-tools-oct31.mjs 34/34 (checks the downloaded files: transparency, ink colour, circle share 21.3% ≈ 1 − π/4,
+WebP ≤ 100 KB, PNG to JPG ≤ 50 KB, PDF page 1241 × 1756 at 150 DPI, mobile layout, no uploads).

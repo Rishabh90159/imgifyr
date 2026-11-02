@@ -28,7 +28,7 @@ export async function runDocumentJob(request: DocumentRequest, onProgress: (frac
     }
     case "pdf-to-jpg": {
       const [pdfjs, { convertPdfToJpg }] = await Promise.all([loadPdfJs(), import("./pdf-to-jpg")]);
-      const result = await convertPdfToJpg(pdfjs, new Uint8Array(request.data), { dpi: request.dpi, maxBytes: request.maxBytes, title: request.title, onProgress });
+      const result = await convertPdfToJpg(pdfjs, new Uint8Array(request.data), { dpi: request.dpi, maxBytes: request.maxBytes, format: request.format, title: request.title, onProgress });
       return { type: "pdf-to-jpg", ...result };
     }
   }

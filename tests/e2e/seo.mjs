@@ -59,6 +59,12 @@ const toolPages = [
   "/tools/change-image-dpi",
   "/tools/resize-image-in-cm",
   "/tools/white-background-photo",
+  "/tools/transparent-signature",
+  "/tools/circle-crop",
+  "/tools/jpg-to-webp",
+  "/tools/webp-to-png",
+  "/tools/heic-to-png",
+  "/tools/pdf-to-png",
 ];
 // Pages with overlapping intent whose text must stay distinct.
 const overlapPages = [
@@ -88,6 +94,16 @@ const overlapPages = [
   "/tools/resize-image-in-cm",
   "/tools/change-image-dpi",
   "/tools/add-name-and-date-on-photo",
+  // Added 31 Oct 2026 next to their siblings: signature-resizer, image-cropper, the WebP/HEIC converters, pdf-to-jpg.
+  "/tools/signature-resizer",
+  "/tools/transparent-signature",
+  "/tools/image-cropper",
+  "/tools/circle-crop",
+  "/tools/jpg-to-webp",
+  "/tools/webp-to-png",
+  "/tools/heic-to-png",
+  "/tools/pdf-to-jpg",
+  "/tools/pdf-to-png",
 ];
 const kbPages = ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
@@ -95,7 +111,7 @@ const applicationPages = ["/tools/ssc-photo", "/tools/upsc-photo", "/tools/ibps-
 const OFFICIAL = /href="https:\/\/(www\.ibps\.in|sbi\.bank\.in|ssc\.gov\.in|neet\.nta\.nic\.in|upsconline\.nic\.in|upsc\.gov\.in|www\.passportindia\.gov\.in|www\.gov\.uk|www\.canada\.ca|rrb\.indianrailways\.gov\.in|upsssc\.gov\.in|dsssb\.delhi\.gov\.in|cdnbbsr\.s3waas\.gov\.in|apply\.upessc\.org)\//;
 const DISCLAIMER = "Application requirements can change. Always verify the final image against the latest official";
 const PDF_HUB = "/tools/pdf-tools";
-const pdfPages = ["/tools/word-to-pdf", "/tools/pdf-to-word", "/tools/merge-pdf", "/tools/compress-pdf", "/tools/pdf-to-jpg"];
+const pdfPages = ["/tools/word-to-pdf", "/tools/pdf-to-word", "/tools/merge-pdf", "/tools/compress-pdf", "/tools/pdf-to-jpg", "/tools/pdf-to-png"];
 const pages = ["/", "/tools", HUB, PDF_HUB, ...toolPages, "/about", "/methodology", "/privacy", "/terms", "/contact"];
 
 const results = [];
@@ -210,7 +226,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 42 && worst.score < 0.15,
+    entries.length === 51 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
@@ -224,7 +240,7 @@ for (const route of toolPages) {
 }
 
 // Heavy tool libraries must not load on pages that don't need them.
-for (const route of ["/", "/tools", "/tools/image-resizer", "/tools/background-remover", "/tools/white-background-photo", "/tools/photo-to-pdf", "/tools/image-upscaler"]) {
+for (const route of ["/", "/tools", "/tools/image-resizer", "/tools/background-remover", "/tools/white-background-photo", "/tools/photo-to-pdf", "/tools/image-upscaler", "/tools/heic-to-png", "/tools/pdf-to-png"]) {
   const html = await (await fetch(BASE + route)).text();
   const srcs = [...new Set([...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]))];
   let heavy = false;

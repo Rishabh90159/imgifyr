@@ -208,7 +208,8 @@ const sheet = (page) => page.locator('section[aria-labelledby="print-sheet-headi
   const page = await openPage("/tools/png-to-jpg");
   await page.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "noisy-transparent.png"));
   await page.locator('section[aria-labelledby="result-heading"]').waitFor({ timeout: 60_000 });
-  check("png2jpg: no size-limit option on the plain converter", (await page.getByText("Maximum file size").count()) === 0 && (await page.getByText(/JPG quality/).count()) >= 1);
+  // Since 31 Oct 2026 PNG to JPG offers a size limit too; quality stays the default (No limit).
+  check("png2jpg: size limit offered, quality slider by default", (await page.getByText("Maximum file size", { exact: true }).count()) === 1 && (await page.getByText(/JPG quality/).count()) >= 1);
   await page.close();
   const other = await openPage("/tools/image-resizer");
   await other.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "gradient.bmp"));

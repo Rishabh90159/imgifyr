@@ -44,6 +44,8 @@ export interface ImageTransform {
 export interface BackgroundCleanup {
   threshold: number;
   to: "white" | "transparent";
+  /** Recolour the kept ink to this RGB colour (e.g. pure black or blue), keeping its soft edges. */
+  ink?: [number, number, number];
 }
 
 /** Decode the image to confirm it is readable and measure it. */

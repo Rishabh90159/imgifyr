@@ -41,7 +41,8 @@ export type AnalyticsEvent =
   | "unit_converted"
   | "dpi_changed"
   | "photo_signature_merged"
-  | "name_date_added";
+  | "name_date_added"
+  | "circle_crop_completed";
 
 export interface AnalyticsProps {
   tool?: string;

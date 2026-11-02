@@ -15,7 +15,7 @@ export type DocumentRequest =
   | { type: "merge-pdf"; files: { name: string; data: ArrayBuffer }[] }
   | { type: "pdf-to-word"; data: ArrayBuffer; title: string }
   | { type: "compress-pdf"; data: ArrayBuffer; targetBytes: number }
-  | { type: "pdf-to-jpg"; data: ArrayBuffer; dpi: number; maxBytes?: number; title: string };
+  | { type: "pdf-to-jpg"; data: ArrayBuffer; dpi: number; maxBytes?: number; format?: "jpg" | "png"; title: string };
 
 export type DocumentResult =
   | { type: "inspect-pdf"; summary: PdfSummary }

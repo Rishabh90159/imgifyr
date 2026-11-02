@@ -116,7 +116,7 @@ export default function ImageCropperPage() {
           <p>
             The <Link href="/tools/passport-photo-resizer">passport photo resizer</Link> crops to a required size in pixels or
             millimetres, and the <Link href="/tools/signature-resizer">signature resizer</Link> cleans up and sizes a
-            signature scan.
+            signature scan. For a round profile picture or logo, use <Link href="/tools/circle-crop">circle crop</Link>.
           </p>
 
           <PrivacyNote>
