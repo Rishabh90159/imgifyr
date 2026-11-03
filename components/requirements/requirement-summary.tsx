@@ -129,8 +129,11 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
                 </tr>
               </thead>
               <tbody className="text-ink-soft">
-                <Row label="Pixel size" specs={specs} value={pixelText} />
-                <Row label="Physical size" specs={specs} value={(s) => s.physical ?? "—"} />
+                {/* A row the notice gives no value for at all (UPESSC states only size and format) is left out, not shown blank. */}
+                {specs.some((s) => s.widthPx && s.heightPx) ? <Row label="Pixel size" specs={specs} value={pixelText} /> : null}
+                {specs.some((s) => s.physical) ? (
+                  <Row label="Physical size" specs={specs} value={(s) => s.physical ?? "—"} />
+                ) : null}
                 <Row label="File size" specs={specs} value={(s) => formatKbRange(s) ?? "—"} />
                 <Row label="Format" specs={specs} value={(s) => s.format ?? "Not stated"} />
               </tbody>
