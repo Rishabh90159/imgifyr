@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { DownloadButton } from "@/components/download-button/download-button";
 import { ImagePreview } from "@/components/image-preview/image-preview";
-import { useObjectUrl, type SourceImage } from "@/components/tools/hooks";
+import { useObjectUrl, useRevealResult, type SourceImage } from "@/components/tools/hooks";
 import { FORMATS, type ImageMime } from "@/lib/image-processing/formats";
 import type { AnalyticsEvent } from "@/lib/analytics";
 import type { ToolId } from "@/lib/tools/registry";
@@ -53,13 +52,7 @@ export function ResultPanel({
   growthExpected = false,
 }: ResultPanelProps) {
   const url = useObjectUrl(output.blob);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
-  // Bring the result into view and announce it, especially on small screens.
-  useEffect(() => {
-    headingRef.current?.focus({ preventScroll: true });
-    headingRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [output.blob]);
+  const headingRef = useRevealResult(output.blob);
 
   const saved = percentSaved(original.size, output.blob.size);
   const rows = [
@@ -78,7 +71,7 @@ export function ResultPanel({
     <section aria-labelledby="result-heading" className="rounded-lg border border-line bg-canvas shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line px-4 py-4 sm:px-5">
         <div>
-          <h2 id="result-heading" ref={headingRef} tabIndex={-1} className="text-lg font-bold text-ink outline-none">
+          <h2 id="result-heading" ref={headingRef} tabIndex={-1} className="scroll-mt-24 text-lg font-bold text-ink outline-none">
             {heading}
           </h2>
           <p className="mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-muted" aria-live="polite">

@@ -181,6 +181,27 @@ export function useEncodeSupport(mime: OutputMime): boolean | null {
   return supported;
 }
 
+/**
+ * Brings a finished result into view when `trigger` changes to a new result: its heading lands near the top of
+ * the screen, so the download button under it is visible on a phone instead of off-screen below the settings.
+ * Focus moves to the heading for screen readers. If the heading is already in the upper part of the screen
+ * (typical on a desktop), the page doesn't move. Attach the returned ref to the result heading.
+ */
+export function useRevealResult<T extends HTMLElement = HTMLHeadingElement>(trigger: unknown) {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const element = ref.current;
+    if (!trigger || !element) return;
+    element.focus({ preventScroll: true });
+    const { top } = element.getBoundingClientRect();
+    if (top >= 72 && top <= window.innerHeight * 0.4) return;
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // The heading's scroll-margin keeps it clear of the sticky site header.
+    element.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+  }, [trigger]);
+  return ref;
+}
+
 /** Fires the tool_open analytics event once per page view. */
 export function useToolOpen(tool: ToolId) {
   useEffect(() => {

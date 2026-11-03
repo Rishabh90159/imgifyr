@@ -13,7 +13,7 @@ import { toImageToolError, type ImageToolError } from "@/lib/image-processing/er
 import { RASTER_INPUT_FORMATS } from "@/lib/image-processing/formats";
 import { mergeLayout, type MergeLayoutOptions } from "@/lib/image-processing/merge-layout";
 import { formatBytes, formatDimensions, KB, sizeBucket } from "@/lib/utils/format";
-import { useJobRunner, useObjectUrl, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
+import { useJobRunner, useObjectUrl, useRevealResult, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
 import { ActionButton } from "./tool-workspace";
 
 const TOOL = "merge-photo-and-signature" as const;
@@ -71,6 +71,7 @@ export function PhotoSignatureTool() {
   const key = p && s ? JSON.stringify([p.id, s.id, layoutOptions, cleanSignature, outWidth ?? null, maxKB ?? null]) : "";
   const current = result?.key === key ? result : null;
   const url = useObjectUrl(current?.blob ?? null);
+  const resultHeading = useRevealResult(current ? url : null);
 
   const join = async (photoImage: SourceImage, signatureImage: SourceImage) => {
     if (settingsError || !finalSize) return;
@@ -253,7 +254,7 @@ export function PhotoSignatureTool() {
         <section aria-labelledby="result-heading" className="rounded-lg border border-line bg-canvas shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line px-4 py-4 sm:px-5">
             <div>
-              <h2 id="result-heading" tabIndex={-1} className="text-lg font-bold text-ink outline-none">
+              <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="scroll-mt-24 text-lg font-bold text-ink outline-none">
                 Your photo with signature
               </h2>
               <p className="mt-0.5 text-sm text-muted" aria-live="polite">

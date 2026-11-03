@@ -13,7 +13,7 @@ import { searchTargetSize } from "@/lib/image-processing/target-size";
 import { buildPdf, displaySize, MARGINS, PAGE_SIZES, placeImage, type Fit, type Orientation, type PageOptions, type PageSize, type PdfImage } from "@/lib/pdf/pdf-writer";
 import type { ToolId } from "@/lib/tools/registry";
 import { countBucket, formatBytes, KB } from "@/lib/utils/format";
-import { useObjectUrl, useToolOpen } from "./hooks";
+import { useObjectUrl, useRevealResult, useToolOpen } from "./hooks";
 import { ImageListView, useImageList, type ListImage } from "./image-list";
 import { ActionButton } from "./tool-workspace";
 
@@ -110,6 +110,7 @@ export function PdfTool({ config }: { config: PdfToolConfig }) {
   const key = JSON.stringify([list.ready.map((item) => item.id), options, limitBytes ? null : quality, limitBytes]);
   const current = result?.key === key ? result : null;
   const url = useObjectUrl(current?.blob ?? null);
+  const resultHeading = useRevealResult(current ? url : null);
 
   const create = async () => {
     const images = list.ready;
@@ -313,7 +314,7 @@ export function PdfTool({ config }: { config: PdfToolConfig }) {
         <section aria-labelledby="result-heading" className="rounded-lg border border-line bg-canvas shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-5">
             <div>
-              <h2 id="result-heading" tabIndex={-1} className="text-lg font-bold text-ink outline-none">
+              <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="scroll-mt-24 text-lg font-bold text-ink outline-none">
                 Your PDF is ready
               </h2>
               <p className="mt-0.5 text-sm text-muted" aria-live="polite">

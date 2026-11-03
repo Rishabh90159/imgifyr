@@ -24,6 +24,8 @@ interface ImageDropzoneProps {
   acceptHandOff?: boolean;
   /** Overrides the default privacy line under the button. */
   privacyNote?: string;
+  /** With onFiles: the most files accepted at once, shown in the hint. */
+  maxFiles?: number;
 }
 
 /**
@@ -40,6 +42,7 @@ export function ImageDropzone({
   prompt = "Drop your image here",
   acceptHandOff = true,
   privacyNote,
+  maxFiles,
 }: ImageDropzoneProps) {
   const multiple = Boolean(onFiles);
   const inputId = useId();
@@ -147,7 +150,7 @@ export function ImageDropzone({
 
       <p id={hintId} className="mt-4 text-sm text-muted">
         {acceptOverride?.label ?? acceptedLabels(accept)} · up to {Math.round(LIMITS.maxFileBytes / MB)} MB
-        {multiple ? " each · select as many as you need" : " · one image at a time"}
+        {multiple ? (maxFiles ? ` each · up to ${maxFiles} at a time` : " each · select as many as you need") : " · one image at a time"}
         <span className="hidden sm:inline"> · or paste with Ctrl+V</span>
       </p>
       <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-accent-ink">

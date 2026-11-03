@@ -1,36 +1,28 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
-import { ResultPanel, type ResultImage } from "@/components/before-after/result-panel";
+import { lazy, Suspense, useEffect, useId, useState } from "react";
+import { ResultPanel } from "@/components/before-after/result-panel";
 import { Alert } from "@/components/controls/alert";
 import { Checkbox, FieldLabel, inputClass, QualitySlider, Segmented } from "@/components/controls/fields";
 import { track, type AnalyticsEvent } from "@/lib/analytics";
 import { toImageToolError } from "@/lib/image-processing/errors";
 import { ALL_INPUT_FORMATS, FORMATS, LIMITS } from "@/lib/image-processing/formats";
 import { QUALITY } from "@/lib/image-processing/target-size";
-import type { TargetResult } from "@/lib/image-processing/types";
 import type { ToolId } from "@/lib/tools/registry";
 import { formatBytes, formatDimensions, formatExactBytes, KB, MB, outputFileName, percentSaved, sizeBucket } from "@/lib/utils/format";
 import { useEncodeSupport, useJobRunner, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
+import { MAX_BATCH, reduceToTarget, type TargetOutput, type TargetSettings } from "./target-size-shared";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
+
+// Batch mode is only needed when several photos are chosen, so its code downloads only then.
+const TargetSizeBatch = lazy(() => import("./target-size-batch").then((module) => ({ default: module.TargetSizeBatch })));
 
 const DEFAULT_PRESETS_KB = [20, 50, 100, 200, 500];
 const MIN_TARGET_BYTES = 2 * KB;
 const MAX_TARGET_BYTES = 20 * MB;
 
 type Unit = "KB" | "MB";
-type OutputMime = "image/jpeg" | "image/webp";
-
-interface TargetState {
-  key: string;
-  result: TargetResult;
-  image: ResultImage;
-  targetBytes: number;
-  /** Lower limit of a size range, when the form sets one. */
-  minBytes: number | null;
-  /** Bytes of padding added to reach the minimum (0 when none was needed). */
-  paddedBytes: number;
-}
+type OutputMime = TargetSettings["format"];
 
 /** Optional minimum in KB, for forms with a range such as 20–50 KB. */
 function parseMinimum(value: string, targetBytes: number | null): { bytes: number | null; error: string | null } {
@@ -52,6 +44,11 @@ export interface TargetSizeToolProps {
   presetsKB?: number[];
   /** Read ?target= from the URL (only the generic exact-KB page uses this). */
   readTargetFromUrl?: boolean;
+  /**
+   * Single-purpose pages (20KB, 50KB…): start as soon as a photo is chosen, with the settings folded away
+   * behind "Change settings", since the page already says what the target is.
+   */
+  quickStart?: boolean;
   /** Analytics events for a dedicated size page (e.g. the 20KB photo page). */
   events?: { started: AnalyticsEvent; completed: AnalyticsEvent; downloaded?: AnalyticsEvent };
 }
@@ -71,13 +68,15 @@ function parseTarget(preset: string, custom: string, unit: Unit): { bytes: numbe
 /**
  * Reduce an image to a target file size with the shared exact-KB engine.
  * Used by the generic "Resize Image to KB" page and by each dedicated size page
- * (20KB, 50KB, 100KB, 200KB), which preselect their own target.
+ * (20KB, 50KB, 100KB, 200KB), which preselect their own target. Choosing several
+ * photos at once (up to MAX_BATCH) switches to batch mode with the same settings.
  */
 export function TargetSizeTool({
   tool = "resize-image-to-kb",
   defaultTargetKB = 100,
   presetsKB = DEFAULT_PRESETS_KB,
   readTargetFromUrl = false,
+  quickStart = false,
   events,
 }: TargetSizeToolProps) {
   useToolOpen(tool);
@@ -96,7 +95,9 @@ export function TargetSizeTool({
   const [maxWidth, setMaxWidth] = useState("");
   const [qualityCap, setQualityCap] = useState<number>(QUALITY.max);
   const [optionsOpen, setOptionsOpen] = useState(false);
-  const [state, setState] = useState<TargetState | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [state, setState] = useState<(TargetOutput & { key: string; settings: TargetSettings }) | null>(null);
+  const [batchFiles, setBatchFiles] = useState<File[] | null>(null);
 
   // Links such as /tools/resize-image-to-kb?target=50 preselect a size.
   useEffect(() => {
@@ -126,59 +127,35 @@ export function TargetSizeTool({
     maxWidthValue !== null && (!Number.isInteger(maxWidthValue) || maxWidthValue < 16 || maxWidthValue > LIMITS.maxOutputSide)
       ? `Enter a whole number of pixels between 16 and ${LIMITS.maxOutputSide.toLocaleString("en-US")}, or leave it empty.`
       : null;
-  const capped = source && maxWidthValue && !widthError && maxWidthValue < source.width;
-  const exact = capped
-    ? { width: maxWidthValue, height: Math.max(1, Math.round((maxWidthValue * source.height) / source.width)) }
-    : null;
+  const exact =
+    source && maxWidthValue && !widthError && maxWidthValue < source.width
+      ? { width: maxWidthValue, height: Math.max(1, Math.round((maxWidthValue * source.height) / source.width)) }
+      : null;
   const customQuality = qualityCap < QUALITY.max - 0.001;
 
-  const settingsKey = source ? JSON.stringify([source.id, target.bytes, minBytes, format, allowResize, exact, customQuality ? qualityCap : null]) : "";
-  const current = state && state.key === settingsKey ? state : null;
+  const settingsError = target.error ?? widthError ?? min.error;
+  const settings: TargetSettings | null =
+    target.bytes && !settingsError
+      ? { targetBytes: target.bytes, minBytes, format, allowResize, maxWidth: maxWidthValue, maxQuality: customQuality ? qualityCap : null }
+      : null;
+  const settingsKey = JSON.stringify(settings);
+  const keyFor = (image: SourceImage) => `${image.id}|${settingsKey}`;
+  const current = source && state && state.key === keyFor(source) ? state : null;
 
   const run = async (image: SourceImage) => {
-    if (!target.bytes || widthError || min.error) return;
+    if (!settings) return;
     setError(null);
     try {
-      const result = await runner.run({
-        kind: "target",
-        sourceId: image.id,
-        file: image.file,
-        sourceMime: image.mime,
-        targetBytes: target.bytes,
-        mime: format,
-        allowResize,
-        background: "#ffffff",
-        width: exact?.width,
-        height: exact?.height,
-        maxQuality: customQuality ? qualityCap : undefined,
-      });
-      if (!result) return;
-      let outMime = result.usedOriginal ? image.mime : format;
-      let blob = result.blob;
-      let paddedBytes = 0;
-      // Under the form's minimum: add bytes that image viewers ignore, so the picture stays exactly the same.
-      if (minBytes && blob.size < minBytes) {
-        const padded = await runner.run({ kind: "inflate", sourceId: `${image.id}:min:${blob.size}`, file: blob, sourceMime: outMime, targetBytes: minBytes, method: "pad" });
-        if (!padded) return;
-        paddedBytes = padded.paddedBytes;
-        blob = padded.blob;
-        outMime = "image/jpeg";
-      }
-      setState({
-        key: settingsKey,
-        result,
-        targetBytes: target.bytes,
-        minBytes,
-        paddedBytes,
-        image: { blob, width: result.width, height: result.height, mime: outMime },
-      });
+      const output = await reduceToTarget(runner.run, image, settings);
+      if (!output) return;
+      setState({ ...output, key: keyFor(image), settings });
       track(events?.completed ?? "resize_completed", {
         tool,
         input_format: FORMATS[image.mime].label,
-        output_format: FORMATS[outMime].label,
+        output_format: FORMATS[output.image.mime].label,
         size_bucket: sizeBucket(image.size),
         target_kb: preset === "custom" ? undefined : Number(preset),
-        outcome: result.usedOriginal ? "already_under" : result.outcome,
+        outcome: output.result.usedOriginal ? "already_under" : output.result.outcome,
       });
     } catch (caught) {
       const normalized = toImageToolError(caught);
@@ -193,20 +170,42 @@ export function TargetSizeTool({
     if (!loaded) return;
     setState(null);
     if (events) track(events.started, { tool, input_format: FORMATS[loaded.mime].label, size_bucket: sizeBucket(loaded.size) });
+    // The page already names the target: go straight to the result.
+    if (quickStart) await run(loaded);
+  };
+
+  const onFiles = (files: File[]) => {
+    if (files.length <= 1) {
+      if (files[0]) void onFile(files[0]);
+      return;
+    }
+    runner.cancel();
+    clear();
+    setState(null);
+    setBatchFiles(files);
   };
 
   const reset = () => {
     runner.cancel();
     clear();
     setState(null);
+    setBatchFiles(null);
     setMaxWidth("");
     setQualityCap(QUALITY.max);
     setOptionsOpen(false);
+    setSettingsOpen(false);
   };
 
   const targetLabel = target.bytes ? formatBytes(target.bytes) : "";
+  const summary = settings
+    ? [
+        minBytes ? `${formatBytes(minBytes)}–${targetLabel}` : `${targetLabel} or less`,
+        FORMATS[format].label,
+        allowResize ? "may reduce dimensions" : "keeps dimensions",
+      ].join(" · ")
+    : "one setting needs fixing (shown below)";
 
-  const controls = source ? (
+  const settingsFields = (
     <>
       <Segmented<string>
         legend="Target file size"
@@ -302,9 +301,7 @@ export function TargetSizeTool({
       >
         <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between px-4 text-sm font-medium text-ink [&::-webkit-details-marker]:hidden">
           More options: width and quality
-          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className="transition-transform group-open:rotate-180">
-            <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
-          </svg>
+          <Chevron />
         </summary>
         <div className="space-y-5 border-t border-line px-4 py-4">
           <div className="max-w-[14rem]">
@@ -313,7 +310,7 @@ export function TargetSizeTool({
               id={`${optionsId}-width`}
               inputMode="numeric"
               autoComplete="off"
-              placeholder={`Optional, now ${source.width}`}
+              placeholder={source ? `Optional, now ${source.width}` : "Optional"}
               value={maxWidth}
               onChange={(event) => setMaxWidth(event.target.value)}
               aria-invalid={Boolean(widthError)}
@@ -341,6 +338,46 @@ export function TargetSizeTool({
           />
         </div>
       </details>
+    </>
+  );
+
+  // Single-purpose pages show one summary line; the full settings open on request.
+  const settingsBlock = quickStart ? (
+    <details className="group rounded-md border border-line" open={settingsOpen} onToggle={(event) => setSettingsOpen(event.currentTarget.open)}>
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-2 text-sm [&::-webkit-details-marker]:hidden">
+        <span className="min-w-0">
+          <span className="font-medium text-ink">Settings: </span>
+          <span className={settings ? "text-ink-soft" : "font-medium text-danger-ink"}>{summary}</span>
+        </span>
+        <span className="flex shrink-0 items-center gap-1.5 font-medium text-accent">
+          Change settings
+          <Chevron />
+        </span>
+      </summary>
+      <div className="space-y-5 border-t border-line px-4 py-4">{settingsFields}</div>
+    </details>
+  ) : (
+    settingsFields
+  );
+
+  if (batchFiles) {
+    return (
+      <Suspense fallback={<p className="rounded-lg border border-line bg-canvas p-5 text-sm text-muted">Preparing your photos…</p>}>
+        <TargetSizeBatch
+          tool={tool}
+          files={batchFiles}
+          settings={settings}
+          settingsKey={settingsKey}
+          settingsPanel={settingsBlock}
+          onReset={reset}
+        />
+      </Suspense>
+    );
+  }
+
+  const controls = source ? (
+    <>
+      {settingsBlock}
 
       {source.hasTransparency && format === "image/jpeg" ? (
         <Alert tone="info" title="Transparent areas will become white">
@@ -348,15 +385,18 @@ export function TargetSizeTool({
         </Alert>
       ) : null}
 
-      <ActionButton
-        onClick={() => run(source)}
-        busy={runner.busy}
-        busyLabel="Finding the best quality…"
-        progress={runner.progress}
-        disabled={Boolean(target.error || widthError || min.error)}
-      >
-        {target.bytes ? `Resize to ${targetLabel}` : "Resize image"}
-      </ActionButton>
+      {/* With quick start the result is made automatically; the button returns when the settings change. */}
+      {!quickStart || !current || runner.busy ? (
+        <ActionButton
+          onClick={() => run(source)}
+          busy={runner.busy}
+          busyLabel="Finding the best quality…"
+          progress={runner.progress}
+          disabled={Boolean(settingsError)}
+        >
+          {target.bytes ? `Resize to ${targetLabel}` : "Resize image"}
+        </ActionButton>
+      ) : null}
     </>
   ) : null;
 
@@ -367,11 +407,21 @@ export function TargetSizeTool({
       loading={loading}
       error={error}
       onFile={onFile}
+      onFiles={onFiles}
+      maxFiles={MAX_BATCH}
       onReset={reset}
       prompt={target.bytes && preset !== "custom" ? `Drop an image to reduce to ${targetLabel}` : "Drop an image to resize to a file size"}
       controls={controls}
       result={source && current ? <TargetResultView tool={tool} source={source} state={current} downloadEvent={events?.downloaded} /> : null}
     />
+  );
+}
+
+function Chevron() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className="transition-transform group-open:rotate-180">
+      <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
+    </svg>
   );
 }
 
@@ -383,10 +433,11 @@ function TargetResultView({
 }: {
   tool: ToolId;
   source: SourceImage;
-  state: TargetState;
+  state: TargetOutput & { settings: TargetSettings };
   downloadEvent?: AnalyticsEvent;
 }) {
-  const { result, image, targetBytes, minBytes, paddedBytes } = state;
+  const { result, image, paddedBytes, settings } = state;
+  const { targetBytes, minBytes } = settings;
   const size = image.blob.size;
   const met = size <= targetBytes && (!minBytes || size >= minBytes);
   const range = minBytes ? `${formatBytes(minBytes)}–${formatBytes(targetBytes)}` : null;

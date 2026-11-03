@@ -5,7 +5,7 @@ import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
 import { Segmented } from "@/components/controls/fields";
 import { DownloadButton } from "@/components/download-button/download-button";
-import { useObjectUrl, useToolOpen } from "@/components/tools/hooks";
+import { useObjectUrl, useRevealResult, useToolOpen } from "@/components/tools/hooks";
 import { ActionButton } from "@/components/tools/tool-workspace";
 import { track } from "@/lib/analytics";
 import { runDocumentRequest } from "@/lib/documents/client";
@@ -51,8 +51,6 @@ export function MergePdfTool() {
   const controller = useRef<AbortController | null>(null);
   const checks = useRef<Promise<void>>(Promise.resolve());
   const addInputId = useId();
-  const resultHeading = useRef<HTMLHeadingElement>(null);
-
   useEffect(() => () => controller.current?.abort(), []);
 
   const ready = items.filter((item) => item.status === "ready");
@@ -61,10 +59,7 @@ export function MergePdfTool() {
   const key = [ready.map((item) => item.id).join(","), limitBytes].join("|");
   const current = result?.key === key ? result : null;
   const url = useObjectUrl(current?.blob ?? null);
-
-  useEffect(() => {
-    if (current) resultHeading.current?.focus();
-  }, [current]);
+  const resultHeading = useRevealResult(current ? url : null);
 
   const update = (id: string, patch: Partial<PdfItem>) => setItems((list) => list.map((item) => (item.id === id ? { ...item, ...patch } : item)));
 
@@ -358,7 +353,7 @@ export function MergePdfTool() {
         <section aria-labelledby="result-heading" className="rounded-lg border border-line bg-canvas shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-5">
             <div>
-              <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="text-lg font-bold text-ink outline-none">
+              <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="scroll-mt-24 text-lg font-bold text-ink outline-none">
                 Your merged PDF is ready
               </h2>
               <p className="mt-0.5 text-sm text-muted">

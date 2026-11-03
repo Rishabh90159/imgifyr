@@ -524,3 +524,42 @@ Not built: PAN card, voter ID and Aadhaar photo pages (no official spec; third-p
 Tests: unit 152; seo 1134/1134 (51 pages in the 6-word overlap check, max 12.1%, an older pair);
 new-tools-oct31.mjs 34/34 (checks the downloaded files: transparency, ink colour, circle share 21.3% ≈ 1 − π/4,
 WebP ≤ 100 KB, PNG to JPG ≤ 50 KB, PDF page 1241 × 1756 at 150 DPI, mobile layout, no uploads).
+
+## 22. Phone experience vs competitors, and fixes (3 Nov)
+
+Same task on each site, measured in Edge at 390 px with a 4× slower CPU and Slow 4G: open the "50 KB" page,
+pick a 6 MB phone photo, get a file. (11zon's 50 KB page returned "Page not found" in a phone browser.)
+
+| | Imgifyr | Pi7 | imresizer | SimpleImageResizer | iLoveIMG |
+|---|---|---|---|---|---|
+| Page loaded | **1.7 s** | 2.6 s | 2.5 s | 11.5 s | 8.2 s |
+| Data on open | **253 KB** | 446 KB | 866 KB | 2,097 KB | 957 KB |
+| Third-party hosts | **3** | 94 (14 ad networks) | 13 | 93 | 13 |
+| CLS | 0 | 0 | 0.007 | 0.121 | 0 |
+| Tap → file | 2.3 s, 49.8 KB, nothing uploaded | 2.1 s; Download blanked the screen (ad), no file in 20 s | – | – | 72.5 s upload, 1.67 MB (no KB target) |
+
+imresizer now copies the "nothing is uploaded / exam form" wording, so that claim alone no longer differentiates.
+
+Problems found on Imgifyr, and what changed:
+
+- **Result off-screen on phones.** `ResultPanel` scrolled with `block: "nearest"`, leaving "Your image is ready" at
+  y = 816 of 844 and the Download button below the screen. New shared hook `useRevealResult` (components/tools/hooks.ts)
+  puts the heading near the top (scroll-margin clears the sticky header) and leaves the page still when the result is
+  already in the upper part of the screen. Used by ResultPanel and the five tools with their own result sections
+  (PDF converters, merge PDF, merge images, photo to PDF, photo + signature), whose old focus calls ran before the
+  heading existed. Measured after: heading at 176 px, Download button at 304–348 px.
+- **An unneeded tap.** The 20/50/100/200 KB pages (`quickStart` on TargetSizeTool) now make the file as soon as a
+  photo is chosen. Exam pages do the same only when nothing needs framing: the requirement sets a shape and the photo
+  already has it (within 1%); otherwise the crop matters and the person still taps. Specs without a fixed shape aren't
+  auto-started, because their default crop trims 5% off each edge.
+- **Too many choices on single-purpose pages.** Those settings now fold into one line, "Settings: 50.0 KB or less ·
+  JPG · may reduce dimensions — Change settings". The button returns when a setting changes. The generic
+  resize-to-KB page keeps everything open.
+- **One photo at a time.** Choosing 2–10 photos on any KB page starts a batch (components/tools/target-size-batch.tsx):
+  same settings and engine (`reduceToTarget` in target-size-shared.ts) as single mode, worker pool, per-photo result
+  and download, "Download all as ZIP", remove/add, automatic redo when settings change. Not on exam pages: each exam
+  file needs its own spec and crop.
+
+Not done yet: Hindi pages (needs keyword research for Hindi and Hinglish queries and native review).
+
+Tests: tests/e2e/ux-flow.mjs (27 checks, phone viewport, 4× CPU); phase3 updated for quick start.

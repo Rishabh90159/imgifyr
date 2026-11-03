@@ -19,6 +19,9 @@ interface ToolWorkspaceProps {
   /** Extra content shown under an error message (e.g. a link to a better-suited tool). */
   errorAction?: React.ReactNode;
   onFile: (file: File) => void;
+  /** Lets the upload box take several files at once (up to `maxFiles`), e.g. to start a batch. */
+  onFiles?: (files: File[]) => void;
+  maxFiles?: number;
   onReset: () => void;
   prompt: string;
   /** Settings and the primary action button. */
@@ -41,6 +44,8 @@ export function ToolWorkspace({
   error,
   errorAction,
   onFile,
+  onFiles,
+  maxFiles,
   onReset,
   prompt,
   controls,
@@ -74,7 +79,7 @@ export function ToolWorkspace({
     return (
       <div className="space-y-4">
         {errorBlock}
-        <ImageDropzone accept={accept} onFile={onFile} loading={loading} prompt={prompt} acceptOverride={acceptOverride} />
+        <ImageDropzone accept={accept} onFile={onFile} onFiles={onFiles} maxFiles={maxFiles} loading={loading} prompt={prompt} acceptOverride={acceptOverride} />
       </div>
     );
   }

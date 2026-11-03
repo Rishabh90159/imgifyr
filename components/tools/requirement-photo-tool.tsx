@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { ResultPanel, type ResultImage } from "@/components/before-after/result-panel";
 import { PrintSheet } from "./print-sheet";
 import { ImageCropper } from "@/components/cropper/image-cropper";
@@ -160,6 +160,8 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
   const aspect = imageSpec?.aspect ?? (output?.widthPx && output.heightPx ? output.widthPx / output.heightPx : null);
   const cropState = useCropState(source, aspect);
   const [made, setMade] = useState<Made | null>(null);
+  // A just-chosen photo waiting to be made without a tap (see the effect below).
+  const [autoFor, setAutoFor] = useState<string | null>(null);
 
   const presetName = set?.id ?? CUSTOM;
   const settingsKey = source && output ? JSON.stringify([source.id, presetName, kind, output, cropState.transform, cleanup]) : "";
@@ -175,6 +177,7 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
     const loaded = await select(file);
     if (!loaded) return;
     setMade(null);
+    setAutoFor(loaded.id);
     track("application_photo_started", { tool, preset: presetName, mode: kind, input_format: FORMATS[loaded.mime].label });
   };
 
@@ -182,6 +185,7 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
     runner.cancel();
     clear();
     setMade(null);
+    setAutoFor(null);
   };
 
   const create = async (image: SourceImage, spec: OutputSpec) => {
@@ -210,6 +214,23 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
       track("processing_failed", { tool, error_code: normalized.code });
     }
   };
+
+  // Make the file without a tap when there is nothing to frame: the requirement sets a shape and the photo
+  // already has it, so the crop is the whole photo. Otherwise the person positions the crop and taps.
+  const fitsShape = Boolean(source && aspect && Math.abs(source.width / source.height - aspect) / aspect <= 0.01);
+  useEffect(() => {
+    if (!source || autoFor !== source.id) return;
+    if (!output || !fitsShape) {
+      setAutoFor(null);
+      return;
+    }
+    // Wait until the crop has been reset for this photo (it may still hold the previous photo's crop).
+    if (cropState.crop.width < 0.999 || cropState.crop.height < 0.999 || cropState.rotation !== 0) return;
+    setAutoFor(null);
+    void create(source, output);
+    // create reads the current settings; it runs once per chosen photo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [source, autoFor, output, fitsShape, cropState.crop, cropState.rotation]);
 
   const grow = async (image: SourceImage, spec: OutputSpec) => {
     setError(null);
