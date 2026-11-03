@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DidYouMean } from "@/components/layout/did-you-mean";
+import { ToolSearch } from "@/components/layout/tool-search";
 import { ToolCard } from "@/components/tool-card/tool-card";
 import { allTools, getTool, type ToolId } from "@/lib/tools/registry";
 
@@ -30,6 +32,10 @@ export default function NotFound() {
         </Link>
         .
       </p>
+      <DidYouMean />
+      <div className="mt-6 max-w-xl">
+        <ToolSearch variant="page" />
+      </div>
       <h2 className="mt-10 text-xl font-bold tracking-tight text-ink">Popular tools</h2>
       <ul className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {popular.map((id) => {

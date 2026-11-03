@@ -6,6 +6,8 @@ export type ImageErrorCode =
   | "EMPTY_FILE"
   | "FILE_TOO_LARGE"
   | "NOT_AN_IMAGE"
+  | "PDF_NOT_IMAGE"
+  | "WORD_NOT_IMAGE"
   | "UNSUPPORTED_FORMAT"
   | "HEIC_NOT_SUPPORTED"
   | "GIF_NOT_SUPPORTED"

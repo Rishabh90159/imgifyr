@@ -563,3 +563,25 @@ Problems found on Imgifyr, and what changed:
 Not done yet: Hindi pages (needs keyword research for Hindi and Hinglish queries and native review).
 
 Tests: tests/e2e/ux-flow.mjs (27 checks, phone viewport, 4× CPU); phase3 updated for quick start.
+
+## 23. First-visit walk-through, phone and desktop (3 Nov)
+
+Walked the site as a new visitor (home → find a tool → use it → download, plus mistakes), on a 390 px phone and
+a 1440 px desktop. Found and fixed:
+
+- **Site search** was a native `<datalist>`: name-only matching, no Firefox Android support, poor on iPhone, and
+  ~13.5 KB of search data in every page's HTML. Replaced by a combobox (components/layout/tool-search.tsx) over
+  lib/search/tool-index.ts, loaded on first use (9.9 KB gz). It matches names, descriptions and the keyword map,
+  everyday, Hinglish and Hindi words ("photo ka size kam kare", "फोटो का साइज कम", "dp", "railway"), and typed sizes
+  ("30 kb" opens the KB tool set to 30 KB). Popular tools show when empty; arrow keys, Enter and Escape work. It's
+  also on the All tools page (reads `?q=`) and the 404 page.
+- **A PDF or Word file on an image tool** got "isn't an image"; it now says what the file is and links PDF to JPG,
+  Compress PDF or Word to PDF (`PDF_NOT_IMAGE`, `WORD_NOT_IMAGE`).
+- **Exam requirement tables on phones** cut off the third column mid-word. Labels now stay pinned, values stay on
+  one line, and a CSS-only edge shadow (`.scroll-shadow-x`) shows there's more to swipe.
+- **404**: "Did you mean …?" from the mistyped address, plus the search box.
+
+Checked against the previous commit built on the same machine: 67 of 68 sitemap pages identical in title,
+description, canonical, robots, H1, headings, JSON-LD, links and text (the All tools page gains its "Find a tool"
+label); HTML −3.6 to −3.9 KB gz per page (−8.6% across the site); JS on open +1.5–1.7 KB; LCP and TBT within run
+noise (11 alternating runs). Tests: tests/unit/tool-search.test.ts, tests/e2e/visitor-ux.mjs (23 checks).

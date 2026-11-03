@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/breadcrumbs/breadcrumbs";
+import { ToolSearch } from "@/components/layout/tool-search";
 import { ToolCard } from "@/components/tool-card/tool-card";
 import { pageMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
@@ -63,6 +64,10 @@ export default function ToolsIndexPage() {
       <p className="mt-3 max-w-2xl text-lg leading-relaxed text-ink-soft">
         Free tools that run in your browser. Pick the one that matches what you need to do; your images are never uploaded.
       </p>
+
+      <div className="mt-6 max-w-xl">
+        <ToolSearch variant="page" />
+      </div>
 
       {/* Jump links to each group; on phones they scroll sideways in one row instead of wrapping. */}
       <nav aria-label="Tool groups" className="-mx-4 mt-6 overflow-x-auto px-4 sm:mx-0 sm:px-0">

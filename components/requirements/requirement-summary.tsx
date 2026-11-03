@@ -113,16 +113,16 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
           </p>
         ) : null}
         {specs.length > 0 ? (
-          <div className="relative overflow-x-auto">
+          <div className="scroll-shadow-x relative overflow-x-auto">
             <table className="w-full min-w-[18rem] text-left">
               <caption className="sr-only">Requirements for {set.name}</caption>
               <thead>
                 <tr className="border-b border-line text-muted">
-                  <th scope="col" className="py-1.5 pr-3 font-medium">
+                  <th scope="col" className="sticky left-0 z-10 bg-canvas py-1.5 pr-3 font-medium">
                     <span className="sr-only">Item</span>
                   </th>
                   {specs.map((s) => (
-                    <th key={s.kind} scope="col" className="py-1.5 pr-3 font-medium">
+                    <th key={s.kind} scope="col" className="whitespace-nowrap py-1.5 pr-3 font-medium">
                       {IMAGE_KIND_LABELS[s.kind]}
                     </th>
                   ))}
@@ -240,11 +240,12 @@ export function pixelText(s: ImageSpec): string {
 function Row({ label, specs, value }: { label: string; specs: ImageSpec[]; value: (s: ImageSpec) => string }) {
   return (
     <tr className="border-b border-line last:border-0">
-      <th scope="row" className="py-1.5 pr-3 font-medium text-ink">
+      {/* The label column stays in place while the values scroll sideways on a phone. */}
+      <th scope="row" className="sticky left-0 z-10 whitespace-nowrap bg-canvas py-1.5 pr-3 font-medium text-ink">
         {label}
       </th>
       {specs.map((s) => (
-        <td key={s.kind} className="py-1.5 pr-3 tabular-nums">
+        <td key={s.kind} className="whitespace-nowrap py-1.5 pr-3 tabular-nums">
           {value(s)}
         </td>
       ))}

@@ -1,13 +1,10 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
-import { allTools, NAV_GROUPS, toolsIn } from "@/lib/tools/registry";
+import { NAV_GROUPS, toolsIn } from "@/lib/tools/registry";
 import { CurrentToolGroup } from "./current-tool-group";
 import { DisclosureMenu } from "./disclosure-menu";
 import { Logo } from "./logo";
 import { ToolSearch } from "./tool-search";
-
-// Built once on the server and passed to the client search box.
-const searchItems = allTools.map((tool) => ({ name: tool.name, path: tool.path, keywords: `${tool.linkText} ${tool.summary}` }));
 
 function Chevron({ className = "group-open:rotate-180" }: { className?: string }) {
   return (
@@ -68,7 +65,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden w-60 shrink-0 xl:block">
-          <ToolSearch items={searchItems} />
+          <ToolSearch />
         </div>
 
         <DisclosureMenu className="group relative md:hidden">
@@ -87,7 +84,7 @@ export function SiteHeader() {
           >
             {/* Search first: most visitors on a phone know which size or format they need. */}
             <div className="p-1 pb-1.5">
-              <ToolSearch items={searchItems} />
+              <ToolSearch variant="menu" />
             </div>
             {/* Categories collapse so the menu fits on a phone screen. The shared `name` makes them an exclusive
                 accordion (one open at a time) without JavaScript; older browsers simply allow several open. */}
