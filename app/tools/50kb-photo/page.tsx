@@ -146,6 +146,7 @@ export default function FiftyKbPhotoPage() {
       <TargetSizeTool
         tool="50kb-photo"
         defaultTargetKB={50}
+        quickStart
         presetsKB={[30, 40, 50, 75, 100]}
         events={{ started: "kb_photo_started", completed: "kb_photo_completed", downloaded: "photo_downloaded" }}
       />

@@ -142,6 +142,7 @@ export default function HundredKbPhotoPage() {
       <TargetSizeTool
         tool="100kb-photo"
         defaultTargetKB={100}
+        quickStart
         presetsKB={[50, 75, 100, 150, 200]}
         events={{ started: "kb_photo_started", completed: "kb_photo_completed", downloaded: "photo_downloaded" }}
       />

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
 import { DownloadButton } from "@/components/download-button/download-button";
-import { useObjectUrl, useToolOpen } from "@/components/tools/hooks";
+import { useObjectUrl, useRevealResult, useToolOpen } from "@/components/tools/hooks";
 import { ActionButton } from "@/components/tools/tool-workspace";
 import { track } from "@/lib/analytics";
 import { isAbortError, toDocumentToolError, type DocumentToolError } from "@/lib/documents/errors";
@@ -59,13 +59,10 @@ export function SingleFileConverter(props: SingleFileConverterProps) {
   const [status, setStatus] = useState("");
   const controller = useRef<AbortController | null>(null);
   const request = useRef(0);
-  const resultHeading = useRef<HTMLHeadingElement>(null);
   const url = useObjectUrl(result?.blob ?? null);
+  const resultHeading = useRevealResult(phase === "done" ? url : null);
 
   useEffect(() => () => controller.current?.abort(), []);
-  useEffect(() => {
-    if (phase === "done") resultHeading.current?.focus();
-  }, [phase]);
 
   const lastSettings = useRef(props.settingsKey);
   useEffect(() => {
@@ -215,7 +212,7 @@ export function SingleFileConverter(props: SingleFileConverterProps) {
             <div className="border-t border-line px-4 py-4 sm:px-5">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="text-lg font-bold text-ink outline-none">
+                  <h2 id="result-heading" ref={resultHeading} tabIndex={-1} className="scroll-mt-24 text-lg font-bold text-ink outline-none">
                     Your {props.outputLabel} is ready
                   </h2>
                   <p className="mt-0.5 text-sm text-muted">{[...result.details, formatBytes(result.blob.size)].join(" · ")}</p>

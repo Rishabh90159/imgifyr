@@ -110,7 +110,7 @@ for (const kb of [20, 50, 100, 200]) {
   await loaded(page, "photo-12mp.jpg");
   const preset = await tool(page).locator('input[type="radio"]:checked').first().evaluate((el) => el.value);
   check(`${kb}KB: target preselected`, preset === String(kb), preset);
-  await page.getByRole("button", { name: `Resize to ${kb}.0 KB` }).or(page.getByRole("button", { name: `Resize to ${kb} KB` })).click();
+  // Single-purpose page: the result is made as soon as the photo is chosen, without a tap.
   await waitResult(page);
   const bytes = await shownBytes(page);
   const dl = await download(page);
@@ -129,7 +129,6 @@ for (const kb of [20, 50, 100, 200]) {
   const page = await openPage("/tools/20kb-photo");
   await upload(page, "transparent.png");
   await loaded(page, "transparent.png");
-  await page.getByRole("button", { name: /^Resize to/ }).click();
   await waitResult(page);
   let dl = await download(page);
   let info = await inspect(page, dl.buf);
@@ -137,20 +136,20 @@ for (const kb of [20, 50, 100, 200]) {
 
   await upload(page, "photo.webp");
   await loaded(page, "photo.webp");
-  await page.getByRole("button", { name: /^Resize to/ }).click();
   await waitResult(page);
   dl = await download(page);
   check("20KB: WebP input works", isJpeg(dl.buf) && dl.buf.length <= 20 * KB, `${dl.buf.length} bytes`);
 
   await upload(page, "tiny.jpg");
   await loaded(page, "tiny.jpg");
-  await page.getByRole("button", { name: /^Resize to/ }).click();
   await waitResult(page);
   dl = await download(page);
   check("20KB: image already under the target is returned unchanged", (await page.getByText("Already under your target").count()) === 1 && dl.buf.equals(fs.readFileSync(files["tiny.jpg"])));
 
   await upload(page, "photo-12mp.jpg");
   await loaded(page, "photo-12mp.jpg");
+  await waitResult(page);
+  await page.locator("summary", { hasText: "Change settings" }).click();
   await page.getByLabel("Allow smaller dimensions").uncheck();
   await tool(page).getByText("10 KB", { exact: true }).click();
   await page.getByRole("button", { name: /^Resize to/ }).click();
@@ -165,6 +164,8 @@ for (const kb of [20, 50, 100, 200]) {
   const page = await openPage("/tools/100kb-photo");
   await upload(page, "photo-12mp.jpg");
   await loaded(page, "photo-12mp.jpg");
+  await waitResult(page);
+  await page.locator("summary", { hasText: "Change settings" }).click();
   await page.getByText("More options: width and quality").click();
   await page.getByLabel("Maximum width (px)").fill("800");
   await page.getByRole("button", { name: /^Resize to/ }).click();
@@ -186,7 +187,6 @@ for (const kb of [20, 50, 100, 200]) {
   const page = await openPage("/tools/200kb-photo");
   await upload(page, "huge-flat.png");
   await loaded(page, "huge-flat.png");
-  await page.getByRole("button", { name: /^Resize to/ }).click();
   await waitResult(page, 180_000);
   const dl = await download(page);
   const info = await inspect(page, dl.buf);
