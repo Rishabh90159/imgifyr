@@ -65,6 +65,22 @@ export function ToolWorkspace({
               Convert HEIC to JPG
             </Link>
           </p>
+        ) : error.code === "PDF_NOT_IMAGE" ? (
+          <p className="mt-1">
+            <Link href="/tools/pdf-to-jpg" className="font-medium text-accent underline">
+              Convert the PDF to JPG
+            </Link>
+            {" · "}
+            <Link href="/tools/compress-pdf" className="font-medium text-accent underline">
+              Make the PDF smaller instead
+            </Link>
+          </p>
+        ) : error.code === "WORD_NOT_IMAGE" ? (
+          <p className="mt-1">
+            <Link href="/tools/word-to-pdf" className="font-medium text-accent underline">
+              Convert Word to PDF
+            </Link>
+          </p>
         ) : error.code === "GIF_NOT_SUPPORTED" ? (
           <p className="mt-1">
             <Link href="/tools/resize-gif" className="font-medium text-accent underline">

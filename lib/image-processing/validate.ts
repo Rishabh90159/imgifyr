@@ -64,6 +64,13 @@ export async function validateImageFile(file: File, options: ValidateOptions): P
       `This tool can't open GIF images. To resize a GIF and keep its animation, use the GIF resizer. Supported formats here: ${accepted}.`,
     );
   }
+  // Documents picked by mistake (common on forms that ask for a photo and a PDF): say what they are.
+  if (detected === null && head[0] === 0x25 && head[1] === 0x50 && head[2] === 0x44 && head[3] === 0x46) {
+    throw new ImageToolError("PDF_NOT_IMAGE", "This is a PDF, not an image. To use a page of it here, convert it to JPG first; that also runs in your browser.");
+  }
+  if (detected === null && /\.docx?$/i.test(file.name)) {
+    throw new ImageToolError("WORD_NOT_IMAGE", "This is a Word document, not an image. To make a PDF of it, use Word to PDF.");
+  }
   if (detected === null) {
     const looksLikeImage = file.type.startsWith("image/") || /\.(jpe?g|png|webp|heic|heif)$/i.test(file.name);
     throw new ImageToolError(
