@@ -58,6 +58,7 @@ const toolPages = [
   "/tools/indian-bank-photo",
   "/tools/kea-photo",
   "/tools/merge-photo-and-signature",
+  "/tools/aadhaar-front-and-back",
   "/tools/add-name-and-date-on-photo",
   "/tools/change-image-dpi",
   "/tools/resize-image-in-cm",
@@ -107,6 +108,8 @@ const overlapPages = [
   "/tools/heic-to-png",
   "/tools/pdf-to-jpg",
   "/tools/pdf-to-png",
+  // Added 4 Nov 2026 next to merge-images and merge-photo-and-signature.
+  "/tools/aadhaar-front-and-back",
 ];
 const kbPages = ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
@@ -229,7 +232,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 54 && worst.score < 0.15,
+    entries.length === 55 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
