@@ -18,6 +18,10 @@ const OFFICIAL_HOSTS = [
   "cdnbbsr.s3waas.gov.in",
   // UPESSC's myOTR portal, linked from upessc.up.gov.in.
   "apply.upessc.org",
+  "www.rrccr.com",
+  "indianbank.bank.in",
+  // KEA's notices, linked from cetonline.karnataka.gov.in/kea.
+  "cetonline.karnataka.gov.in",
   "www.passportindia.gov.in",
   "www.gov.uk",
   "www.canada.ca",
@@ -124,6 +128,9 @@ describe("registry and freshness", () => {
     "dsssb-photo": APPLICATIONS.dsssb.sets,
     "jee-main-photo": APPLICATIONS.jee.sets,
     "upessc-photo": APPLICATIONS.upessc.sets,
+    "rrc-apprentice-photo": APPLICATIONS.rrc.sets,
+    "indian-bank-photo": APPLICATIONS.indianBank.sets,
+    "kea-photo": APPLICATIONS.kea.sets,
     "passport-photo": PASSPORT_REQUIREMENTS,
   };
 
@@ -134,10 +141,10 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 59 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(59);
+  it("has 62 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(62);
     expect(toolsIn("size").map((t) => t.id)).toEqual(["20kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "mb-to-kb-converter"]);
-    expect(toolsIn("application")).toHaveLength(11);
+    expect(toolsIn("application")).toHaveLength(14);
     expect(toolsIn("image")).toHaveLength(24);
     expect(toolsIn("convert")).toHaveLength(13);
     expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "pdf-to-jpg", "pdf-to-png"]);

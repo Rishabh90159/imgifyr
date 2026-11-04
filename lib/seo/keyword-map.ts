@@ -92,7 +92,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/resize-image-to-kb",
     primary: "resize image in kb",
-    secondary: ["image size reducer", "photo size reducer", "jpg size reducer", "kb reducer", "reduce image size in kb", "resize image to specific kb", "image kb resize", "resize image 20kb to 50kb", "resize image between 20kb and 50kb", "resize image 10kb to 20kb"],
+    secondary: ["change image size in kb", "resize image by kb", "image size reducer", "photo size reducer", "jpg size reducer", "kb reducer", "reduce image size in kb", "resize image to specific kb", "image kb resize", "resize image 20kb to 50kb", "resize image between 20kb and 50kb", "resize image 10kb to 20kb"],
     intent: "file-size",
     supportedBy: ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/image-compressor"],
   },
@@ -289,6 +289,28 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     secondary: ["up tgt photo and signature size", "upessc signature size", "upessc hand written declaration", "upessc otr declaration", "up tgt photo size"],
     intent: "application",
     supportedBy: ["/tools/application-photos", "/tools/upsssc-photo", "/tools/signature-resizer"],
+  },
+  {
+    path: "/tools/kea-photo",
+    primary: "kea fda sda photo",
+    secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/signature-resizer"],
+  },
+  {
+    path: "/tools/indian-bank-photo",
+    primary: "indian bank apprentice photo",
+    secondary: ["indian bank apprentice photo size", "indian bank photo and signature size", "indian bank signature size", "indian bank apprentice declaration", "indian bank thumb impression size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/ibps-photo", "/tools/signature-resizer"],
+  },
+  {
+    path: "/tools/rrc-apprentice-photo",
+    // Search Console, 7 Oct – 3 Nov 2026: "railway signature size in pixels" (11), "rrb photo resizer".
+    primary: "railway apprentice photo size",
+    secondary: ["rrc cr apprentice photo size", "central railway apprentice photo and signature size", "rrc apprentice signature size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/rrb-photo", "/tools/resize-image-in-cm"],
   },
   {
     path: "/tools/image-upscaler",
