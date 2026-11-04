@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Faq } from "@/components/faq/faq";
+import { OpenApplications } from "@/components/home/open-applications";
 import { QuickStart } from "@/components/home/quick-start";
 import { ToolTile } from "@/components/home/tool-tile";
 import { PhotoCard } from "@/components/controls/photo-card";
@@ -17,6 +18,8 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
 });
 
+// Regenerated daily so "Applications open now" drops a window the day after it closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -228,6 +231,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <OpenApplications className="mx-auto max-w-6xl px-4 pt-10 sm:px-6" />
 
       <section aria-labelledby="popular-heading" className="render-later mx-auto max-w-6xl px-4 pt-14 sm:px-6">
         <SectionHeader

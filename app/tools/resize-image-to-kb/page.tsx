@@ -9,7 +9,7 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("resize-image-to-kb");
 
 const description =
-  "Reduce an image to a target file size such as 20KB, 50KB, 100KB or 200KB for application forms and uploads, keeping the best possible quality. Free, no upload.";
+  "Change image size in KB: reduce a photo to 20KB, 50KB, 100KB, 200KB or any size for forms and uploads, at the best possible quality. Free, no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Resize Image in KB – 20KB, 50KB, 100KB, 200KB or Any Size",
@@ -57,8 +57,8 @@ export default function ResizeImageToKbPage() {
       h1="Resize Image to KB: Reduce a Photo to 20KB, 50KB, 100KB or Any Size"
       intro={
         <p>
-          Need a photo under 50 KB for an application form, or under 200 KB for a job portal? Pick a target and the tool
-          finds the highest quality that fits, entirely in your browser.
+          Change image size in KB for an application form or job portal, such as under 50 KB or 200 KB. Pick a target and
+          the tool finds the highest quality that fits, entirely in your browser.
         </p>
       }
       schemaDescription={description}

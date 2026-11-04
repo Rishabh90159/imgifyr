@@ -314,6 +314,133 @@ const RRB_SETS: RequirementSet[] = [
       lastVerified: "2026-10-18",
     },
   },
+  {
+    // Same live photo and signature wording as NTPC, except the scan box is 50 mm wide (NTPC: 35 mm).
+    id: "rrb-station-master-cen-08-2026",
+    name: "Station Master (CEN 08/2026)",
+    signature: { ...RRB_SIGNATURE, physical: "fits the 50 mm × 20 mm scan box on the form" },
+    livePhotoCapture: { rules: RRB_LIVE_RULES },
+    notes: [
+      ...RRB_NOTES,
+      "If the live photo doesn't match your photo ID, the form asks you to upload Annexure VIII signed by a Gazetted Officer.",
+    ],
+    source: {
+      title: "Centralised Employment Notice No. 08/2026: Station Master",
+      url: "https://rrb.indianrailways.gov.in/-/image/1793016771817CEN_08_2026_StationMaster.pdf/examsDocuments",
+      publisher: "Railway Recruitment Boards (RRBs), Ministry of Railways",
+      section: "Para 16.5 (live photo) and 16.6 (scanned documents)",
+      lastVerified: "2026-11-04",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- RRC Central Railway
+// Act Apprentices are engaged by the Railway Recruitment Cell, not the RRBs. The notice gives a print size and
+// 100 DPI but no pixel size, so none is stored.
+
+const RRC_SETS: RequirementSet[] = [
+  {
+    id: "rrc-cr-act-apprentice-2026",
+    name: "Act Apprentices, Central Railway (RRC/CR/AA/2026, 2,861 slots)",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      physical: "3.5 cm × 3.5 cm",
+      aspect: 1,
+      dpi: 100,
+      minKB: 20,
+      maxKB: 70,
+      rules: [
+        "Colour photograph taken not more than three months before the date of application",
+        "Clear front view, without cap or sunglasses",
+        "Applications can be rejected for an old or unclear photo, or one that differs significantly from how you look",
+        "Keep two more copies of the same photo for document verification",
+      ],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG/JPEG",
+      physical: "3.5 cm × 3.5 cm",
+      aspect: 1,
+      dpi: 100,
+      minKB: 20,
+      maxKB: 30,
+      rules: ["Upload your signature at 3.5 cm × 3.5 cm, 100 DPI"],
+    },
+    notes: [
+      "Also uploaded: 10th mark sheet, date of birth proof, ITI consolidated mark sheet or provisional NTC, NCVT/SCVT trade certificate, and caste, PwBD or ex-serviceman certificates where they apply. The notice sets no format or size for these.",
+      "Applications are made only on rrccr.com.",
+    ],
+    source: {
+      title: "Notification No. RRC/CR/AA/2026: Engagement of Act Apprentices over Central Railway",
+      url: "https://www.rrccr.com/rrwc/Files/7131ab94-6fc8-45c1-a2ed-f9191914dcbd.pdf",
+      publisher: "Railway Recruitment Cell, Central Railway (RRC/CR)",
+      section: "Paras 14–16",
+      lastVerified: "2026-11-04",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- Indian Bank
+// The apprentice advertisement's Annexure II uses the same photo, signature, thumb and declaration wording as IBPS.
+
+const INDIAN_BANK_SETS: RequirementSet[] = [
+  {
+    id: "indian-bank-apprentice-2026-27",
+    name: "Engagement of Apprentices FY 2026-27 (1,500 seats)",
+    photo: bankingPhoto(),
+    signature: bankingSignature(),
+    thumb: IBPS_THUMB,
+    declaration: IBPS_DECLARATION,
+    notes: [
+      BANKING_LIVE_NOTE,
+      "Register and complete your profile on the NATS 2.0 portal (nats.education.gov.in) before applying.",
+      "A signature on the call letter or attendance sheet that doesn't match the uploaded one means disqualification.",
+    ],
+    source: {
+      title: "Advertisement: Engagement of Apprentices for FY 2026-27",
+      url: "https://indianbank.bank.in/documents/20117/34414/FINAL%20UPDATED%20ADVERTISEMENT%20FOR%20ENGAGEMENT%20OF%20APPRENTICES%20FOR%20FY%202026-27%20-%2004.11.20262026_11_04_04_14_20.pdf/451450a2-0501-51ba-e37c-db63b9c27425",
+      publisher: "Indian Bank",
+      section: "Annexure II: Guidelines for Scanning and Upload of Documents",
+      lastVerified: "2026-11-04",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- KEA (Karnataka)
+// Group-C FDA/SDA 2026. The notices are Kannada scans; the upload rule is the English text inside para 25 (FDA)
+// and para 23 (SDA), identical in both. No pixel size is given.
+
+const KEA_SETS: RequirementSet[] = [
+  {
+    id: "kea-fda-sda-2026",
+    name: "Group-C FDA, SDA and equivalent posts 2026 (5,431 posts)",
+    photo: {
+      kind: "photo",
+      format: "JPEG",
+      minKB: 50,
+      maxKB: 200,
+      rules: ["Recent passport-size photograph", "White background"],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPEG",
+      minKB: 50,
+      maxKB: 70,
+      rules: ["Sign on white paper with a black sketch or marker pen, then scan it"],
+    },
+    notes: [
+      "Applications without the photograph and signature are rejected.",
+      "Covers the Residual Parent Cadre (FDA and SDA) and Kalyana Karnataka notices; apply on cetonline.karnataka.gov.in/kea.",
+    ],
+    source: {
+      title: "Notification: First Division Assistant and equivalent posts (RPC), 2026 (Kannada)",
+      url: "https://cetonline.karnataka.gov.in/keawebentry456/gpcfdasdarpc2026/RPC_FDAkannada.pdf",
+      publisher: "Karnataka Examinations Authority (KEA)",
+      section: "Para 25 (para 23 of the SDA notice)",
+      lastVerified: "2026-11-04",
+    },
+  },
 ];
 
 // ---------------------------------------------------------------- UPSSSC
@@ -542,6 +669,9 @@ export const APPLICATIONS = {
   neet: { name: "NEET", fullName: "National Eligibility cum Entrance Test (UG), conducted by NTA", sets: NEET_SETS },
   jee: { name: "JEE Main", fullName: "Joint Entrance Examination (Main), conducted by NTA", sets: JEE_SETS },
   rrb: { name: "RRB", fullName: "Railway Recruitment Boards (Indian Railways)", sets: RRB_SETS },
+  rrc: { name: "RRC Central Railway", fullName: "Railway Recruitment Cell, Central Railway", sets: RRC_SETS },
+  indianBank: { name: "Indian Bank", fullName: "Indian Bank (public sector bank)", sets: INDIAN_BANK_SETS },
+  kea: { name: "KEA", fullName: "Karnataka Examinations Authority", sets: KEA_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },
   dsssb: { name: "DSSSB", fullName: "Delhi Subordinate Services Selection Board", sets: DSSSB_SETS },
   upessc: { name: "UPESSC", fullName: "Uttar Pradesh Education Services Selection Commission", sets: UPESSC_SETS },

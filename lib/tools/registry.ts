@@ -52,6 +52,9 @@ export type ToolId =
   | "dsssb-photo"
   | "jee-main-photo"
   | "upessc-photo"
+  | "rrc-apprentice-photo"
+  | "indian-bank-photo"
+  | "kea-photo"
   | "merge-photo-and-signature"
   | "add-name-and-date-on-photo"
   | "change-image-dpi"
@@ -612,11 +615,11 @@ export const tools: Record<ToolId, ToolDefinition> = {
     path: "/tools/rrb-photo",
     name: "RRB Photo & Signature",
     navLabel: "RRB photo",
-    summary: "RRB NTPC 2026 takes the photo live; prepare the 30–49 KB signature JPG the application asks for.",
-    linkText: "Prepare your RRB NTPC signature",
+    summary: "RRB NTPC and Station Master 2026 take the photo live; prepare the 30–49 KB signature JPG the form asks for.",
+    linkText: "Prepare your RRB NTPC or Station Master signature",
     category: "application",
-    related: ["signature-resizer", "ssc-photo", "compress-pdf", "image-cropper", "resize-image-to-kb", "upsssc-photo"],
-    updated: "2026-10-18",
+    related: ["signature-resizer", "rrc-apprentice-photo", "ssc-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-04",
   },
   "upsssc-photo": {
     id: "upsssc-photo",
@@ -639,6 +642,39 @@ export const tools: Record<ToolId, ToolDefinition> = {
     category: "application",
     related: ["upsssc-photo", "signature-resizer", "100kb-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
     updated: "2026-10-25",
+  },
+  "rrc-apprentice-photo": {
+    id: "rrc-apprentice-photo",
+    path: "/tools/rrc-apprentice-photo",
+    name: "Railway Apprentice Photo & Signature",
+    navLabel: "Railway apprentice photo",
+    summary: "The RRC Central Railway Act Apprentice photo (20–70 KB) and signature (20–30 KB), 3.5 × 3.5 cm JPGs at 100 DPI.",
+    linkText: "Prepare your Central Railway apprentice photo and signature",
+    category: "application",
+    related: ["rrb-photo", "signature-resizer", "resize-image-in-cm", "change-image-dpi", "compress-pdf", "resize-image-to-kb"],
+    updated: "2026-11-04",
+  },
+  "indian-bank-photo": {
+    id: "indian-bank-photo",
+    path: "/tools/indian-bank-photo",
+    name: "Indian Bank Photo & Signature",
+    navLabel: "Indian Bank photo",
+    summary: "The Indian Bank Apprentice 2026-27 photo, signature, left thumb impression and hand-written declaration files.",
+    linkText: "Prepare your Indian Bank apprentice photo, signature, thumb and declaration",
+    category: "application",
+    related: ["ibps-photo", "sbi-photo", "signature-resizer", "50kb-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-04",
+  },
+  "kea-photo": {
+    id: "kea-photo",
+    path: "/tools/kea-photo",
+    name: "KEA Photo & Signature",
+    navLabel: "KEA photo",
+    summary: "The KEA FDA/SDA 2026 photo (50–200 KB, white background) and signature (50–70 KB) as JPEGs.",
+    linkText: "Prepare your KEA FDA/SDA photo and signature",
+    category: "application",
+    related: ["white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-04",
   },
   "dsssb-photo": {
     id: "dsssb-photo",
@@ -845,6 +881,9 @@ export const toolOrder: ToolId[] = [
   "upsssc-photo",
   "upessc-photo",
   "dsssb-photo",
+  "rrc-apprentice-photo",
+  "indian-bank-photo",
+  "kea-photo",
   "passport-photo",
 ];
 

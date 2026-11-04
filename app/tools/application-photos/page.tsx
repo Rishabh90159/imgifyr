@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs/breadcrumbs";
+import { OpenApplications } from "@/components/home/open-applications";
 import { pixelText } from "@/components/requirements/requirement-summary";
 import { SourceLink } from "@/components/requirements/source-link";
 import { ToolCard } from "@/components/tool-card/tool-card";
@@ -11,11 +12,14 @@ import { pageMetadata } from "@/lib/seo/metadata";
 import { APPLICATION_HUB, getTool, toolsIn, type ToolId } from "@/lib/tools/registry";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Exam Photo Size Requirements – IBPS, SBI, SSC, NEET & UPSC",
+  title: "Exam Photo Size Requirements – SSC, RRB, IBPS, SBI, JEE",
   description:
-    "Compare photo and signature size requirements for IBPS, SBI, SSC, NEET and UPSC applications, taken from official notifications with check dates.",
+    "Compare photo and signature sizes for SSC, RRB, IBPS, SBI, NEET, JEE Main, UP TGT and UPSC forms, taken from official notifications with check dates.",
   path: APPLICATION_HUB.path,
 });
+
+// Regenerated daily so "Applications open now" drops a window the day after it closes.
+export const revalidate = 86400;
 
 const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "ibps", tool: "ibps-photo" },
@@ -27,6 +31,9 @@ const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "upsssc", tool: "upsssc-photo" },
   { id: "upessc", tool: "upessc-photo" },
   { id: "dsssb", tool: "dsssb-photo" },
+  { id: "indianBank", tool: "indian-bank-photo" },
+  { id: "rrc", tool: "rrc-apprentice-photo" },
+  { id: "kea", tool: "kea-photo" },
   { id: "upsc", tool: "upsc-photo" },
 ];
 
@@ -185,6 +192,8 @@ export default function ApplicationPhotosPage() {
         requirements side by side, each copied from the official notification and dated. Open an exam&apos;s page to prepare
         a file that matches it.
       </p>
+
+      <OpenApplications className="mt-6" />
 
       <section aria-labelledby="compare-heading" className="mt-8">
         <h2 id="compare-heading" className="sr-only">

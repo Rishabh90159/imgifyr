@@ -12,24 +12,24 @@ const tool = getTool("rrb-photo");
 const app = APPLICATIONS.rrb;
 
 const description =
-  "RRB NTPC 2026 (CEN 06/2026 and 07/2026) takes your photo live, so only the signature is uploaded: a 30–49 KB JPG of at least 140 × 60 px. Make it here.";
+  "RRB NTPC (CEN 06, 07/2026) and Station Master (CEN 08/2026) take your photo live; only the signature is uploaded: a 30–49 KB JPG, 140 × 60 px or more.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "RRB NTPC Photo & Signature Size 2026 – Signature Resizer",
+  title: "RRB NTPC Photo & Signature Size 2026 + Station Master",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the RRB NTPC 2026 photo size?",
+    question: "What is the RRB NTPC and Station Master 2026 photo size?",
     answer:
-      "There's no photo file: CEN 06/2026 and 07/2026 capture a live photo with your webcam or phone camera in the form.",
+      "There's no photo file: CEN 06/2026, 07/2026 and 08/2026 capture a live photo with your webcam or phone camera in the form.",
   },
   {
-    question: "What is the RRB NTPC signature size?",
+    question: "What is the RRB NTPC and Station Master signature size?",
     answer:
-      "A JPG/JPEG of 30–49 KB, at least 140 × 60 pixels, scanned at 100 DPI or more, in black ink on white paper in running handwriting.",
+      "A JPG/JPEG of 30–49 KB, at least 140 × 60 pixels, scanned at 100 DPI or more, in black ink in running handwriting. The form's box is 35 mm wide for NTPC and 50 mm for Station Master.",
   },
   {
     question: "Why does a 140 × 60 pixel signature get rejected as too small?",
@@ -50,11 +50,11 @@ export default function RrbPhotoPage() {
   return (
     <ToolPageShell
       tool={tool}
-      h1="RRB NTPC 2026 Photo and Signature Requirements"
+      h1="RRB NTPC and Station Master 2026 Photo and Signature Requirements"
       intro={
         <p>
-          NTPC 2026 takes your photo live, so the only upload is your signature. Not affiliated with the Railway Recruitment
-          Boards.
+          NTPC and Station Master 2026 take your photo live, so the only upload is your signature. Not affiliated with the
+          Railway Recruitment Boards.
         </p>
       }
       schemaDescription={description}
@@ -76,10 +76,11 @@ export default function RrbPhotoPage() {
             fully open, with no cap, mask or spectacles. You can retake until you submit.
           </p>
 
-          <h2>Other RRB recruitments</h2>
+          <h2>Station Master and other RRB recruitments</h2>
           <p>
-            Group D, ALP, JE and other notices set their own rules. Choose <strong>Other</strong> in the tool and enter the
-            numbers from your CEN, or use the <Link href="/tools/signature-resizer">signature resizer</Link>.
+            Station Master (CEN 08/2026) is open until 25 November 2026. Group D, ALP, JE and other notices set their own
+            rules: choose <strong>Other</strong> in the tool and enter the numbers from your CEN. Central Railway Act
+            Apprentices have a separate <Link href="/tools/rrc-apprentice-photo">railway apprentice photo page</Link>.
           </p>
 
           <PrivacyNote>
@@ -89,7 +90,7 @@ export default function RrbPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="RRB NTPC Signature Size and Photo Rules at a Glance" app={app} />
+        <RequirementSummary heading="RRB NTPC and Station Master Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="rrb-photo" sets={app.sets} setLabel="RRB notice (CEN)" appName="RRB" />
       </div>
     </ToolPageShell>
