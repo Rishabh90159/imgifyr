@@ -118,14 +118,21 @@ const summaryText = (page) => page.locator('section[aria-labelledby="requirement
 }
 
 // ---------- Applications open now ----------
-for (const route of ["/", "/tools/application-photos"]) {
+{
+  const page = await open("/");
+  check("/: no exam deadline block on the homepage", (await page.locator('section[aria-labelledby="open-applications-heading"]').count()) === 0);
+  const link = page.locator('section[aria-labelledby="photo-heading"] a', { hasText: /applications? open now/ });
+  check("/: one text link to the exam hub with the open count", (await link.count()) === 1 && (await link.getAttribute("href")) === "/tools/application-photos" && /^7 exam applications open now/.test(await link.innerText()), await link.innerText().catch(() => ""));
+  await page.close();
+}
+for (const route of ["/tools/application-photos"]) {
   const page = await open(route);
   const block = page.locator('section[aria-labelledby="open-applications-heading"]');
   const text = (await block.count()) ? await block.innerText() : "";
   const hrefs = await block.locator("a").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
   check(`${route}: "Applications open now" links the open exam pages`, ["/tools/upessc-photo", "/tools/jee-main-photo", "/tools/kea-photo", "/tools/indian-bank-photo", "/tools/rrc-apprentice-photo", "/tools/rrb-photo"].every((h) => hrefs.includes(h)), hrefs.join(", "));
   check(`${route}: each entry shows its last date`, (text.match(/Apply by/g) ?? []).length === hrefs.length);
-  if (await block.count()) await block.screenshot({ path: path.join(OUT, `open-now${route === "/" ? "-home" : "-hub"}.png`) });
+  if (await block.count()) await block.screenshot({ path: path.join(OUT, "open-now-hub.png") });
   await page.close();
 }
 

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Faq } from "@/components/faq/faq";
-import { OpenApplications } from "@/components/home/open-applications";
 import { QuickStart } from "@/components/home/quick-start";
 import { ToolTile } from "@/components/home/tool-tile";
 import { PhotoCard } from "@/components/controls/photo-card";
 import { TINTS, type Tint } from "@/components/controls/tints";
+import { openApplications } from "@/lib/requirements/open-applications";
 import { pageMetadata } from "@/lib/seo/metadata";
 import type { FaqItem } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/site";
@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata({
   path: "/",
 });
 
-// Regenerated daily so "Applications open now" drops a window the day after it closes.
+// Regenerated daily so the count of open exam applications stays current.
 export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
@@ -190,6 +190,7 @@ function HeroIllustration() {
 
 
 export default function HomePage() {
+  const openCount = openApplications().length;
   return (
     <>
       <section className="border-b border-accent/10 bg-accent-soft">
@@ -232,8 +233,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <OpenApplications className="mx-auto max-w-6xl px-4 pt-10 sm:px-6" />
-
       <section aria-labelledby="popular-heading" className="render-later mx-auto max-w-6xl px-4 pt-14 sm:px-6">
         <SectionHeader
           id="popular-heading"
@@ -264,6 +263,14 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
+        {openCount > 0 ? (
+          <p className="mt-4 text-sm">
+            <Link href={APPLICATION_HUB.path} className="font-semibold text-accent hover:underline">
+              {openCount} exam {openCount === 1 ? "application" : "applications"} open now: see photo and signature sizes{" "}
+              <span aria-hidden="true">→</span>
+            </Link>
+          </p>
+        ) : null}
       </section>
 
       <section aria-labelledby="convert-heading" className="render-later mx-auto max-w-6xl px-4 pt-14 sm:px-6">
