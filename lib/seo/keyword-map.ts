@@ -362,6 +362,14 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/photo-to-pdf", "/tools/image-cropper"],
   },
   {
+    path: "/tools/aadhaar-front-and-back",
+    primary: "aadhaar front and back in one page",
+    // Search Console, 7 Oct – 3 Nov 2026: "aadhar combine photo" (40), "two photo in one page", "2 images in one", "images in one page".
+    secondary: ["aadhar card front and back in one page", "aadhar combine photo", "two photo in one page", "2 images in one page", "front and back in one pdf", "id card front and back in one page"],
+    intent: "tool",
+    supportedBy: ["/tools/merge-images", "/tools/photo-to-pdf", "/tools/compress-pdf"],
+  },
+  {
     path: "/tools/merge-photo-and-signature",
     primary: "merge photo and signature",
     // Google India autocomplete, 30 Oct 2026: "merge photo and signature online / jpg / passport size", "photo signature joiner online free".

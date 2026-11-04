@@ -56,6 +56,7 @@ export type ToolId =
   | "indian-bank-photo"
   | "kea-photo"
   | "merge-photo-and-signature"
+  | "aadhaar-front-and-back"
   | "add-name-and-date-on-photo"
   | "change-image-dpi"
   | "resize-image-in-cm"
@@ -486,7 +487,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine JPG, PNG, WebP and HEIC photos into one PDF, with page size, orientation, fit and margins.",
     linkText: "Convert photos to a PDF",
     category: "convert",
-    related: ["jpg-to-pdf", "merge-images", "compress-pdf", "png-to-jpg", "merge-pdf"],
+    related: ["jpg-to-pdf", "merge-images", "aadhaar-front-and-back", "compress-pdf", "png-to-jpg", "merge-pdf"],
     updated: "2026-10-18",
   },
   "merge-images": {
@@ -497,7 +498,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine several images into one, side by side, stacked or in a grid, with optional spacing and background.",
     linkText: "Merge several images into one",
     category: "edit",
-    related: ["merge-photo-and-signature", "photo-to-pdf", "image-resizer", "image-compressor", "image-cropper"],
+    related: ["merge-photo-and-signature", "aadhaar-front-and-back", "photo-to-pdf", "image-resizer", "image-compressor", "image-cropper"],
     updated: "2026-10-30",
   },
   "jpeg-to-jpg": {
@@ -709,6 +710,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["signature-resizer", "add-name-and-date-on-photo", "merge-images", "resize-image-to-kb", "passport-photo-resizer", "20kb-photo"],
     updated: "2026-10-31",
   },
+  "aadhaar-front-and-back": {
+    id: "aadhaar-front-and-back",
+    path: "/tools/aadhaar-front-and-back",
+    name: "Aadhaar Front and Back in One Page",
+    navLabel: "Front + back in one page",
+    summary: "Put the front and back of an Aadhaar, PAN or any ID card on one A4 PDF page or one JPG, under a KB limit.",
+    linkText: "Combine the front and back of a card in one page",
+    category: "edit",
+    related: ["merge-images", "merge-photo-and-signature", "photo-to-pdf", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-04",
+  },
   "add-name-and-date-on-photo": {
     id: "add-name-and-date-on-photo",
     path: "/tools/add-name-and-date-on-photo",
@@ -833,6 +845,7 @@ export const toolOrder: ToolId[] = [
   "white-background-photo",
   "merge-images",
   "merge-photo-and-signature",
+  "aadhaar-front-and-back",
   "add-name-and-date-on-photo",
   "image-to-jpg",
   "jpg-to-png",
