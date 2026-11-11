@@ -101,8 +101,10 @@ export default function ResizeImageToKbPage() {
           <p>
             Application forms often cap photos and signatures at 20, 50 or 100 KB, and portals often allow 200 KB to 1 MB
             for document scans. For the most common limits there are pages with the target preset and size-specific advice:{" "}
-            <Link href="/tools/20kb-photo">20KB photo</Link>, <Link href="/tools/50kb-photo">50KB photo</Link>,{" "}
-            <Link href="/tools/100kb-photo">100KB photo</Link> and <Link href="/tools/200kb-photo">200KB photo</Link>. Exam
+            <Link href="/tools/10kb-photo">10KB</Link>, <Link href="/tools/20kb-photo">20KB photo</Link>,{" "}
+            <Link href="/tools/30kb-photo">30KB</Link>, <Link href="/tools/50kb-photo">50KB photo</Link>,{" "}
+            <Link href="/tools/100kb-photo">100KB photo</Link>, <Link href="/tools/200kb-photo">200KB photo</Link> and{" "}
+            <Link href="/tools/500kb-photo">500KB</Link>. Exam
             or passport photo with a pixel size too? See <Link href="/tools/passport-photo">passport photo requirements</Link>{" "}
             or <Link href="/tools/ibps-photo">IBPS photo</Link>. Need exact pixels?{" "}
             <Link href="/tools/image-resizer">Resize the dimensions</Link> first. No fixed target?{" "}
