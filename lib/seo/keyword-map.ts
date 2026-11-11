@@ -97,6 +97,28 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/image-compressor"],
   },
   {
+    path: "/tools/10kb-photo",
+    primary: "resize image to 10kb",
+    // Search Console, Oct 2026: "resize image 10kb to 20kb" (support for the KB tool).
+    secondary: ["compress image to 10kb", "photo resize 10kb", "signature 10kb", "image under 10kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/resize-image-to-kb", "/tools/20kb-photo", "/tools/signature-resizer"],
+  },
+  {
+    path: "/tools/30kb-photo",
+    primary: "resize image to 30kb",
+    secondary: ["compress image to 30kb", "photo under 30kb", "30kb photo", "signature 30kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/resize-image-to-kb", "/tools/20kb-photo", "/tools/50kb-photo", "/tools/rrb-photo"],
+  },
+  {
+    path: "/tools/500kb-photo",
+    primary: "compress image to 500kb",
+    secondary: ["resize image to 500kb", "reduce photo size to 500kb", "image under 500kb", "500kb photo"],
+    intent: "file-size",
+    supportedBy: ["/tools/resize-image-to-kb", "/tools/200kb-photo", "/tools/image-compressor"],
+  },
+  {
     path: "/tools/20kb-photo",
     primary: "resize image to 20kb",
     secondary: ["compress image to 20kb", "image compressor to 20kb", "20kb photo", "photo resize to 20kb"],
@@ -199,7 +221,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/passport-photo",
     primary: "passport size photo",
-    secondary: ["passport size photo maker", "passport photo maker", "passport photo size", "passport photo", "passport size photo in pixels"],
+    secondary: ["passport size photo maker", "passport photo maker", "passport photo size", "passport photo", "passport size photo in pixels", "us passport photo size", "2x2 passport photo", "schengen visa photo size"],
     intent: "application",
     supportedBy: ["/tools/passport-photo-resizer", "/tools/100kb-photo", "/tools/application-photos"],
   },

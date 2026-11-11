@@ -24,10 +24,13 @@ const toolPages = [
   "/tools/passport-photo-resizer",
   "/tools/signature-resizer",
   "/tools/bulk-image-resizer",
+  "/tools/10kb-photo",
   "/tools/20kb-photo",
+  "/tools/30kb-photo",
   "/tools/50kb-photo",
   "/tools/100kb-photo",
   "/tools/200kb-photo",
+  "/tools/500kb-photo",
   "/tools/ssc-photo",
   "/tools/upsc-photo",
   "/tools/ibps-photo",
@@ -111,7 +114,7 @@ const overlapPages = [
   // Added 4 Nov 2026 next to merge-images and merge-photo-and-signature.
   "/tools/aadhaar-front-and-back",
 ];
-const kbPages = ["/tools/20kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/resize-image-to-kb"];
+const kbPages = ["/tools/10kb-photo", "/tools/20kb-photo", "/tools/30kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/500kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
 const applicationPages = ["/tools/ssc-photo", "/tools/upsc-photo", "/tools/ibps-photo", "/tools/sbi-photo", "/tools/neet-photo", "/tools/rrb-photo", "/tools/upsssc-photo", "/tools/dsssb-photo", "/tools/jee-main-photo", "/tools/upessc-photo", "/tools/rrc-apprentice-photo", "/tools/indian-bank-photo", "/tools/kea-photo", "/tools/passport-photo", HUB];
 const OFFICIAL = /href="https:\/\/(www\.ibps\.in|sbi\.bank\.in|ssc\.gov\.in|neet\.nta\.nic\.in|upsconline\.nic\.in|upsc\.gov\.in|www\.passportindia\.gov\.in|www\.gov\.uk|www\.canada\.ca|rrb\.indianrailways\.gov\.in|upsssc\.gov\.in|dsssb\.delhi\.gov\.in|cdnbbsr\.s3waas\.gov\.in|apply\.upessc\.org|www\.rrccr\.com|indianbank\.bank\.in|cetonline\.karnataka\.gov\.in)\//;
@@ -176,7 +179,7 @@ for (const route of pages) {
     const crumbs = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)]
       .map((m) => JSON.parse(m[1]))
       .find((d) => d["@type"] === "BreadcrumbList")?.itemListElement.map((i) => i.item.replace(SITE, "") || "/");
-    const parent = kbPages.slice(0, 4).includes(route) ? "/tools/resize-image-to-kb" : applicationPages.includes(route) && route !== HUB ? HUB : pdfPages.includes(route) ? PDF_HUB : null;
+    const parent = kbPages.slice(0, -1).includes(route) ? "/tools/resize-image-to-kb" : applicationPages.includes(route) && route !== HUB ? HUB : pdfPages.includes(route) ? PDF_HUB : null;
     if (parent) check(`${route}: breadcrumb goes through its category`, crumbs?.length === 4 && crumbs[2] === parent && crumbs[3] === route, crumbs?.join(" > "));
   }
   {
@@ -232,7 +235,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 55 && worst.score < 0.15,
+    entries.length === 58 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
