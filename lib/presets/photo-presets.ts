@@ -161,6 +161,56 @@ export const PHOTO_PRESETS: PhotoPreset[] = [
     },
     lastVerified: "2026-10-07",
   },
+  {
+    // travel.state.gov blocks automated reading; the same rules are printed in the official DS-82 instructions.
+    id: "usa-passport-print",
+    country: "United States",
+    document: "Passport – printed photo (2 × 2 inches)",
+    kind: "print",
+    widthMm: 50.8,
+    heightMm: 50.8,
+    widthPx: mmToPx(50.8),
+    heightPx: mmToPx(50.8),
+    dpi: PRINT_DPI,
+    background: "Plain white or off-white",
+    requirements: [
+      "One colour photo, 2 × 2 inches in size, taken less than six months ago",
+      "Head 1 to 1 3/8 inches from the bottom of the chin to the top of the head",
+      "Head facing the camera directly with the full face in view",
+      "No eyeglasses, head covering or uniform (exceptions need a signed religious or medical statement)",
+      "Printed on matte or glossy photo-quality paper",
+    ],
+    sizeNote: `2 × 2 in is 600 × 600 pixels at ${PRINT_DPI} DPI. Print at 100% scale (no "fit to page").`,
+    source: {
+      name: "U.S. Department of State – Form DS-82 instructions (photo requirements)",
+      url: "https://eforms.state.gov/Forms/ds82_pdf.PDF",
+    },
+    lastVerified: "2026-11-11",
+  },
+  {
+    id: "schengen-visa-print",
+    country: "Schengen visa",
+    document: "Visa photo – Czech consulates (35 × 45 mm)",
+    kind: "print",
+    widthMm: 35,
+    heightMm: 45,
+    widthPx: mmToPx(35),
+    heightPx: mmToPx(45),
+    dpi: PRINT_DPI,
+    requirements: [
+      "Size 35 × 45 mm, showing your current appearance",
+      "Full-face view; height from the eyes to the bottom of the chin at least 13 mm",
+      "Civil attire, no sunglasses (except for the blind)",
+      "No head cover, except for religious or health reasons, and it must not prevent identification",
+      "Other Schengen consulates publish their own photo rules: check the one you apply to",
+    ],
+    sizeNote: `Pixel size is 35 × 45 mm at ${PRINT_DPI} DPI. Print at 100% scale (no "fit to page").`,
+    source: {
+      name: "Ministry of Foreign Affairs of the Czech Republic – Photo (Schengen visa)",
+      url: "https://mzv.gov.cz/jnp/en/information_for_aliens/supporting_documents_overview/photo.html",
+    },
+    lastVerified: "2026-11-11",
+  },
 ];
 
 export function getPreset(id: string): PhotoPreset | undefined {
