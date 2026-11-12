@@ -24,12 +24,12 @@ const faqs: FaqItem[] = [
   {
     question: "What is the passport photo size?",
     answer:
-      "It depends on the country. India, the UK and Schengen visas use 35 × 45 mm, the USA 2 × 2 inches and Canada 50 × 70 mm; online applications set pixel and file-size limits instead.",
+      "It depends on the country and on printed versus digital. India and the UK use 35 × 45 mm printed photos and Canada 50 × 70 mm, while online applications set minimum pixel sizes and file-size ranges instead.",
   },
   {
     question: "What is a passport size photo in pixels?",
     answer:
-      "At 300 DPI, 35 × 45 mm (India, UK, Schengen) is 413 × 531 pixels, a US 2 × 2 inch photo is 600 × 600 and Canada's 50 × 70 mm is 591 × 827. UK digital photos need at least 600 × 750.",
+      "At 300 DPI, a 35 × 45 mm photo (India, UK) is 413 × 531 pixels and Canada's 50 × 70 mm is 591 × 827. Online applications give pixels directly, such as at least 600 × 750 for a UK digital photo.",
   },
   {
     question: "Do I need a photo for an Indian passport application?",
@@ -195,14 +195,6 @@ export default function PassportPhotoPage() {
             <li>
               <strong>Canada:</strong> head (chin to crown) 31–36 mm on printed photos, or 45–50% of the height on digital
               ones.
-            </li>
-            <li>
-              <strong>United States:</strong> 2 × 2 inches, head 1–1⅜ inches from chin to top, plain white or off-white
-              background, no glasses.
-            </li>
-            <li>
-              <strong>Schengen visa:</strong> 35 × 45 mm (Czech consulates&apos; rule: eyes to chin at least 13 mm); other
-              consulates publish their own wording.
             </li>
           </ul>
 

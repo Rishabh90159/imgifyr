@@ -41,10 +41,17 @@ export const PASSPORT_REQUIREMENTS: RequirementSet[] = PHOTO_PRESETS.map(presetT
  */
 export const PASSPORT_NOT_VERIFIED: { country: string; reason: string; url: string; label: string; checkedOn: string }[] = [
   {
+    country: "United States",
+    reason: "The U.S. Department of State website didn't allow our automated check, so we haven't added its numbers.",
+    url: "https://travel.state.gov/content/travel/en/passports/how-apply/photos.html",
+    label: "travel.state.gov – Passport photos",
+    checkedOn: "2026-10-07",
+  },
+  {
     country: "Australia",
-    reason: "The Australian Passport Office website couldn't be read during our checks, so we haven't added its numbers.",
+    reason: "The Australian Passport Office website couldn't be reached during our check, so we haven't added its numbers.",
     url: "https://www.passports.gov.au/getting-passport-how-it-works/photo-guidelines",
     label: "passports.gov.au – Photo guidelines",
-    checkedOn: "2026-11-11",
+    checkedOn: "2026-10-07",
   },
 ];

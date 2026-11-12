@@ -22,10 +22,7 @@ export type ToolId =
   | "passport-photo-resizer"
   | "signature-resizer"
   | "bulk-image-resizer"
-  | "10kb-photo"
   | "20kb-photo"
-  | "30kb-photo"
-  | "500kb-photo"
   | "50kb-photo"
   | "100kb-photo"
   | "200kb-photo"
@@ -204,7 +201,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Resize a photo for Instagram",
     category: "resize",
     parent: "image-resizer",
-    related: ["image-resizer", "image-cropper", "circle-crop", "image-compressor", "webp-to-jpg", "heic-to-jpg"],
+    related: ["image-resizer", "image-cropper", "image-compressor", "jpg-to-png", "webp-to-jpg", "heic-to-jpg"],
     updated: "2026-10-10",
   },
   "image-compressor": {
@@ -292,7 +289,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Trace logos, icons and simple graphics into real vector SVG paths.",
     linkText: "Vectorize a PNG into SVG",
     category: "convert",
-    related: ["svg-to-png", "image-cropper", "circle-crop", "image-compressor"],
+    related: ["svg-to-png", "image-cropper", "image-compressor"],
     updated: "2026-10-06",
   },
   "image-cropper": {
@@ -339,17 +336,6 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["image-resizer", "image-compressor", "resize-image-to-kb", "resize-jpg", "heic-to-jpg", "photo-to-pdf"],
     updated: "2026-10-06",
   },
-  "10kb-photo": {
-    id: "10kb-photo",
-    path: "/tools/10kb-photo",
-    name: "10KB Photo Resizer",
-    navLabel: "10KB photo",
-    summary: "Compress a signature, thumb impression or small photo to 10 KB or less.",
-    linkText: "Resize an image to 10KB",
-    category: "size",
-    related: ["20kb-photo", "signature-resizer", "30kb-photo", "resize-image-to-kb"],
-    updated: "2026-11-11",
-  },
   "20kb-photo": {
     id: "20kb-photo",
     path: "/tools/20kb-photo",
@@ -358,19 +344,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Reduce a photo or signature to 20 KB or less, the tightest limit on many application forms.",
     linkText: "Resize a photo to 20KB",
     category: "size",
-    related: ["10kb-photo", "30kb-photo", "50kb-photo", "signature-resizer", "resize-image-to-kb", "image-compressor"],
+    related: ["50kb-photo", "signature-resizer", "resize-image-to-kb", "image-compressor"],
     updated: "2026-10-07",
-  },
-  "30kb-photo": {
-    id: "30kb-photo",
-    path: "/tools/30kb-photo",
-    name: "30KB Photo Resizer",
-    navLabel: "30KB photo",
-    summary: "Get a form photo or signature under 30 KB, with the exact size shown before download.",
-    linkText: "Resize a photo to 30KB",
-    category: "size",
-    related: ["20kb-photo", "50kb-photo", "rrb-photo", "signature-resizer", "resize-image-to-kb"],
-    updated: "2026-11-11",
   },
   "50kb-photo": {
     id: "50kb-photo",
@@ -402,19 +377,8 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Shrink a large photo to 200 KB while keeping plenty of detail and resolution.",
     linkText: "Resize a photo to 200KB",
     category: "size",
-    related: ["100kb-photo", "500kb-photo", "50kb-photo", "neet-photo", "image-size-increase", "resize-image-to-kb"],
+    related: ["100kb-photo", "50kb-photo", "neet-photo", "image-size-increase", "image-resizer", "resize-image-to-kb"],
     updated: "2026-10-18",
-  },
-  "500kb-photo": {
-    id: "500kb-photo",
-    path: "/tools/500kb-photo",
-    name: "500KB Image Compressor",
-    navLabel: "500KB photo",
-    summary: "Bring a large photo or document scan under 500 KB while keeping it sharp.",
-    linkText: "Compress an image to 500KB",
-    category: "size",
-    related: ["200kb-photo", "100kb-photo", "image-compressor", "compress-pdf", "photo-to-pdf", "resize-image-to-kb"],
-    updated: "2026-11-11",
   },
   "ssc-photo": {
     id: "ssc-photo",
@@ -491,7 +455,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Check passport photo size by country",
     category: "application",
     related: ["passport-photo-resizer", "signature-resizer", "white-background-photo", "image-cropper", "image-compressor", "resize-image-to-kb"],
-    updated: "2026-11-11",
+    updated: "2026-10-18",
   },
   "image-upscaler": {
     id: "image-upscaler",
@@ -512,7 +476,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Cut out the main subject of a photo and download it as a transparent PNG or on a new background colour.",
     linkText: "Remove the background from an image",
     category: "edit",
-    related: ["white-background-photo", "circle-crop", "image-compressor", "image-resizer", "png-to-jpg", "image-cropper"],
+    related: ["white-background-photo", "image-compressor", "image-resizer", "png-to-jpg", "image-cropper"],
     updated: "2026-10-07",
   },
   "photo-to-pdf": {
@@ -915,13 +879,10 @@ export const toolOrder: ToolId[] = [
   "compress-pdf",
   "pdf-to-jpg",
   "pdf-to-png",
-  "10kb-photo",
   "20kb-photo",
-  "30kb-photo",
   "50kb-photo",
   "100kb-photo",
   "200kb-photo",
-  "500kb-photo",
   "mb-to-kb-converter",
   "ssc-photo",
   "upsc-photo",

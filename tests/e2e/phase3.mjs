@@ -295,22 +295,10 @@ async function makeFile(page, fileName, kindLabel) {
 {
   const page = await openPage("/tools/passport-photo");
   check("Passport: comparison table lists India, UK and Canada with sources", (await page.locator("table").first().innerText()).match(/India[\s\S]*United Kingdom[\s\S]*Canada/) !== null && (await page.locator('a[href^="https://www.passportindia.gov.in/"]').count()) >= 1);
-  const passportSummary = await page.locator('section[aria-labelledby="requirements-heading"]').evaluate((el) => el.textContent ?? "");
-  check("Passport: Australia listed as not yet verified, US no longer", /Australia:/.test(passportSummary) && !/United States:/.test(passportSummary));
-  check("Passport: US and Schengen sources linked", (await page.locator('a[href^="https://eforms.state.gov/"]').count()) >= 1 && (await page.locator('a[href^="https://mzv.gov.cz/"]').count()) >= 1);
+  check("Passport: US and Australia listed as not yet verified", /United States:[\s\S]*Australia:/.test(await page.locator('section[aria-labelledby="requirements-heading"]').evaluate((el) => el.textContent ?? "")));
   await page.getByLabel("Country").selectOption("India");
   let r = await makeFile(page, "portrait.jpg");
   check("Passport India: 413 × 531 px JPG with 300 DPI for printing", r.info.width === 413 && r.info.height === 531 && jfifDpi(r.dl.buf) === 300, `dpi ${jfifDpi(r.dl.buf)}`);
-  await page.getByLabel("Country").selectOption("United States");
-  await rerun(page, /^Create (photo file|again)$/);
-  r = { dl: await download(page) };
-  r.info = await inspect(page, r.dl.buf);
-  check("Passport USA: 2 × 2 in = 600 × 600 px at 300 DPI", r.info.width === 600 && r.info.height === 600 && jfifDpi(r.dl.buf) === 300, `${r.info.width}×${r.info.height} dpi ${jfifDpi(r.dl.buf)}`);
-  await page.getByLabel("Country").selectOption("Schengen visa");
-  await rerun(page, /^Create (photo file|again)$/);
-  r = { dl: await download(page) };
-  r.info = await inspect(page, r.dl.buf);
-  check("Passport Schengen: 35 × 45 mm = 413 × 531 px", r.info.width === 413 && r.info.height === 531, `${r.info.width}×${r.info.height}`);
   await page.getByLabel("Country").selectOption("Canada");
   await page.getByLabel("Application").selectOption("canada-passport-digital");
   await rerun(page, /^Create (photo file|again)$/);
@@ -318,17 +306,6 @@ async function makeFile(page, fileName, kindLabel) {
   r.info = await inspect(page, r.dl.buf);
   const caText = await page.locator('section[aria-labelledby="result-heading"]').innerText();
   check("Passport Canada digital: 1200 × 1800 px and honest about the 200 KB minimum", r.info.width === 1200 && r.info.height === 1800 && (r.dl.buf.length >= 200 * KB || /below the 200 KB minimum/.test(caText)), `${r.dl.buf.length} bytes`);
-  await page.close();
-}
-
-// ---------------------------------------------------------------- 10KB, 30KB and 500KB pages
-for (const kb of [10, 30, 500]) {
-  const page = await openPage(`/tools/${kb}kb-photo`);
-  await upload(page, "photo-12mp.jpg");
-  await loaded(page, "photo-12mp.jpg");
-  await waitResult(page);
-  const dl = await download(page);
-  check(`${kb}KB page: 12 MP photo → JPG at or under ${kb} KB`, isJpeg(dl.buf) && dl.buf.length <= kb * KB, `${(dl.buf.length / KB).toFixed(1)} KB`);
   await page.close();
 }
 

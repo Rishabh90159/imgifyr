@@ -25,8 +25,6 @@ const OFFICIAL_HOSTS = [
   "www.passportindia.gov.in",
   "www.gov.uk",
   "www.canada.ca",
-  "eforms.state.gov",
-  "mzv.gov.cz",
 ];
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -104,7 +102,7 @@ describe("requirement data", () => {
 
   it("passport data covers only verified countries and lists the rest as unverified", () => {
     const countries = new Set(PASSPORT_REQUIREMENTS.map((s) => s.group));
-    expect([...countries].sort()).toEqual(["Canada", "India", "Schengen visa", "United Kingdom", "United States"]);
+    expect([...countries].sort()).toEqual(["Canada", "India", "United Kingdom"]);
     for (const item of PASSPORT_NOT_VERIFIED) expect(countries.has(item.country)).toBe(false);
     const india = PASSPORT_REQUIREMENTS.find((s) => s.id === "india-passport-print")!;
     expect(india.photo).toMatchObject({ widthPx: 413, heightPx: 531, pixelBasis: "derived", dpi: 300 });
@@ -143,9 +141,9 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 66 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(66);
-    expect(toolsIn("size").map((t) => t.id)).toEqual(["10kb-photo", "20kb-photo", "30kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "500kb-photo", "mb-to-kb-converter"]);
+  it("has 63 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(63);
+    expect(toolsIn("size").map((t) => t.id)).toEqual(["20kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "mb-to-kb-converter"]);
     expect(toolsIn("application")).toHaveLength(14);
     expect(toolsIn("image")).toHaveLength(25);
     expect(toolsIn("convert")).toHaveLength(13);

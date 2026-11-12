@@ -17,9 +17,8 @@ describe("site search", () => {
 
   it("turns a typed size into that page, or the KB tool preset to it", () => {
     expect(first("50 KB")).toBe("/tools/50kb-photo");
-    expect(first("photo 30kb")).toBe("/tools/30kb-photo");
-    expect(first("photo 35kb")).toBe("/tools/resize-image-to-kb?target=35");
-    expect(searchTools("35 kb")[0]?.name).toBe("Resize image to 35 KB");
+    expect(first("photo 30kb")).toBe("/tools/resize-image-to-kb?target=30");
+    expect(searchTools("30 kb")[0]?.name).toBe("Resize image to 30 KB");
   });
 
   it("understands everyday, Hinglish and Hindi wording", () => {
