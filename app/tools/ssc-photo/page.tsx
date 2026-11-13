@@ -15,7 +15,7 @@ const description =
   "SSC now captures your photo live in the application form. See the rules from the official 2026 notices and resize your signature to a 10–20 KB JPEG.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "SSC Photo & Signature Requirements – SSC Signature Resizer",
+  title: "SSC Photo & Signature Size 2026 – SSC Signature Resizer",
   description,
   path: tool.path,
 });

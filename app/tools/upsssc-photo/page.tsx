@@ -15,7 +15,7 @@ const description =
   "UPSSSC One Time Registration asks for a 50–100 KB photo and a 30–50 KB signature with your name in Hindi below it. Make both JPGs here, free.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "UPSSSC Photo & Signature Size – OTR Photo Resizer",
+  title: "UPSSSC Photo & Signature Size 2026 – OTR Photo Resizer",
   description,
   path: tool.path,
 });

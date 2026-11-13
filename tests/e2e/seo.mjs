@@ -31,6 +31,14 @@ const toolPages = [
   "/tools/100kb-photo",
   "/tools/200kb-photo",
   "/tools/500kb-photo",
+  "/tools/200x230-photo",
+  "/tools/413x531-photo",
+  "/tools/630x810-photo",
+  "/tools/600x600-photo",
+  "/tools/140x60-signature",
+  "/tools/20kb-signature",
+  "/tools/30kb-signature",
+  "/tools/thumb-impression-resizer",
   "/tools/ssc-photo",
   "/tools/upsc-photo",
   "/tools/ibps-photo",
@@ -113,6 +121,15 @@ const overlapPages = [
   "/tools/pdf-to-png",
   // Added 4 Nov 2026 next to merge-images and merge-photo-and-signature.
   "/tools/aadhaar-front-and-back",
+  // Added 13 Nov 2026: pixel, signature and thumb pages must stay distinct from each other and their parents.
+  "/tools/200x230-photo",
+  "/tools/413x531-photo",
+  "/tools/630x810-photo",
+  "/tools/600x600-photo",
+  "/tools/140x60-signature",
+  "/tools/20kb-signature",
+  "/tools/30kb-signature",
+  "/tools/thumb-impression-resizer",
 ];
 const kbPages = ["/tools/10kb-photo", "/tools/20kb-photo", "/tools/30kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/500kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
@@ -205,7 +222,7 @@ for (const route of pages) {
   if (applicationPages.includes(route)) {
     const text = decode(html);
     check(`${route}: links an official source (new tab)`, OFFICIAL.test(html) && /target="_blank" rel="noopener noreferrer"/.test(html));
-    check(`${route}: shows a verification date`, /Last verified|Verified <!-- -->|Verified <time|Last checked/.test(html));
+    check(`${route}: shows a verification date`, /Last verified|Verified <!-- -->|Verified <time|Last checked|checked <time/.test(html));
     check(`${route}: requirement disclaimer visible`, text.includes(DISCLAIMER));
     check(`${route}: says it is independent, never official`, !/official (SSC|UPSC|IBPS|SBI|NEET|NTA) tool/i.test(text) && /not affiliated/i.test(text));
     check(`${route}: no fabricated schema types`, !/AggregateRating|"Review"|GovernmentOrganization/.test(html));
@@ -235,7 +252,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 58 && worst.score < 0.15,
+    entries.length === 66 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
