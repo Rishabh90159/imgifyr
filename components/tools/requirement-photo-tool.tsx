@@ -156,6 +156,8 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
   const [threshold, setThreshold] = useState(190);
   const cleanup: BackgroundCleanup | undefined = kind !== "photo" && cleanBg ? { threshold, to: "white" } : undefined;
   const text = KIND_TEXT[kind];
+  // NTA's "80% of the photo is the face" rule gets its own crop guide and a hint on how to use it.
+  const faceRule = kind === "photo" && imageSpec?.faceCoverage === 80;
 
   const aspect = imageSpec?.aspect ?? (output?.widthPx && output.heightPx ? output.widthPx / output.heightPx : null);
   const cropState = useCropState(source, aspect);
@@ -325,6 +327,12 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
     <>
       {picker}
       <OrientationControls onRotate={cropState.rotate} onFlip={cropState.flip} flipped={cropState.flipH} />
+      {faceRule ? (
+        <p className="rounded-md border border-accent/20 bg-accent-soft px-3 py-2.5 text-sm text-ink-soft">
+          <strong className="font-semibold text-ink">Face about 80% of the photo:</strong> crop close, so your face, ears
+          included, fills the dashed oval from forehead to chin, as the NTA bulletin asks.
+        </p>
+      ) : null}
       {kind !== "photo" ? (
         <div className="space-y-3">
           <label className="flex items-start gap-3 text-sm font-medium text-ink">
@@ -396,7 +404,7 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
           aspect={aspect}
           crop={cropState.crop}
           onChange={cropState.setCrop}
-          guide={kind === "photo" ? "portrait" : "thirds"}
+          guide={kind === "photo" ? (faceRule ? "face80" : "portrait") : "thirds"}
           label={text.crop}
         />
       }

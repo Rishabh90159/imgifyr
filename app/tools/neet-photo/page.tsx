@@ -60,7 +60,7 @@ export default function NeetPhotoPage() {
           <ol>
             <li>Take a recent photo against a white wall in good light, without a mask, ears showing.</li>
             <li>
-              With <strong>Photograph</strong> selected, crop so your face fills about 80% of the frame and create the file.
+              With <strong>Photograph</strong> selected, crop so your face fills the dashed oval (about 80% of the frame) and create the file.
             </li>
             <li>Switch to <strong>Signature</strong>, add your signed paper, crop tightly and create the second file.</li>
           </ol>

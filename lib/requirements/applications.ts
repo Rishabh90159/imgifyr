@@ -549,6 +549,7 @@ const NEET_SETS: RequirementSet[] = [
       format: "JPG/JPEG",
       minKB: 10,
       maxKB: 200,
+      faceCoverage: 80,
       rules: [
         "Recent passport-size photograph, in colour or black & white",
         "Taken after 01 January 2026",
@@ -587,6 +588,7 @@ const JEE_SETS: RequirementSet[] = [
       format: "JPG/JPEG",
       minKB: 10,
       maxKB: 200,
+      faceCoverage: 80,
       rules: [
         "Recent scanned passport-size photograph, in colour",
         "White background",
