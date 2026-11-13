@@ -1,4 +1,4 @@
-// End-to-end tests for the pixel-size, signature-size and thumb impression pages and the exam source line in a real browser (Edge by default).
+// End-to-end tests for the pixel-size, signature-size and thumb impression pages, the exam source line and the NTA face guide in a real browser (Edge by default).
 // Usage: start the production server (npm run build && npx next start -p 3100), then
 //   node tests/e2e/signature-pixel-thumb.mjs
 import fs from "node:fs";
@@ -98,6 +98,34 @@ for (const route of ["/tools/ssc-photo", "/tools/ibps-photo", "/tools/rrb-photo"
   const line = page.locator('section[aria-labelledby="requirements-heading"] article p').first();
   const text = await line.innerText();
   check(`${route}: "Official notice … checked" line with a link`, /^Official notices?:/.test(text) && /checked \d/.test(text) && (await line.locator('a[href^="https://"]').count()) >= 1, text.slice(0, 120));
+  await page.close();
+}
+
+// Government ID pages, from the official Sarathi PDF and ECI Form 6 guidelines.
+{
+  const page = await open("/tools/driving-licence-photo");
+  check("Driving licence: Sarathi PDF linked", (await page.locator('a[href^="https://sarathi.parivahan.gov.in/"]').count()) >= 1);
+  const photo = await make(page, "portrait.jpg", /^Create photo file$/);
+  check("Driving licence: photo 420 × 525, 10–20 KB", photo.size?.width === 420 && photo.size?.height === 525 && photo.bytes.length >= 10 * KB && photo.bytes.length <= 20 * KB, `${photo.size?.width}×${photo.size?.height}, ${kb(photo.bytes)}`);
+  await page.close();
+}
+{
+  const page = await open("/tools/voter-id-photo");
+  check("Voter ID: ECI guidelines linked", (await page.locator('a[href^="https://voters.eci.gov.in/"]').count()) >= 1);
+  const photo = await make(page, "portrait.jpg", /^Create photo file$/);
+  const ratio = photo.size ? photo.size.width / photo.size.height : 0;
+  check("Voter ID: 3.5:4.5 photo under 2 MB", Math.abs(ratio - 35 / 45) < 0.01 && photo.bytes.length <= 2000 * KB, `${photo.size?.width}×${photo.size?.height}, ${kb(photo.bytes)}`);
+  await page.close();
+}
+
+// NTA's "80% of the photo is the face": the oval guide and hint show on NEET and JEE photos only.
+for (const [route, expected] of [["/tools/neet-photo", 1], ["/tools/jee-main-photo", 1], ["/tools/ibps-photo", 0]]) {
+  const page = await open(route);
+  await page.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "portrait.jpg"));
+  await page.locator('[aria-label^="Photo crop area"]').first().waitFor({ timeout: 60_000 });
+  const oval = await page.getByText("Face ≈ 80%").count();
+  const hint = await page.getByText("Face about 80% of the photo:").count();
+  check(`${route}: face-coverage guide ${expected ? "shown" : "not shown"}`, oval === expected && hint === expected, `oval ${oval}, hint ${hint}`);
   await page.close();
 }
 

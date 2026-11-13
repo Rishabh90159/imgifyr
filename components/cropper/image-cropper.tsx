@@ -24,8 +24,11 @@ interface ImageCropperProps {
   aspect: number | null;
   crop: CropRect;
   onChange: (crop: CropRect) => void;
-  /** Overlay guide: rule-of-thirds grid, a centred head outline for portrait photos, or the circle a round crop keeps. */
-  guide?: "thirds" | "portrait" | "circle";
+  /**
+   * Overlay guide: rule-of-thirds grid, a centred head outline for portrait photos, the circle a round crop keeps, or
+   * the face oval for rules like NTA's "80% of the photo is the face".
+   */
+  guide?: "thirds" | "portrait" | "circle" | "face80";
   /** Accessible name, e.g. "Crop area for your photo". */
   label?: string;
 }
@@ -328,7 +331,21 @@ function handlePosition(handle: Handle): React.CSSProperties {
   return { left: x, top: y };
 }
 
-function CropGuide({ guide }: { guide: "thirds" | "portrait" | "circle" }) {
+function CropGuide({ guide }: { guide: "thirds" | "portrait" | "circle" | "face80" }) {
+  if (guide === "face80") {
+    // An oval touching the frame covers π/4 ≈ 79% of it, so a face (ears included) filling this oval fills about 80%.
+    return (
+      <>
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <ellipse cx="50" cy="50" rx="49" ry="49" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="0.8" strokeDasharray="2 1.5" vectorEffect="non-scaling-stroke" />
+          <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(255,255,255,0.35)" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
+        </svg>
+        <span className="pointer-events-none absolute left-1 top-1 rounded bg-black/55 px-1.5 py-0.5 text-[0.6875rem] font-medium text-white" aria-hidden="true">
+          Face ≈ 80%
+        </span>
+      </>
+    );
+  }
   if (guide === "circle") {
     // The part a round crop keeps; the corners outside it become transparent or the background colour.
     return (

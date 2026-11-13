@@ -407,6 +407,85 @@ const INDIAN_BANK_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- Driving licence (Parivahan Sarathi)
+// Sarathi's own "Photo and Signature Scan & Upload Process" PDF. Some states take the photo from Aadhaar e-KYC instead.
+
+const SARATHI_SETS: RequirementSet[] = [
+  {
+    id: "sarathi-dl-ll",
+    name: "Driving licence and learner's licence applications (Sarathi)",
+    photo: {
+      kind: "photo",
+      format: "JPG",
+      widthPx: 420,
+      heightPx: 525,
+      pixelBasis: "preferred",
+      physical: "35 mm × 45 mm",
+      aspect: 420 / 525,
+      minKB: 10,
+      maxKB: 20,
+      rules: [
+        "Recent (within 6 months) passport-size colour picture",
+        "Light-coloured, preferably white, background",
+        "Caps, hats and dark glasses are not acceptable; religious headwear is allowed but must not cover the face",
+        "Minimum 420 × 525 pixels; 420 × 525 is the preferred size",
+      ],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG",
+      widthPx: 256,
+      heightPx: 64,
+      pixelBasis: "preferred",
+      aspect: 256 / 64,
+      minKB: 10,
+      maxKB: 20,
+      rules: ["Sign on white paper with a black pen"],
+    },
+    notes: [
+      "Services vary by state: some states fetch your photo from Aadhaar e-KYC, so check what your state's upload screen asks for.",
+      "Scan or photograph at 300 DPI or more, in true colour.",
+    ],
+    source: {
+      title: "Photo and Signature Scan & Upload Process",
+      url: "https://sarathi.parivahan.gov.in/sarathiservice/pdf/PhotoSign.pdf",
+      publisher: "Ministry of Road Transport & Highways (Parivahan Sarathi)",
+      section: "Page 2: Photograph and Signature",
+      lastVerified: "2026-11-13",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- Voter ID (Election Commission of India)
+// Form 6 (new voter) and Form 8 (correction) on voters.eci.gov.in. ECI gives a print size and a 2 MB limit, no pixels.
+
+const ECI_SETS: RequirementSet[] = [
+  {
+    id: "eci-form-6",
+    name: "Voter ID: Form 6 (new voter) and Form 8 (photo change)",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      physical: "4.5 cm × 3.5 cm",
+      aspect: 35 / 45,
+      maxKB: 2000,
+      rules: [
+        "Recent, good-quality, unsigned passport-size colour photograph",
+        "White background, showing a front view of the full face",
+        "Eyes open and both edges of the face clearly visible",
+      ],
+    },
+    notes: ["Form 6 asks for no signature upload.", "Apply on voters.eci.gov.in or the Voter Helpline app."],
+    source: {
+      title: "Guidelines for filling Form 6",
+      url: "https://voters.eci.gov.in/guidelines/Form-6_en.pdf",
+      publisher: "Election Commission of India",
+      section: "Item (d) Photograph; the portal's upload field adds the 2 MB JPG limit",
+      lastVerified: "2026-11-13",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- KEA (Karnataka)
 // Group-C FDA/SDA 2026. The notices are Kannada scans; the upload rule is the English text inside para 25 (FDA)
 // and para 23 (SDA), identical in both. No pixel size is given.
@@ -549,6 +628,7 @@ const NEET_SETS: RequirementSet[] = [
       format: "JPG/JPEG",
       minKB: 10,
       maxKB: 200,
+      faceCoverage: 80,
       rules: [
         "Recent passport-size photograph, in colour or black & white",
         "Taken after 01 January 2026",
@@ -587,6 +667,7 @@ const JEE_SETS: RequirementSet[] = [
       format: "JPG/JPEG",
       minKB: 10,
       maxKB: 200,
+      faceCoverage: 80,
       rules: [
         "Recent scanned passport-size photograph, in colour",
         "White background",
@@ -672,6 +753,8 @@ export const APPLICATIONS = {
   rrc: { name: "RRC Central Railway", fullName: "Railway Recruitment Cell, Central Railway", sets: RRC_SETS },
   indianBank: { name: "Indian Bank", fullName: "Indian Bank (public sector bank)", sets: INDIAN_BANK_SETS },
   kea: { name: "KEA", fullName: "Karnataka Examinations Authority", sets: KEA_SETS },
+  sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
+  eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },
   dsssb: { name: "DSSSB", fullName: "Delhi Subordinate Services Selection Board", sets: DSSSB_SETS },
   upessc: { name: "UPESSC", fullName: "Uttar Pradesh Education Services Selection Commission", sets: UPESSC_SETS },

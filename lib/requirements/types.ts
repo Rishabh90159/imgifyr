@@ -56,6 +56,8 @@ export interface ImageSpec {
   dpi?: number;
   minKB?: number;
   maxKB?: number;
+  /** Share of the photo the face should fill, in percent, when the source states one (NTA: 80). Drives the crop guide. */
+  faceCoverage?: number;
   /** Requirements as stated in the source. */
   rules: string[];
 }

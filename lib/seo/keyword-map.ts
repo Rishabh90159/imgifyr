@@ -369,6 +369,20 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/upsssc-photo", "/tools/signature-resizer"],
   },
   {
+    path: "/tools/driving-licence-photo",
+    primary: "driving licence photo",
+    secondary: ["driving licence photo size", "sarathi photo size", "sarathi photo and signature size", "learner licence photo size", "dl photo upload size", "parivahan photo size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/signature-resizer", "/tools/white-background-photo"],
+  },
+  {
+    path: "/tools/voter-id-photo",
+    primary: "voter id photo size",
+    secondary: ["form 6 photo size", "voter id photo upload size", "voter card photo size", "eci photo size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/413x531-photo"],
+  },
+  {
     path: "/tools/kea-photo",
     primary: "kea fda sda photo",
     secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],

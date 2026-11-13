@@ -63,7 +63,7 @@ export default function JeeMainPhotoPage() {
           <ol>
             <li>Stand in front of a plain white background in daylight, mask off and both ears uncovered, and take the photo.</li>
             <li>
-              Load it as the <strong>Photograph</strong>, crop in until your face takes up roughly four-fifths of the picture, then make the photo file.
+              Load it as the <strong>Photograph</strong>, crop in until your face fills the dashed oval, roughly four-fifths of the picture, then make the photo file.
             </li>
             <li>Sign on blank paper, load it as the <strong>Signature</strong>, trim the margins and make the second file.</li>
           </ol>

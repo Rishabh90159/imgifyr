@@ -66,6 +66,8 @@ export type ToolId =
   | "rrc-apprentice-photo"
   | "indian-bank-photo"
   | "kea-photo"
+  | "driving-licence-photo"
+  | "voter-id-photo"
   | "merge-photo-and-signature"
   | "aadhaar-front-and-back"
   | "add-name-and-date-on-photo"
@@ -818,6 +820,28 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-04",
   },
+  "driving-licence-photo": {
+    id: "driving-licence-photo",
+    path: "/tools/driving-licence-photo",
+    name: "Driving Licence Photo & Signature",
+    navLabel: "Driving licence photo",
+    summary: "The Sarathi driving and learner's licence photo (420 × 525 px) and signature (256 × 64 px), each 10–20 KB.",
+    linkText: "Prepare your driving licence photo and signature",
+    category: "application",
+    related: ["voter-id-photo", "white-background-photo", "signature-resizer", "20kb-photo", "passport-photo", "image-cropper"],
+    updated: "2026-11-13",
+  },
+  "voter-id-photo": {
+    id: "voter-id-photo",
+    path: "/tools/voter-id-photo",
+    name: "Voter ID Photo",
+    navLabel: "Voter ID photo",
+    summary: "The voter ID (Form 6 / Form 8) photo: 4.5 × 3.5 cm, white background, JPG up to 2 MB.",
+    linkText: "Prepare your voter ID photo",
+    category: "application",
+    related: ["driving-licence-photo", "white-background-photo", "413x531-photo", "passport-photo", "aadhaar-front-and-back", "image-cropper"],
+    updated: "2026-11-13",
+  },
   "dsssb-photo": {
     id: "dsssb-photo",
     path: "/tools/dsssb-photo",
@@ -1049,6 +1073,8 @@ export const toolOrder: ToolId[] = [
   "rrc-apprentice-photo",
   "indian-bank-photo",
   "kea-photo",
+  "driving-licence-photo",
+  "voter-id-photo",
   "passport-photo",
 ];
 
