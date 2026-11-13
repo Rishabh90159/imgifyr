@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site";
-import { NAV_GROUPS, toolsIn } from "@/lib/tools/registry";
+import { menuToolsIn, NAV_GROUPS } from "@/lib/tools/registry";
 import { CurrentToolGroup } from "./current-tool-group";
 import { DisclosureMenu } from "./disclosure-menu";
 import { Logo } from "./logo";
@@ -31,7 +31,7 @@ export function SiteHeader() {
         <nav aria-label="Image tools" className="hidden md:block xl:mr-auto">
           <ul className="flex items-center gap-1">
             {NAV_GROUPS.map((group, index) => {
-              const items = toolsIn(group.id);
+              const items = menuToolsIn(group.id);
               // The last menu opens towards the left so it stays on screen on tablets.
               const align = index === NAV_GROUPS.length - 1 ? "right-0" : "left-0";
               return (
@@ -95,7 +95,7 @@ export function SiteHeader() {
                   <Chevron className="text-muted group-open/cat:rotate-180" />
                 </summary>
                 <ul className="pb-1">
-                  {toolsIn(group.id).map((tool) => (
+                  {menuToolsIn(group.id).map((tool) => (
                     <li key={tool.id}>
                       <Link
                         href={tool.path}

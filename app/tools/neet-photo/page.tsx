@@ -15,7 +15,7 @@ const description =
   "Prepare your NEET (UG) photo as a JPG of 10–200 KB and your signature within 10–100 KB, following the NTA information bulletin. Source and check date shown.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "NEET Photo Resizer – Photo Size & Upload Requirements",
+  title: "NEET 2026 Photo Resizer – Photo Size & Upload Rules",
   description,
   path: tool.path,
 });

@@ -106,6 +106,24 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
         )}
       </h3>
       <div className="space-y-3 px-4 py-3 text-sm">
+        {/* The source sits up front, not only in the folded rules: it is what sets these values apart from guesswork. */}
+        <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-ink-soft">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 text-success">
+            <path d="M3 7.2l2.6 2.6L11 4.4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span className="font-medium text-ink">{sets.length === 1 ? "Official notice:" : "Official notices:"}</span>
+          {sets.map((s, index) => (
+            <span key={s.id}>
+              <SourceLink href={s.source.url} preset={s.id}>
+                {s.source.title}
+              </SourceLink>
+              {index < sets.length - 1 ? "," : ""}
+            </span>
+          ))}
+          <span className="text-muted">
+            · checked <time dateTime={latestVerified(sets)}>{formatVerifiedDate(latestVerified(sets))}</time>
+          </span>
+        </p>
         {set.livePhotoCapture ? (
           <p className="text-ink-soft">
             <strong className="font-medium text-ink">Photograph: captured live in the application form</strong>, so there is
@@ -211,10 +229,6 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
             </div>
           </div>
         </details>
-        <p className="text-xs text-muted">
-          Last verified <time dateTime={latestVerified(sets)}>{formatVerifiedDate(latestVerified(sets))}</time> against the
-          official notice{sets.length > 1 ? "s" : ""}
-        </p>
       </div>
     </article>
   );

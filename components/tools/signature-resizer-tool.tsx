@@ -35,13 +35,24 @@ interface SignatureResult {
   overMax: boolean;
 }
 
+/** Size settings a page starts with, e.g. 140 × 60 px under 20 KB. Empty fields keep the crop's own size. */
+export interface SignatureDefaults {
+  width?: string;
+  height?: string;
+  maxKB?: string;
+}
+
 export function SignatureResizerTool({
   tool: TOOL = "signature-resizer",
   initialBackground = "white",
+  defaults = {},
 }: {
-  tool?: "signature-resizer" | "transparent-signature";
+  tool?: "signature-resizer" | "transparent-signature" | "140x60-signature" | "20kb-signature" | "30kb-signature";
   initialBackground?: BackgroundChoice;
+  defaults?: SignatureDefaults;
 } = {}) {
+  // A fixed width and height can't follow the crop's shape, so the lock is off when both are given.
+  const fixedSize = Boolean(defaults.width && defaults.height);
   useToolOpen(TOOL);
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
   const runner = useJobRunner();
@@ -51,13 +62,16 @@ export function SignatureResizerTool({
   const [ink, setInk] = useState<InkChoice>("original");
   const [threshold, setThreshold] = useState(190);
   const [format, setFormat] = useState<FormatChoice>("image/jpeg");
-  const [width, setWidth] = useState("");
-  const [height, setHeight] = useState("");
-  const [lock, setLock] = useState(true);
-  const [maxKB, setMaxKB] = useState("");
+  const [width, setWidth] = useState(defaults.width ?? "");
+  const [height, setHeight] = useState(defaults.height ?? "");
+  const [lock, setLock] = useState(!fixedSize);
+  const [maxKB, setMaxKB] = useState(defaults.maxKB ?? "");
   const [result, setResult] = useState<SignatureResult | null>(null);
 
-  const cropState = useCropState(source, null);
+  // With an exact width and height, the crop keeps that shape so the signature is never stretched.
+  const fixedW = !lock ? parseWhole(width) : null;
+  const fixedH = !lock ? parseWhole(height) : null;
+  const cropState = useCropState(source, fixedW && fixedH ? fixedW / fixedH : null);
   const { pixels } = cropState;
 
   const onFile = async (file: File) => {
@@ -65,8 +79,8 @@ export function SignatureResizerTool({
     const loaded = await select(file);
     if (loaded) {
       setResult(null);
-      setWidth("");
-      setHeight("");
+      setWidth(defaults.width ?? "");
+      setHeight(defaults.height ?? "");
     }
   };
 
@@ -78,10 +92,10 @@ export function SignatureResizerTool({
     setInk("original");
     setThreshold(190);
     setFormat("image/jpeg");
-    setWidth("");
-    setHeight("");
-    setLock(true);
-    setMaxKB("");
+    setWidth(defaults.width ?? "");
+    setHeight(defaults.height ?? "");
+    setLock(!fixedSize);
+    setMaxKB(defaults.maxKB ?? "");
   };
 
   if (!source) {

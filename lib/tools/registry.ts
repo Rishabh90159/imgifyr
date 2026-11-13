@@ -26,6 +26,14 @@ export type ToolId =
   | "20kb-photo"
   | "30kb-photo"
   | "500kb-photo"
+  | "200x230-photo"
+  | "413x531-photo"
+  | "630x810-photo"
+  | "600x600-photo"
+  | "140x60-signature"
+  | "20kb-signature"
+  | "30kb-signature"
+  | "thumb-impression-resizer"
   | "50kb-photo"
   | "100kb-photo"
   | "200kb-photo"
@@ -133,6 +141,8 @@ export interface ToolDefinition {
   parent?: ToolId;
   /** ISO date of the last meaningful content or feature change. */
   updated: string;
+  /** False keeps a narrow size page out of the header menus (it stays on /tools, in the sitemap and in related links). */
+  menu?: false;
 }
 
 export const tools: Record<ToolId, ToolDefinition> = {
@@ -325,7 +335,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop, clean up and resize a signature image to the pixel and KB limits of online forms.",
     linkText: "Resize a signature for an online form",
     category: "edit",
-    related: ["image-cropper", "transparent-signature", "20kb-photo", "resize-image-to-kb", "passport-photo-resizer", "merge-photo-and-signature"],
+    related: ["140x60-signature", "20kb-signature", "transparent-signature", "image-cropper", "resize-image-to-kb", "merge-photo-and-signature"],
     updated: "2026-10-31",
   },
   "bulk-image-resizer": {
@@ -416,6 +426,101 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["200kb-photo", "100kb-photo", "image-compressor", "compress-pdf", "photo-to-pdf", "resize-image-to-kb"],
     updated: "2026-11-11",
   },
+  "200x230-photo": {
+    id: "200x230-photo",
+    path: "/tools/200x230-photo",
+    menu: false,
+    name: "200×230 Photo Resizer",
+    navLabel: "200×230 photo",
+    summary: "Resize a photo to 200 × 230 pixels and 20–50 KB, the size bank recruitment forms prefer.",
+    linkText: "Resize a photo to 200 × 230 pixels",
+    category: "size",
+    related: ["140x60-signature", "thumb-impression-resizer", "ibps-photo", "sbi-photo", "50kb-photo", "passport-photo-resizer"],
+    updated: "2026-11-13",
+  },
+  "413x531-photo": {
+    id: "413x531-photo",
+    path: "/tools/413x531-photo",
+    menu: false,
+    name: "413×531 Photo (3.5×4.5 cm)",
+    navLabel: "413×531 photo",
+    summary: "Crop a photo to 413 × 531 pixels, the 3.5 × 4.5 cm passport size at 300 DPI, for print or upload.",
+    linkText: "Resize a photo to 413 × 531 pixels (3.5 × 4.5 cm)",
+    category: "size",
+    related: ["passport-photo", "630x810-photo", "resize-image-in-cm", "passport-photo-resizer", "white-background-photo"],
+    updated: "2026-11-13",
+  },
+  "630x810-photo": {
+    id: "630x810-photo",
+    path: "/tools/630x810-photo",
+    menu: false,
+    name: "630×810 Photo Resizer",
+    navLabel: "630×810 photo",
+    summary: "Resize a photo to exactly 630 × 810 pixels, a sharp 7:9 passport-style photo, with an optional KB limit.",
+    linkText: "Resize a photo to 630 × 810 pixels",
+    category: "size",
+    related: ["413x531-photo", "200x230-photo", "passport-photo-resizer", "resize-image-to-kb"],
+    updated: "2026-11-13",
+  },
+  "600x600-photo": {
+    id: "600x600-photo",
+    path: "/tools/600x600-photo",
+    menu: false,
+    name: "600×600 Photo (2×2 inch)",
+    navLabel: "600×600 photo",
+    summary: "Make a square 600 × 600 pixel photo, the 2 × 2 inch US passport size at 300 DPI.",
+    linkText: "Make a 600 × 600 pixel (2 × 2 inch) photo",
+    category: "size",
+    related: ["passport-photo", "413x531-photo", "circle-crop", "passport-photo-resizer"],
+    updated: "2026-11-13",
+  },
+  "140x60-signature": {
+    id: "140x60-signature",
+    path: "/tools/140x60-signature",
+    menu: false,
+    name: "140×60 Signature Resizer",
+    navLabel: "140×60 signature",
+    summary: "Resize a signature to 140 × 60 pixels under 20 KB, with the paper cleaned to white.",
+    linkText: "Resize a signature to 140 × 60 pixels",
+    category: "size",
+    related: ["20kb-signature", "200x230-photo", "thumb-impression-resizer", "signature-resizer", "ibps-photo"],
+    updated: "2026-11-13",
+  },
+  "20kb-signature": {
+    id: "20kb-signature",
+    path: "/tools/20kb-signature",
+    menu: false,
+    name: "20KB Signature Resizer",
+    navLabel: "20KB signature",
+    summary: "Get a signature under 20 KB with a clean white background, for SSC and bank forms.",
+    linkText: "Resize a signature to 20KB",
+    category: "size",
+    related: ["140x60-signature", "30kb-signature", "ssc-photo", "signature-resizer", "10kb-photo"],
+    updated: "2026-11-13",
+  },
+  "30kb-signature": {
+    id: "30kb-signature",
+    path: "/tools/30kb-signature",
+    menu: false,
+    name: "30KB Signature Resizer",
+    navLabel: "30KB signature",
+    summary: "Make a sharp signature JPG of up to 30 KB, with the paper whitened.",
+    linkText: "Resize a signature to 30KB",
+    category: "size",
+    related: ["20kb-signature", "rrb-photo", "signature-resizer", "30kb-photo"],
+    updated: "2026-11-13",
+  },
+  "thumb-impression-resizer": {
+    id: "thumb-impression-resizer",
+    path: "/tools/thumb-impression-resizer",
+    name: "Thumb Impression Resizer",
+    navLabel: "Thumb impression",
+    summary: "Resize a left thumb impression to 240 × 240 pixels and 20–50 KB, or your form's size.",
+    linkText: "Resize a thumb impression to 240 × 240 pixels",
+    category: "edit",
+    related: ["signature-resizer", "200x230-photo", "140x60-signature", "ibps-photo", "sbi-photo", "indian-bank-photo"],
+    updated: "2026-11-13",
+  },
   "ssc-photo": {
     id: "ssc-photo",
     path: "/tools/ssc-photo",
@@ -424,7 +529,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "What SSC currently asks for: live photo capture rules and a signature resized to 10–20 KB.",
     linkText: "Prepare your SSC signature and photo",
     category: "application",
-    related: ["signature-resizer", "20kb-photo", "image-cropper", "image-compressor", "resize-image-to-kb", "passport-photo-resizer"],
+    related: ["20kb-signature", "signature-resizer", "20kb-photo", "image-cropper", "resize-image-to-kb", "passport-photo-resizer"],
     updated: "2026-10-07",
   },
   "upsc-photo": {
@@ -446,7 +551,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Make a 200 × 230 px, 20–50 KB photo and a 140 × 60 px signature for IBPS CRP applications.",
     linkText: "Resize a photo for IBPS",
     category: "application",
-    related: ["sbi-photo", "50kb-photo", "20kb-photo", "signature-resizer", "image-cropper", "resize-image-to-kb"],
+    related: ["sbi-photo", "200x230-photo", "140x60-signature", "thumb-impression-resizer", "signature-resizer", "resize-image-to-kb"],
     updated: "2026-10-18",
   },
   "sbi-photo": {
@@ -457,7 +562,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Prepare the photo and signature sizes stated in current SBI recruitment advertisements.",
     linkText: "Resize a photo for SBI recruitment",
     category: "application",
-    related: ["ibps-photo", "50kb-photo", "20kb-photo", "signature-resizer", "image-cropper", "resize-image-to-kb"],
+    related: ["ibps-photo", "200x230-photo", "140x60-signature", "thumb-impression-resizer", "signature-resizer", "resize-image-to-kb"],
     updated: "2026-10-18",
   },
   "neet-photo": {
@@ -490,7 +595,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Officially sourced passport photo sizes by country, with a tool to make a photo that matches.",
     linkText: "Check passport photo size by country",
     category: "application",
-    related: ["passport-photo-resizer", "signature-resizer", "white-background-photo", "image-cropper", "image-compressor", "resize-image-to-kb"],
+    related: ["passport-photo-resizer", "413x531-photo", "600x600-photo", "white-background-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-11",
   },
   "image-upscaler": {
@@ -881,6 +986,7 @@ export const toolOrder: ToolId[] = [
   "white-background-photo",
   "merge-images",
   "merge-photo-and-signature",
+  "thumb-impression-resizer",
   "aadhaar-front-and-back",
   "add-name-and-date-on-photo",
   "image-to-jpg",
@@ -922,6 +1028,13 @@ export const toolOrder: ToolId[] = [
   "100kb-photo",
   "200kb-photo",
   "500kb-photo",
+  "200x230-photo",
+  "413x531-photo",
+  "630x810-photo",
+  "600x600-photo",
+  "140x60-signature",
+  "20kb-signature",
+  "30kb-signature",
   "mb-to-kb-converter",
   "ssc-photo",
   "upsc-photo",
@@ -955,4 +1068,9 @@ export const NAV_GROUPS: { id: NavGroup; label: string }[] = [
 
 export function toolsIn(group: NavGroup): ToolDefinition[] {
   return allTools.filter((tool) => navGroupOf(tool) === group);
+}
+
+/** Tools listed in the header menus: the group without its narrow size pages, so the menus fit a phone screen. */
+export function menuToolsIn(group: NavGroup): ToolDefinition[] {
+  return toolsIn(group).filter((tool) => tool.menu !== false);
 }

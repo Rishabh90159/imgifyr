@@ -15,7 +15,7 @@ const description =
   "UPESSC's myOTR asks for a photo, signature and hand-written declaration, each a JPG or PNG of 10–100 KB, for UP TGT 2026 and every UPESSC exam. Make them here.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "UPESSC Photo & Signature Size – UP TGT OTR Resizer",
+  title: "UPESSC Photo & Signature Size 2026 – UP TGT OTR Resizer",
   description,
   path: tool.path,
 });

@@ -15,7 +15,7 @@ const description =
   "Make an IBPS photo of 200 × 230 px and 20–50 KB, and a 140 × 60 px, 10–20 KB signature, as stated in the current IBPS CRP notifications. Sources listed.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "IBPS Photo, Signature & Thumb Impression Resizer",
+  title: "IBPS Photo, Signature & Thumb Size 2026 – Resizer",
   description,
   path: tool.path,
 });

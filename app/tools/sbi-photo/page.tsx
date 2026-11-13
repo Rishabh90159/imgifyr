@@ -15,7 +15,7 @@ const description =
   "Resize your photo and signature for an SBI recruitment application. Pick your advertisement to apply its stated size (200 × 230 px, 20–50 KB) with the source.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "SBI Photo, Signature & Thumb Impression Resizer",
+  title: "SBI Photo, Signature & Thumb Size 2026 – Resizer",
   description,
   path: tool.path,
 });

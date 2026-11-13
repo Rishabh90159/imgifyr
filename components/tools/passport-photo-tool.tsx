@@ -88,7 +88,7 @@ interface PassportResult {
 }
 
 interface PassportPhotoToolProps {
-  tool?: "passport-photo-resizer" | "resize-image-in-cm";
+  tool?: "passport-photo-resizer" | "resize-image-in-cm" | "200x230-photo" | "413x531-photo" | "630x810-photo" | "600x600-photo" | "thumb-impression-resizer";
   /** Units offered for a custom size. */
   units?: Unit[];
   defaultCustom?: CustomState;
