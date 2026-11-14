@@ -298,7 +298,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/ssc-photo",
     primary: "ssc photo",
-    secondary: ["ssc photo size", "ssc signature size", "ssc signature resize", "ssc live photo"],
+    secondary: ["ssc photo size", "ssc signature size", "ssc signature resize", "ssc live photo", "ssc gd signature size", "ssc gd photo size"],
     intent: "application",
     supportedBy: ["/tools/20kb-photo", "/tools/application-photos"],
   },
@@ -388,6 +388,20 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     secondary: ["afcat signature size", "afcat thumb impression size", "afcat photo and signature size", "afcat 01/2027 photo size", "afcat photo resizer"],
     intent: "application",
     supportedBy: ["/tools/application-photos", "/tools/thumb-impression-resizer", "/tools/signature-resizer"],
+  },
+  {
+    path: "/tools/cuet-photo",
+    primary: "cuet photo size",
+    secondary: ["cuet signature size", "cuet ug photo size", "cuet photo and signature size", "cuet photo resizer", "cuet image size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/neet-photo"],
+  },
+  {
+    path: "/tools/ctet-photo",
+    primary: "ctet photo size",
+    secondary: ["ctet signature size", "ctet photo and signature size", "ctet photo resize", "ctet photo size in kb"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/resize-image-in-cm", "/tools/signature-resizer"],
   },
   {
     path: "/tools/kea-photo",
