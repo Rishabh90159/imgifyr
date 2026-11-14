@@ -66,6 +66,7 @@ export type ToolId =
   | "rrc-apprentice-photo"
   | "indian-bank-photo"
   | "kea-photo"
+  | "afcat-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -820,6 +821,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-04",
   },
+  "afcat-photo": {
+    id: "afcat-photo",
+    path: "/tools/afcat-photo",
+    name: "AFCAT Photo, Signature & Thumb",
+    navLabel: "AFCAT photo",
+    summary: "The AFCAT 01/2027 photo (100–200 KB), signature (80–150 KB) and thumb impression (50–100 KB), saved under the file names the notice asks for.",
+    linkText: "Prepare your AFCAT photo, signature and thumb impression",
+    category: "application",
+    related: ["signature-resizer", "thumb-impression-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-14",
+  },
   "driving-licence-photo": {
     id: "driving-licence-photo",
     path: "/tools/driving-licence-photo",
@@ -851,7 +863,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your DSSSB photo, signature and ID scan",
     category: "application",
     related: ["signature-resizer", "resize-image-to-kb", "image-cropper", "upsssc-photo", "rrb-photo", "50kb-photo"],
-    updated: "2026-10-18",
+    updated: "2026-11-14",
   },
   "image-to-jpg": {
     id: "image-to-jpg",
@@ -1073,6 +1085,7 @@ export const toolOrder: ToolId[] = [
   "rrc-apprentice-photo",
   "indian-bank-photo",
   "kea-photo",
+  "afcat-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",

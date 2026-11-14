@@ -122,7 +122,7 @@ const summaryText = (page) => page.locator('section[aria-labelledby="requirement
   const page = await open("/");
   check("/: no exam deadline block on the homepage", (await page.locator('section[aria-labelledby="open-applications-heading"]').count()) === 0);
   const link = page.locator('section[aria-labelledby="photo-heading"] a', { hasText: /applications? open now/ });
-  check("/: one text link to the exam hub with the open count", (await link.count()) === 1 && (await link.getAttribute("href")) === "/tools/application-photos" && /^7 exam applications open now/.test(await link.innerText()), await link.innerText().catch(() => ""));
+  check("/: one text link to the exam hub with the open count", (await link.count()) === 1 && (await link.getAttribute("href")) === "/tools/application-photos" && /^\d+ exam applications open now/.test(await link.innerText()), await link.innerText().catch(() => ""));
   await page.close();
 }
 for (const route of ["/tools/application-photos"]) {

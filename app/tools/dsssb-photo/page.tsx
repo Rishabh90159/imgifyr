@@ -67,6 +67,11 @@ export default function DsssbPhotoPage() {
       faqs={faqs}
       content={
         <>
+          <p>
+            <strong>Open now:</strong> Advertisement 06/2026, Junior Engineer (Electrical) and MTS, 1,260 posts. Apply on
+            dsssbonline.nic.in until 11 December 2026.
+          </p>
+
           <h2>Photo and signature</h2>
           <ol>
             <li>Note the size the OARS upload screen accepts, choose <strong>Other</strong> in the tool and enter it.</li>

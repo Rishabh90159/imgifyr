@@ -522,6 +522,60 @@ const KEA_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- AFCAT (Indian Air Force)
+// AFCAT 01/2027 notification: section "Instructions regarding scanning of Photograph, Signature & Thumb
+// Impression", para 7.6 and the upload table (item 10). KB ranges and file names only; no pixel size.
+
+const AFCAT_SETS: RequirementSet[] = [
+  {
+    id: "afcat-01-2027",
+    name: "AFCAT 01/2027: Flying, Ground Duty (Technical and Non-Technical), NCC Special Entry and GATE score entry",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      minKB: 100,
+      maxKB: 200,
+      fileName: "Passport Photograph.jpg",
+      rules: [
+        "Recent passport-size colour photograph with a light background",
+        "Look straight at the camera with a relaxed face",
+        "Front portrait without headgear, except for Sikhs; not attested",
+        "Name the file Passport Photograph.jpg",
+      ],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG/JPEG",
+      minKB: 80,
+      maxKB: 150,
+      fileName: "Signature.jpg",
+      rules: ["Sign on white paper with a black ink pen", "Scan the signature area only, not the whole page", "Name the file Signature.jpg"],
+    },
+    thumb: {
+      kind: "thumb",
+      label: "Thumb impression",
+      format: "JPG/JPEG",
+      minKB: 50,
+      maxKB: 100,
+      fileName: "Thumb Impression.jpg",
+      rules: [
+        "Men upload the left thumb, women the right thumb",
+        "Press the thumb on an ink stamp pad, then on plain blank paper",
+        "Name the file Thumb Impression.jpg",
+      ],
+    },
+    livePhotoCapture: { rules: ["The form also captures a live image of you through your device camera"] },
+    notes: ["Apply on afcat.edcil.co.in from 12 November (11 am) to 11 December 2026 (11:30 pm). The online exam is on 31 January 2027."],
+    source: {
+      title: "Notification for AFCAT 01/2027",
+      url: "https://afcat.edcil.co.in/assets/images/news/Notification%20for%20AFCAT%2001%20of%202027%20Final.pdf",
+      publisher: "Indian Air Force",
+      section: "Instructions for scanning the photograph, signature and thumb impression; para 7.6; upload table, item 10",
+      lastVerified: "2026-11-14",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -587,6 +641,20 @@ const DSSSB_NOTES = [
 ];
 
 const DSSSB_SETS: RequirementSet[] = [
+  {
+    id: "dsssb-advt-06-2026",
+    name: "Advertisement 06/2026: Junior Engineer (Electrical) and Multi Tasking Staff (1,260 posts)",
+    photo: DSSSB_PHOTO,
+    signature: DSSSB_SIGNATURE,
+    notes: [...DSSSB_NOTES, "Apply on dsssbonline.nic.in from 12 November to 11 December 2026 (11:59 pm)."],
+    source: {
+      title: "Vacancy Notice / Advertisement No. 06/2026",
+      url: "https://dsssb.delhi.gov.in/sites/default/files/DSSSB/circulars-orders/final_advt_06_2026_j_e_electrical_mts.pdf",
+      publisher: "Delhi Subordinate Services Selection Board (DSSSB), Government of NCT of Delhi",
+      section: "General instructions (viii) and Annexure II (points 3 and 13)",
+      lastVerified: "2026-11-14",
+    },
+  },
   {
     id: "dsssb-advt-04-2026",
     name: "Advertisement 04/2026: Combined Examination 2026 (Senior PA, Junior Judicial Assistant, Process Server, Peon and others)",
@@ -753,6 +821,7 @@ export const APPLICATIONS = {
   rrc: { name: "RRC Central Railway", fullName: "Railway Recruitment Cell, Central Railway", sets: RRC_SETS },
   indianBank: { name: "Indian Bank", fullName: "Indian Bank (public sector bank)", sets: INDIAN_BANK_SETS },
   kea: { name: "KEA", fullName: "Karnataka Examinations Authority", sets: KEA_SETS },
+  afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },

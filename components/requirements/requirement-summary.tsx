@@ -141,7 +141,7 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
                   </th>
                   {specs.map((s) => (
                     <th key={s.kind} scope="col" className="whitespace-nowrap py-1.5 pr-3 font-medium">
-                      {IMAGE_KIND_LABELS[s.kind]}
+                      {s.label ?? IMAGE_KIND_LABELS[s.kind]}
                     </th>
                   ))}
                 </tr>
@@ -193,7 +193,7 @@ function RequirementCard({ sets }: { sets: RequirementSet[] }) {
             {specs.map((s) =>
               s.rules.length > 0 ? (
                 <div key={`${s.kind}-rules`}>
-                  <p className="font-medium text-ink">{IMAGE_KIND_LABELS[s.kind]}</p>
+                  <p className="font-medium text-ink">{s.label ?? IMAGE_KIND_LABELS[s.kind]}</p>
                   <ul className="mt-1 list-disc space-y-0.5 pl-5 text-ink-soft">
                     {s.rules.map((rule) => (
                       <li key={rule}>{rule}</li>
