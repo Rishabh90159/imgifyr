@@ -198,7 +198,7 @@ const SBI_SETS: RequirementSet[] = [
 ];
 
 // ---------------------------------------------------------------- SSC
-// SSC's 2026 notices capture the photograph live in the application module and
+// SSC notices capture the photograph live in the application module and
 // reject applications that photograph a pre-existing photo. Only the signature is uploaded.
 
 const SSC_LIVE_RULES = [
@@ -223,18 +223,30 @@ const SSC_SIGNATURE: ImageSpec = {
 const SSC_SETS: RequirementSet[] = [
   {
     id: "ssc-gd-2026",
-    name: "Constable (GD) in CAPFs, SSF and Rifleman (GD) in Assam Rifles Examination, 2026",
-    signature: SSC_SIGNATURE,
-    livePhotoCapture: { rules: SSC_LIVE_RULES },
+    name: "SSC GD Constable: CAPFs, SSF and Rifleman (GD) in Assam Rifles",
+    signature: {
+      ...SSC_SIGNATURE,
+      physical: "about 6.0 cm (width) × 2.0 cm (height) at 300 DPI",
+      dpi: 300,
+      rules: ["Upload a scanned signature", "Keep the signature horizontally aligned", "Blurred or miniature signatures are rejected"],
+    },
+    livePhotoCapture: {
+      rules: [
+        ...SSC_LIVE_RULES,
+        "Keep your whole face inside the red rectangle the camera shows",
+        "Don't wear earphones or any other device while the photo is taken",
+      ],
+    },
     notes: [
-      "From the GD 2026 notice (published 1 December 2025; applications ran 1–31 December 2025). The GD 2027 notice isn't out yet; this page will be updated from it.",
       "Applications submitted through Aadhaar-based authentication are not rejected on these photo and signature grounds.",
+      "Without Aadhaar authentication, carry at least two recent passport-size colour photographs and an original photo ID with your date of birth to the exam hall.",
+      "Candidates called for PET/PST go through biometric checks: the photo, left thumb impression and signature are matched with the data collected earlier.",
     ],
     source: {
-      title: "Notice: Constable (GD) in CAPFs, SSF and Rifleman (GD) in Assam Rifles Examination, 2026 (SSC notice, copy on a Government of India s3waas website)",
+      title: "SSC Constable (GD) notice",
       url: "https://cdn.s3waas.gov.in/s3e5841df2166dd424a57127423d276bbe/uploads/2025/12/17646730408096.pdf",
       publisher: "Staff Selection Commission (SSC)",
-      section: "Paragraphs 8.3 to 8.7",
+      section: "Paragraphs 8.3 to 8.7 and 13.9; Annexure II, Part II, items 20 and 21",
       lastVerified: "2026-11-14",
     },
   },

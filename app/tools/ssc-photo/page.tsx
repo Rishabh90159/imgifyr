@@ -29,7 +29,7 @@ const faqs: FaqItem[] = [
   {
     question: "What is the SSC GD photo and signature size?",
     answer:
-      "The GD 2026 notice uses the same rules: a live photo taken in the form and a 10–20 KB JPEG signature of about 6.0 × 2.0 cm. We'll update this from the GD 2027 notice.",
+      "SSC GD takes a live photo in the form and asks for a horizontal JPEG signature of 10–20 KB, about 6.0 × 2.0 cm at 300 DPI. Pick SSC GD in the tool and it saves exactly that.",
   },
   {
     question: "What size should my SSC photo be?",
