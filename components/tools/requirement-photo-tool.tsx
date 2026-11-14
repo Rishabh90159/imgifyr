@@ -35,7 +35,7 @@ interface Made {
   spec: OutputSpec;
   overMax: boolean;
   underMin: boolean;
-  /** Set when the user chose to enlarge a "preferred" pixel size to reach the minimum KB. */
+  /** Set when the user chose to enlarge a "preferred" pixel size, or an image whose source states no pixel size, to reach the minimum KB. */
   grownFrom?: { width: number; height: number };
 }
 
@@ -417,7 +417,7 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
             heading={text.heading}
             original={source}
             output={current.image}
-            fileName={outputFileName(source.name, `${appName.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${kind}`, "jpg")}
+            fileName={imageSpec?.fileName ?? outputFileName(source.name, `${appName.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${kind}`, "jpg")}
             downloadLabel={`Download JPG (${formatBytes(current.image.blob.size)})`}
             downloadEvent="photo_downloaded"
             status={
@@ -427,8 +427,9 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
                 appName={appName}
                 busy={runner.busy}
                 onGrow={
-                  current.underMin && !current.grownFrom && (imageSpec?.pixelBasis === "preferred" || imageSpec?.pixelBasis === "minimum") && output
-                    ? () => grow(source, output)
+                  current.underMin && !current.grownFrom && (imageSpec?.pixelBasis === "preferred" || imageSpec?.pixelBasis === "minimum" || !imageSpec?.widthPx) && output
+                    ? // With no pixel size in the source, enlarging starts from the size just made.
+                      () => grow(source, imageSpec?.widthPx ? output : { ...output, widthPx: current.image.width, heightPx: current.image.height })
                     : undefined
                 }
               />
@@ -485,7 +486,13 @@ function Checklist({
   const { image, spec: out } = made;
   const size = image.blob.size;
   const checks: { label: string; ok: boolean; detail: string }[] = [];
-  if (made.grownFrom) {
+  if (made.grownFrom && !spec?.widthPx) {
+    checks.push({
+      label: "Pixel size",
+      ok: true,
+      detail: `${formatDimensions(image.width, image.height)}, enlarged from ${made.grownFrom.width} × ${made.grownFrom.height} to reach the minimum file size; no pixel size is specified`,
+    });
+  } else if (made.grownFrom) {
     checks.push({
       label: "Pixel size",
       ok: image.width === out.widthPx && image.height === out.heightPx,
@@ -535,7 +542,9 @@ function Checklist({
         <Alert tone="warning" title={`The file is below the ${out.minKB} KB minimum`}>
           Even at maximum quality this image is {formatBytes(size)} at {formatDimensions(image.width, image.height)}. Portals usually
           reject files below their minimum.{" "}
-          {onGrow
+          {onGrow && !spec?.widthPx
+            ? "The notification sets no pixel size, so a larger image with the same shape can reach the minimum."
+            : onGrow
             ? `The notification lists ${out.widthPx} × ${out.heightPx} px as preferred, not mandatory, so a slightly larger image with the same shape can reach the minimum.`
             : "Use a more detailed image, turn off the background clean-up, or check the notification for an alternative size."}
           {onGrow ? (

@@ -37,6 +37,10 @@ export const IMAGE_KIND_LABELS: Record<ImageKind, string> = {
 
 export interface ImageSpec {
   kind: ImageKind;
+  /** Name shown instead of the kind's default label, when the source words it differently (AFCAT: "Thumb impression", either hand). */
+  label?: string;
+  /** Exact file name the source tells candidates to use (AFCAT: "Signature.jpg"); the download is saved under it. */
+  fileName?: string;
   /** File formats the source accepts, as written there (e.g. "JPG/JPEG"). Omitted when the source doesn't say. */
   format?: string;
   /** Pixel dimensions, only when the source states them. */

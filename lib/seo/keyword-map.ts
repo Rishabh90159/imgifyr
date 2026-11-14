@@ -383,6 +383,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/413x531-photo"],
   },
   {
+    path: "/tools/afcat-photo",
+    primary: "afcat photo size",
+    secondary: ["afcat signature size", "afcat thumb impression size", "afcat photo and signature size", "afcat 01/2027 photo size", "afcat photo resizer"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/thumb-impression-resizer", "/tools/signature-resizer"],
+  },
+  {
     path: "/tools/kea-photo",
     primary: "kea fda sda photo",
     secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],
