@@ -76,10 +76,13 @@ const summaryText = (page) => page.locator('section[aria-labelledby="requirement
 {
   const page = await open("/tools/ssc-photo");
   const summary = await summaryText(page);
-  check("SSC: GD 2026 notice listed and linked", summary.includes("Constable (GD)") && (await page.locator('a[href^="https://cdn.s3waas.gov.in/"]').count()) >= 1);
-  check("SSC: GD notice year stated", summary.includes("GD 2027 notice isn't out yet"));
+  check("SSC: GD listed and its notice linked", summary.includes("SSC GD Constable") && (await page.locator('a[href^="https://cdn.s3waas.gov.in/"]').count()) >= 1);
+  check("SSC: GD signature at 300 DPI and horizontal rule shown", summary.includes("at 300 DPI") && summary.includes("horizontally aligned"));
+  check("SSC: no 'notice not out yet' wording", !/isn't out yet|will be updated from/.test(summary));
   const sig = await make(page, "signature.jpg", "Create signature file");
-  check("SSC GD signature: 3:1, 10–20 KB", ratioOk(sig.size, 3) && inRange(sig.bytes, 10, 20), `${sig.size?.width}×${sig.size?.height}, ${kb(sig.bytes)}`);
+  // JFIF header: density units at byte 13 (1 = dots per inch), X density at bytes 14–15.
+  const dpi = sig.bytes[13] === 1 ? (sig.bytes[14] << 8) | sig.bytes[15] : 0;
+  check("SSC GD signature: 3:1, 10–20 KB, 300 DPI", ratioOk(sig.size, 3) && inRange(sig.bytes, 10, 20) && dpi === 300, `${sig.size?.width}×${sig.size?.height}, ${kb(sig.bytes)}, ${dpi} DPI`);
   await page.close();
 }
 
