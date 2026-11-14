@@ -222,6 +222,23 @@ const SSC_SIGNATURE: ImageSpec = {
 
 const SSC_SETS: RequirementSet[] = [
   {
+    id: "ssc-gd-2026",
+    name: "Constable (GD) in CAPFs, SSF and Rifleman (GD) in Assam Rifles Examination, 2026",
+    signature: SSC_SIGNATURE,
+    livePhotoCapture: { rules: SSC_LIVE_RULES },
+    notes: [
+      "From the GD 2026 notice (published 1 December 2025; applications ran 1–31 December 2025). The GD 2027 notice isn't out yet; this page will be updated from it.",
+      "Applications submitted through Aadhaar-based authentication are not rejected on these photo and signature grounds.",
+    ],
+    source: {
+      title: "Notice: Constable (GD) in CAPFs, SSF and Rifleman (GD) in Assam Rifles Examination, 2026 (SSC notice, copy on a Government of India s3waas website)",
+      url: "https://cdn.s3waas.gov.in/s3e5841df2166dd424a57127423d276bbe/uploads/2025/12/17646730408096.pdf",
+      publisher: "Staff Selection Commission (SSC)",
+      section: "Paragraphs 8.3 to 8.7",
+      lastVerified: "2026-11-14",
+    },
+  },
+  {
     id: "ssc-cgle-2026",
     name: "Combined Graduate Level Examination, 2026",
     signature: SSC_SIGNATURE,
@@ -761,6 +778,85 @@ const JEE_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- CUET (UG)
+// Pre-built from the CUET (UG) 2026 bulletin; the 2027 bulletin is expected around January 2027.
+// CUET (PG) is left out until NTA itself publishes a bulletin we can read (the 2026 PG KB limits were
+// only found on university mirrors).
+
+const CUET_SETS: RequirementSet[] = [
+  {
+    id: "cuet-ug-2026",
+    name: "CUET (UG) 2026",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      minKB: 10,
+      maxKB: 200,
+      faceCoverage: 80,
+      rules: [
+        "Recent scanned passport-size photograph, in colour",
+        "White background",
+        "80% of the photo is the face, including ears, without a mask",
+        "Clearly legible",
+      ],
+    },
+    signature: { kind: "signature", format: "JPG/JPEG", minKB: 10, maxKB: 50, rules: ["Clearly legible"] },
+    notes: [
+      "From the CUET (UG) 2026 bulletin (applications ran 3 January to 4 February 2026). The 2027 bulletin isn't out yet; this page will be updated from it.",
+      "The bulletin gives no pixel size for the photograph or the signature, only the format and file size.",
+      "A live photograph is also captured while you fill in the form, with your camera or webcam, or with a phone through the QR code: light-coloured background, proper lighting, 80% face visibility including ears, no mask.",
+      "A disability/UDID certificate is uploaded as a PDF of 50–300 KB; an identity proof (if you don't verify through Aadhaar or DigiLocker) as a JPG/JPEG of 10–200 KB.",
+    ],
+    source: {
+      title: "CUET (UG) 2026 Information Bulletin",
+      url: "https://cdnbbsr.s3waas.gov.in/s3d1a21da7bca4abff8b0b61b87597de73/uploads/2026/01/202601031633478370.pdf",
+      publisher: "National Testing Agency (NTA)",
+      section: "Upload scanned images of the photograph, signature and disability/UDID certificate (bulletin page 8)",
+      lastVerified: "2026-11-14",
+    },
+  },
+];
+
+// ---------------------------------------------------------------- CTET
+// Pre-built from the CTET September 2026 bulletin (CBSE); the next session's bulletin may come in late 2026.
+// Sizes are given in cm and KB; no pixel size.
+
+const CTET_SETS: RequirementSet[] = [
+  {
+    id: "ctet-sep-2026",
+    name: "CTET September 2026 (Paper I and Paper II)",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      physical: "3.5 cm (width) × 4.5 cm (height)",
+      aspect: 3.5 / 4.5,
+      minKB: 10,
+      maxKB: 100,
+      rules: ["Latest scanned photograph", "Uploading the photo is mandatory"],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG/JPEG",
+      physical: "3.5 cm (length) × 1.5 cm (height)",
+      aspect: 3.5 / 1.5,
+      minKB: 3,
+      maxKB: 30,
+      rules: ["Scanned signature", "Uploading the signature is mandatory"],
+    },
+    notes: [
+      "From the CTET September 2026 bulletin (applications ran 11 May to 10 June 2026). The next CTET bulletin isn't out yet; this page will be updated from it.",
+      "The bulletin states the size in cm and KB, not in pixels.",
+    ],
+    source: {
+      title: "Information Bulletin: CTET September 2026",
+      url: "https://cdnbbsr.s3waas.gov.in/s3443dec3062d0286986e21dc0631734c9/uploads/2026/05/202605111250310617.pdf",
+      publisher: "Central Board of Secondary Education (CBSE), CTET Unit",
+      section: "Registration procedure, (c) Online uploading of scanned images",
+      lastVerified: "2026-11-14",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPESSC
 // Uttar Pradesh Education Services Selection Commission (not UPSSSC). Every UPESSC exam is applied for
 // through the myOTR portal (apply.upessc.org, linked from upessc.up.gov.in). The photo, signature and
@@ -822,6 +918,8 @@ export const APPLICATIONS = {
   indianBank: { name: "Indian Bank", fullName: "Indian Bank (public sector bank)", sets: INDIAN_BANK_SETS },
   kea: { name: "KEA", fullName: "Karnataka Examinations Authority", sets: KEA_SETS },
   afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
+  cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
+  ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },

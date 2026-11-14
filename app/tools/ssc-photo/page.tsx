@@ -12,7 +12,7 @@ const tool = getTool("ssc-photo");
 const app = APPLICATIONS.ssc;
 
 const description =
-  "SSC now captures your photo live in the application form. See the rules from the official 2026 notices and resize your signature to a 10–20 KB JPEG.";
+  "SSC CGL, CHSL and GD capture your photo live in the form. See the rules from the official notices and resize your signature to a 10–20 KB JPEG.";
 
 export const metadata: Metadata = pageMetadata({
   title: "SSC Photo & Signature Size 2026 – SSC Signature Resizer",
@@ -24,7 +24,12 @@ const faqs: FaqItem[] = [
   {
     question: "What is the current SSC photo requirement?",
     answer:
-      "For CGL 2026 and CHSL 2026 you don't upload a photo: the form captures it with your camera. Use good light, a plain background and the camera at eye level, with no cap, mask or glasses.",
+      "For CGL, CHSL and GD you don't upload a photo: the form captures it with your camera. Use good light, a plain background and the camera at eye level, with no cap, mask or glasses.",
+  },
+  {
+    question: "What is the SSC GD photo and signature size?",
+    answer:
+      "The GD 2026 notice uses the same rules: a live photo taken in the form and a 10–20 KB JPEG signature of about 6.0 × 2.0 cm. We'll update this from the GD 2027 notice.",
   },
   {
     question: "What size should my SSC photo be?",

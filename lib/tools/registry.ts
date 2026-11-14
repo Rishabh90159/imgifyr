@@ -67,6 +67,8 @@ export type ToolId =
   | "indian-bank-photo"
   | "kea-photo"
   | "afcat-photo"
+  | "cuet-photo"
+  | "ctet-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -533,7 +535,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your SSC signature and photo",
     category: "application",
     related: ["20kb-signature", "signature-resizer", "20kb-photo", "image-cropper", "resize-image-to-kb", "passport-photo-resizer"],
-    updated: "2026-10-07",
+    updated: "2026-11-14",
   },
   "upsc-photo": {
     id: "upsc-photo",
@@ -832,6 +834,28 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["signature-resizer", "thumb-impression-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-14",
   },
+  "cuet-photo": {
+    id: "cuet-photo",
+    path: "/tools/cuet-photo",
+    name: "CUET Photo & Signature",
+    navLabel: "CUET photo",
+    summary: "The CUET (UG) photo (10–200 KB, 80% face, white background) and signature (10–50 KB), from NTA's latest bulletin.",
+    linkText: "Prepare your CUET photo and signature",
+    category: "application",
+    related: ["neet-photo", "jee-main-photo", "white-background-photo", "signature-resizer", "200kb-photo", "image-cropper"],
+    updated: "2026-11-14",
+  },
+  "ctet-photo": {
+    id: "ctet-photo",
+    path: "/tools/ctet-photo",
+    name: "CTET Photo & Signature",
+    navLabel: "CTET photo",
+    summary: "The CTET photo (3.5 × 4.5 cm, 10–100 KB) and signature (3.5 × 1.5 cm, 3–30 KB), from CBSE's latest bulletin.",
+    linkText: "Prepare your CTET photo and signature",
+    category: "application",
+    related: ["signature-resizer", "resize-image-in-cm", "100kb-photo", "30kb-signature", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-14",
+  },
   "driving-licence-photo": {
     id: "driving-licence-photo",
     path: "/tools/driving-licence-photo",
@@ -1086,6 +1110,8 @@ export const toolOrder: ToolId[] = [
   "indian-bank-photo",
   "kea-photo",
   "afcat-photo",
+  "cuet-photo",
+  "ctet-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",
