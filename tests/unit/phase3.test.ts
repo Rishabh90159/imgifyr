@@ -11,6 +11,7 @@ const OFFICIAL_HOSTS = [
   "sbi.bank.in",
   "afcat.edcil.co.in",
   "cdn.s3waas.gov.in",
+  "uppbpb.gov.in",
   "ssc.gov.in",
   "neet.nta.nic.in",
   "rrb.indianrailways.gov.in",
@@ -149,10 +150,10 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 79 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(79);
+  it("has 80 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(80);
     expect(toolsIn("size").map((t) => t.id)).toEqual(["10kb-photo", "20kb-photo", "30kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "500kb-photo", "200x230-photo", "413x531-photo", "630x810-photo", "600x600-photo", "140x60-signature", "20kb-signature", "30kb-signature", "mb-to-kb-converter"]);
-    expect(toolsIn("application")).toHaveLength(19);
+    expect(toolsIn("application")).toHaveLength(20);
     expect(toolsIn("image")).toHaveLength(26);
     expect(toolsIn("convert")).toHaveLength(13);
     expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "pdf-to-jpg", "pdf-to-png"]);

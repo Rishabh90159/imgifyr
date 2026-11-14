@@ -605,6 +605,56 @@ const AFCAT_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- UP Police (UPPRPB)
+// Constable notice PRPB-B-07 (Hindi scan): para 5.7 (live photograph) and para 5.8 (signature, page 24).
+// The signature may be 50 mm × 20 mm or 140 × 60 px, so 140 × 60 is treated as preferred: a 140 × 60
+// JPEG can't reach the 30 KB minimum, and the tool then offers a larger image with the same shape.
+
+const UP_POLICE_SETS: RequirementSet[] = [
+  {
+    id: "up-police-constable",
+    name: "UP Police Constable: Civil Police, PAC/Armed Police, Special Security Force, Mounted Police and Jail Warder",
+    signature: {
+      kind: "signature",
+      format: "JPG/JPEG",
+      widthPx: 140,
+      heightPx: 60,
+      pixelBasis: "preferred",
+      physical: "50 mm × 20 mm",
+      aspect: 140 / 60,
+      minKB: 30,
+      maxKB: 50,
+      rules: [
+        "Sign with a black ink pen on white paper, inside a 50 mm × 20 mm box",
+        "Running letters (joined handwriting), not block letters",
+        "Only your own signature, nobody else's",
+      ],
+    },
+    livePhotoCapture: {
+      rules: [
+        "The form takes a real-time photo with a webcam or another camera; no photo file is uploaded",
+        "No cap: a photo with a cap is not accepted",
+        "Nothing may cover your face: no mask, hair, cloth, shadow or jewellery",
+        "If you wear glasses, make sure no reflection or light falls on them and your eyes are clearly visible",
+        "The photo must not be blurred or have strong glare",
+        "Don't wear any uniform: an application with a uniform in the photo is not accepted",
+      ],
+    },
+    notes: [
+      "If your live photo doesn't match your Aadhaar photo, you must fill in a declaration in the online form; without Aadhaar, a self-declaration is required.",
+      "Register first on the board's One Time Registration (OTR) with a unique email ID and mobile number, verified through DigiLocker; neither can be changed later.",
+      "Don't wear any uniform at any stage of the recruitment, including the written exam.",
+    ],
+    source: {
+      title: "UPPRPB notice: Constable (Civil Police) and equivalent posts",
+      url: "https://uppbpb.gov.in/FilesUploaded/Notice/CONSTABLE-VIGYAPTIc7be0cc8-3365-471e-9237-447c528d341a.pdf",
+      publisher: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)",
+      section: "Para 5.7 (photograph) and 5.8 (signature), in Hindi",
+      lastVerified: "2026-11-14",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -931,6 +981,7 @@ export const APPLICATIONS = {
   kea: { name: "KEA", fullName: "Karnataka Examinations Authority", sets: KEA_SETS },
   afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
   cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
+  upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },

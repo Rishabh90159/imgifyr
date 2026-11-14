@@ -69,6 +69,7 @@ export type ToolId =
   | "afcat-photo"
   | "cuet-photo"
   | "ctet-photo"
+  | "up-police-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -856,6 +857,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["signature-resizer", "resize-image-in-cm", "100kb-photo", "30kb-signature", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-14",
   },
+  "up-police-photo": {
+    id: "up-police-photo",
+    path: "/tools/up-police-photo",
+    name: "UP Police Photo & Signature",
+    navLabel: "UP Police photo",
+    summary: "The UP Police constable live photo rules and a black-pen signature of 30–50 KB, 140 × 60 px or 50 × 20 mm.",
+    linkText: "Prepare your UP Police signature and photo",
+    category: "application",
+    related: ["rrb-photo", "upsssc-photo", "140x60-signature", "signature-resizer", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-14",
+  },
   "driving-licence-photo": {
     id: "driving-licence-photo",
     path: "/tools/driving-licence-photo",
@@ -1112,6 +1124,7 @@ export const toolOrder: ToolId[] = [
   "afcat-photo",
   "cuet-photo",
   "ctet-photo",
+  "up-police-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",

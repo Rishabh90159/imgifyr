@@ -404,6 +404,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/resize-image-in-cm", "/tools/signature-resizer"],
   },
   {
+    path: "/tools/up-police-photo",
+    primary: "up police photo size",
+    secondary: ["up police signature size", "up police constable photo size", "up police constable signature size", "upprpb signature size", "up police photo resize"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/140x60-signature", "/tools/signature-resizer"],
+  },
+  {
     path: "/tools/kea-photo",
     primary: "kea fda sda photo",
     secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],
