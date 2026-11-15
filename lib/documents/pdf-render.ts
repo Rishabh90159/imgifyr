@@ -8,8 +8,40 @@ type GetDocumentParams = Parameters<PdfJsModule["getDocument"]>[0];
  * Renders PDF pages to pixels with pdf.js, inside the document worker. pdf.js
  * normally draws on DOM canvases and loads fonts into the document; a worker
  * has neither, so it gets OffscreenCanvas helpers and draws glyphs as paths.
- * Nothing is fetched: no fonts, colour profiles or other resources.
+ * The only thing fetched is pdf.js's own image decoders (below), from this site.
  */
+
+/**
+ * pdf.js decodes fax (CCITT), JBIG2 and JPEG 2000 images, common in scanned
+ * government notices, with WebAssembly files it fetches on demand. Without
+ * them those images are skipped and scanned pages render blank. The files are
+ * bundled from pdfjs-dist, so they are versioned with it and served from this
+ * origin; each is downloaded only when a PDF contains that kind of image.
+ */
+function wasmFileUrl(filename: string): string | null {
+  switch (filename) {
+    case "jbig2.wasm":
+      return new URL("pdfjs-dist/wasm/jbig2.wasm", import.meta.url).href;
+    case "openjpeg.wasm":
+      return new URL("pdfjs-dist/wasm/openjpeg.wasm", import.meta.url).href;
+    case "qcms_bg.wasm":
+      return new URL("pdfjs-dist/wasm/qcms_bg.wasm", import.meta.url).href;
+    default:
+      return null;
+  }
+}
+
+/** pdf.js's default loader reads `document.baseURI`, which a worker lacks; this one fetches the bundled decoders. */
+class WorkerBinaryDataFactory {
+  constructor(_options: unknown) {}
+  async fetch({ kind, filename }: { kind: string; filename: string }): Promise<Uint8Array> {
+    const url = kind === "wasmUrl" ? wasmFileUrl(filename) : null;
+    if (!url) throw new Error(`Not available: ${kind} ${filename}`);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Couldn't load ${filename}: ${response.status}`);
+    return new Uint8Array(await response.arrayBuffer());
+  }
+}
 
 /** Largest page image, so a huge or very tall page can't exhaust memory. */
 export const RENDER_LIMITS = { maxSide: 8000, maxPixels: 25_000_000 } as const;
@@ -86,6 +118,10 @@ export async function openRenderablePdf(pdfjs: PdfJsModule, bytes: Uint8Array, m
     data: bytes.slice(),
     CanvasFactory: OffscreenCanvasFactory,
     FilterFactory: NoFilterFactory,
+    BinaryDataFactory: WorkerBinaryDataFactory,
+    // Any value ending in "/" turns the decoders on; the factory above maps each file to its bundled URL.
+    wasmUrl: "pdfjs-wasm/",
+    useWorkerFetch: false,
     disableFontFace: true,
     useSystemFonts: false,
     enableXfa: false,
