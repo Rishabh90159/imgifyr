@@ -411,6 +411,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/140x60-signature", "/tools/signature-resizer"],
   },
   {
+    path: "/tools/india-post-gds-photo",
+    primary: "gds photo size",
+    secondary: ["india post gds photo size", "gds signature size", "gds photo and signature size", "india post gds signature size", "gds photo resize"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/signature-resizer"],
+  },
+  {
     path: "/tools/kea-photo",
     primary: "kea fda sda photo",
     secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],

@@ -70,6 +70,7 @@ export type ToolId =
   | "cuet-photo"
   | "ctet-photo"
   | "up-police-photo"
+  | "india-post-gds-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -868,6 +869,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["rrb-photo", "upsssc-photo", "140x60-signature", "signature-resizer", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-14",
   },
+  "india-post-gds-photo": {
+    id: "india-post-gds-photo",
+    path: "/tools/india-post-gds-photo",
+    name: "India Post GDS Photo & Signature",
+    navLabel: "India Post GDS photo",
+    summary: "The GDS photo (320 × 400 px, 30–100 KB) and signature (300 × 120 px, 20–100 KB) from India Post's instructions.",
+    linkText: "Prepare your India Post GDS photo and signature",
+    category: "application",
+    related: ["white-background-photo", "signature-resizer", "100kb-photo", "50kb-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-15",
+  },
   "driving-licence-photo": {
     id: "driving-licence-photo",
     path: "/tools/driving-licence-photo",
@@ -1125,6 +1137,7 @@ export const toolOrder: ToolId[] = [
   "cuet-photo",
   "ctet-photo",
   "up-police-photo",
+  "india-post-gds-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",
