@@ -51,12 +51,6 @@ export default function RrbPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="RRB NTPC and Station Master 2026 Photo and Signature Requirements"
-      intro={
-        <p>
-          NTPC and Station Master 2026 take your photo live, so the only upload is your signature. Not affiliated with the
-          Railway Recruitment Boards.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

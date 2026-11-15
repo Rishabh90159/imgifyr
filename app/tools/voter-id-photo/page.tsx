@@ -49,12 +49,6 @@ export default function VoterIdPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="Voter ID Photo Size (Form 6 and Form 8)"
-      intro={
-        <p>
-          Make the white-background, 4.5 × 3.5 cm photo for a new voter ID or a photo change. Not affiliated with the Election
-          Commission of India.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

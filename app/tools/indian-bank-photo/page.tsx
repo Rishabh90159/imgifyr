@@ -51,11 +51,6 @@ export default function IndianBankPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="Indian Bank Apprentice 2026 Photo, Signature and Declaration Size"
-      intro={
-        <p>
-          Make the four images the Indian Bank Apprentice FY 2026-27 form asks for. Not affiliated with Indian Bank.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

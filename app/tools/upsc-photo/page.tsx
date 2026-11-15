@@ -52,12 +52,6 @@ export default function UpscPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="UPSC Photo Resizer"
-      intro={
-        <p>
-          Enter the photo and signature limits from your UPSC instructions and the tool applies them exactly. Not affiliated
-          with UPSC.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

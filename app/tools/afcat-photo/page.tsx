@@ -51,12 +51,6 @@ export default function AfcatPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="AFCAT Photo Size, Signature and Thumb Impression (01/2027)"
-      intro={
-        <p>
-          Make the three uploads for the AFCAT 01/2027 application, saved under the file names the notification asks for.
-          Not affiliated with the Indian Air Force.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

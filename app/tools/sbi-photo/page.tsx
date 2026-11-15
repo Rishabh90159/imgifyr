@@ -52,12 +52,6 @@ export default function SbiPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="SBI Photo Resizer"
-      intro={
-        <p>
-          Pick your SBI advertisement and the tool makes each file at the size it states. Not affiliated with State Bank of
-          India.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

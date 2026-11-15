@@ -52,12 +52,6 @@ export default function UpssscPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="UPSSSC OTR Photo and Signature Size"
-      intro={
-        <p>
-          Every UPSSSC exam uses the photo and signature from your One Time Registration. Not affiliated with the Uttar Pradesh
-          Subordinate Services Selection Commission.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

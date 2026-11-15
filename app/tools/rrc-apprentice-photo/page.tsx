@@ -51,12 +51,6 @@ export default function RrcApprenticePhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="Central Railway Apprentice 2026 Photo and Signature Size"
-      intro={
-        <p>
-          Make the square photo and signature for RRC Central Railway&apos;s Act Apprentice application. Not affiliated with
-          Indian Railways.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

@@ -52,12 +52,6 @@ export default function KeaPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="KEA FDA and SDA 2026 Photo and Signature Size"
-      intro={
-        <p>
-          Make the photo and signature for the Karnataka FDA/SDA 2026 application. Not affiliated with the Karnataka
-          Examinations Authority.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

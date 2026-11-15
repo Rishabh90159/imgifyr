@@ -51,12 +51,6 @@ export default function UpPolicePhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="UP Police Photo Size and Signature Size (Constable)"
-      intro={
-        <p>
-          Make the signature file and check the live photo rules for the UP Police constable form. Not affiliated with the
-          UP Police Recruitment and Promotion Board.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

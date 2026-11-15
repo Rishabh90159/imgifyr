@@ -9,7 +9,8 @@ import { breadcrumbTrail, type ToolDefinition } from "@/lib/tools/registry";
 interface ToolPageShellProps {
   tool: ToolDefinition;
   h1: string;
-  intro: React.ReactNode;
+  /** Optional: exam pages go straight from the H1 to the tool. */
+  intro?: React.ReactNode;
   /** Description used in WebApplication structured data. */
   schemaDescription: string;
   /** The interactive tool. */
@@ -30,7 +31,7 @@ export function ToolPageShell({ tool, h1, intro, schemaDescription, children, co
         <div className="mx-auto max-w-6xl px-4 pb-8 pt-6 sm:px-6 sm:pt-8">
           <Breadcrumbs items={breadcrumbTrail(tool)} />
           <h1 className="mt-4 text-[1.75rem] font-extrabold leading-tight tracking-[-0.02em] text-ink sm:text-4xl">{h1}</h1>
-          <div className="mt-3 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-soft">{intro}</div>
+          {intro ? <div className="mt-3 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-soft">{intro}</div> : null}
           <div className="mt-6">{children}</div>
         </div>
       </div>
