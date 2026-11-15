@@ -87,8 +87,8 @@ export default function CtetPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="CTET Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="ctet-photo" sets={app.sets} setLabel="CTET bulletin" appName="CTET" />
+        <RequirementSummary heading="CTET Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

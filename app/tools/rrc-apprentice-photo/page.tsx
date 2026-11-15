@@ -90,8 +90,8 @@ export default function RrcApprenticePhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="Central Railway Apprentice Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="rrc-apprentice-photo" sets={app.sets} setLabel="RRC notification" appName="RRC/CR" />
+        <RequirementSummary heading="Central Railway Apprentice Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

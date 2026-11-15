@@ -87,8 +87,8 @@ export default function UpPolicePhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="UP Police Signature Size and Photo Rules at a Glance" app={app} />
         <RequirementPhotoTool tool="up-police-photo" sets={app.sets} setLabel="UP Police recruitment" appName="UP Police" />
+        <RequirementSummary heading="UP Police Signature Size and Photo Rules at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

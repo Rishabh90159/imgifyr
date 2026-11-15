@@ -82,8 +82,8 @@ export default function NeetPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="NEET Photo and Signature Size Requirements" app={app} />
         <RequirementPhotoTool tool="neet-photo" sets={app.sets} setLabel="Information bulletin" appName="NEET" />
+        <RequirementSummary heading="NEET Photo and Signature Size Requirements" app={app} />
       </div>
     </ToolPageShell>
   );

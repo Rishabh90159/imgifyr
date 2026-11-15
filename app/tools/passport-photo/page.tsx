@@ -57,16 +57,16 @@ function PassportComparison() {
   return (
     <section aria-labelledby="requirements-heading" className="rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <h2 id="requirements-heading" className="text-lg font-bold text-ink">
+        <h2 id="requirements-heading" className="scroll-mt-4 text-lg font-bold text-ink">
           Verified passport photo requirements
         </h2>
         <a
           href="#prepare"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-accent px-4 text-sm font-medium text-white hover:bg-accent-hover"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-line-strong bg-canvas px-4 text-sm font-medium text-ink hover:bg-surface"
         >
-          Make your photo now
+          Make your photo
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-            <path d="M7 2v9M3 7.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7 12V3M3 6.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </a>
       </div>
@@ -222,7 +222,6 @@ export default function PassportPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <PassportComparison />
         <RequirementPhotoTool
           tool="passport-photo"
           sets={PASSPORT_REQUIREMENTS}
@@ -230,6 +229,7 @@ export default function PassportPhotoPage() {
           setLabel="Application"
           appName="passport"
         />
+        <PassportComparison />
       </div>
     </ToolPageShell>
   );

@@ -87,8 +87,8 @@ export default function IndiaPostGdsPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="India Post GDS Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="india-post-gds-photo" sets={app.sets} setLabel="GDS engagement" appName="India Post GDS" />
+        <RequirementSummary heading="India Post GDS Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

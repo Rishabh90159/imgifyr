@@ -86,8 +86,8 @@ export default function UpscPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="UPSC Photo and Signature Requirements" app={app} />
         <RequirementPhotoTool tool="upsc-photo" sets={app.sets} setLabel="Requirement" appName="UPSC" />
+        <RequirementSummary heading="UPSC Photo and Signature Requirements" app={app} />
       </div>
     </ToolPageShell>
   );

@@ -271,8 +271,17 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
         </div>
       ) : null}
       <div>
-        <FieldLabel htmlFor={setId}>{setLabel}</FieldLabel>
-        <select id={setId} value={set ? set.id : CUSTOM} onChange={(e) => setSelected(e.target.value)} className={`${inputClass} mt-1.5`}>
+        {/* The full table, rules and official notice sit right below the tool; the link shares the label's row to keep the upload box on the first screen. */}
+        <div className="flex flex-wrap items-center justify-between gap-x-3">
+          <FieldLabel htmlFor={setId}>{setLabel}</FieldLabel>
+          <a href="#requirements-heading" className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+            Full requirements
+            <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true">
+              <path d="M7 2v9M3 7.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </div>
+        <select id={setId} value={set ? set.id : CUSTOM} onChange={(e) => setSelected(e.target.value)} className={inputClass}>
           {visibleSets.map((s) => (
             <option key={s.id} value={s.id}>
               {s.name}
@@ -282,10 +291,12 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
         </select>
       </div>
 
+      {/* A one-line note, not a boxed alert: the intro says the same, and the upload box should stay on the first screen. */}
       {set?.livePhotoCapture && !set.photo ? (
-        <Alert tone="info" title="The photo is captured live, not uploaded">
-          The {appName} form takes your photo with your camera. This tool prepares the signature you upload.
-        </Alert>
+        <p className="text-sm leading-snug text-ink-soft">
+          <strong className="font-semibold text-ink">The photo is captured live, not uploaded</strong>: the {appName} form takes
+          it with your camera. Prepare your signature here.
+        </p>
       ) : null}
 
       {kinds.length > 1 ? (

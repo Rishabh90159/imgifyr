@@ -96,8 +96,8 @@ export default function IbpsPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="IBPS Photo and Signature Size Requirements" app={app} />
         <RequirementPhotoTool tool="ibps-photo" sets={app.sets} setLabel="IBPS notification" appName="IBPS" />
+        <RequirementSummary heading="IBPS Photo and Signature Size Requirements" app={app} />
       </div>
     </ToolPageShell>
   );

@@ -28,16 +28,17 @@ export function RequirementSummary({
   return (
     <section aria-labelledby="requirements-heading" className="rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <h2 id="requirements-heading" className="text-lg font-bold text-ink">
+        <h2 id="requirements-heading" className="scroll-mt-4 text-lg font-bold text-ink">
           {heading}
         </h2>
+        {/* The tool sits above this summary; this takes a reader who scrolled down to the details back to it. */}
         <a
           href="#prepare"
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-accent px-4 text-sm font-medium text-white hover:bg-accent-hover"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-line-strong bg-canvas px-4 text-sm font-medium text-ink hover:bg-surface"
         >
-          Prepare your file now
+          Make your file
           <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-            <path d="M7 2v9M3 7.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M7 12V3M3 6.5l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </a>
       </div>
@@ -46,7 +47,7 @@ export function RequirementSummary({
           <Alert tone="warning" title="No verified requirement to apply yet">
             {app.unverified.reason}
           </Alert>
-          <p>Check the current requirement here, then enter it in the tool below:</p>
+          <p>Check the current requirement here, then enter it in the tool above:</p>
           <ul className="list-disc space-y-1 pl-5">
             {app.unverified.whereToCheck.map((item) => (
               <li key={item.url}>
@@ -262,7 +263,8 @@ function Row({ label, specs, value }: { label: string; specs: ImageSpec[]; value
         {label}
       </th>
       {specs.map((s) => (
-        <td key={s.kind} className="whitespace-nowrap py-1.5 pr-3 tabular-nums">
+        // Long values (e.g. "fits the 35 mm × 20 mm scan box") wrap instead of running off a phone screen; wide tables still scroll.
+        <td key={s.kind} className="min-w-[7.5rem] py-1.5 pr-3 align-top tabular-nums">
           {value(s)}
         </td>
       ))}

@@ -93,8 +93,8 @@ export default function SbiPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="SBI Photo and Signature Size Requirements" app={app} />
         <RequirementPhotoTool tool="sbi-photo" sets={app.sets} setLabel="SBI advertisement" appName="SBI" />
+        <RequirementSummary heading="SBI Photo and Signature Size Requirements" app={app} />
       </div>
     </ToolPageShell>
   );

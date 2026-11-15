@@ -100,8 +100,8 @@ export default function SscPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="SSC Signature Size and Photo Rules at a Glance" app={app} />
         <RequirementPhotoTool tool="ssc-photo" sets={app.sets} setLabel="SSC examination" appName="SSC" />
+        <RequirementSummary heading="SSC Signature Size and Photo Rules at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );
