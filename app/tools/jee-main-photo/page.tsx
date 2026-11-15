@@ -94,8 +94,8 @@ export default function JeeMainPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="JEE Main Photo Size in KB and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="jee-main-photo" sets={app.sets} setLabel="Information bulletin" appName="JEE Main" />
+        <RequirementSummary heading="JEE Main Photo Size in KB and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

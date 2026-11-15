@@ -80,8 +80,8 @@ export default function VoterIdPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="Voter ID Photo Size at a Glance" app={app} />
         <RequirementPhotoTool tool="voter-id-photo" sets={app.sets} setLabel="Form" appName="Voter ID" />
+        <RequirementSummary heading="Voter ID Photo Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

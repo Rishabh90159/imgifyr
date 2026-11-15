@@ -87,8 +87,8 @@ export default function KeaPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="KEA FDA/SDA Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="kea-photo" sets={app.sets} setLabel="KEA notification" appName="KEA" />
+        <RequirementSummary heading="KEA FDA/SDA Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

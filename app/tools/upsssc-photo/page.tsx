@@ -97,8 +97,8 @@ export default function UpssscPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="UPSSSC Photo Size in KB and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="upsssc-photo" sets={app.sets} setLabel="UPSSSC registration" appName="UPSSSC" />
+        <RequirementSummary heading="UPSSSC Photo Size in KB and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

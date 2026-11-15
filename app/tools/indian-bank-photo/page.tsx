@@ -87,8 +87,8 @@ export default function IndianBankPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="Indian Bank Apprentice Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="indian-bank-photo" sets={app.sets} setLabel="Indian Bank advertisement" appName="Indian Bank" />
+        <RequirementSummary heading="Indian Bank Apprentice Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

@@ -84,7 +84,15 @@ export function ImageDropzone({
   }, [acceptHandOff]);
 
   return (
+    // A tap or click anywhere in the box opens the file picker, so on a phone the visible top of the box works even
+    // when the button is just below the screen. The button stays the keyboard control; taps on it are left to it.
     <div
+      onClick={(event) => {
+        if (loading) return;
+        const target = event.target as HTMLElement;
+        if (target.closest("label, input, a, button")) return;
+        inputRef.current?.click();
+      }}
       onDragEnter={(event) => {
         event.preventDefault();
         dragDepth.current++;
@@ -104,7 +112,7 @@ export function ImageDropzone({
         setDragging(false);
         handleFiles(event.dataTransfer.files);
       }}
-      className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed px-5 text-center transition-colors ${compact ? "py-6" : "py-10 sm:py-14"} ${
+      className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed px-5 text-center transition-colors ${compact ? "py-6" : "py-10 sm:py-14"} ${
         dragging ? "border-accent bg-accent-soft" : "border-accent/35 bg-canvas hover:border-accent/60"
       }`}
       aria-busy={loading}

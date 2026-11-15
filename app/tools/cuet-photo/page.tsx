@@ -86,8 +86,8 @@ export default function CuetPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="CUET Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="cuet-photo" sets={app.sets} setLabel="CUET bulletin" appName="CUET" />
+        <RequirementSummary heading="CUET Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

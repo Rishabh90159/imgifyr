@@ -90,8 +90,8 @@ export default function RrbPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="RRB NTPC and Station Master Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="rrb-photo" sets={app.sets} setLabel="RRB notice (CEN)" appName="RRB" />
+        <RequirementSummary heading="RRB NTPC and Station Master Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

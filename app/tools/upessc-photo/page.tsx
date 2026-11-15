@@ -100,8 +100,8 @@ export default function UpesscPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="UPESSC Photo, Signature and Declaration Size at a Glance" app={app} />
         <RequirementPhotoTool tool="upessc-photo" sets={app.sets} setLabel="UPESSC registration" appName="UPESSC" />
+        <RequirementSummary heading="UPESSC Photo, Signature and Declaration Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

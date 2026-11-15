@@ -85,8 +85,8 @@ export default function DrivingLicencePhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="Sarathi Photo and Signature Size at a Glance" app={app} />
         <RequirementPhotoTool tool="driving-licence-photo" sets={app.sets} setLabel="Application" appName="Sarathi" />
+        <RequirementSummary heading="Sarathi Photo and Signature Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );

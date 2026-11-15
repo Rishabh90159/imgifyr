@@ -93,8 +93,8 @@ export default function AfcatPhotoPage() {
       }
     >
       <div className="space-y-6">
-        <RequirementSummary heading="AFCAT Photo, Signature and Thumb Size at a Glance" app={app} />
         <RequirementPhotoTool tool="afcat-photo" sets={app.sets} setLabel="AFCAT notification" appName="AFCAT" />
+        <RequirementSummary heading="AFCAT Photo, Signature and Thumb Size at a Glance" app={app} />
       </div>
     </ToolPageShell>
   );
