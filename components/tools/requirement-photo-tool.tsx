@@ -256,9 +256,9 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
     }
   };
 
-  const picker = (
-    <div className="space-y-4">
-      {groupLabel ? (
+  // The picker's parts: before a photo is added, the kind choice (and the country, for passports) sits above the upload
+  // box and the notice settings below it; afterwards all of them sit together beside the crop preview.
+  const groupPicker = groupLabel ? (
         <div>
           <FieldLabel htmlFor={groupId}>{groupLabel}</FieldLabel>
           <select id={groupId} value={group} onChange={(e) => changeGroup(e.target.value)} className={`${inputClass} mt-1.5`}>
@@ -269,9 +269,22 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
             ))}
           </select>
         </div>
-      ) : null}
+      ) : null;
+
+  const kindPicker =
+    kinds.length > 1 ? (
+      <Segmented<ImageKind>
+        legend="What are you preparing?"
+        value={kind}
+        onChange={setKindChoice}
+        options={kinds.map((k) => ({ value: k, label: KIND_TEXT[k].option }))}
+      />
+    ) : null;
+
+  const noticePicker = (
+    <>
       <div>
-        {/* The full table, rules and official notice sit right below the tool; the link shares the label's row to keep the upload box on the first screen. */}
+        {/* The full table, rules and official notice sit right below the tool; the link shares the notice label's row. */}
         <div className="flex flex-wrap items-center justify-between gap-x-3">
           <FieldLabel htmlFor={setId}>{setLabel}</FieldLabel>
           <a href="#requirements-heading" className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
@@ -298,28 +311,31 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
           it with your camera. Prepare your signature here.
         </p>
       ) : null}
+    </>
+  );
 
-      {kinds.length > 1 ? (
-        <Segmented<ImageKind>
-          legend="What are you preparing?"
-          value={kind}
-          onChange={setKindChoice}
-          options={kinds.map((k) => ({ value: k, label: KIND_TEXT[k].option }))}
-        />
-      ) : null}
+  // The size being applied depends on the kind, so it always follows the kind choice.
+  const specPicker =
+    set && imageSpec ? <SpecLine spec={imageSpec} /> : !set ? <CustomFields value={custom} onChange={setCustom} error={specError} /> : null;
 
-      {set && imageSpec ? (
-        <SpecLine spec={imageSpec} />
-      ) : !set ? (
-        <CustomFields value={custom} onChange={setCustom} error={specError} />
-      ) : null}
+  const picker = (
+    <div className="space-y-4">
+      {groupPicker}
+      {noticePicker}
+      {kindPicker}
+      {specPicker}
     </div>
   );
 
   if (!source) {
     return (
-      <div className="space-y-6">
-        <div className="rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">{picker}</div>
+      <div className="space-y-4">
+        {groupPicker || kindPicker ? (
+          <div className="space-y-4">
+            {groupPicker}
+            {kindPicker}
+          </div>
+        ) : null}
         <ToolWorkspace
           accept={RASTER_INPUT_FORMATS}
           source={null}
@@ -330,6 +346,10 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
           prompt={text.prompt}
           controls={null}
         />
+        <div className="space-y-4 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
+          {noticePicker}
+          {specPicker}
+        </div>
       </div>
     );
   }

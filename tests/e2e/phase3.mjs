@@ -358,9 +358,9 @@ for (const kb of [10, 30, 500]) {
     await p.close();
   }
   const page = await openPage("/tools/ibps-photo", mobile);
-  // The tool comes before the requirements card, so the picker is on the first screen without a jump.
-  const pickerTop = await page.getByLabel("IBPS notification").evaluate((el) => el.getBoundingClientRect().top);
-  check("mobile: the tool is on the first screen, no jump needed", pickerTop >= 0 && pickerTop < 844, `picker at ${Math.round(pickerTop)} px`);
+  // The file-type choice and the upload box come first, so the "Choose image" button is on the first screen.
+  const buttonBottom = await page.getByText("Choose image", { exact: true }).evaluate((el) => el.getBoundingClientRect().bottom);
+  check("mobile: the upload button is on the first screen, no scrolling", buttonBottom > 0 && buttonBottom < 844, `button ends at ${Math.round(buttonBottom)} px`);
   await upload(page, "portrait.jpg");
   await loaded(page, "portrait.jpg");
   const btn = page.getByRole("button", { name: "Create photo file" });
