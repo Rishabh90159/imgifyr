@@ -655,6 +655,64 @@ const UP_POLICE_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- India Post GDS
+// GDS Online Engagement instructions (Annexure II, para 5). Pixel sizes are "recommended", so they are
+// treated as preferred: a clean 300 × 120 signature can't reach 20 KB, and the tool offers a larger copy.
+
+const GDS_SETS: RequirementSet[] = [
+  {
+    id: "india-post-gds",
+    name: "Gramin Dak Sevak online engagement: Branch Postmaster, Assistant Branch Postmaster and Dak Sevak",
+    photo: {
+      kind: "photo",
+      format: "JPG/JPEG",
+      widthPx: 320,
+      heightPx: 400,
+      pixelBasis: "preferred",
+      aspect: 4 / 5,
+      dpi: 150,
+      minKB: 30,
+      maxKB: 100,
+      rules: [
+        "Recent photograph on a plain white or light-coloured background",
+        "Face fills 70–80% of the image, centred, with no shadows or red-eye",
+        "Clear, well-lit and in focus; don't upload a scanned photo or a selfie",
+        "72 to 150 DPI",
+      ],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG/JPEG",
+      widthPx: 300,
+      heightPx: 120,
+      pixelBasis: "preferred",
+      aspect: 5 / 2,
+      dpi: 150,
+      minKB: 20,
+      maxKB: 100,
+      rules: [
+        "Sign on white paper with a black or blue pen and scan it",
+        "The signature fills 70–80% of the image, completely inside the frame",
+        "Plain white background, no shadows, borders or extra marks",
+        "Not typed or digital text; clear, not shaky or pixelated",
+        "72 to 150 DPI",
+      ],
+    },
+    notes: [
+      "Blurred photographs and blurred or miniature signatures lead to rejection.",
+      "Register once (One-Time Registration) on indiapost.gov.in/gdsonlineengagement with your own mobile number and email, then apply.",
+      "Check the preview after uploading: the photo and signature can't be replaced after final submission.",
+    ],
+    source: {
+      title: "GDS Online Engagement: instructions for applicants (Annexure II)",
+      url: "https://indiapost.gov.in/gdsonlineengagement/pdf/Annexure-II.pdf",
+      publisher: "Department of Posts (India Post), Government of India",
+      section: "Para 5: Uploading of photographs and signature",
+      lastVerified: "2026-11-15",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -982,6 +1040,7 @@ export const APPLICATIONS = {
   afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
   cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
   upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
+  gds: { name: "India Post GDS", fullName: "Gramin Dak Sevak online engagement, Department of Posts", sets: GDS_SETS },
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
