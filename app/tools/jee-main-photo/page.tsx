@@ -52,9 +52,6 @@ export default function JeeMainPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="JEE Main 2027 Photo and Signature Size"
-      intro={
-        <p>Make your JEE (Main) 2027 photo and signature within NTA&apos;s limits. Not affiliated with the National Testing Agency.</p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

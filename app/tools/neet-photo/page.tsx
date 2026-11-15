@@ -51,7 +51,6 @@ export default function NeetPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="NEET Photo Resizer"
-      intro={<p>Make your NEET (UG) photo and signature within NTA&apos;s limits, as JPGs. Not affiliated with NTA.</p>}
       schemaDescription={description}
       faqs={faqs}
       content={

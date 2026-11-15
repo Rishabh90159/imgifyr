@@ -57,12 +57,6 @@ export default function DsssbPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="DSSSB Photo, Signature and ID Proof Requirements"
-      intro={
-        <p>
-          Prepare the photo, signature and scanned photo ID for a DSSSB application on OARS. Not affiliated with the Delhi
-          Subordinate Services Selection Board.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

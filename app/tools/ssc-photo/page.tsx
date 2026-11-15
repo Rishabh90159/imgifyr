@@ -57,12 +57,6 @@ export default function SscPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="SSC Photo and Signature Requirements"
-      intro={
-        <p>
-          SSC takes your photo live in the form, so the only file to prepare is your signature. Not affiliated with the Staff
-          Selection Commission.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

@@ -51,12 +51,6 @@ export default function CuetPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="CUET Photo Size and Signature Size (UG)"
-      intro={
-        <p>
-          Make the photo and signature for the CUET (UG) application, from NTA&apos;s latest bulletin. Not affiliated with
-          the National Testing Agency.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

@@ -53,12 +53,6 @@ export default function UpesscPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="UPESSC (UP TGT) Photo, Signature and Declaration Size"
-      intro={
-        <p>
-          Make the three images every UPESSC application uses, including UP TGT 2026. Not affiliated with the Uttar Pradesh
-          Education Services Selection Commission.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

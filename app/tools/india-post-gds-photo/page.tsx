@@ -51,12 +51,6 @@ export default function IndiaPostGdsPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="India Post GDS Photo Size and Signature Size"
-      intro={
-        <p>
-          Make the photo and signature for the Gramin Dak Sevak (BPM, ABPM, Dak Sevak) application. Not affiliated with
-          India Post.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

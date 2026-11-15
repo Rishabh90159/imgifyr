@@ -50,12 +50,6 @@ export default function CtetPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="CTET Photo Size and Signature Size"
-      intro={
-        <p>
-          Make the photo and signature for the CTET application, from CBSE&apos;s latest bulletin. Not affiliated with CBSE
-          or the CTET unit.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

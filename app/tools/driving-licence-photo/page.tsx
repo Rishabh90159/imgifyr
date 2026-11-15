@@ -50,12 +50,6 @@ export default function DrivingLicencePhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="Driving Licence Photo and Signature Size (Sarathi)"
-      intro={
-        <p>
-          Make the photo and signature for a driving or learner&apos;s licence application on Parivahan Sarathi. Not
-          affiliated with the Ministry of Road Transport &amp; Highways.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={

@@ -52,12 +52,6 @@ export default function IbpsPhotoPage() {
     <ToolPageShell
       tool={tool}
       h1="IBPS Photo Resizer"
-      intro={
-        <p>
-          Pick your IBPS notification and the tool makes the photo, signature, thumb impression and declaration at its stated
-          sizes. Not affiliated with IBPS.
-        </p>
-      }
       schemaDescription={description}
       faqs={faqs}
       content={
