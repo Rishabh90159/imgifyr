@@ -71,6 +71,7 @@ export type ToolId =
   | "ctet-photo"
   | "up-police-photo"
   | "india-post-gds-photo"
+  | "mht-cet-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -880,6 +881,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["white-background-photo", "signature-resizer", "100kb-photo", "50kb-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-15",
   },
+  "mht-cet-photo": {
+    id: "mht-cet-photo",
+    path: "/tools/mht-cet-photo",
+    name: "MHT CET Photo",
+    navLabel: "MHT CET photo",
+    summary: "The MHT CET photo: square 2 × 2 inch, face 80%, light background, 100 KB to 5 MB.",
+    linkText: "Prepare your MHT CET photo",
+    category: "application",
+    related: ["white-background-photo", "jee-main-photo", "neet-photo", "200kb-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-16",
+  },
   "driving-licence-photo": {
     id: "driving-licence-photo",
     path: "/tools/driving-licence-photo",
@@ -1138,6 +1150,7 @@ export const toolOrder: ToolId[] = [
   "ctet-photo",
   "up-police-photo",
   "india-post-gds-photo",
+  "mht-cet-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",

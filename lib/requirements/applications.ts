@@ -713,6 +713,45 @@ const GDS_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- MHT CET (Maharashtra State CET Cell)
+// Information Brochure, "Photo Specifications": a photograph only (no signature upload is listed), 2 × 2 inch,
+// 100 KB to 5 MB. No pixel size or file format is stated, so neither is set here.
+
+const MHT_CET_SETS: RequirementSet[] = [
+  {
+    id: "mht-cet",
+    name: "MHT CET (PCM and PCB groups)",
+    photo: {
+      kind: "photo",
+      physical: "2 inch × 2 inch (50 mm × 50 mm)",
+      aspect: 1,
+      minKB: 100,
+      maxKB: 5120,
+      faceCoverage: 80,
+      rules: [
+        "Recent colour photograph; the face covers 80% of the photo",
+        "Full face, front view, eyes open, neutral expression, head centred",
+        "Full head visible, from the top of the hair to the bottom of the chin, with both edges of the face",
+        "Plain light-coloured or white background, evenly lit, with no shadows on the face or background",
+        "No head covering except for religious reasons, with the face from chin to forehead fully visible",
+        "No tinted or dark glasses; tilt your head slightly to avoid glare on clear glasses",
+        "Upload a high-resolution, clear picture",
+      ],
+    },
+    notes: [
+      "The brochure asks only for a photograph; it lists no signature upload.",
+      "Registration uses Aadhaar authentication and APAAR ID verification through DigiLocker, so keep your Aadhaar details (including the photo) up to date.",
+    ],
+    source: {
+      title: "MHT-CET Information Brochure (State CET Cell, Maharashtra)",
+      url: "https://cetcell.mahacet.org/wp-content/uploads/2023/12/MHT-CET-2026-Information-Brochure-Updated-on-11.04.2026.pdf",
+      publisher: "State Common Entrance Test Cell, Government of Maharashtra",
+      section: "Photo Specifications (brochure pages 8–9)",
+      lastVerified: "2026-11-16",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -906,7 +945,7 @@ const JEE_SETS: RequirementSet[] = [
 const CUET_SETS: RequirementSet[] = [
   {
     id: "cuet-ug-2026",
-    name: "CUET (UG) 2026",
+    name: "CUET (UG)",
     photo: {
       kind: "photo",
       format: "JPG/JPEG",
@@ -922,13 +961,12 @@ const CUET_SETS: RequirementSet[] = [
     },
     signature: { kind: "signature", format: "JPG/JPEG", minKB: 10, maxKB: 50, rules: ["Clearly legible"] },
     notes: [
-      "From the CUET (UG) 2026 bulletin (applications ran 3 January to 4 February 2026). The 2027 bulletin isn't out yet; this page will be updated from it.",
       "The bulletin gives no pixel size for the photograph or the signature, only the format and file size.",
       "A live photograph is also captured while you fill in the form, with your camera or webcam, or with a phone through the QR code: light-coloured background, proper lighting, 80% face visibility including ears, no mask.",
       "A disability/UDID certificate is uploaded as a PDF of 50–300 KB; an identity proof (if you don't verify through Aadhaar or DigiLocker) as a JPG/JPEG of 10–200 KB.",
     ],
     source: {
-      title: "CUET (UG) 2026 Information Bulletin",
+      title: "CUET (UG) Information Bulletin (NTA)",
       url: "https://cdnbbsr.s3waas.gov.in/s3d1a21da7bca4abff8b0b61b87597de73/uploads/2026/01/202601031633478370.pdf",
       publisher: "National Testing Agency (NTA)",
       section: "Upload scanned images of the photograph, signature and disability/UDID certificate (bulletin page 8)",
@@ -944,7 +982,7 @@ const CUET_SETS: RequirementSet[] = [
 const CTET_SETS: RequirementSet[] = [
   {
     id: "ctet-sep-2026",
-    name: "CTET September 2026 (Paper I and Paper II)",
+    name: "CTET (Paper I and Paper II)",
     photo: {
       kind: "photo",
       format: "JPG/JPEG",
@@ -964,11 +1002,10 @@ const CTET_SETS: RequirementSet[] = [
       rules: ["Scanned signature", "Uploading the signature is mandatory"],
     },
     notes: [
-      "From the CTET September 2026 bulletin (applications ran 11 May to 10 June 2026). The next CTET bulletin isn't out yet; this page will be updated from it.",
       "The bulletin states the size in cm and KB, not in pixels.",
     ],
     source: {
-      title: "Information Bulletin: CTET September 2026",
+      title: "CTET Information Bulletin (CBSE)",
       url: "https://cdnbbsr.s3waas.gov.in/s3443dec3062d0286986e21dc0631734c9/uploads/2026/05/202605111250310617.pdf",
       publisher: "Central Board of Secondary Education (CBSE), CTET Unit",
       section: "Registration procedure, (c) Online uploading of scanned images",
@@ -1041,6 +1078,7 @@ export const APPLICATIONS = {
   cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
   upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
   gds: { name: "India Post GDS", fullName: "Gramin Dak Sevak online engagement, Department of Posts", sets: GDS_SETS },
+  mhtCet: { name: "MHT CET", fullName: "MHT CET, conducted by the State CET Cell, Maharashtra", sets: MHT_CET_SETS },
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },

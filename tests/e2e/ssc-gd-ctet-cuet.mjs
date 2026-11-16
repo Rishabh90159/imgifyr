@@ -92,7 +92,7 @@ const summaryText = (page) => page.locator('section[aria-labelledby="requirement
   const summary = await summaryText(page);
   check("CTET: bulletin linked on cdnbbsr.s3waas.gov.in", (await page.locator('a[href^="https://cdnbbsr.s3waas.gov.in/"]').count()) >= 1);
   check("CTET: 10–100 KB, 3–30 KB and cm sizes shown", /10 KB – 100 KB/.test(summary) && /3 KB – 30 KB/.test(summary) && summary.includes("3.5 cm"));
-  check("CTET: bulletin session stated", summary.includes("CTET September 2026 bulletin"));
+  check("CTET: no year or 'not out yet' wording", !/2025|2026|2027|isn't out yet|will be updated/i.test(summary.replace(/checked \d{1,2} \w+ \d{4}/, "")));
   const photo = await make(page, "portrait.jpg", "Create photo file");
   check("CTET photo: 3.5:4.5, 10–100 KB", ratioOk(photo.size, 3.5 / 4.5) && inRange(photo.bytes, 10, 100), `${photo.size?.width}×${photo.size?.height}, ${kb(photo.bytes)}`);
   await page.close();
@@ -110,7 +110,7 @@ const summaryText = (page) => page.locator('section[aria-labelledby="requirement
   const summary = await summaryText(page);
   check("CUET: bulletin linked on cdnbbsr.s3waas.gov.in", (await page.locator('a[href^="https://cdnbbsr.s3waas.gov.in/"]').count()) >= 1);
   check("CUET: 10–200 KB photo and 10–50 KB signature shown", /10 KB – 200 KB/.test(summary) && /10 KB – 50 KB/.test(summary));
-  check("CUET: bulletin year stated", summary.includes("CUET (UG) 2026 bulletin"));
+  check("CUET: no year or 'not out yet' wording", !/2025|2026|2027|isn't out yet|will be updated/i.test(summary.replace(/checked \d{1,2} \w+ \d{4}/, "")));
   await page.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "portrait.jpg"));
   await page.locator('[aria-label^="Photo crop area"]').first().waitFor({ timeout: 60_000 });
   check("CUET: 80% face guide shown", (await page.getByText("Face ≈ 80%").count()) === 1);

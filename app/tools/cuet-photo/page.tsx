@@ -31,9 +31,8 @@ const faqs: FaqItem[] = [
     answer: "A clearly legible JPG/JPEG between 10 KB and 50 KB. That is half NEET's and JEE's 100 KB limit, so a NEET signature file may be too big.",
   },
   {
-    question: "Is this for CUET 2027?",
-    answer:
-      "The limits come from NTA's CUET (UG) 2026 bulletin, the latest one out. We'll update this page from the 2027 bulletin when NTA publishes it.",
+    question: "Can my CUET photo be black and white?",
+    answer: "No. NTA asks for a recent colour photo on a white background, with your face, ears included, filling about 80% of it.",
   },
   {
     question: "Do I still need a photo file if CUET takes a live photo?",
@@ -66,12 +65,6 @@ export default function CuetPhotoPage() {
               saves it at 10–50 KB.
             </li>
           </ol>
-
-          <h2>Which year these limits are from</h2>
-          <p>
-            The CUET (UG) 2026 bulletin; applications ran from 3 January to 4 February 2026. The 2027 bulletin is expected
-            around January, and this page will follow it.
-          </p>
 
           <PrivacyNote>
             <p>Your CUET photo and signature are processed in your browser and never uploaded here.</p>
