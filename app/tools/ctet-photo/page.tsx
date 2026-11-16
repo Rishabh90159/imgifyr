@@ -35,9 +35,8 @@ const faqs: FaqItem[] = [
       "You don't need a pixel count: what matters is the 7:9 shape and the KB range. The crop box here is locked to that shape. To set an exact print size, use resize image in cm.",
   },
   {
-    question: "Is this for the next CTET session?",
-    answer:
-      "The limits come from CBSE's CTET September 2026 bulletin, the latest one out. We'll update this page from the next bulletin when CBSE publishes it.",
+    question: "Can I upload the CTET photo as a PNG?",
+    answer: "No. The bulletin asks for JPG/JPEG for both the photo and the signature; this tool always saves JPG.",
   },
   {
     question: "Are the photo and signature compulsory?",
@@ -66,12 +65,6 @@ export default function CtetPhotoPage() {
           </ol>
           <p>
             Need the exact print size as well? <Link href="/tools/resize-image-in-cm">Resize the image in cm</Link>.
-          </p>
-
-          <h2>Which session these limits are from</h2>
-          <p>
-            The CTET September 2026 bulletin; applications ran from 11 May to 10 June 2026. The page will follow the next
-            bulletin when CBSE publishes it.
           </p>
 
           <PrivacyNote>

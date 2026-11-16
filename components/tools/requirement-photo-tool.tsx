@@ -360,8 +360,8 @@ function RequirementPhotoToolInner({ tool, sets, groupLabel, setLabel, appName }
       <OrientationControls onRotate={cropState.rotate} onFlip={cropState.flip} flipped={cropState.flipH} />
       {faceRule ? (
         <p className="rounded-md border border-accent/20 bg-accent-soft px-3 py-2.5 text-sm text-ink-soft">
-          <strong className="font-semibold text-ink">Face about 80% of the photo:</strong> crop close, so your face, ears
-          included, fills the dashed oval from forehead to chin, as the NTA bulletin asks.
+          <strong className="font-semibold text-ink">Face about 80% of the photo:</strong> crop close, so your face fills the
+          dashed oval from forehead to chin, as the {appName} instructions ask.
         </p>
       ) : null}
       {kind !== "photo" ? (
