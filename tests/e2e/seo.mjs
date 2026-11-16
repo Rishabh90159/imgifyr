@@ -83,6 +83,7 @@ const toolPages = [
   "/tools/resize-image-in-cm",
   "/tools/white-background-photo",
   "/tools/transparent-signature",
+  "/tools/signature-maker",
   "/tools/circle-crop",
   "/tools/jpg-to-webp",
   "/tools/webp-to-png",
@@ -120,6 +121,7 @@ const overlapPages = [
   // Added 31 Oct 2026 next to their siblings: signature-resizer, image-cropper, the WebP/HEIC converters, pdf-to-jpg.
   "/tools/signature-resizer",
   "/tools/transparent-signature",
+  "/tools/signature-maker",
   "/tools/image-cropper",
   "/tools/circle-crop",
   "/tools/jpg-to-webp",
@@ -260,7 +262,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 74 && worst.score < 0.15,
+    entries.length === 75 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }
