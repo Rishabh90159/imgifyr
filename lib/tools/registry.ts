@@ -21,6 +21,7 @@ export type ToolId =
   | "image-cropper"
   | "passport-photo-resizer"
   | "signature-resizer"
+  | "signature-maker"
   | "bulk-image-resizer"
   | "10kb-photo"
   | "20kb-photo"
@@ -335,6 +336,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["passport-photo", "resize-image-in-cm", "signature-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-10-07",
   },
+  "signature-maker": {
+    id: "signature-maker",
+    path: "/tools/signature-maker",
+    name: "Online Signature Maker",
+    navLabel: "Signature maker",
+    summary: "Draw your signature with a finger or mouse, or type it in a handwriting style, and save a transparent PNG or a JPG.",
+    linkText: "Draw or type your signature online",
+    category: "edit",
+    related: ["signature-resizer", "transparent-signature", "20kb-signature", "140x60-signature", "merge-photo-and-signature"],
+    updated: "2026-11-16",
+  },
   "signature-resizer": {
     id: "signature-resizer",
     path: "/tools/signature-resizer",
@@ -343,7 +355,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop, clean up and resize a signature image to the pixel and KB limits of online forms.",
     linkText: "Resize a signature for an online form",
     category: "edit",
-    related: ["140x60-signature", "20kb-signature", "transparent-signature", "image-cropper", "resize-image-to-kb", "merge-photo-and-signature"],
+    related: ["signature-maker", "140x60-signature", "20kb-signature", "transparent-signature", "resize-image-to-kb", "merge-photo-and-signature"],
     updated: "2026-10-31",
   },
   "bulk-image-resizer": {
@@ -1010,7 +1022,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn a photo of your signature into a PNG with a see-through background, in its own ink or solid black or blue.",
     linkText: "Make a transparent signature PNG",
     category: "edit",
-    related: ["signature-resizer", "merge-photo-and-signature", "background-remover", "image-cropper", "resize-image-to-kb"],
+    related: ["signature-maker", "signature-resizer", "merge-photo-and-signature", "background-remover", "image-cropper", "resize-image-to-kb"],
     updated: "2026-10-31",
   },
   "circle-crop": {
@@ -1103,6 +1115,7 @@ export const toolOrder: ToolId[] = [
   "circle-crop",
   "passport-photo-resizer",
   "signature-resizer",
+  "signature-maker",
   "transparent-signature",
   "heic-to-jpg",
   "heic-to-png",

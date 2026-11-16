@@ -609,6 +609,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/pdf-tools", "/tools/pdf-to-jpg"],
   },
   {
+    path: "/tools/signature-maker",
+    primary: "online signature maker",
+    secondary: ["signature maker", "create signature online", "draw signature online", "signature generator", "signature creator", "handwritten signature maker"],
+    intent: "tool",
+    supportedBy: ["/tools/signature-resizer", "/tools/transparent-signature"],
+  },
+  {
     path: "/tools/transparent-signature",
     primary: "transparent signature",
     secondary: ["transparent signature maker", "transparent signature png", "transparent signature online", "remove background from signature", "signature background remover", "signature png maker"],
