@@ -425,6 +425,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/jee-main-photo"],
   },
   {
+    path: "/tools/kcet-photo",
+    primary: "kcet photo size",
+    secondary: ["kcet signature size", "kcet photo and signature size", "kcet photo size in kb", "ugcet photo size", "kcet photo resize"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/50kb-photo", "/tools/signature-maker"],
+  },
+  {
     path: "/tools/kea-photo",
     primary: "kea fda sda photo",
     secondary: ["kea fda sda photo size", "kea photo size", "kea signature size", "kea fda photo and signature size", "karnataka sda photo size"],

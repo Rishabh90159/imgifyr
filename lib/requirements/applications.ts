@@ -752,6 +752,31 @@ const MHT_CET_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- KCET (KEA UGCET)
+// KEA's UGCET simple guide ("Saral Diksuchi", Kannada, one page), section "What documents do you need to apply?":
+// photo and signature as JPG, each under 50 KB. The Information Bulletin gives no upload sizes, and no pixel size or
+// thumb-impression upload is stated, so none is set here.
+
+const KCET_SETS: RequirementSet[] = [
+  {
+    id: "kcet-ugcet",
+    name: "KCET (UGCET): engineering, agriculture, pharmacy, nursing and other professional courses",
+    photo: { kind: "photo", format: "JPG", maxKB: 50, rules: ["The student's photograph, in JPG format"] },
+    signature: { kind: "signature", format: "JPG", maxKB: 50, rules: ["The student's own signature, in JPG format"] },
+    notes: [
+      "Also keep ready: the SSLC / 10th marks card, the Aadhaar card and certificates, and the student's own mobile number (with WhatsApp) and email ID.",
+      "The name must be written the same way on the SSLC marks card, the Aadhaar card and the RD certificates; correct any mismatch, following the SSLC marks card, before applying.",
+    ],
+    source: {
+      title: "UGCET simple guide (Saral Diksuchi), Karnataka Examinations Authority",
+      url: "https://cetonline.karnataka.gov.in/keawebentry456/ugcet2026/ugcet_2026_inog_diksuchi_KAN_16012026kannada.pdf",
+      publisher: "Karnataka Examinations Authority (KEA)",
+      section: "Documents needed to apply (in Kannada)",
+      lastVerified: "2026-11-17",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -1079,6 +1104,7 @@ export const APPLICATIONS = {
   upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
   gds: { name: "India Post GDS", fullName: "Gramin Dak Sevak online engagement, Department of Posts", sets: GDS_SETS },
   mhtCet: { name: "MHT CET", fullName: "MHT CET, conducted by the State CET Cell, Maharashtra", sets: MHT_CET_SETS },
+  kcet: { name: "KCET", fullName: "Karnataka Common Entrance Test (UGCET), conducted by KEA", sets: KCET_SETS },
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },

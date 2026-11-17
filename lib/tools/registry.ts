@@ -73,6 +73,7 @@ export type ToolId =
   | "up-police-photo"
   | "india-post-gds-photo"
   | "mht-cet-photo"
+  | "kcet-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
   | "merge-photo-and-signature"
@@ -835,7 +836,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The KEA FDA/SDA 2026 photo (50–200 KB, white background) and signature (50–70 KB) as JPEGs.",
     linkText: "Prepare your KEA FDA/SDA photo and signature",
     category: "application",
-    related: ["white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
+    related: ["kcet-photo", "white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "resize-image-to-kb"],
     updated: "2026-11-04",
   },
   "afcat-photo": {
@@ -903,6 +904,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     category: "application",
     related: ["white-background-photo", "jee-main-photo", "neet-photo", "200kb-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-16",
+  },
+  "kcet-photo": {
+    id: "kcet-photo",
+    path: "/tools/kcet-photo",
+    name: "KCET Photo & Signature",
+    navLabel: "KCET photo",
+    summary: "The KCET (UGCET) photo and signature as JPGs, each under 50 KB, from KEA's application guide.",
+    linkText: "Prepare your KCET photo and signature",
+    category: "application",
+    related: ["cuet-photo", "mht-cet-photo", "jee-main-photo", "signature-maker", "50kb-photo", "kea-photo"],
+    updated: "2026-11-17",
   },
   "driving-licence-photo": {
     id: "driving-licence-photo",
@@ -1164,6 +1176,7 @@ export const toolOrder: ToolId[] = [
   "up-police-photo",
   "india-post-gds-photo",
   "mht-cet-photo",
+  "kcet-photo",
   "driving-licence-photo",
   "voter-id-photo",
   "passport-photo",
