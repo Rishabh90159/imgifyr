@@ -320,7 +320,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     path: "/tools/rrb-photo",
     primary: "rrb ntpc photo",
     // Google India autocomplete, 18 Oct 2026: "rrb ntpc photo and signature size converter", "rrb ntpc photo size in pixels".
-    secondary: ["rrb ntpc photo size", "rrb ntpc signature size", "rrb photo resizer", "rrb ntpc photo and signature size", "rrb signature size"],
+    secondary: ["rrb ntpc photo size", "rrb ntpc signature size", "rrb photo resizer", "rrb ntpc photo and signature size", "rrb signature size", "rrb group d photo size", "rrb group d signature size"],
     intent: "application",
     supportedBy: ["/tools/application-photos", "/tools/signature-resizer", "/tools/ssc-photo"],
   },
