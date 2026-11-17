@@ -9,7 +9,7 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("whatsapp-dp-without-crop");
 
 const description =
-  "Set your full photo as your WhatsApp DP without cropping: fit it into a square with a blurred or coloured background, even inside the round view. Free, no upload.";
+  "Full DP for WhatsApp without cropping: this WhatsApp DP size converter and WhatsApp DP maker keeps your whole photo in the square. Free, no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "WhatsApp DP Without Crop – Full Size DP Maker, Free",
@@ -19,7 +19,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the WhatsApp DP size?",
+    question: "What size is a full DP for WhatsApp?",
     answer:
       "WhatsApp doesn't publish an official pixel size. It crops your profile photo to a square and shows it as a circle, so a sharp square image works best. This tool makes 1080 × 1080.",
   },
@@ -57,7 +57,7 @@ export default function WhatsappDpPage() {
       faqs={faqs}
       content={
         <>
-          <h2>How to set a full DP on WhatsApp</h2>
+          <h2>How to set a full size DP for WhatsApp</h2>
           <ol>
             <li>Add your photo above, pick a background, and choose whether the whole photo fits the square or the circle.</li>
             <li>Create the DP and download the 1080 × 1080 JPG.</li>

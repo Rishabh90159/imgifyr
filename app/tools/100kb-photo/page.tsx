@@ -9,17 +9,17 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("100kb-photo");
 
 const description =
-  "Reduce a photo to 100KB online while keeping it sharp. See the before and after size, dimensions and quality, then download. Runs in your browser, no upload.";
+  "Reduce image size to 100KB online and keep it sharp. Check the 100 kb photo size, dimensions and quality before you download. Free photo resizer, no upload.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Resize Image to 100KB Online – Free 100KB Image Compressor",
+  title: "Resize Image to 100KB – Reduce Photo Size to 100KB Free",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I resize an image to 100KB?",
+    question: "How do I reduce photo size to 100KB?",
     answer:
       "Add the photo and select Resize to 100 KB, which is preset. It is tried at full size and high quality first, then at lower quality, and the dimensions are reduced only if needed.",
   },
@@ -77,7 +77,7 @@ export default function HundredKbPhotoPage() {
             <li>Select <strong>Resize to 100 KB</strong>, compare size, dimensions and quality, then download.</li>
           </ol>
 
-          <h2>Reduce a JPG or PNG to 100KB</h2>
+          <h2>Image size reducer: a JPG or PNG to 100KB</h2>
           <p>
             No encoder can be asked for &ldquo;exactly 100 KB&rdquo;, so the tool encodes, measures the real file and adjusts,
             up to about 20 times, keeping the best version at or below the target. It prefers modestly smaller dimensions to

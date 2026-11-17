@@ -12,7 +12,7 @@ import { formatBytes } from "@/lib/utils/format";
 const tool = getTool("compress-pdf");
 
 const description =
-  "Compress a PDF to 100KB, 200KB, 500KB or any size for upload forms. A free PDF size reducer that keeps pages readable and runs in your browser, with no upload.";
+  "PDF size reducer: compress PDF to 200KB, 100KB, 500KB or 1MB for upload forms, keeping pages readable. Free, in your browser, with no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Compress PDF to 100KB, 200KB or Any Size Online",
@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I compress a PDF to 200 KB?",
+    question: "How do I compress PDF to 200KB?",
     answer:
       "Choose your PDF, select 200 KB as the target and select Compress. You get a PDF of 200 KB or less with its exact size shown; a PDF already under 200 KB comes back unchanged.",
   },
@@ -74,7 +74,7 @@ export default function CompressPdfPage() {
             </li>
           </ol>
 
-          <h2>How the tool reaches your target</h2>
+          <h2>How the PDF size reducer reaches 100KB, 300KB or 50KB</h2>
           <p>It tries the least destructive option first and stops as soon as the file fits:</p>
           <ol>
             <li>

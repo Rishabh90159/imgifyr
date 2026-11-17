@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the SBI photo size for recruitment applications?",
+    question: "What is the SBI PO photo size?",
     answer:
       "Both current advertisements (PO CRPD/PO/2026-27/09 and Resolvers CRPD/RS/2026-27/06) ask for a recent colour photo of 200 × 230 pixels (preferred), 20–50 KB, on a light, preferably white, background.",
   },
@@ -56,7 +56,7 @@ export default function SbiPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make your SBI files</h2>
+          <h2>SBI image resizer: make your files</h2>
           <ol>
             <li>Choose the advertisement you&apos;re applying under; its sizes appear in the table above.</li>
             <li>Pick Photograph, Signature, Thumb impression or Declaration, add the image and crop it.</li>

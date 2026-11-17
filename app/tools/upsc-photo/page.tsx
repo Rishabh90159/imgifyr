@@ -15,24 +15,24 @@ const description =
   "Crop and resize your photo and signature for a UPSC application using the pixel and KB limits in your UPSC instructions. Shows where to find them. No upload.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "UPSC Photo Resizer – Prepare Your UPSC Photo & Signature",
+  title: "UPSC Photo Size and Signature – UPSC Photo Resizer",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the current UPSC photo requirement?",
+    question: "What is the UPSC photo size?",
     answer:
       "The CSE 2026 notice asks you to upload a photo and also capture a live photo in the Common Application Form. The size limits are in the portal under Instructions and FAQs > Photos and Signature.",
   },
   {
-    question: "Why doesn't this page show UPSC's photo size?",
+    question: "Why doesn't this page show the UPSC photo and signature size?",
     answer:
       "The public UPSC documents we checked disagree with each other, and the current values are inside the portal. Rather than guess, the tool lets you enter the numbers from your instructions.",
   },
   {
-    question: "Can I resize my UPSC photo online?",
+    question: "Can I do the UPSC photo resize online?",
     answer:
       "Yes. Choose “Other”, type the width, height and KB limits from the UPSC instructions, add your photo, crop and download.",
   },

@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the MHT CET photo size?",
+    question: "What is the MHT CET photo size in KB and inches?",
     answer:
       "A square 2 × 2 inch (50 × 50 mm) colour photo with your face covering 80% of it, as a file between 100 KB and 5 MB. The brochure gives no pixel size.",
   },
@@ -36,7 +36,7 @@ const faqs: FaqItem[] = [
       "The CET Cell wants a high-resolution, clear picture. A small crop can fall under 100 KB; the tool then offers to make it larger with the same square shape.",
   },
   {
-    question: "What background should the photo have?",
+    question: "What are the MHT CET photo requirements for the background?",
     answer: "Plain white or light-coloured, evenly lit, with no shadows on your face or behind you.",
   },
   {
@@ -54,7 +54,7 @@ export default function MhtCetPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make your MHT CET photo</h2>
+          <h2>MHT CET photo resize: make your photo</h2>
           <ol>
             <li>Sit facing even light against a plain white or light wall, looking straight at the camera.</li>
             <li>

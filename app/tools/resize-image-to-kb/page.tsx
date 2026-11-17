@@ -9,17 +9,17 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("resize-image-to-kb");
 
 const description =
-  "Change image size in KB: reduce a photo to 20KB, 50KB, 100KB, 200KB or any size for forms and uploads, at the best possible quality. Free, no upload.";
+  "Photo size reducer in KB: reduce photo size to 20KB, 50KB, 100KB, 200KB or any size for forms, at the best quality. A free image size reducer, no upload.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Resize Image in KB – 20KB, 50KB, 100KB, 200KB or Any Size",
+  title: "Resize Image in KB – Photo Size Reducer for Any KB Size",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I resize an image to 50 KB?",
+    question: "How do I reduce photo size in KB, for example to 50 KB?",
     answer:
       "Select your image, choose 50 KB as the target and select Resize. You get the highest quality that stays at or below 50 KB, with dimensions reduced only if needed, and the exact result before download.",
   },
@@ -77,7 +77,7 @@ export default function ResizeImageToKbPage() {
             <li>Select <strong>Resize</strong>, check the preview and the final size, then download.</li>
           </ol>
 
-          <h2>How the tool reaches your target size</h2>
+          <h2>How the image size reducer in KB works</h2>
           <p>File size depends on content, dimensions and quality, so it can&apos;t be set directly. Instead the tool searches:</p>
           <ol>
             <li>Full size at high quality first; if that fits, you get the best possible result.</li>

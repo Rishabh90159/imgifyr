@@ -12,14 +12,14 @@ const description =
   "Increase image size in pixels, or increase the file size in KB to meet an upload minimum such as 20 KB, without changing how the picture looks. Free, in your browser.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Increase Image Size – In Pixels or in KB",
+  title: "Increase Image Size in KB or Pixels – Photo Size Increase",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I increase an image's size in KB?",
+    question: "How do I increase photo size in KB?",
     answer:
       "Choose File size (KB), enter the minimum the form asks for, and keep “Keep the picture, add padding”. A comment block that viewers ignore is added to the JPG until it reaches your target, while the picture stays identical.",
   },

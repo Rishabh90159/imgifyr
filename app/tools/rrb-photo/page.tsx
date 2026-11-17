@@ -12,7 +12,7 @@ const tool = getTool("rrb-photo");
 const app = APPLICATIONS.rrb;
 
 const description =
-  "RRB Group D, NTPC and Station Master take your photo live; only the signature is uploaded: a 30–49 KB JPG, 140 × 60 px or more, in black ink.";
+  "RRB NTPC photo and signature size: Group D, NTPC and Station Master take your photo live; only the signature is uploaded, a 30–49 KB JPG of 140 × 60 px or more.";
 
 export const metadata: Metadata = pageMetadata({
   title: "RRB NTPC Photo & Signature Size 2026 + Group D",
@@ -22,12 +22,12 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the RRB Group D and NTPC photo size?",
+    question: "What is the RRB NTPC photo size (and Group D)?",
     answer:
       "There's no photo file: Group D, NTPC and Station Master forms capture a live photo with your webcam or phone camera. For Group D, wear dark, non-white clothes.",
   },
   {
-    question: "What is the RRB Group D and NTPC signature size?",
+    question: "What is the RRB NTPC signature size (and Group D)?",
     answer:
       "A JPG/JPEG of 30–49 KB, at least 140 × 60 pixels, scanned at 100 DPI or more, in black ink in running handwriting. The form's box is 35 mm wide for Group D and NTPC, 50 mm for Station Master.",
   },
@@ -55,7 +55,7 @@ export default function RrbPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make the RRB signature</h2>
+          <h2>RRB photo resizer: make the signature</h2>
           <ol>
             <li>Sign once in joined-up handwriting with a black pen on clean white paper; scan it or photograph it from above.</li>
             <li>Choose your CEN above, add the image and crop around the ink with a small margin.</li>

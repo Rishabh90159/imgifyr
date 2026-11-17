@@ -9,17 +9,17 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("20kb-photo");
 
 const description =
-  "Resize a photo or signature to 20KB or less in your browser. The tool finds the best quality that fits, shows the exact result in KB and never uploads your image.";
+  "Reduce photo size to 20KB or less for forms: a free 20KB photo size reducer for photos and signatures. Finds the best quality that fits and never uploads.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Resize Image to 20KB Online – Free 20KB Image Compressor",
+  title: "Resize Image to 20KB – 20KB Photo Size Reducer Online",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How can I resize a photo to 20KB?",
+    question: "How can I reduce photo size to 20KB?",
     answer:
       "Add your photo; the target is already 20 KB. Select Resize to 20 KB: the tool tries high quality first, then lower quality, and shrinks the pixel size only when quality alone can't get under the limit.",
   },

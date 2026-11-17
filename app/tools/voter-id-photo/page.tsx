@@ -22,12 +22,12 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the photo size for a voter ID application?",
+    question: "What is the Form 6 photo size for a voter ID?",
     answer:
       "The Election Commission asks for a passport-size colour photo of 4.5 × 3.5 cm on a white background, uploaded as a JPG or JPEG of up to 2 MB.",
   },
   {
-    question: "Is there a pixel size for the voter ID photo?",
+    question: "Is there a pixel or upload size for the voter ID photo?",
     answer: "No. ECI gives only the print size, white background, format and 2 MB limit. The tool keeps the 4.5 × 3.5 cm shape.",
   },
   {
@@ -53,7 +53,7 @@ export default function VoterIdPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make your voter ID photo</h2>
+          <h2>Make your voter card photo</h2>
           <ol>
             <li>Stand against a white wall, face the camera with eyes open and both sides of your face visible.</li>
             <li>Add the photo above and frame your head inside the guide; the crop keeps the 4.5 × 3.5 cm shape.</li>

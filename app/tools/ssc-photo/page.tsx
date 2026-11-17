@@ -15,7 +15,7 @@ const description =
   "SSC CGL, CHSL and GD capture your photo live in the form. See the rules from the official notices and resize your signature to a 10–20 KB JPEG.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "SSC Photo & Signature Size 2026 – SSC Signature Resizer",
+  title: "SSC Signature Size & SSC Photo Size 2026 – Resizer",
   description,
   path: tool.path,
 });
@@ -27,12 +27,12 @@ const faqs: FaqItem[] = [
       "For CGL, CHSL and GD you don't upload a photo: the form captures it with your camera. Use good light, a plain background and the camera at eye level, with no cap, mask or glasses.",
   },
   {
-    question: "What is the SSC GD photo and signature size?",
+    question: "What is the SSC GD signature size and photo rule?",
     answer:
       "SSC GD takes a live photo in the form and asks for a horizontal JPEG signature of 10–20 KB, about 6.0 × 2.0 cm at 300 DPI. Pick SSC GD in the tool and it saves exactly that.",
   },
   {
-    question: "What size should my SSC photo be?",
+    question: "What is the SSC photo size?",
     answer:
       "There is no photo file size for these exams, because nothing is uploaded. Pointing the camera at an existing printed photo is not allowed and leads to rejection.",
   },
@@ -61,7 +61,7 @@ export default function SscPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make the SSC signature</h2>
+          <h2>SSC signature resize in three steps</h2>
           <ol>
             <li>Sign in your usual way with a dark pen on plain white paper, then scan or photograph it straight on.</li>
             <li>Pick your exam above, add the image and fit the 3:1 crop box tightly around the ink.</li>
@@ -71,7 +71,7 @@ export default function SscPhotoPage() {
             </li>
           </ol>
 
-          <h2>Before the live photo</h2>
+          <h2>Before the SSC live photo</h2>
           <p>
             Sit facing a window or an even light, against a plain wall, with the camera at eye level. Take off your cap, mask
             and glasses first, and look on exam day as you do in the photo.

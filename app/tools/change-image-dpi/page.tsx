@@ -9,7 +9,7 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("change-image-dpi");
 
 const description =
-  "Change DPI of image online: check a JPG or PNG's current DPI and set it to 300, 200, 600 or any value without changing pixels or quality. Free DPI converter, no upload.";
+  "Change DPI of image online: an image DPI converter and checker. See a JPG or PNG's DPI and change DPI to 300, 200 or 600 without touching pixels. Free, no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Change DPI of Image Online – 300 DPI Converter & Checker",
@@ -19,7 +19,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I change an image to 300 DPI?",
+    question: "How do I change DPI to 300 for an image?",
     answer:
       "Drop the image, choose 300 and select Change to 300 DPI. A JPG or PNG keeps every pixel; only the resolution stored in the file changes, so it prints smaller and sharper.",
   },

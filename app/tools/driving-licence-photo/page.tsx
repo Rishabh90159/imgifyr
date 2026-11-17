@@ -22,7 +22,7 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the photo size for a driving licence application?",
+    question: "What is the driving licence photo size?",
     answer:
       "On Sarathi: a JPG of 420 × 525 pixels (preferred), 10–20 KB, a recent colour passport-size photo on a light, preferably white, background.",
   },
@@ -31,7 +31,7 @@ const faqs: FaqItem[] = [
     answer: "256 × 64 pixels (preferred), 10–20 KB, JPG, signed with a black pen on white paper.",
   },
   {
-    question: "Does it work for a learner's licence too?",
+    question: "Is the learner licence photo size the same?",
     answer: "Yes. Learner's and driving licence applications on Sarathi use the same photo and signature upload.",
   },
   {
@@ -54,7 +54,7 @@ export default function DrivingLicencePhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>Make your Sarathi files</h2>
+          <h2>Sarathi photo size: make your files</h2>
           <ol>
             <li>
               <strong>Photograph:</strong> a recent colour photo on a light wall, no cap or dark glasses; the tool saves 420 ×
