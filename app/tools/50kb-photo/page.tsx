@@ -9,17 +9,17 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("50kb-photo");
 
 const description =
-  "Make a photo under 50KB that still shows a clear face. Built for application forms: preset 50 KB target, honest results, optional width limit. No upload.";
+  "Photo resizer 50KB: reduce photo size to 50KB for application forms and keep the face clear. A free photo size reducer that never uploads your image.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Resize Image to 50KB Online – Free 50KB Image Compressor",
+  title: "Resize Image to 50KB – Photo Size Reducer 50KB, Free",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I make my photo less than 50KB?",
+    question: "How do I reduce photo size to 50KB?",
     answer:
       "Add the photo; the target is already 50 KB. Select Resize to 50 KB. The full size is kept if a good quality level fits; otherwise the dimensions shrink slightly so the face stays sharp.",
   },
@@ -77,7 +77,7 @@ export default function FiftyKbPhotoPage() {
             <li>Download the JPG and upload it to your form.</li>
           </ol>
 
-          <h2>Compress a JPG or PNG to a 50KB Photo</h2>
+          <h2>Photo resize 50 KB: JPG or PNG to a 50KB photo</h2>
           <p>
             At 50 KB the quality stays around 78% or higher and only large photos lose pixels. A PNG is converted to JPG,
             with any transparent background filled white. Results from our detailed, noisy test images:

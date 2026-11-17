@@ -9,7 +9,7 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("10kb-photo");
 
 const description =
-  "Compress a signature, thumb impression or small photo to 10KB or less. The tool keeps the best quality that fits, shows the exact size and works without uploading.";
+  "Compress image to 10KB or less: a signature 10KB file, a thumb impression or a small photo, at the best quality that fits. Shows the exact size; no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Resize Image to 10KB – Signature & Photo Under 10 KB",
@@ -59,7 +59,7 @@ export default function TenKbPhotoPage() {
       faqs={faqs}
       content={
         <>
-          <h2>How to compress an image to 10KB</h2>
+          <h2>How to compress image to 10KB</h2>
           <ol>
             <li>Crop to just the signature, thumb or face. Every bit of background costs bytes.</li>
             <li>Add the image here; 10 KB is already selected.</li>

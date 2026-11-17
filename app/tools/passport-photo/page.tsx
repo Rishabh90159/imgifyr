@@ -22,12 +22,12 @@ export const metadata: Metadata = pageMetadata({
 
 const faqs: FaqItem[] = [
   {
-    question: "What is the passport photo size?",
+    question: "What is the passport size photo size in cm?",
     answer:
-      "It depends on the country. India, the UK and Schengen visas use 35 × 45 mm, the USA 2 × 2 inches and Canada 50 × 70 mm; online applications set pixel and file-size limits instead.",
+      "It depends on the country: 3.5 × 4.5 cm for India, the UK and Schengen visas, 2 × 2 inches (about 5.1 × 5.1 cm) for the USA and 5 × 7 cm for Canada. Online applications set pixel and file-size limits instead.",
   },
   {
-    question: "What is a passport size photo in pixels?",
+    question: "What is the passport size photo size in pixels?",
     answer:
       "At 300 DPI, 35 × 45 mm (India, UK, Schengen) is 413 × 531 pixels, a US 2 × 2 inch photo is 600 × 600 and Canada's 50 × 70 mm is 591 × 827. UK digital photos need at least 600 × 750.",
   },
@@ -170,7 +170,7 @@ export default function PassportPhotoPage() {
             <li>For printed photos, have the JPG printed at a photo lab at 100% scale, on photo paper.</li>
           </ol>
 
-          <h2>Passport photo size: printed vs digital</h2>
+          <h2>Passport size photo dimensions: printed vs digital</h2>
           <p>
             <strong>Printed photos</strong> are set in millimetres; the tool converts them to pixels at 300 DPI and stores that
             in the JPG, so 35 × 45 mm prints at 35 × 45 mm at actual size. <strong>Digital photos</strong> are set in pixels

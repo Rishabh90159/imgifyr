@@ -9,10 +9,10 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("200kb-photo");
 
 const description =
-  "Compress a large photo to 200KB while keeping high resolution. Preset 200 KB target, optional width cap, exact result size shown. Free, in your browser.";
+  "Compress image to 200KB or reduce image size to 200KB and keep high resolution. Shows the exact 200 kb photo size you get. Free, in your browser.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Resize Image to 200KB Online – Free 200KB Image Compressor",
+  title: "Resize Image to 200KB – Compress Photo to 200KB Free",
   description,
   path: tool.path,
 });
@@ -75,7 +75,7 @@ export default function TwoHundredKbPhotoPage() {
             <li>Check the dimensions and quality in the comparison, then download.</li>
           </ol>
 
-          <h2>Compress a JPG or PNG to 200KB</h2>
+          <h2>Reduce photo size to 200KB: JPG or PNG</h2>
           <p>
             At 200 KB the tool rarely compromises much: quality usually stays around 70–90%, with the full size or a large
             share of it. From our deliberately detailed test images:

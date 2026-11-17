@@ -9,7 +9,7 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("signature-resizer");
 
 const description =
-  "Resize, crop and clean up a signature image for online forms. Whiten or remove the background, set exact pixels and a KB limit, and download JPG or PNG.";
+  "Signature resize for SSC, banks and other online forms: crop, whiten or remove the background, set exact pixels and a KB limit, and download JPG or PNG.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Signature Resizer – Resize Signature Image for Online Forms",
@@ -84,7 +84,7 @@ export default function SignatureResizerPage() {
             <Link href="/tools/transparent-signature">transparent signature maker</Link> starts with a see-through PNG.
           </p>
 
-          <h2>Signature resize to a KB limit</h2>
+          <h2>Signature resizer in KB: 10 to 20 KB and other limits</h2>
           <ul>
             <li>Crop tightly: empty space still costs bytes.</li>
             <li>Use Clean white and the exact pixel size the form asks for, not larger.</li>

@@ -10,10 +10,10 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("photo-to-pdf");
 
 const description =
-  "Convert photos to PDF in your browser: combine JPG, PNG, WebP and HEIC images into one file and keep it under 200 KB or any limit. Free, no upload.";
+  "Convert photo to PDF, image to PDF or JPG to PDF in your browser: combine pics into one PDF and keep it under 200 KB or any limit. Free, no upload.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Photo to PDF Converter – Convert Images to PDF Online",
+  title: "Photo to PDF Converter – Image to PDF, JPG to PDF Online",
   description,
   path: tool.path,
 });
@@ -72,7 +72,7 @@ export default function PhotoToPdfPage() {
       faqs={faqs}
       content={
         <>
-          <h2>How to convert images to PDF</h2>
+          <h2>Convert picture to PDF: one photo or many</h2>
           <ol>
             <li>Choose or drop your photos. You can add more later.</li>
             <li>Reorder them with the arrow buttons; each photo becomes one page.</li>
@@ -104,7 +104,7 @@ export default function PhotoToPdfPage() {
             <Link href="/tools/jpg-to-pdf">JPG to PDF converter</Link> embeds them with no quality loss.
           </p>
 
-          <h2>Photo to PDF under a size limit</h2>
+          <h2>Photo to PDF 200KB, 100KB or any limit</h2>
           <p>
             Forms that want certificates as one PDF usually cap its size. Pick a cap from 100 KB to 1 MB under{" "}
             <strong>Maximum PDF size</strong> and quality is balanced across every page so the file fits. Shoot documents in
