@@ -631,6 +631,21 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/instagram-image-resizer", "/tools/circle-crop"],
   },
   {
+    path: "/tools/instagram-dp-without-crop",
+    primary: "instagram dp size",
+    // Google India autocomplete, 17 Nov 2026.
+    secondary: ["instagram dp size converter", "instagram dp size maker", "instagram profile picture size", "resize image for instagram dp without cropping", "instagram dp without crop"],
+    intent: "tool",
+    supportedBy: ["/tools/whatsapp-dp-without-crop", "/tools/instagram-image-resizer"],
+  },
+  {
+    path: "/tools/telegram-dp-without-crop",
+    primary: "telegram dp size",
+    secondary: ["telegram dp size converter", "telegram profile picture size", "telegram dp size converter online", "telegram dp without crop"],
+    intent: "tool",
+    supportedBy: ["/tools/whatsapp-dp-without-crop", "/tools/circle-crop"],
+  },
+  {
     path: "/tools/transparent-signature",
     primary: "transparent signature",
     secondary: ["transparent signature maker", "transparent signature png", "transparent signature online", "remove background from signature", "signature background remover", "signature png maker"],

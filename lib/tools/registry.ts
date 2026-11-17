@@ -11,6 +11,8 @@ export type ToolId =
   | "resize-gif"
   | "instagram-image-resizer"
   | "whatsapp-dp-without-crop"
+  | "instagram-dp-without-crop"
+  | "telegram-dp-without-crop"
   | "image-compressor"
   | "resize-image-to-kb"
   | "jpg-to-png"
@@ -224,8 +226,32 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Fit your whole photo into a square WhatsApp DP, with a blurred or coloured background, so nothing gets cut off.",
     linkText: "Make a full-size WhatsApp DP without cropping",
     category: "edit",
-    related: ["instagram-image-resizer", "circle-crop", "image-cropper", "white-background-photo", "background-remover"],
+    related: ["instagram-dp-without-crop", "telegram-dp-without-crop", "instagram-image-resizer", "circle-crop", "white-background-photo", "background-remover"],
     updated: "2026-11-17",
+  },
+  "instagram-dp-without-crop": {
+    id: "instagram-dp-without-crop",
+    path: "/tools/instagram-dp-without-crop",
+    name: "Instagram DP Size Converter",
+    navLabel: "Instagram DP",
+    summary: "Turn any photo into a square Instagram profile picture without cropping, with a blurred or coloured background.",
+    linkText: "Make an Instagram DP without cropping",
+    category: "edit",
+    related: ["instagram-image-resizer", "whatsapp-dp-without-crop", "telegram-dp-without-crop", "circle-crop", "background-remover"],
+    updated: "2026-11-17",
+    menu: false,
+  },
+  "telegram-dp-without-crop": {
+    id: "telegram-dp-without-crop",
+    path: "/tools/telegram-dp-without-crop",
+    name: "Telegram DP Size Converter",
+    navLabel: "Telegram DP",
+    summary: "Fit your whole photo into a round Telegram profile picture, with a blurred or coloured background around it.",
+    linkText: "Make a Telegram DP without cropping",
+    category: "edit",
+    related: ["whatsapp-dp-without-crop", "instagram-dp-without-crop", "circle-crop", "image-cropper", "white-background-photo"],
+    updated: "2026-11-17",
+    menu: false,
   },
   "instagram-image-resizer": {
     id: "instagram-image-resizer",
@@ -1134,6 +1160,8 @@ export const toolOrder: ToolId[] = [
   "resize-gif",
   "instagram-image-resizer",
   "whatsapp-dp-without-crop",
+  "instagram-dp-without-crop",
+  "telegram-dp-without-crop",
   "resize-image-in-cm",
   "change-image-dpi",
   "image-cropper",
