@@ -40,6 +40,7 @@ const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "upPolice", tool: "up-police-photo" },
   { id: "gds", tool: "india-post-gds-photo" },
   { id: "mhtCet", tool: "mht-cet-photo" },
+  { id: "kcet", tool: "kcet-photo" },
   { id: "sarathi", tool: "driving-licence-photo" },
   { id: "eci", tool: "voter-id-photo" },
   { id: "upsc", tool: "upsc-photo" },
