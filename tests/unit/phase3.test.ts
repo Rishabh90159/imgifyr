@@ -14,6 +14,7 @@ const OFFICIAL_HOSTS = [
   "uppbpb.gov.in",
   "indiapost.gov.in",
   "cetcell.mahacet.org",
+  "www.rrbcdg.gov.in",
   "ssc.gov.in",
   "neet.nta.nic.in",
   "rrb.indianrailways.gov.in",

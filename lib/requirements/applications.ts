@@ -314,7 +314,37 @@ const RRB_SIGNATURE: ImageSpec = {
 
 const RRB_NOTES = ["SC/ST candidates asking for a free train travel pass also upload their SC/ST certificate as a PDF smaller than 400 KB."];
 
+// Group D (Level 1, CEN 09/2025): the live-photo wording differs from NTPC (no white-background or 50%-head rule; it
+// asks for non-white, preferably dark clothes), so it has its own list. The signature specification is identical.
+const RRB_GROUP_D_LIVE_RULES = [
+  "No pre-existing photograph is uploaded: the form captures a live photo with your webcam or your phone's front camera",
+  "Wear non-white clothes, preferably dark, so you stand out from the background",
+  "Keep the camera at eye level, sit or stand directly in front of it and look straight ahead with a neutral expression",
+  "Your whole face must be clearly visible and centred in the frame the form shows, neither too close nor too far",
+  "No cap, mask or glasses/spectacles",
+  "Never photograph a printed or on-screen photo: such applications are rejected",
+  "You can preview and retake the photo until the application is submitted",
+];
+
 const RRB_SETS: RequirementSet[] = [
+  {
+    id: "rrb-group-d-cen-09-2025",
+    name: "Group D (Level 1): Track Maintainer, Pointsman and Assistant posts",
+    signature: RRB_SIGNATURE,
+    livePhotoCapture: { rules: RRB_GROUP_D_LIVE_RULES },
+    notes: [
+      ...RRB_NOTES,
+      "Your appearance at every stage of the recruitment must match the live photo.",
+      "Bring a colour passport photo no more than two months old to the CBT, PET, document verification and medical examination.",
+    ],
+    source: {
+      title: "Centralised Employment Notice No. 09/2025: Level 1 posts (Group D)",
+      url: "https://www.rrbcdg.gov.in/uploads/2025/09-LVL1/092025-CEN.pdf",
+      publisher: "Railway Recruitment Boards (RRBs), Ministry of Railways",
+      section: "Para 16.4 (live photo), 16.5.1 (signature) and 20.0 (g)",
+      lastVerified: "2026-11-17",
+    },
+  },
   {
     id: "rrb-ntpc-graduate-cen-06-2026",
     name: "NTPC Graduate Level (CEN 06/2026)",

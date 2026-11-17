@@ -778,11 +778,11 @@ export const tools: Record<ToolId, ToolDefinition> = {
     path: "/tools/rrb-photo",
     name: "RRB Photo & Signature",
     navLabel: "RRB photo",
-    summary: "RRB NTPC and Station Master 2026 take the photo live; prepare the 30–49 KB signature JPG the form asks for.",
+    summary: "RRB Group D, NTPC and Station Master take the photo live; prepare the 30–49 KB signature JPG the form asks for.",
     linkText: "Prepare your RRB NTPC or Station Master signature",
     category: "application",
     related: ["signature-resizer", "rrc-apprentice-photo", "ssc-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-11-04",
+    updated: "2026-11-17",
   },
   "upsssc-photo": {
     id: "upsssc-photo",
