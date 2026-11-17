@@ -623,6 +623,14 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/signature-resizer", "/tools/transparent-signature"],
   },
   {
+    path: "/tools/whatsapp-dp-without-crop",
+    primary: "whatsapp dp without crop",
+    // Google India autocomplete, 17 Nov 2026.
+    secondary: ["full dp for whatsapp", "whatsapp dp size converter", "whatsapp dp maker", "full size dp for whatsapp", "resize photo for whatsapp dp", "whatsapp dp without crop online free"],
+    intent: "tool",
+    supportedBy: ["/tools/instagram-image-resizer", "/tools/circle-crop"],
+  },
+  {
     path: "/tools/transparent-signature",
     primary: "transparent signature",
     secondary: ["transparent signature maker", "transparent signature png", "transparent signature online", "remove background from signature", "signature background remover", "signature png maker"],
