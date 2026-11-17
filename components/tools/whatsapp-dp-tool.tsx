@@ -10,17 +10,24 @@ import { circlePlacement, fitPlacement } from "@/lib/image-processing/fit";
 import { FORMATS, RASTER_INPUT_FORMATS } from "@/lib/image-processing/formats";
 import { formatDimensions, outputFileName, sizeBucket } from "@/lib/utils/format";
 import { useJobRunner, useObjectUrl, useSourceImage, useToolOpen, type SourceImage } from "./hooks";
+import type { ToolId } from "@/lib/tools/registry";
 import { ActionButton, ToolWorkspace } from "./tool-workspace";
 
 /**
- * WhatsApp DP without crop: the whole photo is fitted into a square (WhatsApp crops profile photos to a square and
+ * Profile photo (DP) without crop, for WhatsApp, Instagram and Telegram: the whole photo is fitted into a square (each app crops profile photos to a square and
  * shows them as a circle), with a blurred, plain or coloured background around it. "Inside the circle" shrinks the
  * photo so even its corners stay visible in the round view. Uses the shared encoder's fit mode, so the preview and
  * the file match.
  */
 
-const TOOL = "whatsapp-dp-without-crop" as const;
-/** Sharp on every phone screen; WhatsApp re-compresses profile photos anyway. */
+/** The apps that show a square profile photo as a circle, each with its own page. */
+export type DpApp = "WhatsApp" | "Instagram" | "Telegram";
+const TOOLS = {
+  WhatsApp: "whatsapp-dp-without-crop",
+  Instagram: "instagram-dp-without-crop",
+  Telegram: "telegram-dp-without-crop",
+} as const satisfies Record<DpApp, ToolId>;
+/** Sharp on every phone screen; the apps re-compress profile photos anyway. */
 const SIDE = 1080;
 
 type Fill = "blur" | "white" | "black" | "custom";
@@ -29,6 +36,11 @@ type FitShape = "square" | "circle";
 const FILL_COLORS: Record<Exclude<Fill, "custom" | "blur">, string> = { white: "#ffffff", black: "#000000" };
 
 export function WhatsappDpTool() {
+  return <DpMakerTool app="WhatsApp" />;
+}
+
+export function DpMakerTool({ app }: { app: DpApp }) {
+  const TOOL = TOOLS[app];
   useToolOpen(TOOL);
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
   const runner = useJobRunner();
@@ -113,7 +125,7 @@ export function WhatsappDpTool() {
     <div className="lg:sticky lg:top-6 lg:self-start">
       <div
         role="img"
-        aria-label={`Preview: your whole photo in a ${SIDE} × ${SIDE} square${showCircle ? ", with WhatsApp's round view marked" : ""}`}
+        aria-label={`Preview: your whole photo in a ${SIDE} × ${SIDE} square${showCircle ? ", with ${app}'s round view marked" : ""}`}
         className="relative mx-auto aspect-square w-full max-w-[26rem] overflow-hidden rounded-md border border-line shadow-sm"
       >
         {fill === "blur" ? (
@@ -133,12 +145,12 @@ export function WhatsappDpTool() {
             height: `${(placement.height / SIDE) * 100}%`,
           }}
         />
-        {/* Darkens what WhatsApp's round view hides; on the preview only, not in the file. */}
+        {/* Darkens what the app's round view hides; on the preview only, not in the file. */}
         {showCircle ? (
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-full" style={{ boxShadow: "0 0 0 100vmax rgba(0,0,0,0.45)" }} />
         ) : null}
       </div>
-      <p className="mt-2 text-center text-xs text-muted">{showCircle ? "The shaded corners are hidden in WhatsApp's round view." : `${SIDE} × ${SIDE} square`}</p>
+      <p className="mt-2 text-center text-xs text-muted">{showCircle ? `The shaded corners are hidden in ${app}'s round view.` : `${SIDE} × ${SIDE} square`}</p>
     </div>
   );
 
@@ -178,7 +190,7 @@ export function WhatsappDpTool() {
         </div>
       ) : null}
       <Checkbox checked={showCircle} onChange={setShowCircle} description="Shown on the preview only; your image stays square.">
-        Show WhatsApp&apos;s round view
+        Show {app}&apos;s round view
       </Checkbox>
       <p className="text-sm text-muted">
         Output: <span className="font-medium text-ink">{formatDimensions(SIDE, SIDE)} JPG</span>
@@ -214,14 +226,14 @@ export function WhatsappDpTool() {
             heading="Your full-size DP"
             original={source}
             output={current}
-            fileName={outputFileName(source.name, "whatsapp-dp", "jpg")}
+            fileName={outputFileName(source.name, `${app.toLowerCase()}-dp`, "jpg")}
             downloadLabel="Download DP (JPG)"
             comparison={
               <figure className="mx-auto max-w-xs text-center">
                 {resultUrl ? (
-                  <img src={resultUrl} alt={`Your DP as WhatsApp shows it, ${formatDimensions(current.width, current.height)}`} className="mx-auto aspect-square w-full rounded-full border border-line object-cover" />
+                  <img src={resultUrl} alt={`Your DP as ${app} shows it, ${formatDimensions(current.width, current.height)}`} className="mx-auto aspect-square w-full rounded-full border border-line object-cover" />
                 ) : null}
-                <figcaption className="mt-2 text-sm text-muted">As it appears in WhatsApp</figcaption>
+                <figcaption className="mt-2 text-sm text-muted">As it appears in {app}</figcaption>
               </figure>
             }
           />

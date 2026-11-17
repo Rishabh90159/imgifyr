@@ -86,6 +86,8 @@ const toolPages = [
   "/tools/transparent-signature",
   "/tools/signature-maker",
   "/tools/whatsapp-dp-without-crop",
+  "/tools/instagram-dp-without-crop",
+  "/tools/telegram-dp-without-crop",
   "/tools/circle-crop",
   "/tools/jpg-to-webp",
   "/tools/webp-to-png",
@@ -125,6 +127,8 @@ const overlapPages = [
   "/tools/transparent-signature",
   "/tools/signature-maker",
   "/tools/whatsapp-dp-without-crop",
+  "/tools/instagram-dp-without-crop",
+  "/tools/telegram-dp-without-crop",
   "/tools/image-cropper",
   "/tools/circle-crop",
   "/tools/jpg-to-webp",
@@ -265,7 +269,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 77 && worst.score < 0.15,
+    entries.length === 79 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }

@@ -38,9 +38,10 @@ describe("site search", () => {
     expect(top("white background")).toContain("/tools/white-background-photo");
     expect(top("transparent signature")).toContain("/tools/transparent-signature");
     expect(first("round profile picture")).toBe("/tools/circle-crop");
-    // A "dp" search on this site is usually about a WhatsApp profile photo; the circle crop stays in the results.
+    // A "dp" search is about a profile photo: the WhatsApp, Instagram and Telegram DP makers lead, the circle crop follows.
     expect(first("dp")).toBe("/tools/whatsapp-dp-without-crop");
-    expect(top("dp")).toContain("/tools/circle-crop");
+    expect(top("dp")).toEqual(expect.arrayContaining(["/tools/whatsapp-dp-without-crop", "/tools/instagram-dp-without-crop", "/tools/telegram-dp-without-crop"]));
+    expect(top("dp", 5)).toContain("/tools/circle-crop");
   });
 
   it("returns nothing for empty or meaningless queries, and offers popular tools", () => {

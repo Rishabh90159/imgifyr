@@ -101,6 +101,23 @@ const isBlack = (c) => c.every((v) => v < 12);
   await page.close();
 }
 
+// Instagram and Telegram DP pages use the same tool, named for their app.
+for (const [app, route] of [["Instagram", "/tools/instagram-dp-without-crop"], ["Telegram", "/tools/telegram-dp-without-crop"]]) {
+  const page = await context.newPage();
+  page.on("pageerror", (e) => consoleErrors.push(`${route}: ${e.message}`));
+  await page.goto(BASE + route, { waitUntil: "networkidle" });
+  const dp = await make(page, "portrait.jpg", { shape: "circle", fill: "White" });
+  const r = await inspect(page, dp.bytes, [[0.03, 0.03], [0.5, 0.5]]);
+  const label = await page.getByText(`Show ${app}'s round view`, { exact: true }).count();
+  const inMenu = await page.locator(`header a[href="${route}"]`).count();
+  check(
+    `${app} DP: ${app.toLowerCase()}-dp.jpg, 1080 × 1080, round view named for ${app}, not in the header menu`,
+    new RegExp(`${app.toLowerCase()}-dp\\.jpg$`).test(dp.name) && r.width === 1080 && isWhite(r.colours[0]) && !isWhite(r.colours[1]) && label === 1 && inMenu === 0,
+    `${dp.name}, ${r.width}×${r.height}, label ${label}, in menu ${inMenu}`,
+  );
+  await page.close();
+}
+
 // Phone: the upload box is on the first screen and there's no sideways scroll.
 {
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
