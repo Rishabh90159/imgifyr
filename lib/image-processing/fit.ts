@@ -36,6 +36,18 @@ export function fitPlacement(sourceWidth: number, sourceHeight: number, layout: 
   };
 }
 
+/**
+ * Fits the whole image inside the circle inscribed in a square frame (how WhatsApp and other apps show a profile
+ * photo): the image's half-diagonal stays within the radius, centred, never stretched. A 2% margin keeps the
+ * corners clear of the edge after the app's own resizing.
+ */
+export function circlePlacement(sourceWidth: number, sourceHeight: number, side: number): PixelRect {
+  const scale = ((side / 2) * 0.98) / Math.hypot(sourceWidth / 2, sourceHeight / 2);
+  const width = Math.max(1, Math.round(sourceWidth * scale));
+  const height = Math.max(1, Math.round(sourceHeight * scale));
+  return { x: Math.round((side - width) / 2), y: Math.round((side - height) / 2), width, height };
+}
+
 /** The part of the source that fills the frame when scaled to cover it (used for the blurred background). */
 export function coverSourceRect(sourceWidth: number, sourceHeight: number, frameWidth: number, frameHeight: number): PixelRect {
   const frameRatio = frameWidth / frameHeight;

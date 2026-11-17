@@ -10,6 +10,7 @@ export type ToolId =
   | "resize-webp"
   | "resize-gif"
   | "instagram-image-resizer"
+  | "whatsapp-dp-without-crop"
   | "image-compressor"
   | "resize-image-to-kb"
   | "jpg-to-png"
@@ -214,6 +215,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     parent: "image-resizer",
     related: ["image-resizer", "resize-png", "merge-images", "image-compressor", "bulk-image-resizer", "image-cropper"],
     updated: "2026-10-08",
+  },
+  "whatsapp-dp-without-crop": {
+    id: "whatsapp-dp-without-crop",
+    path: "/tools/whatsapp-dp-without-crop",
+    name: "WhatsApp DP Without Crop",
+    navLabel: "WhatsApp DP",
+    summary: "Fit your whole photo into a square WhatsApp DP, with a blurred or coloured background, so nothing gets cut off.",
+    linkText: "Make a full-size WhatsApp DP without cropping",
+    category: "edit",
+    related: ["instagram-image-resizer", "circle-crop", "image-cropper", "white-background-photo", "background-remover"],
+    updated: "2026-11-17",
   },
   "instagram-image-resizer": {
     id: "instagram-image-resizer",
@@ -1121,6 +1133,7 @@ export const toolOrder: ToolId[] = [
   "resize-webp",
   "resize-gif",
   "instagram-image-resizer",
+  "whatsapp-dp-without-crop",
   "resize-image-in-cm",
   "change-image-dpi",
   "image-cropper",

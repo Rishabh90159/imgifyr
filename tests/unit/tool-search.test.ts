@@ -38,7 +38,9 @@ describe("site search", () => {
     expect(top("white background")).toContain("/tools/white-background-photo");
     expect(top("transparent signature")).toContain("/tools/transparent-signature");
     expect(first("round profile picture")).toBe("/tools/circle-crop");
-    expect(first("dp")).toBe("/tools/circle-crop");
+    // A "dp" search on this site is usually about a WhatsApp profile photo; the circle crop stays in the results.
+    expect(first("dp")).toBe("/tools/whatsapp-dp-without-crop");
+    expect(top("dp")).toContain("/tools/circle-crop");
   });
 
   it("returns nothing for empty or meaningless queries, and offers popular tools", () => {
