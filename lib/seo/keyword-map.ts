@@ -383,6 +383,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/413x531-photo"],
   },
   {
+    path: "/tools/all-exam-photo-signature",
+    primary: "all exam photo resizer",
+    secondary: ["photo and signature resizer for all exams", "all exam photo and signature resizer", "photo resizer for all exams", "signature resizer for all exams"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/ssc-photo", "/tools/rrb-photo"],
+  },
+  {
     path: "/tools/pan-card-photo",
     primary: "pan card photo size",
     secondary: ["pan card signature size", "pan card photo size in kb", "pan card photo resize", "nsdl pan photo size", "pan card photo and signature size"],

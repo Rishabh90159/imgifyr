@@ -26,6 +26,8 @@ interface ImageDropzoneProps {
   privacyNote?: string;
   /** With onFiles: the most files accepted at once, shown in the hint. */
   maxFiles?: number;
+  /** Take images pasted anywhere on the page. Off for a second upload box on the same page, so one paste fills one box. */
+  paste?: boolean;
 }
 
 /**
@@ -43,6 +45,7 @@ export function ImageDropzone({
   acceptHandOff = true,
   privacyNote,
   maxFiles,
+  paste = true,
 }: ImageDropzoneProps) {
   const multiple = Boolean(onFiles);
   const inputId = useId();
@@ -53,6 +56,7 @@ export function ImageDropzone({
 
   // Paste an image from the clipboard (Ctrl/Cmd + V) while the upload area is shown.
   useEffect(() => {
+    if (!paste) return;
     const onPaste = (event: ClipboardEvent) => {
       const target = event.target as HTMLElement | null;
       if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) return;
@@ -65,7 +69,7 @@ export function ImageDropzone({
     };
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
-  }, [onFile, onFiles]);
+  }, [onFile, onFiles, paste]);
 
   const handleFiles = (list: FileList | File[] | null) => {
     const files = [...(list ?? [])];

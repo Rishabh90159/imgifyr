@@ -80,6 +80,7 @@ export type ToolId =
   | "driving-licence-photo"
   | "voter-id-photo"
   | "pan-card-photo"
+  | "all-exam-photo-signature"
   | "merge-photo-and-signature"
   | "aadhaar-front-and-back"
   | "add-name-and-date-on-photo"
@@ -977,6 +978,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["driving-licence-photo", "white-background-photo", "413x531-photo", "passport-photo", "aadhaar-front-and-back", "image-cropper"],
     updated: "2026-11-13",
   },
+  "all-exam-photo-signature": {
+    id: "all-exam-photo-signature",
+    path: "/tools/all-exam-photo-signature",
+    name: "All Exam Photo & Signature Kit",
+    navLabel: "All exams at once",
+    summary: "Add your photo and signature once, tick your forms, and get every exam's file in one ZIP.",
+    linkText: "Make every exam's photo and signature at once",
+    category: "application",
+    related: ["ssc-photo", "rrb-photo", "ibps-photo", "neet-photo", "pan-card-photo", "signature-maker"],
+    updated: "2026-11-18",
+  },
   "pan-card-photo": {
     id: "pan-card-photo",
     path: "/tools/pan-card-photo",
@@ -1210,6 +1222,7 @@ export const toolOrder: ToolId[] = [
   "20kb-signature",
   "30kb-signature",
   "mb-to-kb-converter",
+  "all-exam-photo-signature",
   "ssc-photo",
   "upsc-photo",
   "ibps-photo",

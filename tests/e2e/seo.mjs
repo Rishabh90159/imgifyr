@@ -78,6 +78,7 @@ const toolPages = [
   "/tools/driving-licence-photo",
   "/tools/voter-id-photo",
   "/tools/pan-card-photo",
+  "/tools/all-exam-photo-signature",
   "/tools/merge-photo-and-signature",
   "/tools/aadhaar-front-and-back",
   "/tools/add-name-and-date-on-photo",
