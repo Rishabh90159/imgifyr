@@ -236,11 +236,11 @@ export function ExamKitTool({ exams }: { exams: KitExam[] }) {
         </Upload>
       </div>
 
-      <fieldset className="rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
+      <fieldset className="min-w-0 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
         <legend className="px-1 text-base font-bold text-ink">3. Tick the forms you&apos;re filling</legend>
-        <div className="mt-2 grid gap-5 sm:grid-cols-2">
+        <div className="mt-2 grid gap-x-8 gap-y-5 md:grid-cols-2">
           {KIT_GROUPS.map((group) => (
-            <div key={group}>
+            <div key={group} className="min-w-0">
               <p className="text-sm font-semibold text-ink">{group}</p>
               <ul className="mt-2 space-y-1">
                 {exams
@@ -257,18 +257,22 @@ export function ExamKitTool({ exams }: { exams: KitExam[] }) {
                         {exam.name}
                       </label>
                       {exam.id in picked && exam.sets.length > 1 ? (
-                        <select
-                          aria-label={`${exam.name} notice`}
-                          value={picked[exam.id]}
-                          onChange={(e) => setPicked((p) => ({ ...p, [exam.id]: e.target.value }))}
-                          className={`${inputClass} mb-2 ml-8 w-[calc(100%-2rem)] text-sm`}
-                        >
-                          {exam.sets.map((s) => (
-                            <option key={s.id} value={s.id}>
-                              {s.name}
-                            </option>
-                          ))}
-                        </select>
+                        // The wrapper sets the width: a select with long option names otherwise sizes itself to the
+                        // longest one and runs into the next column.
+                        <div className="mb-2 min-w-0 pl-8">
+                          <select
+                            aria-label={`${exam.name} notice`}
+                            value={picked[exam.id]}
+                            onChange={(e) => setPicked((p) => ({ ...p, [exam.id]: e.target.value }))}
+                            className={`${inputClass} block w-full min-w-0 max-w-full truncate text-sm`}
+                          >
+                            {exam.sets.map((s) => (
+                              <option key={s.id} value={s.id}>
+                                {s.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       ) : null}
                     </li>
                   ))}
@@ -323,7 +327,7 @@ function Upload({
 }) {
   const { source, loading, select, clear } = state;
   return (
-    <section className="space-y-3 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5" aria-label={title}>
+    <section className="min-w-0 space-y-3 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5" aria-label={title}>
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-base font-bold text-ink">{title}</h2>
         {source ? (
