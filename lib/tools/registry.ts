@@ -646,7 +646,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Resize a photo for JEE Main",
     category: "application",
     related: ["neet-photo", "200kb-photo", "signature-resizer", "compress-pdf", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-10-25",
+    updated: "2026-11-18",
   },
   "passport-photo": {
     id: "passport-photo",
@@ -844,7 +844,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your UPESSC OTR photo, signature and declaration",
     category: "application",
     related: ["upsssc-photo", "signature-resizer", "100kb-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-10-25",
+    updated: "2026-11-18",
   },
   "rrc-apprentice-photo": {
     id: "rrc-apprentice-photo",
@@ -866,7 +866,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your Indian Bank apprentice photo, signature, thumb and declaration",
     category: "application",
     related: ["ibps-photo", "sbi-photo", "signature-resizer", "50kb-photo", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-11-04",
+    updated: "2026-11-18",
   },
   "kea-photo": {
     id: "kea-photo",
@@ -877,7 +877,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your KEA FDA/SDA photo and signature",
     category: "application",
     related: ["kcet-photo", "white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "resize-image-to-kb"],
-    updated: "2026-11-04",
+    updated: "2026-11-18",
   },
   "afcat-photo": {
     id: "afcat-photo",
@@ -888,7 +888,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Prepare your AFCAT photo, signature and thumb impression",
     category: "application",
     related: ["signature-resizer", "thumb-impression-resizer", "200kb-photo", "100kb-photo", "image-cropper", "resize-image-to-kb"],
-    updated: "2026-11-14",
+    updated: "2026-11-18",
   },
   "cuet-photo": {
     id: "cuet-photo",
