@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Alert } from "@/components/controls/alert";
 import {
   formatKbRange,
@@ -68,6 +69,14 @@ export function RequirementSummary({
           <RequirementCard key={group[0].id} sets={group} />
         ))}
       </div>
+      {list.length > 0 ? (
+        <p className="mt-3 text-sm text-ink-soft">
+          Applying to more than one exam?{" "}
+          <Link href="/tools/all-exam-photo-signature" className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover">
+            Make every file at once
+          </Link>
+        </p>
+      ) : null}
       <p className="mt-3 text-xs leading-relaxed text-muted">
         <strong className="text-ink-soft">Important:</strong> Application requirements can change. Always verify the final image
         against the latest official notification or application portal before submitting. This is an independent tool and is

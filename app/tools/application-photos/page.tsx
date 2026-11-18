@@ -200,7 +200,7 @@ export default function ApplicationPhotosPage() {
       <p className="mt-3 max-w-3xl text-lg leading-relaxed text-ink-soft">
         Applying to more than one exam? Each one sets its own photo and signature size. This table puts the current
         requirements side by side, each copied from the official notification and dated. Open an exam&apos;s page to prepare
-        a file that matches it.
+        a file that matches it, or <Link href="/tools/all-exam-photo-signature" className="font-medium text-accent underline underline-offset-2">make every exam&apos;s file at once</Link>.
       </p>
 
       <OpenApplications className="mt-6" />

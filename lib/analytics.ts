@@ -43,7 +43,8 @@ export type AnalyticsEvent =
   | "photo_signature_merged"
   | "name_date_added"
   | "circle_crop_completed"
-  | "signature_created";
+  | "signature_created"
+  | "exam_kit_created";
 
 export interface AnalyticsProps {
   tool?: string;

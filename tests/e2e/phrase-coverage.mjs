@@ -25,6 +25,7 @@ const SEARCHED = {
   "/tools/passport-photo": ["passport size photo size in cm", "passport size photo size in pixels", "passport size photo dimensions"],
   "/tools/change-image-dpi": ["change dpi of image", "dpi converter", "image dpi converter", "change dpi to 300"],
   "/tools/image-size-increase": ["increase image size", "increase photo size in kb", "photo size increase"],
+  "/tools/all-exam-photo-signature": ["all exam photo resizer", "photo and signature resizer for all exams", "photo resizer for all exams", "all exam photo and signature resizer"],
   "/tools/pan-card-photo": ["pan card photo size", "pan card signature size", "pan card photo size in kb", "nsdl pan photo size", "pan card photo resize"],
   "/tools/whatsapp-dp-without-crop": ["whatsapp dp without crop", "full dp for whatsapp", "whatsapp dp maker", "whatsapp dp size converter"],
 };
