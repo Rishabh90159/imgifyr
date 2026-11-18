@@ -305,7 +305,7 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/upsc-photo",
     primary: "upsc photo",
-    secondary: ["upsc photo size", "upsc signature size", "upsc photo resizer"],
+    secondary: ["upsc photo size", "upsc signature size", "upsc photo resizer", "nda photo size", "cds photo size"],
     intent: "application",
     supportedBy: ["/tools/application-photos"],
   },
