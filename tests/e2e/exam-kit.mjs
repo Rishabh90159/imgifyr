@@ -36,6 +36,35 @@ const errors = [];
   await context.close();
 }
 
+// No sideways scrolling at any width, with both images loaded and every form ticked (long notice names in the
+// dropdowns once pushed the page wider than the screen).
+for (const width of [360, 390, 768, 907, 1024, 1280]) {
+  const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+  const p = await ctx.newPage();
+  await p.goto(BASE + PATH, { waitUntil: "networkidle" });
+  await p.locator('section[aria-label="1. Your photo"] input[type="file"]').setInputFiles(path.join(FIX, "portrait.jpg"));
+  await p.locator('section[aria-label="2. Your signature"] input[type="file"]').setInputFiles(path.join(FIX, "signature.jpg"));
+  await p.locator('section[aria-label="2. Your signature"]').getByRole("button", { name: "Change" }).waitFor({ timeout: 30_000 });
+  for (const box of await p.locator('fieldset input[type="checkbox"]').all()) await box.check();
+  const fit = await p.evaluate(() => {
+    const view = window.innerWidth;
+    const bad = [];
+    // Each notice dropdown stays inside its own column, and nothing runs past the screen edge.
+    for (const sel of document.querySelectorAll("fieldset select")) {
+      const col = sel.closest("ul").parentElement.getBoundingClientRect();
+      const r = sel.getBoundingClientRect();
+      if (r.right > col.right + 0.5 || r.left < col.left - 0.5) bad.push(`${sel.getAttribute("aria-label")} leaves its column`);
+    }
+    for (const el of document.querySelectorAll("fieldset, section[aria-label], fieldset select")) {
+      if (el.getBoundingClientRect().right > view) bad.push(`${el.tagName.toLowerCase()} past the screen edge`);
+    }
+    if (document.documentElement.scrollWidth > view) bad.push("page scrolls sideways");
+    return bad;
+  });
+  check(`${width}px: every form ticked, dropdowns stay in their columns, nothing past the screen edge`, fit.length === 0, fit.slice(0, 3).join("; "));
+  await ctx.close();
+}
+
 const context = await browser.newContext({ acceptDownloads: true, viewport: { width: 1280, height: 900 } });
 context.on("request", (req) => {
   const url = req.url();
