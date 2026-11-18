@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RequirementSummary } from "@/components/requirements/requirement-summary";
+import { WhileOpen } from "@/components/requirements/while-open";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { RequirementPhotoTool } from "@/components/tools/requirement-photo-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
@@ -19,6 +20,9 @@ export const metadata: Metadata = pageMetadata({
   description,
   path: tool.path,
 });
+
+// Regenerated daily so the application dates below drop the day after the window closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -74,11 +78,13 @@ export default function AfcatPhotoPage() {
             KB range.
           </p>
 
-          <h2>Application dates</h2>
-          <p>
-            Apply on afcat.edcil.co.in from 12 November to 11 December 2026 (11:30 pm). The online exam is on 31 January
-            2027.
-          </p>
+          <WhileOpen closes="2026-12-11">
+            <h2>Application dates</h2>
+            <p>
+              Apply on afcat.edcil.co.in from 12 November to 11 December 2026 (11:30 pm). The online exam is on 31 January
+              2027.
+            </p>
+          </WhileOpen>
 
           <PrivacyNote>
             <p>All three AFCAT images are processed in your browser and never uploaded here.</p>

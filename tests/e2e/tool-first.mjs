@@ -7,7 +7,7 @@ import { chromium } from "playwright-core";
 
 const BASE = process.env.BASE_URL || "http://localhost:3100";
 const CHANNEL = process.env.BROWSER_CHANNEL || "msedge";
-const PAGES = ["afcat", "ctet", "cuet", "driving-licence", "dsssb", "ibps", "india-post-gds", "indian-bank", "jee-main", "kea", "neet", "rrb", "rrc-apprentice", "sbi", "ssc", "up-police", "upessc", "upsc", "upsssc", "voter-id", "passport", "mht-cet", "kcet"].map((p) => `/tools/${p}-photo`);
+const PAGES = ["afcat", "ctet", "cuet", "driving-licence", "dsssb", "ibps", "india-post-gds", "indian-bank", "jee-main", "kea", "neet", "rrb", "rrc-apprentice", "sbi", "ssc", "up-police", "upessc", "upsc", "upsssc", "voter-id", "passport", "mht-cet", "kcet", "pan-card"].map((p) => `/tools/${p}-photo`);
 const PHONE = { width: 390, height: 844 };
 
 const results = [];

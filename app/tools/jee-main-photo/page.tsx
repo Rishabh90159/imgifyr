@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RequirementSummary } from "@/components/requirements/requirement-summary";
+import { WhileOpen } from "@/components/requirements/while-open";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { RequirementPhotoTool } from "@/components/tools/requirement-photo-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
@@ -19,6 +20,9 @@ export const metadata: Metadata = pageMetadata({
   description,
   path: tool.path,
 });
+
+// Regenerated daily so the application dates below drop the day after the window closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -65,15 +69,20 @@ export default function JeeMainPhotoPage() {
             <li>Sign on blank paper, load it as the <strong>Signature</strong>, trim the margins and make the second file.</li>
           </ol>
 
-          <h2>Key dates</h2>
-          <ul>
-            <li>
-              <strong>Session 1:</strong> apply by 22 November 2026 (late fee until 26 November); exams 20–24 and 28 January 2027.
-            </li>
-            <li>
-              <strong>Session 2:</strong> apply 5 January – 3 February 2027; exams 2–7 April 2027.
-            </li>
-          </ul>
+          <WhileOpen closes="2027-02-03">
+            <h2>Key dates</h2>
+            <ul>
+              <WhileOpen closes="2026-11-26">
+                <li>
+                  <strong>Session 1:</strong> apply by 22 November 2026 (late fee until 26 November); exams 20–24 and 28 January
+                  2027.
+                </li>
+              </WhileOpen>
+              <li>
+                <strong>Session 2:</strong> apply 5 January – 3 February 2027; exams 2–7 April 2027.
+              </li>
+            </ul>
+          </WhileOpen>
 
           <h2>Avoid these mistakes</h2>
           <ul>
