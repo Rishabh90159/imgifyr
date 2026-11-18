@@ -18,7 +18,7 @@ const SEARCHED = {
   "/tools/compress-pdf": ["pdf size reducer", "compress pdf to 200kb", "compress pdf to 100kb"],
   "/tools/photo-to-pdf": ["photo to pdf", "image to pdf", "jpg to pdf", "convert photo to pdf", "convert picture to pdf", "photo to pdf 200kb"],
   "/tools/ssc-photo": ["ssc signature size", "ssc photo size", "ssc signature resize", "ssc gd signature size"],
-  "/tools/upsc-photo": ["upsc photo size", "upsc photo resize", "upsc photo resizer", "upsc photo and signature size"],
+  "/tools/upsc-photo": ["upsc photo size", "upsc photo resize", "upsc photo resizer", "upsc photo and signature size", "nda photo size", "cds photo size"],
   "/tools/rrb-photo": ["rrb ntpc photo size", "rrb ntpc signature size", "rrb photo resizer", "rrb ntpc photo and signature size"],
   "/tools/sbi-photo": ["sbi po photo size", "sbi image resizer"],
   "/tools/signature-resizer": ["signature resize", "signature resizer in kb", "signature resize for ssc"],

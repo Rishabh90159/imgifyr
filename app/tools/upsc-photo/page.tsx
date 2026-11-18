@@ -12,7 +12,7 @@ const tool = getTool("upsc-photo");
 const app = APPLICATIONS.upsc;
 
 const description =
-  "Crop and resize your photo and signature for a UPSC application using the pixel and KB limits in your UPSC instructions. Shows where to find them. No upload.";
+  "UPSC photo resize for CSE, NDA and CDS forms: crop your photo and signature to the pixel and KB limits in your UPSC instructions. Free, no upload.";
 
 export const metadata: Metadata = pageMetadata({
   title: "UPSC Photo Size and Signature – UPSC Photo Resizer",
@@ -25,6 +25,11 @@ const faqs: FaqItem[] = [
     question: "What is the UPSC photo size?",
     answer:
       "The CSE 2026 notice asks you to upload a photo and also capture a live photo in the Common Application Form. The size limits are in the portal under Instructions and FAQs > Photos and Signature.",
+  },
+  {
+    question: "What is the NDA photo size or CDS photo size?",
+    answer:
+      "NDA and CDS are applied for on the same UPSC portal. Their 2026 notices ask for an uploaded photo plus a live photo in the Common Application Form, and point to the portal's Photos and Signature instructions for the limits.",
   },
   {
     question: "Why doesn't this page show the UPSC photo and signature size?",
@@ -40,10 +45,6 @@ const faqs: FaqItem[] = [
     question: "What happens if the photo is wrong?",
     answer:
       "Rule 19 of the CSE 2026 rules lists uploading an irrelevant or incorrect photo or signature among the grounds for disciplinary action.",
-  },
-  {
-    question: "Where can I verify the official UPSC requirement?",
-    answer: "On upsconline.nic.in under Instructions and FAQs, and in the exam notice on upsc.gov.in. Both are linked on this page.",
   },
 ];
 
