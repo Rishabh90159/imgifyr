@@ -1,15 +1,24 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site";
+import { OPEN_APPLICATIONS } from "@/lib/requirements/open-applications";
+import { lastModified } from "@/lib/seo/lastmod";
 import { allTools } from "@/lib/tools/registry";
 
 /**
  * Canonical, indexable URLs only: no query parameters, no duplicates.
  * Tool URLs come from the registry, so new tools are included automatically.
+ * Regenerated daily: pages that list application windows change by themselves when one closes, and their
+ * lastmod follows (see lastModified).
  */
+export const revalidate = 86400;
+
+/** Pages whose text changes when an application window closes. */
+const WINDOW_PAGES = new Set(["/", "/tools/application-photos"]);
+const windowTools = new Set<string>(OPEN_APPLICATIONS.map((a) => a.tool));
 const staticPages: { path: string; updated: string; priority: number }[] = [
-  { path: "/", updated: "2026-10-31", priority: 1 },
+  { path: "/", updated: "2026-11-14", priority: 1 },
   { path: "/tools", updated: "2026-10-31", priority: 0.8 },
-  { path: "/tools/application-photos", updated: "2026-10-30", priority: 0.7 },
+  { path: "/tools/application-photos", updated: "2026-11-18", priority: 0.7 },
   { path: "/tools/pdf-tools", updated: "2026-10-31", priority: 0.7 },
   { path: "/about", updated: "2026-10-07", priority: 0.4 },
   { path: "/methodology", updated: "2026-10-07", priority: 0.5 },
@@ -20,8 +29,16 @@ const staticPages: { path: string; updated: string; priority: number }[] = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries = [
-    ...staticPages.map((page) => ({ url: absoluteUrl(page.path), lastModified: page.updated, priority: page.priority })),
-    ...allTools.map((tool) => ({ url: absoluteUrl(tool.path), lastModified: tool.updated, priority: 0.9 })),
+    ...staticPages.map((page) => ({
+      url: absoluteUrl(page.path),
+      lastModified: WINDOW_PAGES.has(page.path) ? lastModified(page.updated) : page.updated,
+      priority: page.priority,
+    })),
+    ...allTools.map((tool) => ({
+      url: absoluteUrl(tool.path),
+      lastModified: windowTools.has(tool.id) ? lastModified(tool.updated, tool.id) : tool.updated,
+      priority: 0.9,
+    })),
   ];
   const seen = new Set<string>();
   return entries.filter((entry) => (seen.has(entry.url) ? false : (seen.add(entry.url), true)));
