@@ -383,6 +383,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/white-background-photo", "/tools/413x531-photo"],
   },
   {
+    path: "/tools/pan-card-photo",
+    primary: "pan card photo size",
+    secondary: ["pan card signature size", "pan card photo size in kb", "pan card photo resize", "nsdl pan photo size", "pan card photo and signature size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/voter-id-photo", "/tools/20kb-photo"],
+  },
+  {
     path: "/tools/afcat-photo",
     primary: "afcat photo size",
     secondary: ["afcat signature size", "afcat thumb impression size", "afcat photo and signature size", "afcat 01/2027 photo size", "afcat photo resizer"],

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RequirementSummary } from "@/components/requirements/requirement-summary";
+import { WhileOpen } from "@/components/requirements/while-open";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { RequirementPhotoTool } from "@/components/tools/requirement-photo-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
@@ -19,6 +20,9 @@ export const metadata: Metadata = pageMetadata({
   description,
   path: tool.path,
 });
+
+// Regenerated daily so the application dates below drop the day after the window closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -73,19 +77,23 @@ export default function UpesscPhotoPage() {
           </ol>
           <p>Each file must be 10–100 KB. The tool saves JPG, which the portal accepts.</p>
 
-          <h2>Open applications</h2>
-          <ul>
-            <li>
-              <strong>TGT (07/2026):</strong> until 23 November 2026.
-            </li>
-            <li>
-              <strong>Principal (08/2026) and Headmaster (09/2026):</strong> until 22 November 2026.
-            </li>
-          </ul>
-          <p>
-            Certificates for these forms are PDFs of 20–200 KB; the <Link href="/tools/compress-pdf">PDF compressor</Link> can
-            shrink a large scan.
-          </p>
+          <WhileOpen closes="2026-11-23">
+            <h2>Open applications</h2>
+            <ul>
+              <li>
+                <strong>TGT (07/2026):</strong> until 23 November 2026.
+              </li>
+              <WhileOpen closes="2026-11-22">
+                <li>
+                  <strong>Principal (08/2026) and Headmaster (09/2026):</strong> until 22 November 2026.
+                </li>
+              </WhileOpen>
+            </ul>
+            <p>
+              Certificates for these forms are PDFs of 20–200 KB; the <Link href="/tools/compress-pdf">PDF compressor</Link>{" "}
+              can shrink a large scan.
+            </p>
+          </WhileOpen>
 
           <PrivacyNote>
             <p>The three UPESSC images are processed locally; none is sent to this site.</p>

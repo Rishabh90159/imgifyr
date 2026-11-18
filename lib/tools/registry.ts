@@ -79,6 +79,7 @@ export type ToolId =
   | "kcet-photo"
   | "driving-licence-photo"
   | "voter-id-photo"
+  | "pan-card-photo"
   | "merge-photo-and-signature"
   | "aadhaar-front-and-back"
   | "add-name-and-date-on-photo"
@@ -976,6 +977,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["driving-licence-photo", "white-background-photo", "413x531-photo", "passport-photo", "aadhaar-front-and-back", "image-cropper"],
     updated: "2026-11-13",
   },
+  "pan-card-photo": {
+    id: "pan-card-photo",
+    path: "/tools/pan-card-photo",
+    name: "PAN Card Photo & Signature",
+    navLabel: "PAN card photo",
+    summary: "The PAN card photo (3.5 × 2.5 cm, under 20 KB) and signature (2 × 4.5 cm, under 10 KB) at 200 DPI.",
+    linkText: "Prepare your PAN card photo and signature",
+    category: "application",
+    related: ["voter-id-photo", "aadhaar-front-and-back", "signature-maker", "20kb-photo", "white-background-photo", "resize-image-to-kb"],
+    updated: "2026-11-18",
+  },
   "dsssb-photo": {
     id: "dsssb-photo",
     path: "/tools/dsssb-photo",
@@ -1220,6 +1232,7 @@ export const toolOrder: ToolId[] = [
   "kcet-photo",
   "driving-licence-photo",
   "voter-id-photo",
+  "pan-card-photo",
   "passport-photo",
 ];
 

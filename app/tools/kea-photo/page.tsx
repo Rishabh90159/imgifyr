@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RequirementSummary } from "@/components/requirements/requirement-summary";
+import { WhileOpen } from "@/components/requirements/while-open";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { RequirementPhotoTool } from "@/components/tools/requirement-photo-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
@@ -19,6 +20,9 @@ export const metadata: Metadata = pageMetadata({
   description,
   path: tool.path,
 });
+
+// Regenerated daily so the application dates below drop the day after the window closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -68,11 +72,13 @@ export default function KeaPhotoPage() {
           </ol>
           <p>The tool saves JPEG files inside the 50–200 KB and 50–70 KB ranges.</p>
 
-          <h2>Application dates</h2>
-          <p>
-            Apply online from 30 October to 25 November 2026; the fee can be paid until 26 November. Details can&apos;t be
-            changed after you submit.
-          </p>
+          <WhileOpen closes="2026-11-26">
+            <h2>Application dates</h2>
+            <p>
+              Apply online from 30 October to 25 November 2026; the fee can be paid until 26 November. Details can&apos;t be
+              changed after you submit.
+            </p>
+          </WhileOpen>
 
           <PrivacyNote>
             <p>Both KEA images are processed in your browser and never uploaded here.</p>

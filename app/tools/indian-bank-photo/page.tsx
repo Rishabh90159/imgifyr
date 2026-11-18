@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { RequirementSummary } from "@/components/requirements/requirement-summary";
+import { WhileOpen } from "@/components/requirements/while-open";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { RequirementPhotoTool } from "@/components/tools/requirement-photo-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
@@ -19,6 +20,9 @@ export const metadata: Metadata = pageMetadata({
   description,
   path: tool.path,
 });
+
+// Regenerated daily so the application dates below drop the day after the window closes.
+export const revalidate = 86400;
 
 const faqs: FaqItem[] = [
   {
@@ -72,8 +76,10 @@ export default function IndianBankPhotoPage() {
             The sizes match IBPS, so the <Link href="/tools/ibps-photo">IBPS files</Link> follow the same rules.
           </p>
 
-          <h2>Application dates</h2>
-          <p>Apply and pay the fee from 5 to 25 November 2026 for the 1,500 apprentice seats.</p>
+          <WhileOpen closes="2026-11-25">
+            <h2>Application dates</h2>
+            <p>Apply and pay the fee from 5 to 25 November 2026 for the 1,500 apprentice seats.</p>
+          </WhileOpen>
 
           <PrivacyNote>
             <p>All four files are made in your browser; none is uploaded here.</p>

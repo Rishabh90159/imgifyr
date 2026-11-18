@@ -807,6 +807,54 @@ const KCET_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- PAN card (Protean / NSDL)
+// Protean's PAN instructions (Form 49A with DSC, same table on the correction page) list the scanning specification:
+// 200 DPI, colour, JPEG; photo max 20 KB, "3.5X2.5 cms"; signature max 10 KB, "2X4.5 cms". Both are written height
+// first (the PAN photo box is portrait), so the photo is 2.5 cm wide and the signature 4.5 cm wide. Pixels are our
+// conversion at the stated 200 DPI. UTIITSL publishes no specification on its public pages, so it isn't listed.
+
+const PAN_SETS: RequirementSet[] = [
+  {
+    id: "pan-protean",
+    name: "PAN card: new PAN (Form 49A) and changes or correction, Protean (NSDL) online application",
+    photo: {
+      kind: "photo",
+      format: "JPEG",
+      physical: "2.5 cm (width) × 3.5 cm (height)",
+      widthPx: 197,
+      heightPx: 276,
+      pixelBasis: "derived",
+      aspect: 197 / 276,
+      dpi: 200,
+      maxKB: 20,
+      rules: ["Scanned in colour at 200 DPI", "Recent colour photograph"],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPEG",
+      physical: "4.5 cm (width) × 2 cm (height)",
+      widthPx: 354,
+      heightPx: 157,
+      pixelBasis: "derived",
+      aspect: 354 / 157,
+      dpi: 200,
+      maxKB: 10,
+      rules: ["Scanned in colour at 200 DPI"],
+    },
+    notes: [
+      "Protean writes the sizes as 3.5 × 2.5 cm (photo) and 2 × 4.5 cm (signature); pixels are our conversion at the stated 200 DPI.",
+      "Supporting documents (proof of identity, address and date of birth): black and white, 200 DPI, PDF/A or JPEG, up to 300 KB per page.",
+    ],
+    source: {
+      title: "PAN application instructions (Form 49A, Protean)",
+      url: "https://tin.tin.proteantech.in/pan/form49Adsc.html",
+      publisher: "Protean eGov Technologies (formerly NSDL e-Gov), for the Income Tax Department",
+      section: "Scanning specifications table: photograph, signature and supporting documents",
+      lastVerified: "2026-11-18",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -1138,6 +1186,7 @@ export const APPLICATIONS = {
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
+  pan: { name: "PAN card", fullName: "PAN (Permanent Account Number), Income Tax Department", sets: PAN_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },
   dsssb: { name: "DSSSB", fullName: "Delhi Subordinate Services Selection Board", sets: DSSSB_SETS },
   upessc: { name: "UPESSC", fullName: "Uttar Pradesh Education Services Selection Commission", sets: UPESSC_SETS },
