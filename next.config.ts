@@ -70,7 +70,7 @@ const nextConfig: NextConfig = {
     const security = [
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+      { key: "Permissions-Policy", value: "camera=(self), microphone=(), geolocation=(), interest-cohort=()" },
     ];
     if (isProd) security.push({ key: "Content-Security-Policy", value: contentSecurityPolicy() });
     // The background-removal model is large and rarely changes: let browsers reuse it.
