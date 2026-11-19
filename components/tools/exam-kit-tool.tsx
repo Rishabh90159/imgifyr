@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
-import { inputClass } from "@/components/controls/fields";
+import { NoticeChoice } from "@/components/controls/notice-choice";
 import { ImageCropper } from "@/components/cropper/image-cropper";
 import { OrientationControls } from "@/components/cropper/orientation-controls";
 import { useCropState } from "@/components/cropper/use-crop";
@@ -257,21 +257,14 @@ export function ExamKitTool({ exams }: { exams: KitExam[] }) {
                         {exam.name}
                       </label>
                       {exam.id in picked && exam.sets.length > 1 ? (
-                        // The wrapper sets the width: a select with long option names otherwise sizes itself to the
-                        // longest one and runs into the next column.
                         <div className="mb-2 min-w-0 pl-8">
-                          <select
-                            aria-label={`${exam.name} notice`}
+                          <NoticeChoice
+                            legend={`${exam.name} notice`}
+                            hideLegend
+                            options={exam.sets.map((s) => ({ id: s.id, label: shortNoticeName(s.name) }))}
                             value={picked[exam.id]}
-                            onChange={(e) => setPicked((p) => ({ ...p, [exam.id]: e.target.value }))}
-                            className={`${inputClass} block w-full min-w-0 max-w-full truncate text-sm`}
-                          >
-                            {exam.sets.map((s) => (
-                              <option key={s.id} value={s.id} title={s.name}>
-                                {shortNoticeName(s.name)}
-                              </option>
-                            ))}
-                          </select>
+                            onChange={(id) => setPicked((p) => ({ ...p, [exam.id]: id }))}
+                          />
                         </div>
                       ) : null}
                     </li>

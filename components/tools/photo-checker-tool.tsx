@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
 import { FieldLabel, inputClass, Segmented } from "@/components/controls/fields";
+import { NoticeChoice } from "@/components/controls/notice-choice";
 import { ImageDropzone } from "@/components/image-uploader/image-dropzone";
 import { track } from "@/lib/analytics";
 import { checkFile, checkPhoto, checkSignature, type FileFacts, type Finding, type FixTarget } from "@/lib/checker/check";
@@ -84,7 +85,6 @@ export function PhotoCheckerTool({ exams }: { exams: KitExam[] }) {
   useToolOpen(TOOL);
   const router = useRouter();
   const examId = useId();
-  const noticeId = useId();
   const [kind, setKind] = useState<Kind>("photo");
   const [examChoice, setExamChoice] = useState("");
   const [noticeChoice, setNoticeChoice] = useState("");
@@ -171,16 +171,12 @@ export function PhotoCheckerTool({ exams }: { exams: KitExam[] }) {
         </select>
       </div>
       {exam && exam.sets.length > 1 ? (
-        <div>
-          <FieldLabel htmlFor={noticeId}>Notice</FieldLabel>
-          <select id={noticeId} value={set?.id} onChange={(e) => setNoticeChoice(e.target.value)} className={`${inputClass} mt-1.5 block w-full min-w-0 truncate`}>
-            {exam.sets.map((s) => (
-              <option key={s.id} value={s.id}>
-                {shortNoticeName(s.name)}
-              </option>
-            ))}
-          </select>
-        </div>
+        <NoticeChoice
+          legend="Notice"
+          options={exam.sets.map((s) => ({ id: s.id, label: shortNoticeName(s.name) }))}
+          value={set?.id ?? ""}
+          onChange={setNoticeChoice}
+        />
       ) : null}
       {liveOnly ? (
         <p className="text-sm text-ink-soft">

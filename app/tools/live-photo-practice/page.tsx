@@ -27,8 +27,9 @@ const exams: LiveExam[] = Object.values(APPLICATIONS).flatMap((app) =>
       const own = s.name.startsWith(app.name);
       return {
         id: s.id,
+        app: app.name,
         name: own ? s.name : `${app.name}: ${s.name}`,
-        label: own ? shortNoticeName(s.name) : `${app.name}: ${shortNoticeName(s.name)}`,
+        label: shortNoticeName(s.name),
         rules: s.livePhotoCapture!.rules,
       };
     }),
