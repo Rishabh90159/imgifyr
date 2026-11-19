@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PrivacyNote, ToolPageShell } from "@/components/tool-page/tool-page-shell";
 import { LivePhotoPracticeTool, type LiveExam } from "@/components/tools/live-photo-practice-tool";
 import { APPLICATIONS } from "@/lib/requirements/applications";
+import { shortNoticeName } from "@/lib/requirements/kit";
 import { pageMetadata } from "@/lib/seo/metadata";
 import type { FaqItem } from "@/lib/seo/schema";
 import { getTool } from "@/lib/tools/registry";
@@ -22,7 +23,15 @@ export const metadata: Metadata = pageMetadata({
 const exams: LiveExam[] = Object.values(APPLICATIONS).flatMap((app) =>
   app.sets
     .filter((s) => s.livePhotoCapture)
-    .map((s) => ({ id: s.id, name: s.name.startsWith(app.name) ? s.name : `${app.name}: ${s.name}`, rules: s.livePhotoCapture!.rules })),
+    .map((s) => {
+      const own = s.name.startsWith(app.name);
+      return {
+        id: s.id,
+        name: own ? s.name : `${app.name}: ${s.name}`,
+        label: own ? shortNoticeName(s.name) : `${app.name}: ${shortNoticeName(s.name)}`,
+        rules: s.livePhotoCapture!.rules,
+      };
+    }),
 );
 const appNames = [...new Set(Object.values(APPLICATIONS).filter((a) => a.sets.some((s) => s.livePhotoCapture)).map((a) => a.name))];
 

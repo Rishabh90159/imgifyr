@@ -90,3 +90,14 @@ export function deriveCrop(framed: PixelRect, aspect: number | null, bounds: { w
   const y = Math.min(Math.max(cy - height / 2, 0), bounds.height - height);
   return { x: Math.round(x), y: Math.round(y), width: Math.max(1, Math.round(width)), height: Math.max(1, Math.round(height)) };
 }
+
+/**
+ * A short label for a notice in a dropdown. Browsers size an open list to its longest option, so full notice names
+ * ("AFCAT 01/2027: Flying, Ground Duty (Technical and Non-Technical), NCC Special Entry…") spill over the page.
+ * Keeps the part before the first colon, says "Exam" for "Examination", and caps the length; the full name is shown
+ * next to the dropdown.
+ */
+export function shortNoticeName(name: string, max = 50): string {
+  const short = name.split(":")[0].replace(/\bExamination\b/g, "Exam").trim();
+  return short.length > max ? `${short.slice(0, max - 1).trimEnd()}…` : short;
+}
