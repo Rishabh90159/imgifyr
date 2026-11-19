@@ -50,12 +50,14 @@ for (const width of [360, 390, 768, 907, 1024, 1280]) {
     const view = window.innerWidth;
     const bad = [];
     // Each notice dropdown stays inside its own column, and nothing runs past the screen edge.
-    for (const sel of document.querySelectorAll("fieldset select")) {
-      const col = sel.closest("ul").parentElement.getBoundingClientRect();
-      const r = sel.getBoundingClientRect();
-      if (r.right > col.right + 0.5 || r.left < col.left - 0.5) bad.push(`${sel.getAttribute("aria-label")} leaves its column`);
+    for (const choice of document.querySelectorAll("fieldset fieldset")) {
+      const col = choice.closest("ul").parentElement.getBoundingClientRect();
+      for (const label of choice.querySelectorAll("label")) {
+        const r = label.getBoundingClientRect();
+        if (r.right > col.right + 0.5 || r.left < col.left - 0.5) bad.push(`${choice.querySelector("legend").textContent} leaves its column`);
+      }
     }
-    for (const el of document.querySelectorAll("fieldset, section[aria-label], fieldset select")) {
+    for (const el of document.querySelectorAll("fieldset, section[aria-label], fieldset label")) {
       if (el.getBoundingClientRect().right > view) bad.push(`${el.tagName.toLowerCase()} past the screen edge`);
     }
     if (document.documentElement.scrollWidth > view) bad.push("page scrolls sideways");
@@ -84,7 +86,7 @@ await page.locator('section[aria-label="2. Your signature"]').getByRole("button"
 check("both images load into their own croppers", true);
 
 for (const name of ["SSC", "PAN card", "MHT CET", "AFCAT", "IBPS"]) await page.getByLabel(name, { exact: true }).check();
-check("SSC offers its notices to choose from", await page.getByLabel("SSC notice").isVisible());
+check("SSC offers its notices to choose from", (await page.getByRole("group", { name: "SSC notice" }).getByRole("radio").count()) > 1);
 
 await page.getByRole("button", { name: /^Make all files/ }).click();
 await page.getByRole("heading", { name: /^Your files/ }).waitFor({ timeout: 120_000 });

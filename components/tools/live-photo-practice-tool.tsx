@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
-import { FieldLabel, inputClass } from "@/components/controls/fields";
+import { Segmented } from "@/components/controls/fields";
+import { NoticeChoice } from "@/components/controls/notice-choice";
 import { track } from "@/lib/analytics";
 import type { Finding } from "@/lib/checker/check";
 import { assessFrame, faceBox, type FaceFound } from "@/lib/checker/live";
@@ -16,6 +17,8 @@ const TOOL: ToolId = "live-photo-practice";
 
 export interface LiveExam {
   id: string;
+  /** The exam body, e.g. "SSC"; notices are grouped under it. */
+  app: string;
   /** Full notice name, shown under the dropdown. */
   name: string;
   /** Short name for the dropdown option. */
@@ -46,9 +49,10 @@ const CAMERA_ERRORS: Record<string, string> = {
 export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
   useToolOpen(TOOL);
   const router = useRouter();
-  const examId = useId();
+  const apps = [...new Set(exams.map((e) => e.app))];
   const [examChoice, setExamChoice] = useState(exams[0]?.id ?? "");
   const exam = exams.find((e) => e.id === examChoice) ?? exams[0];
+  const notices = exams.filter((e) => e.app === exam?.app);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -263,15 +267,19 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
               <h2 id="live-rules" className="sr-only">
                 Official live photo rules
               </h2>
-              <FieldLabel htmlFor={examId}>Practising for</FieldLabel>
-              <select id={examId} value={exam?.id} onChange={(e) => setExamChoice(e.target.value)} className={`${inputClass} mt-1.5 block w-full min-w-0 truncate`}>
-                {exams.map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.label}
-                  </option>
-                ))}
-              </select>
-              {exam && exam.label !== exam.name ? <p className="mt-1.5 text-xs text-muted">{exam.name}</p> : null}
+              <div className="space-y-3">
+                <Segmented<string>
+                  legend="Practising for"
+                  value={exam?.app ?? ""}
+                  onChange={(app) => setExamChoice(exams.find((e) => e.app === app)?.id ?? "")}
+                  options={apps.map((a) => ({ value: a, label: a }))}
+                />
+                {notices.length > 1 && exam ? (
+                  <NoticeChoice legend={`${exam.app} notice`} options={notices} value={exam.id} onChange={setExamChoice} />
+                ) : exam && exam.label !== exam.name ? (
+                  <p className="text-xs text-muted">{exam.name}</p>
+                ) : null}
+              </div>
               {exam ? (
                 <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-soft">
                   {exam.rules.map((r) => (

@@ -127,10 +127,13 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
   check("the practice photo downloads as a JPG", download.suggestedFilename() === "practice-photo.jpg" && bytes[0] === 0xff && bytes[1] === 0xd8, `${bytes.length} bytes`);
 
   // Short notice names in the dropdown (an open list is as wide as its longest option); the full name sits below.
-  const options = await page.getByLabel("Practising for").locator("option").allInnerTexts();
-  check("live: dropdown options are short", options.every((o) => o.length <= 60), `longest ${Math.max(...options.map((o) => o.length))} chars`);
-  await page.getByLabel("Practising for").selectOption({ label: "AFCAT 01/2027" });
-  check("live: the full notice name is shown under the dropdown", (await page.locator("section[aria-labelledby='live-rules']").innerText()).includes("NCC Special Entry"));
+  // Exam buttons, then that exam's notices as choices (no dropdown list that can run off a narrow screen).
+  await page.getByText("RRB", { exact: true }).click();
+  const rrb = page.getByRole("group", { name: "RRB notice" }).getByRole("radio");
+  check("live: picking RRB lists its notices as choices", (await rrb.count()) === 4);
+  await page.getByText("AFCAT", { exact: true }).click();
+  const rules = await page.locator("section[aria-labelledby='live-rules']").innerText();
+  check("live: AFCAT shows its full notice name and its rule", rules.includes("NCC Special Entry") && rules.includes("live image"));
 
   await page.getByRole("button", { name: "Use it in the all-exam kit" }).click();
   await page.waitForURL(/\/tools\/all-exam-photo-signature$/);
@@ -138,6 +141,20 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
   check("the practice photo opens in the all-exam kit", true);
   const tracks = await page.evaluate(() => document.querySelectorAll("video").length);
   check("the camera is released after leaving", tracks === 0);
+}
+
+// Narrow screens: nothing on the live page runs past the edge, with the longest notice list shown.
+for (const width of [320, 360, 390]) {
+  const ctx = await browser.newContext({ viewport: { width, height: 800 } });
+  const p = await ctx.newPage();
+  await p.goto(BASE + "/tools/live-photo-practice", { waitUntil: "networkidle" });
+  await p.getByText("SSC", { exact: true }).click();
+  const past = await p.evaluate(() =>
+    [...document.querySelectorAll("#prepare *")].filter((el) => el.getBoundingClientRect().right > window.innerWidth + 0.5).length +
+    (document.documentElement.scrollWidth > window.innerWidth ? 1 : 0),
+  );
+  check(`live, ${width}px: nothing runs past the screen edge`, past === 0, `${past} elements`);
+  await ctx.close();
 }
 
 // A camera with a striped (busy) background: "Take practice photo" warns first, and the photo then scrolls into view.
