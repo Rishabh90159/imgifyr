@@ -13,7 +13,7 @@ import { track } from "@/lib/analytics";
 import { handOffFiles } from "@/lib/handoff";
 import { toImageToolError, type ImageToolError } from "@/lib/image-processing/errors";
 import { RASTER_INPUT_FORMATS } from "@/lib/image-processing/formats";
-import { deriveCrop, KIT_GROUPS, specAspect, type KitExam, type KitSet } from "@/lib/requirements/kit";
+import { deriveCrop, KIT_GROUPS, shortNoticeName, specAspect, type KitExam, type KitSet } from "@/lib/requirements/kit";
 import { formatKbRange, type ImageSpec } from "@/lib/requirements/types";
 import type { ToolId } from "@/lib/tools/registry";
 import { formatBytes } from "@/lib/utils/format";
@@ -267,8 +267,8 @@ export function ExamKitTool({ exams }: { exams: KitExam[] }) {
                             className={`${inputClass} block w-full min-w-0 max-w-full truncate text-sm`}
                           >
                             {exam.sets.map((s) => (
-                              <option key={s.id} value={s.id}>
-                                {s.name}
+                              <option key={s.id} value={s.id} title={s.name}>
+                                {shortNoticeName(s.name)}
                               </option>
                             ))}
                           </select>

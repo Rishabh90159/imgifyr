@@ -16,7 +16,10 @@ const TOOL: ToolId = "live-photo-practice";
 
 export interface LiveExam {
   id: string;
+  /** Full notice name, shown under the dropdown. */
   name: string;
+  /** Short name for the dropdown option. */
+  label: string;
   rules: string[];
 }
 
@@ -56,6 +59,9 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
   const [hasDetector, setHasDetector] = useState(false);
   const [aspect, setAspect] = useState(4 / 3);
   const [shot, setShot] = useState<{ blob: Blob; url: string; findings: Finding[] } | null>(null);
+  /** Checks that weren't passing when "Take practice photo" was pressed; the photo waits for a choice. */
+  const [pending, setPending] = useState<Finding[] | null>(null);
+  const shotRef = useRef<HTMLElement>(null);
 
   const stop = useCallback(() => {
     streamRef.current?.getTracks().forEach((t) => t.stop());
@@ -67,6 +73,13 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
 
   useEffect(() => stop, [stop]);
   useEffect(() => () => (shot ? URL.revokeObjectURL(shot.url) : undefined), [shot]);
+
+  // A new practice photo appears below the camera: bring it into view and move focus to its heading.
+  useEffect(() => {
+    if (!shot || !shotRef.current) return;
+    shotRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    shotRef.current.querySelector("h2")?.focus({ preventScroll: true });
+  }, [shot]);
 
   const start = async () => {
     setError(null);
@@ -130,7 +143,15 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
     return () => window.clearInterval(timer);
   }, [running]);
 
+  /** Takes the photo now if every check passes; otherwise lists what isn't right yet and waits for a choice. */
+  const requestCapture = () => {
+    const problems = findings.filter((f) => f.verdict !== "pass");
+    if (problems.length) setPending(problems);
+    else capture();
+  };
+
   const capture = () => {
+    setPending(null);
     const video = videoRef.current;
     if (!video || !video.videoWidth) return;
     const canvas = document.createElement("canvas");
@@ -176,13 +197,32 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
           </div>
           {running ? (
             <div className="flex flex-wrap gap-3">
-              <button type="button" className={buttonClass("primary")} onClick={capture}>
+              <button type="button" className={buttonClass("primary")} onClick={requestCapture}>
                 Take practice photo
               </button>
               <button type="button" className={buttonClass("secondary")} onClick={stop}>
                 Stop camera
               </button>
             </div>
+          ) : null}
+          {pending && running ? (
+            <Alert tone="warning" title="Not quite ready yet">
+              <ul className="list-disc space-y-0.5 pl-4">
+                {pending.map((f) => (
+                  <li key={f.id}>
+                    <strong>{f.label}:</strong> {f.detail}
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-2 flex flex-wrap gap-3">
+                <button type="button" className={buttonClass("secondary")} onClick={() => setPending(null)}>
+                  Keep adjusting
+                </button>
+                <button type="button" className={buttonClass("secondary")} onClick={capture}>
+                  Take it anyway
+                </button>
+              </span>
+            </Alert>
           ) : null}
           {error ? (
             <Alert tone="error" title="Camera not available">
@@ -227,10 +267,11 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
               <select id={examId} value={exam?.id} onChange={(e) => setExamChoice(e.target.value)} className={`${inputClass} mt-1.5 block w-full min-w-0 truncate`}>
                 {exams.map((e) => (
                   <option key={e.id} value={e.id}>
-                    {e.name}
+                    {e.label}
                   </option>
                 ))}
               </select>
+              {exam && exam.label !== exam.name ? <p className="mt-1.5 text-xs text-muted">{exam.name}</p> : null}
               {exam ? (
                 <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink-soft">
                   {exam.rules.map((r) => (
@@ -244,8 +285,8 @@ export function LivePhotoPracticeTool({ exams }: { exams: LiveExam[] }) {
       </div>
 
       {shot ? (
-        <section aria-labelledby="practice-shot" className="space-y-3 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
-          <h2 id="practice-shot" className="text-lg font-bold text-ink">
+        <section ref={shotRef} aria-labelledby="practice-shot" className="scroll-mt-4 space-y-3 rounded-lg border border-line bg-canvas p-4 shadow-sm sm:p-5">
+          <h2 id="practice-shot" tabIndex={-1} className="text-lg font-bold text-ink outline-none">
             Your practice photo
           </h2>
           <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">

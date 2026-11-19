@@ -126,12 +126,64 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
   const bytes = fs.readFileSync(await download.path());
   check("the practice photo downloads as a JPG", download.suggestedFilename() === "practice-photo.jpg" && bytes[0] === 0xff && bytes[1] === 0xd8, `${bytes.length} bytes`);
 
+  // Short notice names in the dropdown (an open list is as wide as its longest option); the full name sits below.
+  const options = await page.getByLabel("Practising for").locator("option").allInnerTexts();
+  check("live: dropdown options are short", options.every((o) => o.length <= 60), `longest ${Math.max(...options.map((o) => o.length))} chars`);
+  await page.getByLabel("Practising for").selectOption({ label: "AFCAT 01/2027" });
+  check("live: the full notice name is shown under the dropdown", (await page.locator("section[aria-labelledby='live-rules']").innerText()).includes("NCC Special Entry"));
+
   await page.getByRole("button", { name: "Use it in the all-exam kit" }).click();
   await page.waitForURL(/\/tools\/all-exam-photo-signature$/);
   await page.locator('section[aria-label="1. Your photo"]').getByRole("button", { name: "Change" }).waitFor({ timeout: 30_000 });
   check("the practice photo opens in the all-exam kit", true);
   const tracks = await page.evaluate(() => document.querySelectorAll("video").length);
   check("the camera is released after leaving", tracks === 0);
+}
+
+// A camera with a striped (busy) background: "Take practice photo" warns first, and the photo then scrolls into view.
+{
+  const page = await context.newPage();
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    navigator.mediaDevices.getUserMedia = async () => {
+      const c = document.createElement("canvas");
+      c.width = 640;
+      c.height = 480;
+      const ctx = c.getContext("2d");
+      const draw = () => {
+        for (let x = 0; x < 640; x += 16) {
+          ctx.fillStyle = (x / 16) % 2 ? "#f5f5f5" : "#202020";
+          ctx.fillRect(x, 0, 16, 480);
+        }
+        ctx.fillStyle = "#c08060";
+        ctx.beginPath();
+        ctx.ellipse(320, 200, 90, 120, 0, 0, Math.PI * 2);
+        ctx.fill();
+        requestAnimationFrame(draw);
+      };
+      draw();
+      return c.captureStream(15);
+    };
+  });
+  await page.setViewportSize({ width: 1280, height: 700 });
+  await page.goto(BASE + "/tools/live-photo-practice", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Start camera" }).click();
+  await page.getByRole("list", { name: "Live check results" }).getByText("The background is busy").waitFor({ timeout: 30_000 });
+  await page.getByRole("button", { name: "Take practice photo" }).click();
+  const warning = page.getByRole("status").filter({ hasText: "Not quite ready yet" });
+  await warning.waitFor({ timeout: 5_000 });
+  check("live: a failing check warns before the photo is taken", (await warning.innerText()).includes("background is busy") && (await page.getByRole("heading", { name: "Your practice photo" }).count()) === 0);
+  await page.getByRole("button", { name: "Keep adjusting" }).click();
+  check("live: Keep adjusting closes the warning without a photo", (await warning.count()) === 0 && (await page.getByRole("heading", { name: "Your practice photo" }).count()) === 0);
+  await page.getByRole("button", { name: "Take practice photo" }).click();
+  await page.getByRole("button", { name: "Take it anyway" }).click();
+  const heading = page.getByRole("heading", { name: "Your practice photo" });
+  await heading.waitFor({ timeout: 15_000 });
+  await page.waitForTimeout(1200);
+  const top = await heading.evaluate((h) => h.getBoundingClientRect().top);
+  check("live: the photo scrolls into view below the camera", top >= 0 && top < 700, `heading at ${Math.round(top)} px`);
+  check("live: focus moves to the photo", await heading.evaluate((h) => document.activeElement === h));
+  await page.close();
 }
 
 check("no uploads or third-party requests", offending.length === 0, offending.slice(0, 3).join(", "));

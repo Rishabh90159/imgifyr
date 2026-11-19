@@ -14,7 +14,7 @@ import { readImageDpi } from "@/lib/image-processing/dpi";
 import { RASTER_INPUT_FORMATS } from "@/lib/image-processing/formats";
 import { readJpegInfo } from "@/lib/image-processing/jpeg-info";
 import { detectFormat, readDimensions } from "@/lib/image-processing/sniff";
-import { KIT_GROUPS, type KitExam } from "@/lib/requirements/kit";
+import { KIT_GROUPS, shortNoticeName, type KitExam } from "@/lib/requirements/kit";
 import type { ToolId } from "@/lib/tools/registry";
 import { useToolOpen } from "./hooks";
 
@@ -176,7 +176,7 @@ export function PhotoCheckerTool({ exams }: { exams: KitExam[] }) {
           <select id={noticeId} value={set?.id} onChange={(e) => setNoticeChoice(e.target.value)} className={`${inputClass} mt-1.5 block w-full min-w-0 truncate`}>
             {exam.sets.map((s) => (
               <option key={s.id} value={s.id}>
-                {s.name}
+                {shortNoticeName(s.name)}
               </option>
             ))}
           </select>

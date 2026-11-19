@@ -66,3 +66,15 @@ describe("kit data", () => {
     expect(specAspect({ kind: "photo", rules: ["x"] })).toBeNull();
   });
 });
+
+describe("shortNoticeName", () => {
+  it("keeps dropdown labels short and recognisable", async () => {
+    const { shortNoticeName } = await import("@/lib/requirements/kit");
+    expect(shortNoticeName("AFCAT 01/2027: Flying, Ground Duty (Technical and Non-Technical), NCC Special Entry and GATE score entry")).toBe("AFCAT 01/2027");
+    expect(shortNoticeName("Combined Higher Secondary (10+2) Level Examination, 2026")).toBe("Combined Higher Secondary (10+2) Level Exam, 2026");
+    expect(shortNoticeName("NTPC Under Graduate Level (CEN 07/2026)")).toBe("NTPC Under Graduate Level (CEN 07/2026)");
+    const long = shortNoticeName("CRP PO/MT-XVI (Probationary Officers / Management Trainees, vacancies 2027-28)");
+    expect(long.length).toBeLessThanOrEqual(50);
+    expect(long.endsWith("…")).toBe(true);
+  });
+});
