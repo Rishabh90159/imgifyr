@@ -4,7 +4,7 @@ import { useEffect, useId, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components/controls/alert";
 import { buttonClass } from "@/components/controls/button";
-import { FieldLabel, inputClass, Segmented } from "@/components/controls/fields";
+import { Segmented } from "@/components/controls/fields";
 import { NoticeChoice } from "@/components/controls/notice-choice";
 import { ImageDropzone } from "@/components/image-uploader/image-dropzone";
 import { track } from "@/lib/analytics";
@@ -143,33 +143,34 @@ export function PhotoCheckerTool({ exams }: { exams: KitExam[] }) {
     />
   );
 
+  const pickExam = (id: string) => {
+    setExamChoice(id);
+    setNoticeChoice("");
+  };
+
   const examPicker = (
     <div className="space-y-3">
-      <div>
-        <FieldLabel htmlFor={examId}>Check against</FieldLabel>
-        <select
-          id={examId}
-          value={examChoice}
-          onChange={(e) => {
-            setExamChoice(e.target.value);
-            setNoticeChoice("");
-          }}
-          className={`${inputClass} mt-1.5 block w-full min-w-0 truncate`}
-        >
-          <option value="">Any form (general checks)</option>
+      {/* Buttons, not a <select>: an open list of 23 exams covered the page on phones and desktops alike. */}
+      <fieldset className="min-w-0">
+        <legend className="text-sm font-medium text-ink">Check against</legend>
+        <div className="mt-2 space-y-3">
+          <div className="flex flex-wrap gap-2">
+            <ExamChip name={examId} value="" label="Any form (general checks)" checked={examChoice === ""} onPick={pickExam} />
+          </div>
           {KIT_GROUPS.map((group) => (
-            <optgroup key={group} label={group}>
-              {exams
-                .filter((e) => e.group === group)
-                .map((e) => (
-                  <option key={e.id} value={e.id}>
-                    {e.name}
-                  </option>
-                ))}
-            </optgroup>
+            <div key={group}>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted">{group}</p>
+              <div className="mt-1.5 flex flex-wrap gap-2">
+                {exams
+                  .filter((e) => e.group === group)
+                  .map((e) => (
+                    <ExamChip key={e.id} name={examId} value={e.id} label={e.name} checked={examChoice === e.id} onPick={pickExam} />
+                  ))}
+              </div>
+            </div>
           ))}
-        </select>
-      </div>
+        </div>
+      </fieldset>
       {exam && exam.sets.length > 1 ? (
         <NoticeChoice
           legend="Notice"
@@ -249,5 +250,19 @@ export function PhotoCheckerTool({ exams }: { exams: KitExam[] }) {
         </Alert>
       </section>
     </div>
+  );
+}
+
+/** One exam as a compact radio "chip"; native radios keep keyboard and screen-reader support. */
+function ExamChip({ name, value, label, checked, onPick }: { name: string; value: string; label: string; checked: boolean; onPick: (id: string) => void }) {
+  return (
+    <label
+      className={`inline-flex min-h-10 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+        checked ? "border-accent bg-accent-soft text-accent" : "border-line bg-canvas text-ink-soft hover:bg-surface"
+      }`}
+    >
+      <input type="radio" name={name} value={value} checked={checked} onChange={() => onPick(value)} className="sr-only" />
+      {label}
+    </label>
   );
 }

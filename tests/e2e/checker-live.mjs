@@ -56,7 +56,7 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
 
 {
   const page = await open("/tools/exam-photo-checker");
-  await page.getByLabel("Check against").selectOption({ label: "PAN card" });
+  await page.getByText("PAN card", { exact: true }).click();
   await page.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "portrait.jpg"));
   await page.getByRole("heading", { name: /problem|Looks OK|No problems/ }).waitFor({ timeout: 30_000 });
   const rows = await results_(page);
@@ -66,12 +66,12 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
   check("photo checks include light, background and sharpness", ["Light", "Background", "Sharpness"].every((l) => rows.some((r) => r.includes(l))));
 
   // Switching the form re-checks the same file.
-  await page.getByLabel("Check against").selectOption({ label: "Any form (general checks)" });
+  await page.getByText("Any form (general checks)", { exact: true }).click();
   const general = await results_(page);
   check("general check: no pixel or KB failures without a form", !general.some((r) => r.startsWith("✗")), general.map((r) => r.split("\n")[0].slice(0, 2)).join(""));
 
   // Fix it hands the photo to the PAN page.
-  await page.getByLabel("Check against").selectOption({ label: "PAN card" });
+  await page.getByText("PAN card", { exact: true }).click();
   await page.getByRole("listitem").filter({ hasText: "Pixel size" }).getByRole("button", { name: "Fix it" }).click();
   await page.waitForURL(/\/tools\/pan-card-photo$/);
   await page.getByLabel("Photo crop area").first().waitFor({ timeout: 30_000 });
@@ -101,6 +101,28 @@ const results_ = (page) => page.getByRole("list", { name: "Check results" }).loc
   await page.getByRole("heading", { name: /problem|Looks OK|No problems/ }).waitFor({ timeout: 30_000 });
   const rows = await results_(page);
   check("signature checks look at the ink and the paper", rows.some((r) => /Size in the image|Signature/.test(r)) && rows.some((r) => r.includes("Paper")), rows.length + " rows");
+}
+
+// Exam buttons instead of a long dropdown: nothing covers the page or runs past the edge, before or after a photo.
+for (const width of [320, 390, 768, 1280]) {
+  const ctx = await browser.newContext({ viewport: { width, height: 800 } });
+  const p = await ctx.newPage();
+  await p.goto(BASE + "/tools/exam-photo-checker", { waitUntil: "networkidle" });
+  const past = () =>
+    p.evaluate(
+      () =>
+        [...document.querySelectorAll("#prepare *")].filter((el) => el.getBoundingClientRect().right > window.innerWidth + 0.5).length +
+        (document.documentElement.scrollWidth > window.innerWidth ? 1 : 0),
+    );
+  const before = await past();
+  await p.getByText("PAN card", { exact: true }).click();
+  await p.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "portrait.jpg"));
+  await p.locator("#check-results").waitFor({ timeout: 30_000 });
+  await p.getByText("SSC", { exact: true }).click();
+  const after = await past();
+  const selects = await p.locator("#prepare select").count();
+  check(`checker, ${width}px: exam buttons, no dropdown, nothing past the edge`, before === 0 && after === 0 && selects === 0, `${before}/${after} elements, ${selects} selects`);
+  await ctx.close();
 }
 
 // ---------------------------------------------------------------- Live photo practice
