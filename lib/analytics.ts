@@ -44,7 +44,10 @@ export type AnalyticsEvent =
   | "name_date_added"
   | "circle_crop_completed"
   | "signature_created"
-  | "exam_kit_created";
+  | "exam_kit_created"
+  | "photo_checked"
+  | "live_practice_started"
+  | "live_practice_captured";
 
 export interface AnalyticsProps {
   tool?: string;

@@ -390,6 +390,20 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/ssc-photo", "/tools/rrb-photo"],
   },
   {
+    path: "/tools/exam-photo-checker",
+    primary: "exam photo checker",
+    secondary: ["why is my photo rejected", "photo rejected in ssc form", "signature checker", "photo checker for exam form", "photo rejected in exam form"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/all-exam-photo-signature", "/tools/live-photo-practice"],
+  },
+  {
+    path: "/tools/live-photo-practice",
+    primary: "live photo capture",
+    secondary: ["live photo capture practice", "live photo capture rules", "live photo capture ssc", "live photo practice", "ssc live photo glasses"],
+    intent: "application",
+    supportedBy: ["/tools/ssc-photo", "/tools/rrb-photo", "/tools/up-police-photo"],
+  },
+  {
     path: "/tools/pan-card-photo",
     primary: "pan card photo size",
     secondary: ["pan card signature size", "pan card photo size in kb", "pan card photo resize", "nsdl pan photo size", "pan card photo and signature size"],

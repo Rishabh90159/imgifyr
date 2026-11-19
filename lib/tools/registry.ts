@@ -81,6 +81,8 @@ export type ToolId =
   | "voter-id-photo"
   | "pan-card-photo"
   | "all-exam-photo-signature"
+  | "exam-photo-checker"
+  | "live-photo-practice"
   | "merge-photo-and-signature"
   | "aadhaar-front-and-back"
   | "add-name-and-date-on-photo"
@@ -989,6 +991,28 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["ssc-photo", "rrb-photo", "ibps-photo", "neet-photo", "pan-card-photo", "signature-maker"],
     updated: "2026-11-18",
   },
+  "exam-photo-checker": {
+    id: "exam-photo-checker",
+    path: "/tools/exam-photo-checker",
+    name: "Exam Photo Checker",
+    navLabel: "Check my photo",
+    summary: "Check a photo or signature before uploading: real file type, pixels, KB, DPI, light, background and blur.",
+    linkText: "Check if your photo will be rejected",
+    category: "application",
+    related: ["all-exam-photo-signature", "live-photo-practice", "white-background-photo", "image-to-jpg", "signature-resizer", "resize-image-to-kb"],
+    updated: "2026-11-19",
+  },
+  "live-photo-practice": {
+    id: "live-photo-practice",
+    path: "/tools/live-photo-practice",
+    name: "Live Photo Capture Practice",
+    navLabel: "Live photo practice",
+    summary: "Practise the live photo for SSC, RRB, UP Police and AFCAT: your camera checks light, background and framing.",
+    linkText: "Practise the live photo capture",
+    category: "application",
+    related: ["exam-photo-checker", "ssc-photo", "rrb-photo", "up-police-photo", "all-exam-photo-signature", "white-background-photo"],
+    updated: "2026-11-19",
+  },
   "pan-card-photo": {
     id: "pan-card-photo",
     path: "/tools/pan-card-photo",
@@ -1223,6 +1247,8 @@ export const toolOrder: ToolId[] = [
   "30kb-signature",
   "mb-to-kb-converter",
   "all-exam-photo-signature",
+  "exam-photo-checker",
+  "live-photo-practice",
   "ssc-photo",
   "upsc-photo",
   "ibps-photo",
