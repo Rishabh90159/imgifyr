@@ -84,6 +84,7 @@ export type ToolId =
   | "driving-licence-photo"
   | "voter-id-photo"
   | "pan-card-photo"
+  | "india-visa-photo"
   | "all-exam-photo-signature"
   | "exam-photo-checker"
   | "live-photo-practice"
@@ -1065,6 +1066,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["exam-photo-checker", "ssc-photo", "rrb-photo", "up-police-photo", "all-exam-photo-signature", "white-background-photo"],
     updated: "2026-11-19",
   },
+  "india-visa-photo": {
+    id: "india-visa-photo",
+    path: "/tools/india-visa-photo",
+    name: "Indian Visa Photo",
+    navLabel: "Indian visa photo",
+    summary: "The Indian visa photo: a square JPEG of 350 × 350 to 1000 × 1000 pixels, 10–300 KB, from the official visa site.",
+    linkText: "Prepare your Indian visa photo",
+    category: "application",
+    related: ["passport-photo", "white-background-photo", "600x600-photo", "pan-card-photo", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-20",
+  },
   "pan-card-photo": {
     id: "pan-card-photo",
     path: "/tools/pan-card-photo",
@@ -1328,6 +1340,7 @@ export const toolOrder: ToolId[] = [
   "driving-licence-photo",
   "voter-id-photo",
   "pan-card-photo",
+  "india-visa-photo",
   "passport-photo",
 ];
 

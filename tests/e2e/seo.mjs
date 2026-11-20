@@ -82,6 +82,7 @@ const toolPages = [
   "/tools/driving-licence-photo",
   "/tools/voter-id-photo",
   "/tools/pan-card-photo",
+  "/tools/india-visa-photo",
   "/tools/all-exam-photo-signature",
   "/tools/exam-photo-checker",
   "/tools/live-photo-practice",
@@ -163,8 +164,8 @@ const overlapPages = [
 ];
 const kbPages = ["/tools/10kb-photo", "/tools/20kb-photo", "/tools/30kb-photo", "/tools/50kb-photo", "/tools/100kb-photo", "/tools/200kb-photo", "/tools/500kb-photo", "/tools/resize-image-to-kb"];
 const HUB = "/tools/application-photos";
-const applicationPages = ["/tools/ssc-photo", "/tools/upsc-photo", "/tools/ibps-photo", "/tools/sbi-photo", "/tools/neet-photo", "/tools/rrb-photo", "/tools/upsssc-photo", "/tools/dsssb-photo", "/tools/jee-main-photo", "/tools/upessc-photo", "/tools/rrc-apprentice-photo", "/tools/indian-bank-photo", "/tools/kea-photo", "/tools/afcat-photo", "/tools/cuet-photo", "/tools/ctet-photo", "/tools/up-police-photo", "/tools/india-post-gds-photo", "/tools/mht-cet-photo", "/tools/kcet-photo", "/tools/driving-licence-photo", "/tools/voter-id-photo", "/tools/pan-card-photo", "/tools/passport-photo", HUB];
-const OFFICIAL = /href="https:\/\/(www\.ibps\.in|sbi\.bank\.in|ssc\.gov\.in|neet\.nta\.nic\.in|upsconline\.nic\.in|upsc\.gov\.in|www\.passportindia\.gov\.in|www\.gov\.uk|www\.canada\.ca|rrb\.indianrailways\.gov\.in|upsssc\.gov\.in|dsssb\.delhi\.gov\.in|cdnbbsr\.s3waas\.gov\.in|apply\.upessc\.org|www\.rrccr\.com|indianbank\.bank\.in|cetonline\.karnataka\.gov\.in|sarathi\.parivahan\.gov\.in|voters\.eci\.gov\.in|afcat\.edcil\.co\.in|cdn\.s3waas\.gov\.in|uppbpb\.gov\.in|indiapost\.gov\.in|cetcell\.mahacet\.org|www\.rrbcdg\.gov\.in|tin\.tin\.proteantech\.in)\//;
+const applicationPages = ["/tools/ssc-photo", "/tools/upsc-photo", "/tools/ibps-photo", "/tools/sbi-photo", "/tools/neet-photo", "/tools/rrb-photo", "/tools/upsssc-photo", "/tools/dsssb-photo", "/tools/jee-main-photo", "/tools/upessc-photo", "/tools/rrc-apprentice-photo", "/tools/indian-bank-photo", "/tools/kea-photo", "/tools/afcat-photo", "/tools/cuet-photo", "/tools/ctet-photo", "/tools/up-police-photo", "/tools/india-post-gds-photo", "/tools/mht-cet-photo", "/tools/kcet-photo", "/tools/driving-licence-photo", "/tools/voter-id-photo", "/tools/pan-card-photo", "/tools/india-visa-photo", "/tools/passport-photo", HUB];
+const OFFICIAL = /href="https:\/\/(www\.ibps\.in|sbi\.bank\.in|ssc\.gov\.in|neet\.nta\.nic\.in|upsconline\.nic\.in|upsc\.gov\.in|www\.passportindia\.gov\.in|www\.gov\.uk|www\.canada\.ca|rrb\.indianrailways\.gov\.in|upsssc\.gov\.in|dsssb\.delhi\.gov\.in|cdnbbsr\.s3waas\.gov\.in|apply\.upessc\.org|www\.rrccr\.com|indianbank\.bank\.in|cetonline\.karnataka\.gov\.in|sarathi\.parivahan\.gov\.in|voters\.eci\.gov\.in|afcat\.edcil\.co\.in|cdn\.s3waas\.gov\.in|uppbpb\.gov\.in|indiapost\.gov\.in|cetcell\.mahacet\.org|www\.rrbcdg\.gov\.in|tin\.tin\.proteantech\.in|indianvisaonline\.gov\.in)\//;
 const DISCLAIMER = "Application requirements can change. Always verify the final image against the latest official";
 const PDF_HUB = "/tools/pdf-tools";
 const pdfPages = ["/tools/word-to-pdf", "/tools/pdf-to-word", "/tools/merge-pdf", "/tools/compress-pdf", "/tools/compress-pdf-to-100kb", "/tools/compress-pdf-to-200kb", "/tools/compress-pdf-to-500kb", "/tools/compress-pdf-to-1mb", "/tools/pdf-to-jpg", "/tools/pdf-to-png"];
@@ -282,7 +283,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 85 && worst.score < 0.15,
+    entries.length === 86 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }

@@ -404,6 +404,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/ssc-photo", "/tools/rrb-photo", "/tools/up-police-photo"],
   },
   {
+    path: "/tools/india-visa-photo",
+    primary: "indian visa photo size",
+    secondary: ["india visa photo requirements", "india e visa photo", "indian visa photo resize", "india visa photo size in kb", "indian visa photo 350x350"],
+    intent: "application",
+    supportedBy: ["/tools/passport-photo", "/tools/application-photos", "/tools/600x600-photo"],
+  },
+  {
     path: "/tools/pan-card-photo",
     primary: "pan card photo size",
     secondary: ["pan card signature size", "pan card photo size in kb", "pan card photo resize", "nsdl pan photo size", "pan card photo and signature size"],

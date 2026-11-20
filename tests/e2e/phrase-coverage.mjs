@@ -32,6 +32,7 @@ const SEARCHED = {
   "/tools/exam-photo-checker": ["exam photo checker", "why is my photo rejected", "photo rejected in ssc form", "signature checker", "photo rejected in exam form"],
   "/tools/live-photo-practice": ["live photo capture", "live photo capture practice", "ssc live photo", "live photo practice"],
   "/tools/all-exam-photo-signature": ["all exam photo resizer", "photo and signature resizer for all exams", "photo resizer for all exams", "all exam photo and signature resizer"],
+  "/tools/india-visa-photo": ["indian visa photo size", "india visa photo requirements", "india e visa photo", "indian visa photo resize"],
   "/tools/pan-card-photo": ["pan card photo size", "pan card signature size", "pan card photo size in kb", "nsdl pan photo size", "pan card photo resize"],
   "/tools/whatsapp-dp-without-crop": ["whatsapp dp without crop", "full dp for whatsapp", "whatsapp dp maker", "whatsapp dp size converter"],
 };
