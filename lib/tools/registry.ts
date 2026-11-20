@@ -64,6 +64,7 @@ export type ToolId =
   | "compress-pdf-to-200kb"
   | "compress-pdf-to-500kb"
   | "compress-pdf-to-1mb"
+  | "document-scanner"
   | "pdf-to-jpg"
   | "image-to-jpg"
   | "rrb-photo"
@@ -857,6 +858,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
     updated: "2026-11-20",
   },
+  "document-scanner": {
+    id: "document-scanner",
+    path: "/tools/document-scanner",
+    name: "Document Scanner",
+    navLabel: "Scan to PDF",
+    summary: "Turn phone photos of documents into a straight, clean scanned PDF, with an optional size limit such as 200 KB.",
+    linkText: "Scan a document to PDF with your phone",
+    category: "pdf",
+    related: ["compress-pdf-to-200kb", "photo-to-pdf", "compress-pdf", "merge-pdf", "pdf-to-jpg", "white-background-photo"],
+    updated: "2026-11-20",
+  },
   "pdf-to-jpg": {
     id: "pdf-to-jpg",
     path: "/tools/pdf-to-jpg",
@@ -1297,6 +1309,7 @@ export const toolOrder: ToolId[] = [
   "compress-pdf-to-200kb",
   "compress-pdf-to-500kb",
   "compress-pdf-to-1mb",
+  "document-scanner",
   "pdf-to-jpg",
   "pdf-to-png",
   "10kb-photo",

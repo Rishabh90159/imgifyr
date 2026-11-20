@@ -656,6 +656,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
   },
   {
+    path: "/tools/document-scanner",
+    primary: "document scanner online",
+    secondary: ["scan document to pdf", "camscanner alternative", "online document scanner free", "phone photo to scanned pdf", "scan certificate to pdf"],
+    intent: "tool",
+    supportedBy: ["/tools/pdf-tools", "/tools/photo-to-pdf", "/tools/compress-pdf"],
+  },
+  {
     path: "/tools/compress-pdf",
     primary: "compress pdf",
     // Google India autocomplete, 18 Oct 2026: KB targets dominate ("compress pdf to 200kb", "pdf size reducer in kb").

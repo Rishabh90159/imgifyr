@@ -1,0 +1,141 @@
+import { describe, expect, it } from "vitest";
+import { enhance, rotate } from "@/lib/scanner/enhance";
+import { detectSheet, flatSize, fullQuad, rectToQuad, warp, type Quad, type Raster } from "@/lib/scanner/geometry";
+
+function raster(width: number, height: number, paint: (x: number, y: number) => number | [number, number, number]): Raster {
+  const data = new Uint8ClampedArray(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const v = paint(x, y);
+      const [r, g, b] = typeof v === "number" ? [v, v, v] : v;
+      const i = (y * width + x) * 4;
+      data[i] = r;
+      data[i + 1] = g;
+      data[i + 2] = b;
+      data[i + 3] = 255;
+    }
+  }
+  return { data, width, height };
+}
+
+/** Is (x, y) inside the convex quad? */
+function inside(q: Quad, x: number, y: number): boolean {
+  let sign = 0;
+  for (let i = 0; i < 4; i++) {
+    const a = q[i];
+    const b = q[(i + 1) % 4];
+    const s = Math.sign((b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x));
+    if (s === 0) continue;
+    if (sign && s !== sign) return false;
+    sign = s;
+  }
+  return true;
+}
+
+const tilted: Quad = [
+  { x: 70, y: 40 },
+  { x: 250, y: 60 },
+  { x: 235, y: 330 },
+  { x: 50, y: 310 },
+];
+const photo = raster(300, 380, (x, y) => (inside(tilted, x, y) ? [235, 230, 215] : [70, 55, 45]));
+
+describe("detectSheet", () => {
+  it("finds the corners of a tilted sheet on a dark table", () => {
+    const q = detectSheet(photo)!;
+    expect(q).not.toBeNull();
+    for (let i = 0; i < 4; i++) {
+      expect(Math.hypot(q[i].x - tilted[i].x, q[i].y - tilted[i].y)).toBeLessThan(6);
+    }
+  });
+
+  it("gives up (null) when there is no sheet edge to find", () => {
+    expect(detectSheet(raster(200, 200, () => 240))).toBeNull();
+    expect(detectSheet(raster(200, 200, (x) => (x % 7 ? 30 : 230)))).toBeNull();
+  });
+});
+
+describe("warp", () => {
+  it("maps the output rectangle's corners onto the quad", () => {
+    const H = rectToQuad(100, 200, tilted);
+    const at = (x: number, y: number) => {
+      const d = H[6] * x + H[7] * y + H[8];
+      return { x: (H[0] * x + H[1] * y + H[2]) / d, y: (H[3] * x + H[4] * y + H[5]) / d };
+    };
+    for (const [p, q] of [
+      [at(0, 0), tilted[0]],
+      [at(100, 0), tilted[1]],
+      [at(100, 200), tilted[2]],
+      [at(0, 200), tilted[3]],
+    ]) {
+      expect(p.x).toBeCloseTo(q.x, 6);
+      expect(p.y).toBeCloseTo(q.y, 6);
+    }
+  });
+
+  it("flattens the sheet so the result is all paper, no table", () => {
+    const size = flatSize(tilted, 1000);
+    const flat = warp(photo, tilted, size.width, size.height);
+    let dark = 0;
+    for (let i = 0; i < flat.data.length; i += 4) if (flat.data[i] < 150) dark++;
+    // Only the anti-aliased edge may touch the table.
+    expect(dark / (flat.width * flat.height)).toBeLessThan(0.02);
+    expect(size.height).toBeGreaterThan(size.width);
+  });
+
+  it("caps the long side", () => {
+    expect(Math.max(flatSize(fullQuad(4000, 3000), 2000).width, flatSize(fullQuad(4000, 3000), 2000).height)).toBe(2000);
+  });
+});
+
+describe("enhance", () => {
+  // Grey paper with a shadow across the right half, and a band of dark "text".
+  const page = raster(240, 320, (x, y) => {
+    const paper = x < 120 ? 190 : 120;
+    return y > 150 && y < 160 && x > 20 && x < 220 ? Math.round(paper * 0.25) : paper;
+  });
+  const at = (img: Raster, x: number, y: number) => img.data[(y * img.width + x) * 4];
+
+  it("black & white: shadowed and lit paper both become white, text black", () => {
+    const bw = enhance(page, "bw");
+    expect(at(bw, 60, 60)).toBe(255);
+    expect(at(bw, 180, 60)).toBe(255);
+    expect(at(bw, 60, 155)).toBe(0);
+    expect(at(bw, 180, 155)).toBe(0);
+  });
+
+  it("colour and grey: paper whitened, text stays clearly darker", () => {
+    for (const mode of ["color", "gray"] as const) {
+      const out = enhance(page, mode);
+      expect(at(out, 180, 60)).toBeGreaterThan(240);
+      expect(at(out, 180, 155)).toBeLessThan(80);
+    }
+  });
+
+  it("colour mode turns cream paper white but keeps a red stamp red", () => {
+    const cream = raster(160, 160, (x, y) => (x > 60 && x < 100 && y > 60 && y < 100 ? [200, 40, 40] : [230, 215, 180]));
+    const out = enhance(cream, "color");
+    const px = (x: number, y: number) => Array.from(out.data.slice((y * 160 + x) * 4, (y * 160 + x) * 4 + 3));
+    const [r, g, b] = px(20, 20);
+    expect(Math.min(r, g, b)).toBeGreaterThan(245);
+    const [sr, sg] = px(80, 80);
+    expect(sr - sg).toBeGreaterThan(80);
+  });
+
+  it("keeps colour in colour mode", () => {
+    const blueInk = raster(120, 120, (x, y) => (y > 50 && y < 60 ? [30, 40, 160] : [200, 200, 200]));
+    const out = enhance(blueInk, "color");
+    const i = (55 * 120 + 60) * 4;
+    expect(out.data[i + 2]).toBeGreaterThan(out.data[i] + 60);
+  });
+});
+
+describe("rotate", () => {
+  it("turns a page a quarter clockwise", () => {
+    const img = raster(3, 2, (x, y) => (x === 0 && y === 0 ? 10 : 200));
+    const r = rotate(img, 1);
+    expect([r.width, r.height]).toEqual([2, 3]);
+    expect(r.data[(0 * 2 + 1) * 4]).toBe(10);
+    expect(rotate(rotate(img, 1), 3).data).toEqual(img.data);
+  });
+});

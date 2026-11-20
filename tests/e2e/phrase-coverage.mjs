@@ -16,6 +16,7 @@ const SEARCHED = {
   "/tools/200kb-photo": ["resize image to 200kb", "reduce photo size to 200kb", "reduce image size to 200kb", "compress image to 200kb", "200 kb photo size"],
   "/tools/20kb-photo": ["resize image to 20kb", "reduce photo size to 20kb", "20kb photo size reducer"],
   "/tools/compress-pdf": ["pdf size reducer", "compress pdf"],
+  "/tools/document-scanner": ["document scanner online", "scan document to pdf", "camscanner alternative", "phone photo to scanned pdf", "scan a certificate to a 200 kb pdf"],
   "/tools/compress-pdf-to-100kb": ["compress pdf to 100kb", "reduce pdf size to 100kb", "pdf size reducer"],
   "/tools/compress-pdf-to-200kb": ["compress pdf to 200kb", "reduce pdf size to 200kb", "pdf size reducer to 200kb"],
   "/tools/compress-pdf-to-500kb": ["compress pdf to 500kb", "reduce pdf size to 500kb"],

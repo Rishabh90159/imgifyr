@@ -47,7 +47,8 @@ export type AnalyticsEvent =
   | "exam_kit_created"
   | "photo_checked"
   | "live_practice_started"
-  | "live_practice_captured";
+  | "live_practice_captured"
+  | "document_scanned";
 
 export interface AnalyticsProps {
   tool?: string;
