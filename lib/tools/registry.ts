@@ -60,6 +60,10 @@ export type ToolId =
   | "pdf-to-word"
   | "merge-pdf"
   | "compress-pdf"
+  | "compress-pdf-to-100kb"
+  | "compress-pdf-to-200kb"
+  | "compress-pdf-to-500kb"
+  | "compress-pdf-to-1mb"
   | "pdf-to-jpg"
   | "image-to-jpg"
   | "rrb-photo"
@@ -801,8 +805,56 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Reduce a PDF to a target size such as 100 KB, 200 KB or 500 KB for upload forms, keeping it as readable as possible.",
     linkText: "Compress a PDF to 100KB, 200KB or any size",
     category: "pdf",
-    related: ["merge-pdf", "pdf-to-jpg", "jpg-to-pdf", "resize-image-to-kb", "photo-to-pdf"],
-    updated: "2026-10-18",
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "merge-pdf", "photo-to-pdf"],
+    updated: "2026-11-20",
+  },
+  "compress-pdf-to-100kb": {
+    id: "compress-pdf-to-100kb",
+    path: "/tools/compress-pdf-to-100kb",
+    name: "Compress PDF to 100KB",
+    navLabel: "PDF to 100KB",
+    summary: "Compress a PDF to 100 KB or less for forms with a tight limit, such as single certificates.",
+    linkText: "Compress a PDF to 100KB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    updated: "2026-11-20",
+  },
+  "compress-pdf-to-200kb": {
+    id: "compress-pdf-to-200kb",
+    path: "/tools/compress-pdf-to-200kb",
+    name: "Compress PDF to 200KB",
+    navLabel: "PDF to 200KB",
+    summary: "Bring certificates, mark sheets and ID proofs down to a 200 KB upload limit.",
+    linkText: "Compress a PDF to 200KB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    updated: "2026-11-20",
+  },
+  "compress-pdf-to-500kb": {
+    id: "compress-pdf-to-500kb",
+    path: "/tools/compress-pdf-to-500kb",
+    name: "Compress PDF to 500KB",
+    navLabel: "PDF to 500KB",
+    summary: "Fit resumes, reports and multi-page documents under 500 KB.",
+    linkText: "Compress a PDF to 500KB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    updated: "2026-11-20",
+  },
+  "compress-pdf-to-1mb": {
+    id: "compress-pdf-to-1mb",
+    path: "/tools/compress-pdf-to-1mb",
+    name: "Compress PDF to 1MB",
+    navLabel: "PDF to 1MB",
+    summary: "Reduce a large PDF or phone scan to under 1 MB for portals and email.",
+    linkText: "Compress a PDF to 1MB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    updated: "2026-11-20",
   },
   "pdf-to-jpg": {
     id: "pdf-to-jpg",
@@ -1229,6 +1281,10 @@ export const toolOrder: ToolId[] = [
   "pdf-to-word",
   "merge-pdf",
   "compress-pdf",
+  "compress-pdf-to-100kb",
+  "compress-pdf-to-200kb",
+  "compress-pdf-to-500kb",
+  "compress-pdf-to-1mb",
   "pdf-to-jpg",
   "pdf-to-png",
   "10kb-photo",

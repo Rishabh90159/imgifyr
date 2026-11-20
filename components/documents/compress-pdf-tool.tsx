@@ -5,6 +5,7 @@ import { FieldLabel, inputClass, Segmented } from "@/components/controls/fields"
 import { runDocumentRequest } from "@/lib/documents/client";
 import { DocumentToolError } from "@/lib/documents/errors";
 import { assertPdfHeader, documentFileName, DOC_LIMITS } from "@/lib/documents/validate";
+import type { ToolId } from "@/lib/tools/registry";
 import { formatBytes, formatExactBytes, KB, MB } from "@/lib/utils/format";
 import { SingleFileConverter } from "./single-file-converter";
 
@@ -29,15 +30,16 @@ function parseTarget(preset: string, custom: string, unit: Unit): { bytes: numbe
   return { bytes, error: null };
 }
 
-export function CompressPdfTool() {
-  const [preset, setPreset] = useState("200");
+/** `defaultKB` starts the tool at one of the preset sizes (the "compress PDF to 100KB" pages); `tool` is the page, for analytics. */
+export function CompressPdfTool({ tool = "compress-pdf", defaultKB = 200 }: { tool?: ToolId; defaultKB?: number } = {}) {
+  const [preset, setPreset] = useState(String(PRESETS_KB.includes(defaultKB) ? defaultKB : 200));
   const [custom, setCustom] = useState("");
   const [unit, setUnit] = useState<Unit>("KB");
   const target = parseTarget(preset, custom, unit);
 
   return (
     <SingleFileConverter
-      tool="compress-pdf"
+      tool={tool}
       accept=".pdf,application/pdf"
       hint={`PDF up to ${formatBytes(DOC_LIMITS.compressMaxBytes)} and ${DOC_LIMITS.compressMaxPages} pages`}
       prompt="Drop a PDF to compress"
