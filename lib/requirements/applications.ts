@@ -855,6 +855,44 @@ const PAN_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- Indian visa
+// The visa site's "Online Visa Photo Upload Process" (VSS_IMAGE.pdf), section 2(b): JPEG, 10–300 KB, height and
+// width equal, at least 350 × 350 and at most 1000 × 1000 pixels. The tool makes the 350 × 350 minimum, which is inside
+// that range. The e-Visa page (evisa/tvoa.html) asks for a recent front-facing photograph with a white background
+// but publishes no pixel or KB limits on its public pages, so none are claimed for it.
+
+const INDIA_VISA_SETS: RequirementSet[] = [
+  {
+    id: "india-visa-online",
+    name: "Indian visa: online visa application (indianvisaonline.gov.in)",
+    photo: {
+      kind: "photo",
+      format: "JPEG",
+      widthPx: 350,
+      heightPx: 350,
+      pixelBasis: "minimum",
+      aspect: 1,
+      minKB: 10,
+      maxKB: 300,
+      rules: [
+        "Height and width must be equal (a square photo)",
+        "At least 350 × 350 pixels and at most 1000 × 1000 pixels",
+        "Taken with a digital camera or webcam, or a scanned photograph",
+      ],
+    },
+    notes: [
+      "e-Visa (e-Tourist, e-Business, e-Medical and others): the e-Visa page asks for a recent, front-facing photograph with a white background, uploaded with the passport's photo page. Its public pages state no pixel or KB limits; check the upload screen of the form.",
+    ],
+    source: {
+      title: "Online Visa Photo Upload Process (Government of India visa site)",
+      url: "https://indianvisaonline.gov.in/visa/VSS_IMAGE.pdf",
+      publisher: "Indian Visa Online, Government of India",
+      section: "2(b) Photograph parameters for the online visa registration",
+      lastVerified: "2026-11-20",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- UPSSSC
 // From 14 July 2026, One Time Registration (OTR) is compulsory for every UPSSSC exam; the photo and
 // signature are uploaded once, in the OTR. The notice states file sizes and formats, but no pixel size.
@@ -1186,6 +1224,7 @@ export const APPLICATIONS = {
   ctet: { name: "CTET", fullName: "Central Teacher Eligibility Test, conducted by CBSE", sets: CTET_SETS },
   sarathi: { name: "Driving licence", fullName: "Parivahan Sarathi (driving and learner's licence)", sets: SARATHI_SETS },
   eci: { name: "Voter ID", fullName: "Election Commission of India (voter ID / EPIC)", sets: ECI_SETS },
+  indiaVisa: { name: "Indian visa", fullName: "Indian visa online application, Government of India", sets: INDIA_VISA_SETS },
   pan: { name: "PAN card", fullName: "PAN (Permanent Account Number), Income Tax Department", sets: PAN_SETS },
   upsssc: { name: "UPSSSC", fullName: "Uttar Pradesh Subordinate Services Selection Commission", sets: UPSSSC_SETS },
   dsssb: { name: "DSSSB", fullName: "Delhi Subordinate Services Selection Board", sets: DSSSB_SETS },

@@ -44,6 +44,7 @@ const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "sarathi", tool: "driving-licence-photo" },
   { id: "eci", tool: "voter-id-photo" },
   { id: "pan", tool: "pan-card-photo" },
+  { id: "indiaVisa", tool: "india-visa-photo" },
   { id: "upsc", tool: "upsc-photo" },
 ];
 

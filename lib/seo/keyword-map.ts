@@ -404,6 +404,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/ssc-photo", "/tools/rrb-photo", "/tools/up-police-photo"],
   },
   {
+    path: "/tools/india-visa-photo",
+    primary: "indian visa photo size",
+    secondary: ["india visa photo requirements", "india e visa photo", "indian visa photo resize", "india visa photo size in kb", "indian visa photo 350x350"],
+    intent: "application",
+    supportedBy: ["/tools/passport-photo", "/tools/application-photos", "/tools/600x600-photo"],
+  },
+  {
     path: "/tools/pan-card-photo",
     primary: "pan card photo size",
     secondary: ["pan card signature size", "pan card photo size in kb", "pan card photo resize", "nsdl pan photo size", "pan card photo and signature size"],
@@ -621,10 +628,38 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/pdf-tools", "/tools/jpg-to-pdf", "/tools/photo-to-pdf", "/tools/word-to-pdf"],
   },
   {
+    path: "/tools/compress-pdf-to-100kb",
+    primary: "compress pdf to 100kb",
+    secondary: ["reduce pdf size to 100kb", "pdf size reducer 100kb", "compress pdf to 100kb on phone"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/compress-pdf-to-200kb",
+    primary: "compress pdf to 200kb",
+    secondary: ["reduce pdf size to 200kb", "pdf size reducer 200kb", "compress certificate pdf to 200kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/compress-pdf-to-500kb",
+    primary: "compress pdf to 500kb",
+    secondary: ["reduce pdf size to 500kb", "compress resume pdf to 500kb", "reduce multi page pdf size"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/compress-pdf-to-1mb",
+    primary: "compress pdf to 1mb",
+    secondary: ["reduce pdf size to 1mb", "compress pdf under 1mb", "compress pdf to 1mb for email"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
     path: "/tools/compress-pdf",
     primary: "compress pdf",
     // Google India autocomplete, 18 Oct 2026: KB targets dominate ("compress pdf to 200kb", "pdf size reducer in kb").
-    secondary: ["compress pdf to 200kb", "compress pdf to 100kb", "compress pdf to 500kb", "compress pdf to 1mb", "pdf size reducer", "reduce pdf size"],
+    secondary: ["pdf size reducer", "reduce pdf size", "compress pdf online", "pdf compressor"],
     intent: "file-size",
     supportedBy: ["/tools/pdf-tools", "/tools/merge-pdf", "/tools/pdf-to-jpg", "/tools/jpg-to-pdf"],
   },
