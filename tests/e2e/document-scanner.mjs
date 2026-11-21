@@ -92,16 +92,16 @@ await page.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
 const photo1 = await makePhoto(page, "page-1.jpg", 1);
 const photo2 = await makePhoto(page, "page-2.jpg", 2);
 
-// "Take a photo" opens the camera on phones and tablets; desktops would only get a second file picker, so it's hidden.
-check("desktop: no Take a photo button (the upload box is enough)", (await page.getByRole("button", { name: "Take a photo" }).count()) === 0);
+// Only "Choose images" for now: the direct camera button lost photos on the owner's phone, so it was removed.
+// Phones get a tip to use the camera app first; desktops see just the upload box.
+check("desktop: only the upload box, no camera button or tip", (await page.getByRole("button", { name: "Take a photo" }).count()) === 0 && (await page.getByText("camera app").count()) === 0);
 {
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await phone.newPage();
   await p.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
-  const camera = p.getByRole("button", { name: "Take a photo" });
-  await camera.waitFor({ timeout: 10_000 });
-  const input = await p.locator('input[capture="environment"]').count();
-  check("phone: Take a photo opens the back camera", (await camera.isVisible()) && input === 1);
+  await p.getByText("photograph the page with your camera app first").waitFor({ timeout: 10_000 });
+  const cameraInputs = await p.locator('input[capture]').count();
+  check("phone: no camera button, a tip to take the photo first and choose it", (await p.getByRole("button", { name: "Take a photo" }).count()) === 0 && cameraInputs === 0);
   await phone.close();
 }
 

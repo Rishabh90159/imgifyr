@@ -38,7 +38,7 @@ const faqs: FaqItem[] = [
   },
   {
     question: "My iPhone photo won't open. Why?",
-    answer: "It may be a HEIC photo. Convert it with HEIC to JPG first, or use the Take a photo button, which opens the camera directly.",
+    answer: "It may be a HEIC photo. Convert it with HEIC to JPG first, or change the camera format to Most Compatible (JPG) in your iPhone settings.",
   },
   {
     question: "Are my documents uploaded?",

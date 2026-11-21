@@ -133,12 +133,12 @@ export function DocumentScannerTool() {
   const [busy, setBusy] = useState<{ label: string; progress: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ key: string; blob: Blob; url: string; pages: number; overLimit: boolean } | null>(null);
-  const cameraRef = useRef<HTMLInputElement>(null);
-  // Desktop browsers open the file picker for a camera input, which duplicates the upload box, so it's shown on
-  // phones and tablets only. Decided after mounting, so the server-rendered page and the first render match.
-  const [hasCamera, setHasCamera] = useState(false);
+  // A direct camera button was removed (19–21 Nov 2026): on the owner's phone the photo was lost on returning from the
+  // camera. Phones get a tip to take the photo with the camera app first and choose it, which works. Decided after
+  // mounting, so the server-rendered page and the first render match.
+  const [isPhone, setIsPhone] = useState(false);
   useEffect(() => {
-    setHasCamera(window.matchMedia("(pointer: coarse)").matches && navigator.maxTouchPoints > 0);
+    setIsPhone(window.matchMedia("(pointer: coarse)").matches && navigator.maxTouchPoints > 0);
   }, []);
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
@@ -299,41 +299,15 @@ export function DocumentScannerTool() {
 
   const page = pages.find((p) => p.id === selected) ?? null;
 
-  const cameraButton = !hasCamera ? null : (
-    <>
-      <input
-        ref={cameraRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        className="sr-only"
-        tabIndex={-1}
-        aria-hidden="true"
-        onChange={(e) => {
-          const files = [...(e.target.files ?? [])];
-          e.target.value = "";
-          if (files.length) void addFiles(files);
-        }}
-      />
-      <button type="button" className={buttonClass("secondary")} onClick={() => cameraRef.current?.click()}>
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" className="mr-1.5">
-          <path d="M4 8h3l2-2.5h6L17 8h3v11H4z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-        </svg>
-        Take a photo
-      </button>
-    </>
-  );
+  const phoneTip = isPhone ? (
+    <p className="text-sm text-muted">Tip: photograph the page with your camera app first, then choose the photo here.</p>
+  ) : null;
 
   if (!pages.length) {
     return (
       <div id="prepare" className="scroll-mt-4 space-y-3">
         <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Drop photos of your document (one per page)" maxFiles={MAX_PAGES} />
-        {cameraButton ? (
-          <div className="flex flex-wrap items-center gap-3">
-            {cameraButton}
-            <span className="text-sm text-muted">or photograph the page now.</span>
-          </div>
-        ) : null}
+        {phoneTip}
         {error ? <Alert tone="error">{error}</Alert> : null}
       </div>
     );
@@ -410,7 +384,6 @@ export function DocumentScannerTool() {
             {pages.length < MAX_PAGES ? (
               <div className="mt-3 space-y-2">
                 <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Add more pages" compact acceptHandOff={false} maxFiles={MAX_PAGES - pages.length} />
-                {cameraButton}
               </div>
             ) : null}
           </section>
