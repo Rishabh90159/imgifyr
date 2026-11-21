@@ -10,6 +10,7 @@ export type ToolId =
   | "resize-webp"
   | "resize-gif"
   | "instagram-image-resizer"
+  | "youtube-thumbnail"
   | "whatsapp-dp-without-crop"
   | "instagram-dp-without-crop"
   | "telegram-dp-without-crop"
@@ -262,6 +263,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["whatsapp-dp-without-crop", "instagram-dp-without-crop", "circle-crop", "image-cropper", "white-background-photo"],
     updated: "2026-11-17",
     menu: false,
+  },
+  "youtube-thumbnail": {
+    id: "youtube-thumbnail",
+    path: "/tools/youtube-thumbnail",
+    name: "YouTube Thumbnail Maker",
+    navLabel: "YouTube thumbnail",
+    summary: "Turn any image into a 16:9 YouTube or 9:16 Shorts thumbnail under 2 MB, without cropping.",
+    linkText: "Make a YouTube thumbnail at the right size",
+    category: "resize",
+    related: ["instagram-image-resizer", "image-resizer", "image-compressor", "whatsapp-dp-without-crop", "image-upscaler", "image-cropper"],
+    updated: "2026-11-21",
   },
   "instagram-image-resizer": {
     id: "instagram-image-resizer",
@@ -1283,6 +1295,7 @@ export const toolOrder: ToolId[] = [
   "resize-webp",
   "resize-gif",
   "instagram-image-resizer",
+  "youtube-thumbnail",
   "whatsapp-dp-without-crop",
   "instagram-dp-without-crop",
   "telegram-dp-without-crop",

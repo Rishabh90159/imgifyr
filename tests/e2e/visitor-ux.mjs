@@ -55,11 +55,17 @@ const optionNames = (page) => page.locator('[role="listbox"] [role="option"] spa
   await page.waitForURL("**/tools/resize-image-to-kb");
   check("desktop search: Enter opens the highlighted tool", page.url().endsWith("/tools/resize-image-to-kb"));
   const box2 = page.getByRole("combobox", { name: "Search tools" }).first();
+  // A size with its own page opens that page; any other size opens the KB tool already set to it.
   await box2.fill("30 kb");
   await page.waitForTimeout(150);
   await page.locator('[role="option"]').first().click();
-  await page.waitForURL("**/tools/resize-image-to-kb?target=30");
-  check("desktop search: '30 kb' opens the KB tool already set to 30 KB", page.url().endsWith("?target=30"));
+  await page.waitForURL("**/tools/30kb-photo");
+  check("desktop search: '30 kb' opens the 30KB page", page.url().endsWith("/tools/30kb-photo"));
+  await box2.fill("35 kb");
+  await page.waitForTimeout(150);
+  await page.locator('[role="option"]').first().click();
+  await page.waitForURL("**/tools/resize-image-to-kb?target=35");
+  check("desktop search: '35 kb' opens the KB tool already set to 35 KB", page.url().endsWith("?target=35"));
   await box2.fill("pdf to jpg");
   await page.waitForTimeout(150);
   await box2.press("Escape");
@@ -123,8 +129,22 @@ for (const [label, options] of [["phone", phone], ["desktop", desktop]]) {
 {
   const { ctx, page } = await open(phone, "/tools/ibps-photo");
   const scroller = page.locator(".scroll-shadow-x").first();
-  const info = await scroller.evaluate((el) => ({ scrollable: el.scrollWidth > el.clientWidth + 2, wraps: [...el.querySelectorAll("td")].some((td) => td.getBoundingClientRect().height > 40) }));
-  check("exam table: values stay on one line and the table scrolls sideways", info.scrollable && !info.wraps);
+  // Since 15 Nov 2026 cells are at least 7.5rem wide and long values wrap (at most two lines); the table scrolls inside
+  // its own box, and the page itself never scrolls sideways.
+  const info = await scroller.evaluate((el) => {
+    const tds = [...el.querySelectorAll("td")].map((td) => td.getBoundingClientRect());
+    return {
+      scrollable: el.scrollWidth > el.clientWidth + 2,
+      narrowest: Math.min(...tds.map((r) => r.width)),
+      tallest: Math.max(...tds.map((r) => r.height)),
+      pageOverflow: document.documentElement.scrollWidth > window.innerWidth,
+    };
+  });
+  check(
+    "exam table: readable cells (≥ 7.5rem, ≤ 2 lines), scrolls inside its box, page doesn't scroll sideways",
+    info.scrollable && info.narrowest >= 119 && info.tallest <= 64 && !info.pageOverflow,
+    `narrowest ${Math.round(info.narrowest)} px, tallest ${Math.round(info.tallest)} px`,
+  );
   const before = await page.locator('tbody th[scope="row"]').first().boundingBox();
   await scroller.evaluate((el) => el.scrollTo({ left: el.scrollWidth }));
   await page.waitForTimeout(200);
