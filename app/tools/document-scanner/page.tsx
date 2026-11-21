@@ -37,10 +37,6 @@ const faqs: FaqItem[] = [
     answer: "Yes. Add up to 20 photos, one per page, put them in order with the arrows, and they become one PDF.",
   },
   {
-    question: "My iPhone photo won't open. Why?",
-    answer: "It may be a HEIC photo. Convert it with HEIC to JPG first, or use the Take a photo button, which opens the camera directly.",
-  },
-  {
     question: "Are my documents uploaded?",
     answer: "No. The pages are straightened, cleaned and saved by your browser on your device; nothing is sent to a server.",
   },

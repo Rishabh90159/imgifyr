@@ -133,12 +133,12 @@ export function DocumentScannerTool() {
   const [busy, setBusy] = useState<{ label: string; progress: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ key: string; blob: Blob; url: string; pages: number; overLimit: boolean } | null>(null);
-  const cameraRef = useRef<HTMLInputElement>(null);
-  // Desktop browsers open the file picker for a camera input, which duplicates the upload box, so it's shown on
-  // phones and tablets only. Decided after mounting, so the server-rendered page and the first render match.
-  const [hasCamera, setHasCamera] = useState(false);
+  // A direct camera button was removed (19–21 Nov 2026): on the owner's phone the photo was lost on returning from the
+  // camera. Phones get a tip to take the photo with the camera app first and choose it, which works. Decided after
+  // mounting, so the server-rendered page and the first render match.
+  const [isPhone, setIsPhone] = useState(false);
   useEffect(() => {
-    setHasCamera(window.matchMedia("(pointer: coarse)").matches && navigator.maxTouchPoints > 0);
+    setIsPhone(window.matchMedia("(pointer: coarse)").matches && navigator.maxTouchPoints > 0);
   }, []);
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
@@ -299,41 +299,15 @@ export function DocumentScannerTool() {
 
   const page = pages.find((p) => p.id === selected) ?? null;
 
-  const cameraButton = !hasCamera ? null : (
-    <>
-      <input
-        ref={cameraRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        className="sr-only"
-        tabIndex={-1}
-        aria-hidden="true"
-        onChange={(e) => {
-          const files = [...(e.target.files ?? [])];
-          e.target.value = "";
-          if (files.length) void addFiles(files);
-        }}
-      />
-      <button type="button" className={buttonClass("secondary")} onClick={() => cameraRef.current?.click()}>
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" className="mr-1.5">
-          <path d="M4 8h3l2-2.5h6L17 8h3v11H4z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-        </svg>
-        Take a photo
-      </button>
-    </>
-  );
+  const phoneTip = isPhone ? (
+    <p className="text-sm text-muted">Tip: take the photo first, then choose it here.</p>
+  ) : null;
 
   if (!pages.length) {
     return (
       <div id="prepare" className="scroll-mt-4 space-y-3">
-        <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Drop photos of your document (one per page)" maxFiles={MAX_PAGES} />
-        {cameraButton ? (
-          <div className="flex flex-wrap items-center gap-3">
-            {cameraButton}
-            <span className="text-sm text-muted">or photograph the page now.</span>
-          </div>
-        ) : null}
+        <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Add photos of your document" maxFiles={MAX_PAGES} />
+        {phoneTip}
         {error ? <Alert tone="error">{error}</Alert> : null}
       </div>
     );
@@ -343,29 +317,19 @@ export function DocumentScannerTool() {
     <div id="prepare" className="scroll-mt-4 space-y-5">
       <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <section aria-labelledby="corners-heading" className="min-w-0 space-y-3 rounded-lg border border-line bg-canvas p-4 shadow-sm">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 id="corners-heading" className="text-base font-bold text-ink">
-              {page ? `Page ${pages.indexOf(page) + 1}: drag the corners onto the page edges` : "Choose a page"}
-            </h2>
-            {page && !page.autoQuad ? <span className="text-xs text-muted">No page edge found automatically</span> : null}
-          </div>
+          <h2 id="corners-heading" className="text-base font-bold text-ink">
+            {page ? `Page ${pages.indexOf(page) + 1}: drag the corners to fit` : "Choose a page"}
+          </h2>
           {page ? (
             <>
               <CornerEditor page={page} onChange={(quad) => update(page.id, { quad })} />
               <div className="flex flex-wrap gap-2">
-                <button type="button" className={buttonClass("secondary")} onClick={() => update(page.id, { turns: page.turns + 3 })}>
-                  Rotate left
-                </button>
                 <button type="button" className={buttonClass("secondary")} onClick={() => update(page.id, { turns: page.turns + 1 })}>
-                  Rotate right
+                  Rotate
                 </button>
-                {page.autoQuad ? (
-                  <button type="button" className={buttonClass("secondary")} onClick={() => update(page.id, { quad: page.autoQuad! })}>
-                    Auto-detect
-                  </button>
-                ) : null}
-                <button type="button" className={buttonClass("secondary")} onClick={() => update(page.id, { quad: fullQuad(1, 1, 0) })}>
-                  Whole photo
+                {/* Back to the automatically found corners, or the whole photo when none were found. */}
+                <button type="button" className={buttonClass("secondary")} onClick={() => update(page.id, { quad: page.autoQuad ?? fullQuad(1, 1, 0) })}>
+                  Reset corners
                 </button>
               </div>
             </>
@@ -406,13 +370,29 @@ export function DocumentScannerTool() {
                   </div>
                 </li>
               ))}
+              {pages.length < MAX_PAGES ? (
+                <li className="min-w-0">
+                  {/* A small tile instead of a second upload box: one tap opens the photo picker. */}
+                  <label className="flex aspect-[3/4] w-full cursor-pointer flex-col items-center justify-center gap-1 rounded border-2 border-dashed border-line-strong text-sm font-medium text-accent hover:bg-surface has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent">
+                    <span aria-hidden="true" className="text-2xl leading-none">
+                      +
+                    </span>
+                    {loading ? "Adding…" : "Add page"}
+                    <input
+                      type="file"
+                      accept={ACCEPT.join(",")}
+                      multiple
+                      className="sr-only"
+                      onChange={(e) => {
+                        const files = [...(e.target.files ?? [])];
+                        e.target.value = "";
+                        if (files.length) void addFiles(files);
+                      }}
+                    />
+                  </label>
+                </li>
+              ) : null}
             </ol>
-            {pages.length < MAX_PAGES ? (
-              <div className="mt-3 space-y-2">
-                <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Add more pages" compact acceptHandOff={false} maxFiles={MAX_PAGES - pages.length} />
-                {cameraButton}
-              </div>
-            ) : null}
           </section>
 
           <section aria-label="Scan settings" className="space-y-4 rounded-lg border border-line bg-canvas p-4 shadow-sm">
@@ -427,7 +407,7 @@ export function DocumentScannerTool() {
               ]}
             />
             <Segmented<Limit>
-              legend="PDF size limit"
+              legend="Size limit"
               value={limit}
               onChange={setLimit}
               options={[
