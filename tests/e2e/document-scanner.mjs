@@ -94,12 +94,12 @@ const photo2 = await makePhoto(page, "page-2.jpg", 2);
 
 // Only "Choose images" for now: the direct camera button lost photos on the owner's phone, so it was removed.
 // Phones get a tip to use the camera app first; desktops see just the upload box.
-check("desktop: only the upload box, no camera button or tip", (await page.getByRole("button", { name: "Take a photo" }).count()) === 0 && (await page.getByText("camera app").count()) === 0);
+check("desktop: only the upload box, no camera button or tip", (await page.getByRole("button", { name: "Take a photo" }).count()) === 0 && (await page.getByText("Tip: take the photo first").count()) === 0);
 {
   const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await phone.newPage();
   await p.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
-  await p.getByText("photograph the page with your camera app first").waitFor({ timeout: 10_000 });
+  await p.getByText("Tip: take the photo first, then choose it here.").waitFor({ timeout: 10_000 });
   const cameraInputs = await p.locator('input[capture]').count();
   check("phone: no camera button, a tip to take the photo first and choose it", (await p.getByRole("button", { name: "Take a photo" }).count()) === 0 && cameraInputs === 0);
   await phone.close();
@@ -192,6 +192,20 @@ check("text lines stay black", stats.black > 0.05 && stats.white > 0.5, `${(stat
   check("48 MP photo: corners still found", bigWorst < 0.03, `worst ${(bigWorst * 100).toFixed(1)}%`);
   await p.close();
 }
+
+// Simple controls: one upload box only, two editor buttons, and a small "Add page" tile.
+check("after the first photo there is no second upload box", (await page.locator("#prepare").getByText("Choose images").count()) === 0);
+const editorButtons = await page.locator('section[aria-labelledby="corners-heading"] button').allInnerTexts();
+check("editor offers just Rotate and Reset corners", JSON.stringify(editorButtons) === JSON.stringify(["Rotate", "Reset corners"]), editorButtons.join(", "));
+const moved = await page.locator('[role="slider"][aria-label="Top-left corner"]').getAttribute("aria-valuetext");
+await page.locator('[role="slider"][aria-label="Top-left corner"]').focus();
+await page.keyboard.press("Shift+ArrowRight");
+await page.getByRole("button", { name: "Reset corners" }).click();
+check("Reset corners goes back to the detected corners", (await page.locator('[role="slider"][aria-label="Top-left corner"]').getAttribute("aria-valuetext")) === moved);
+await page.locator("#prepare label", { hasText: "Add page" }).locator('input[type="file"]').setInputFiles([photo1]);
+await page.getByRole("button", { name: "Page 3", exact: true }).waitFor({ timeout: 30_000 });
+check("the Add page tile adds a page", (await page.getByRole("button", { name: /^Page \d$/ }).count()) === 3);
+await page.getByRole("button", { name: "Delete page 3" }).click();
 
 // Order and delete.
 await page.getByRole("button", { name: "Move page 2 up" }).click();
