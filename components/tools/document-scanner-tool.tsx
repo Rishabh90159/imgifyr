@@ -7,6 +7,8 @@ import { Segmented } from "@/components/controls/fields";
 import { DownloadButton } from "@/components/download-button/download-button";
 import { ImageDropzone } from "@/components/image-uploader/image-dropzone";
 import { track } from "@/lib/analytics";
+import { readJpegInfo } from "@/lib/image-processing/jpeg-info";
+import { detectFormat, readDimensions } from "@/lib/image-processing/sniff";
 import { searchTargetSize } from "@/lib/image-processing/target-size";
 import { buildPdf, MARGINS, placeImage, type PdfImage } from "@/lib/pdf/pdf-writer";
 import { enhance, rotate, type ScanMode } from "@/lib/scanner/enhance";
@@ -39,8 +41,42 @@ interface Page {
 
 let nextId = 0;
 
+/** Upright pixel size read from the file header, without decoding the picture. */
+async function headerSize(file: File): Promise<{ width: number; height: number } | null> {
+  const bytes = new Uint8Array(await file.slice(0, 512 * 1024).arrayBuffer());
+  const format = detectFormat(bytes);
+  if (!format) return null;
+  const jpeg = format === "image/jpeg" ? readJpegInfo(bytes) : null;
+  const dims = jpeg ?? readDimensions(bytes, format);
+  if (!dims) return null;
+  // EXIF orientations 5–8 store the picture turned a quarter.
+  return (jpeg?.orientation ?? 1) >= 5 ? { width: dims.height, height: dims.width } : { width: dims.width, height: dims.height };
+}
+
+/**
+ * Decodes a photo at most `maxSide` pixels on its long side. Phone cameras take 50–200 megapixel photos; decoding one at
+ * full size needs hundreds of MB and can crash a phone's browser tab (the photo is then lost), so the browser is asked
+ * to decode it already shrunk. If it returns a different shape than the header says, a normal decode is used instead.
+ */
+async function openBitmap(file: File, maxSide: number): Promise<ImageBitmap> {
+  const size = await headerSize(file).catch(() => null);
+  if (size && Math.max(size.width, size.height) > maxSide) {
+    const scale = maxSide / Math.max(size.width, size.height);
+    const width = Math.max(1, Math.round(size.width * scale));
+    const height = Math.max(1, Math.round(size.height * scale));
+    try {
+      const small = await createImageBitmap(file, { resizeWidth: width, resizeHeight: height, resizeQuality: "high", imageOrientation: "from-image" });
+      if (Math.abs(small.width / small.height - size.width / size.height) < 0.02) return small;
+      small.close();
+    } catch {
+      // Older browsers without resize options fall through to a normal decode.
+    }
+  }
+  return createImageBitmap(file);
+}
+
 async function decode(file: File, maxSide: number): Promise<Raster> {
-  const bitmap = await createImageBitmap(file);
+  const bitmap = await openBitmap(file, maxSide);
   const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.round(bitmap.width * scale));
@@ -48,6 +84,18 @@ async function decode(file: File, maxSide: number): Promise<Raster> {
   const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
   ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
   bitmap.close();
+  const d = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  return { data: d.data, width: d.width, height: d.height };
+}
+
+/** A smaller copy of a raster (for corner detection), drawn through a canvas. */
+function shrink(r: Raster, maxSide: number): Raster {
+  const scale = Math.min(1, maxSide / Math.max(r.width, r.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(r.width * scale));
+  canvas.height = Math.max(1, Math.round(r.height * scale));
+  const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
+  ctx.drawImage(toCanvas(r), 0, 0, canvas.width, canvas.height);
   const d = ctx.getImageData(0, 0, canvas.width, canvas.height);
   return { data: d.data, width: d.width, height: d.height };
 }
@@ -86,6 +134,12 @@ export function DocumentScannerTool() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ key: string; blob: Blob; url: string; pages: number; overLimit: boolean } | null>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
+  // Desktop browsers open the file picker for a camera input, which duplicates the upload box, so it's shown on
+  // phones and tablets only. Decided after mounting, so the server-rendered page and the first render match.
+  const [hasCamera, setHasCamera] = useState(false);
+  useEffect(() => {
+    setHasCamera(window.matchMedia("(pointer: coarse)").matches && navigator.maxTouchPoints > 0);
+  }, []);
   const pagesRef = useRef(pages);
   pagesRef.current = pages;
 
@@ -113,13 +167,13 @@ export function DocumentScannerTool() {
     for (const file of files.slice(0, room)) {
       try {
         const edit = await decode(file, EDIT_SIDE);
-        const small = await decode(file, 400);
+        const small = shrink(edit, 400);
         const found = detectSheet(small);
         const quad = found ? toFractions(found, small.width, small.height) : toFractions(fullQuad(1, 1, 0.02), 1, 1);
         const editUrl = URL.createObjectURL(await blobOf(toCanvas(edit), 0.85));
         added.push({ id: `p${nextId++}`, file, edit, editUrl, quad, autoQuad: found ? quad : null, turns: 0, previewUrl: null });
       } catch {
-        setError(`“${file.name}” couldn't be opened. Use a JPG, PNG or WebP photo (iPhone HEIC photos: convert them first with HEIC to JPG).`);
+        setError(`“${file.name}” couldn't be opened. Use a JPG, PNG or WebP photo (iPhone HEIC photos: convert them first with HEIC to JPG). If it came straight from the camera, try again with the camera set to a lower resolution.`);
       }
     }
     if (files.length > room) setError(`Only the first ${room} photos were added: a scan can have up to ${MAX_PAGES} pages.`);
@@ -245,7 +299,7 @@ export function DocumentScannerTool() {
 
   const page = pages.find((p) => p.id === selected) ?? null;
 
-  const cameraButton = (
+  const cameraButton = !hasCamera ? null : (
     <>
       <input
         ref={cameraRef}
@@ -274,10 +328,12 @@ export function DocumentScannerTool() {
     return (
       <div id="prepare" className="scroll-mt-4 space-y-3">
         <ImageDropzone accept={[...ACCEPT]} onFiles={(f) => void addFiles(f)} loading={loading} prompt="Drop photos of your document (one per page)" maxFiles={MAX_PAGES} />
-        <div className="flex flex-wrap items-center gap-3">
-          {cameraButton}
-          <span className="text-sm text-muted">On a phone, photograph the page straight away.</span>
-        </div>
+        {cameraButton ? (
+          <div className="flex flex-wrap items-center gap-3">
+            {cameraButton}
+            <span className="text-sm text-muted">or photograph the page now.</span>
+          </div>
+        ) : null}
         {error ? <Alert tone="error">{error}</Alert> : null}
       </div>
     );

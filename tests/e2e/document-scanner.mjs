@@ -31,11 +31,12 @@ const CORNERS = [
   [380, 2700],
 ];
 
-async function makePhoto(page, file, seed) {
+async function makePhoto(page, file, seed, scale = 1) {
   const b64 = await page.evaluate(
-    async ({ corners, seed }) => {
-      const c = new OffscreenCanvas(2400, 3200);
+    async ({ corners, seed, scale }) => {
+      const c = new OffscreenCanvas(2400 * scale, 3200 * scale);
       const ctx = c.getContext("2d");
+      ctx.scale(scale, scale);
       // Wooden table.
       ctx.fillStyle = "#4a3426";
       ctx.fillRect(0, 0, 2400, 3200);
@@ -72,7 +73,7 @@ async function makePhoto(page, file, seed) {
       for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
       return btoa(s);
     },
-    { corners: CORNERS, seed },
+    { corners: CORNERS, seed, scale },
   );
   const target = path.join(OUT, file);
   fs.writeFileSync(target, Buffer.from(b64, "base64"));
@@ -91,7 +92,18 @@ await page.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
 const photo1 = await makePhoto(page, "page-1.jpg", 1);
 const photo2 = await makePhoto(page, "page-2.jpg", 2);
 
-check("a Take a photo (camera) button is offered", await page.getByRole("button", { name: "Take a photo" }).isVisible());
+// "Take a photo" opens the camera on phones and tablets; desktops would only get a second file picker, so it's hidden.
+check("desktop: no Take a photo button (the upload box is enough)", (await page.getByRole("button", { name: "Take a photo" }).count()) === 0);
+{
+  const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const p = await phone.newPage();
+  await p.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
+  const camera = p.getByRole("button", { name: "Take a photo" });
+  await camera.waitFor({ timeout: 10_000 });
+  const input = await p.locator('input[capture="environment"]').count();
+  check("phone: Take a photo opens the back camera", (await camera.isVisible()) && input === 1);
+  await phone.close();
+}
 
 await page.locator('input[type="file"]').first().setInputFiles([photo1, photo2]);
 await page.getByRole("heading", { name: /Page 1: drag the corners/ }).waitFor({ timeout: 30_000 });
@@ -156,6 +168,30 @@ check("preview is the flattened page, portrait", stats.h > stats.w, `${stats.w} 
 check("no table left in the corners", stats.corners.every((v) => v > 200), stats.corners.join(", "));
 check("shadowed paper turns white in black & white", stats.shadowPaper > 230, `${stats.shadowPaper}`);
 check("text lines stay black", stats.black > 0.05 && stats.white > 0.5, `${(stats.black * 100).toFixed(0)}% black, ${(stats.white * 100).toFixed(0)}% white`);
+
+// A 48-megapixel phone photo (6000 × 8000): opened shrunk, without a full-size decode, and still detected correctly.
+{
+  const big = await makePhoto(page, "big-48mp.jpg", 3, 2.5);
+  const p = await context.newPage();
+  p.on("pageerror", (e) => errors.push(e.message));
+  await p.goto(BASE + "/tools/document-scanner", { waitUntil: "networkidle" });
+  await p.locator('input[type="file"]').first().setInputFiles([big]);
+  await p.getByRole("heading", { name: /Page 1: drag the corners/ }).waitFor({ timeout: 60_000 });
+  const editSize = await p.locator("[data-corner-editor] img").evaluate(async (img) => {
+    await img.decode();
+    return [img.naturalWidth, img.naturalHeight];
+  });
+  const bigHandles = await p.locator('[role="slider"][aria-label$="corner"]').evaluateAll((els) =>
+    els.map((el) => {
+      const m = el.getAttribute("aria-valuetext").match(/(\d+)% across, (\d+)% down/);
+      return [Number(m[1]) / 100, Number(m[2]) / 100];
+    }),
+  );
+  const bigWorst = Math.max(...bigHandles.map((h, i) => Math.hypot(h[0] - expected[i][0], h[1] - expected[i][1])));
+  check("48 MP photo opens as a 900 × 1200 editing copy", editSize[0] === 900 && editSize[1] === 1200, editSize.join(" × "));
+  check("48 MP photo: corners still found", bigWorst < 0.03, `worst ${(bigWorst * 100).toFixed(1)}%`);
+  await p.close();
+}
 
 // Order and delete.
 await page.getByRole("button", { name: "Move page 2 up" }).click();
