@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { enhance, rotate } from "@/lib/scanner/enhance";
-import { detectSheet, flatSize, fullQuad, rectToQuad, warp, type Quad, type Raster } from "@/lib/scanner/geometry";
+import { detectSheet, flatSize, fullQuad, pageSize, rectToQuad, snapToA4, trueAspect, warp, type Quad, type Raster } from "@/lib/scanner/geometry";
 
 function raster(width: number, height: number, paint: (x: number, y: number) => number | [number, number, number]): Raster {
   const data = new Uint8ClampedArray(width * height * 4);
@@ -88,7 +88,56 @@ describe("warp", () => {
   });
 });
 
+/** Corners of a W × H mm page tilted `tiltDeg` away from a camera (focal f px), as they appear in a cw × ch photo. */
+function photographed(W: number, H: number, tiltDeg: number, opts: { f?: number; cw?: number; ch?: number; dist?: number; shiftX?: number } = {}): Quad {
+  const { f = 2800, cw = 3000, ch = 4000, dist = 420, shiftX = 0 } = opts;
+  const t = (tiltDeg * Math.PI) / 180;
+  return ([
+    [-W / 2, -H / 2],
+    [W / 2, -H / 2],
+    [W / 2, H / 2],
+    [-W / 2, H / 2],
+  ] as const).map(([x, y]) => {
+    const yy = y * Math.cos(t);
+    const zz = dist + y * Math.sin(t);
+    return { x: cw / 2 + (f * (x + shiftX)) / zz, y: ch / 2 + (f * yy) / zz };
+  }) as Quad;
+}
+
+describe("page shape", () => {
+  it("recovers an A4 page's true shape when photographed at an angle (the old edge method squashed it)", () => {
+    for (const tilt of [10, 25, 35]) {
+      const q = photographed(210, 297, tilt);
+      // Within 3% before snapping (the focal length is assumed when the tilt is one-way), exactly A4 after.
+      expect(Math.abs(trueAspect(q, 3000, 4000) / (210 / 297) - 1)).toBeLessThan(0.03);
+      const size = pageSize(q, 3000, 4000, 2200);
+      expect(size.height / size.width).toBeCloseTo(Math.SQRT2, 2);
+      // What the old method gave: noticeably too short.
+      const old = flatSize(q, 2200);
+      if (tilt >= 25) expect(old.height / old.width).toBeLessThan(1.25);
+    }
+  });
+
+  it("works for an off-centre page and for a page shot from straight above", () => {
+    expect(Math.abs(trueAspect(photographed(210, 297, 20, { shiftX: 60 }), 3000, 4000) / (210 / 297) - 1)).toBeLessThan(0.03);
+    expect(trueAspect(photographed(210, 297, 0), 3000, 4000)).toBeCloseTo(210 / 297, 3);
+  });
+
+  it("keeps non-A4 shapes (an ID card) and only snaps near-A4 shapes", () => {
+    const card = pageSize(photographed(85.6, 54, 20, { dist: 250 }), 3000, 4000, 2000);
+    expect(Math.abs(card.width / card.height / (85.6 / 54) - 1)).toBeLessThan(0.03);
+    expect(snapToA4(0.69)).toBeCloseTo(1 / Math.SQRT2, 6);
+    expect(snapToA4(1.45)).toBeCloseTo(Math.SQRT2, 6);
+    expect(snapToA4(0.6)).toBe(0.6);
+  });
+});
+
 describe("enhance", () => {
+  it("Original leaves the colours untouched", () => {
+    const img = raster(20, 20, (x) => [x * 10, 120, 200 - x * 5]);
+    expect(enhance(img, "original").data).toEqual(img.data);
+  });
+
   // Grey paper with a shadow across the right half, and a band of dark "text".
   const page = raster(240, 320, (x, y) => {
     const paper = x < 120 ? 190 : 120;

@@ -193,6 +193,22 @@ check("text lines stay black", stats.black > 0.05 && stats.white > 0.5, `${(stat
   await p.close();
 }
 
+// "Original" only straightens: the warm paper colour of the photo stays (Clean colour would whiten it).
+await page.locator("#prepare").getByText("Original", { exact: true }).click();
+await page.waitForTimeout(2000);
+const paper = await page.getByRole("button", { name: "Page 1", exact: true }).locator("img").evaluate(async (img) => {
+  await img.decode();
+  const c = document.createElement("canvas");
+  c.width = img.naturalWidth;
+  c.height = img.naturalHeight;
+  const ctx = c.getContext("2d");
+  ctx.drawImage(img, 0, 0);
+  // A paper spot in the lit upper-left, between text lines.
+  return Array.from(ctx.getImageData(Math.floor(c.width * 0.05), Math.floor(c.height * 0.05), 1, 1).data.slice(0, 3));
+});
+check("Original keeps the photo's own paper colour (warm, not whitened)", paper[0] > paper[2] + 8 && paper[0] < 250, paper.join(", "));
+await page.locator("#prepare").getByText("Black & white", { exact: true }).click();
+
 // Simple controls: one upload box only, two editor buttons, and a small "Add page" tile.
 check("after the first photo there is no second upload box", (await page.locator("#prepare").getByText("Choose images").count()) === 0);
 const editorButtons = await page.locator('section[aria-labelledby="corners-heading"] button').allInnerTexts();
