@@ -56,15 +56,16 @@ export default function DocumentScannerPage() {
           <ol>
             <li>Lay the page flat on a darker table, in daylight, and take a photo from straight above.</li>
             <li>Add the photo; the page corners are found automatically. Drag any corner that&apos;s off.</li>
-            <li>Choose Colour, Grey or Black &amp; white, and a size limit if the form has one.</li>
+            <li>Choose a look (Original, Clean colour, Grey or Black &amp; white) and a size limit if the form has one.</li>
             <li>
               Select <strong>Make PDF</strong> and download your scanned PDF.
             </li>
           </ol>
 
-          <h2>Colour, grey or black &amp; white?</h2>
+          <h2>Which look to choose</h2>
           <p>
-            <strong>Colour</strong> keeps stamps, photos and coloured ink: best for certificates and ID cards.{" "}
+            <strong>Original</strong> keeps the photo&apos;s own colours, only straightened. <strong>Clean colour</strong> whitens the paper
+            but keeps stamps, photos and coloured ink: best for certificates and ID cards.{" "}
             <strong>Black &amp; white</strong> gives the crispest text and the smallest file for typed pages; <strong>Grey</strong>{" "}
             sits in between. Already have a PDF that&apos;s too big? Use <Link href="/tools/compress-pdf-to-200kb">compress PDF to
             200KB</Link>.

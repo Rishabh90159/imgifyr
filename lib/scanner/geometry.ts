@@ -161,6 +161,87 @@ export function flatSize(q: Quad, maxSide: number): { width: number; height: num
   return { width: Math.max(1, Math.round(w * scale)), height: Math.max(1, Math.round(h * scale)) };
 }
 
+/**
+ * The page's true width / height, recovered from the perspective of its four corners (Zhang & He, "Whiteboard
+ * scanning and image enhancement"): a page photographed at an angle looks shorter than it is, so measuring its edges in
+ * the photo squashes it (about 20% at a 25° tilt). The camera's focal length is estimated from the quad itself, with the
+ * principal point at the photo's centre. Falls back to the measured edges when the photo shows no usable perspective.
+ */
+export function trueAspect(q: Quad, imageWidth: number, imageHeight: number): number {
+  const edges = Math.max(dist(q[0], q[1]), dist(q[3], q[2])) / Math.max(dist(q[0], q[3]), dist(q[1], q[2]));
+  // Corners as in the paper: m1 top-left, m2 top-right, m3 bottom-left, m4 bottom-right; centred on the principal point.
+  const u0 = imageWidth / 2;
+  const v0 = imageHeight / 2;
+  const m = (p: Point) => [p.x, p.y, 1];
+  const [m1, m2, m4, m3] = [m(q[0]), m(q[1]), m(q[2]), m(q[3])];
+  const cross = (a: number[], b: number[]) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const dot = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const c14 = cross(m1, m4);
+  const k2 = dot(c14, m3) / dot(cross(m2, m4), m3);
+  const k3 = dot(c14, m2) / dot(cross(m3, m4), m2);
+  const n2 = m2.map((v, i) => k2 * v - m1[i]);
+  const n3 = m3.map((v, i) => k3 * v - m1[i]);
+  if (!Number.isFinite(k2) || !Number.isFinite(k3)) return edges;
+  // Nearly no perspective (a parallelogram): the plain ratio of the edge vectors is right.
+  if (Math.abs(n2[2]) < 1e-9 && Math.abs(n3[2]) < 1e-9) {
+    const r = Math.hypot(n2[0], n2[1]) / Math.hypot(n3[0], n3[1]);
+    return Number.isFinite(r) && r > 0 ? r : edges;
+  }
+  // The focal length can be measured only when the page shows perspective in both directions. The usual photo is tilted
+  // one way (top edge farther away), which leaves it undetermined, so a typical phone main camera is assumed instead:
+  // about 26 mm-equivalent, i.e. a focal length of roughly 0.75 × the photo's long side. A measured value is used only when
+  // it is reliable and plausible.
+  const longSide = Math.max(imageWidth, imageHeight);
+  const assumed = 0.75 * longSide;
+  let f = assumed;
+  if (Math.abs(n2[2]) > 0.02 && Math.abs(n3[2]) > 0.02) {
+    const f2 =
+      -(
+        n2[0] * n3[0] - (n2[0] * n3[2] + n2[2] * n3[0]) * u0 + n2[2] * n3[2] * u0 * u0 +
+        (n2[1] * n3[1] - (n2[1] * n3[2] + n2[2] * n3[1]) * v0 + n2[2] * n3[2] * v0 * v0)
+      ) /
+      (n2[2] * n3[2]);
+    const measured = f2 > 0 ? Math.sqrt(f2) : 0;
+    if (measured > 0.4 * longSide && measured < 2 * longSide) f = measured;
+  }
+  // |A⁻¹ n|² with A = [[f,0,u0],[0,f,v0],[0,0,1]].
+  const norm = (n: number[]) => {
+    const x = (n[0] - u0 * n[2]) / f;
+    const y = (n[1] - v0 * n[2]) / f;
+    return x * x + y * y + n[2] * n[2];
+  };
+  const r = Math.sqrt(norm(n2) / norm(n3));
+  // Guard against wild estimates from a badly placed corner: stay within a sensible range of the measured shape.
+  return Number.isFinite(r) && r > edges / 2.5 && r < edges * 2.5 ? r : edges;
+}
+
+/** A4's shape (portrait width / height). Shapes within 5% of A4, portrait or landscape, snap to it exactly. */
+const A4 = 1 / Math.SQRT2;
+export function snapToA4(aspect: number): number {
+  if (Math.abs(aspect - A4) / A4 < 0.05) return A4;
+  if (Math.abs(aspect - 1 / A4) / (1 / A4) < 0.05) return 1 / A4;
+  return aspect;
+}
+
+/**
+ * Output size of the flattened page: its true shape (perspective-corrected, A4 snapped), at the resolution the photo
+ * gives it (the longer of each pair of opposite edges), with the long side at most `maxSide`.
+ */
+export function pageSize(q: Quad, imageWidth: number, imageHeight: number, maxSide: number): { width: number; height: number } {
+  const aspect = snapToA4(trueAspect(q, imageWidth, imageHeight));
+  const w0 = Math.max(dist(q[0], q[1]), dist(q[3], q[2]));
+  const h0 = Math.max(dist(q[0], q[3]), dist(q[1], q[2]));
+  // Keep the larger measured dimension and set the other from the true shape (never throwing detail away).
+  let width = w0;
+  let height = w0 / aspect;
+  if (height < h0) {
+    height = h0;
+    width = h0 * aspect;
+  }
+  const scale = Math.min(1, maxSide / Math.max(width, height));
+  return { width: Math.max(1, Math.round(width * scale)), height: Math.max(1, Math.round(height * scale)) };
+}
+
 /** Homography (3×3, h33 = 1) mapping the output rectangle (0,0)–(W,H) onto the quad in the source. */
 export function rectToQuad(W: number, H: number, q: Quad): number[] {
   const src: Point[] = [

@@ -5,7 +5,8 @@ import type { Raster } from "./geometry";
  * each block, smoothed), and every pixel is divided by it: shadows, a yellow lamp and grey paper all become white,
  * while ink keeps its contrast. "bw" then turns the result into crisp black ink on white.
  */
-export type ScanMode = "color" | "gray" | "bw";
+/** "original" only straightens and crops: the photo's own colours, untouched. */
+export type ScanMode = "original" | "color" | "gray" | "bw";
 
 const luma = (d: Uint8ClampedArray, i: number) => 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
 
@@ -67,6 +68,7 @@ function paperGrid(img: Raster, block: number): { grid: Float32Array; gw: number
 }
 
 export function enhance(img: Raster, mode: ScanMode): Raster {
+  if (mode === "original") return img;
   const { width, height, data } = img;
   const block = Math.max(12, Math.round(Math.max(width, height) / 32));
   const { grid, gw, gh } = paperGrid(img, block);

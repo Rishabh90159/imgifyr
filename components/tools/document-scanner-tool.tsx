@@ -12,7 +12,7 @@ import { detectFormat, readDimensions } from "@/lib/image-processing/sniff";
 import { searchTargetSize } from "@/lib/image-processing/target-size";
 import { buildPdf, MARGINS, placeImage, type PdfImage } from "@/lib/pdf/pdf-writer";
 import { enhance, rotate, type ScanMode } from "@/lib/scanner/enhance";
-import { detectSheet, flatSize, fullQuad, warp, type Point, type Quad, type Raster } from "@/lib/scanner/geometry";
+import { detectSheet, fullQuad, pageSize, warp, type Point, type Quad, type Raster } from "@/lib/scanner/geometry";
 import type { ToolId } from "@/lib/tools/registry";
 import { countBucket, formatBytes, KB } from "@/lib/utils/format";
 import { useToolOpen } from "./hooks";
@@ -117,7 +117,8 @@ const toFractions = (q: Quad, w: number, h: number): Quad => q.map((p) => ({ x: 
 /** Flatten, clean and turn one page at `side` resolution. */
 function render(source: Raster, quad: Quad, mode: ScanMode, turns: number, side: number): Raster {
   const q = scaleQuad(quad, source.width, source.height);
-  const size = flatSize(q, side);
+  // The page's true shape (a tilted photo makes it look shorter), not just the edge lengths seen in the photo.
+  const size = pageSize(q, source.width, source.height, side);
   return rotate(enhance(warp(source, q, size.width, size.height), mode), turns);
 }
 
@@ -401,7 +402,8 @@ export function DocumentScannerTool() {
               value={mode}
               onChange={setMode}
               options={[
-                { value: "color", label: "Colour" },
+                { value: "original", label: "Original" },
+                { value: "color", label: "Clean colour" },
                 { value: "gray", label: "Grey" },
                 { value: "bw", label: "Black & white" },
               ]}
