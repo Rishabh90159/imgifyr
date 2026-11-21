@@ -57,6 +57,13 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/image-resizer", "/tools/resize-png", "/tools/bulk-image-resizer"],
   },
   {
+    path: "/tools/youtube-thumbnail",
+    primary: "youtube thumbnail size",
+    secondary: ["youtube thumbnail maker", "youtube shorts thumbnail size", "youtube thumbnail resizer", "youtube thumbnail size in mb", "youtube thumbnail without cropping"],
+    intent: "tool",
+    supportedBy: ["/tools/instagram-image-resizer", "/tools/image-resizer"],
+  },
+  {
     path: "/tools/instagram-image-resizer",
     primary: "instagram image resizer",
     secondary: [

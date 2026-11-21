@@ -12,6 +12,7 @@ const toolPages = [
   "/tools/resize-webp",
   "/tools/resize-gif",
   "/tools/instagram-image-resizer",
+  "/tools/youtube-thumbnail",
   "/tools/image-compressor",
   "/tools/resize-image-to-kb",
   "/tools/jpg-to-png",
@@ -124,6 +125,7 @@ const overlapPages = [
   "/tools/resize-webp",
   "/tools/resize-gif",
   "/tools/instagram-image-resizer",
+  "/tools/youtube-thumbnail",
   "/tools/image-to-jpg",
   "/tools/png-to-jpg",
   "/tools/webp-to-jpg",
@@ -284,7 +286,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 86 && worst.score < 0.15,
+    entries.length === 87 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }

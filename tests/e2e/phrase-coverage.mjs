@@ -35,6 +35,7 @@ const SEARCHED = {
   "/tools/all-exam-photo-signature": ["all exam photo resizer", "photo and signature resizer for all exams", "photo resizer for all exams", "all exam photo and signature resizer"],
   "/tools/india-visa-photo": ["indian visa photo size", "india visa photo requirements", "india e visa photo", "indian visa photo resize"],
   "/tools/pan-card-photo": ["pan card photo size", "pan card signature size", "pan card photo size in kb", "nsdl pan photo size", "pan card photo resize"],
+  "/tools/youtube-thumbnail": ["youtube thumbnail size", "youtube thumbnail size maker", "youtube shorts thumbnail size", "thumbnail without cropping"],
   "/tools/whatsapp-dp-without-crop": ["whatsapp dp without crop", "full dp for whatsapp", "whatsapp dp maker", "whatsapp dp size converter"],
 };
 
