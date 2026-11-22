@@ -86,9 +86,9 @@ function pngDpi(bytes) {
 }
 
 /** Decodes an image in the page and summarises a region: mean brightness and the share of dark pixels. */
-async function regionStats(page, bytes, mime, region) {
+async function regionStats(page, bytes, mime, region, channel) {
   return page.evaluate(
-    async ({ b64, mime, region }) => {
+    async ({ b64, mime, region, channel }) => {
       // No fetch(): the site's CSP only allows connections to itself.
       const blob = new Blob([Uint8Array.from(atob(b64), (c) => c.charCodeAt(0))], { type: mime });
       const bitmap = await createImageBitmap(blob);
@@ -100,14 +100,14 @@ async function regionStats(page, bytes, mime, region) {
       let sum = 0;
       let dark = 0;
       for (let i = 0; i < data.length; i += 4) {
-        const l = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        const l = channel ? data[i + "rgb".indexOf(channel)] : 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
         sum += l;
         if (l < 100) dark++;
       }
       const n = data.length / 4;
       return { mean: sum / n, dark: dark / n, width: bitmap.width, height: bitmap.height };
     },
-    { b64: bytes.toString("base64"), mime, region },
+    { b64: bytes.toString("base64"), mime, region, channel },
   );
 }
 
@@ -333,12 +333,36 @@ const exifFixture = path.join(OUT, "phone-exif-72dpi.jpg");
   await remover.getByRole("link", { name: "Download PNG" }).waitFor({ timeout: 180_000 });
   check("background remover: still defaults to a transparent PNG", true);
   await remover.close();
+
+  // Photo background changer (22 Nov 2026): opens on light blue, ready colours switch the background.
+  const changer = await openPage("/tools/photo-background-changer");
+  await changer.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "portrait.jpg"));
+  let changerLink = changer.getByRole("link", { name: "Download JPG" });
+  await changerLink.waitFor({ timeout: 180_000 });
+  let changed = await download(changer, changerLink);
+  const blueInfo = jpegInfo(changed.bytes);
+  check("background changer: opens on light blue, saves a full-size JPG", blueInfo?.width === 1200 && /new-background.jpg$/.test(changed.name), `${blueInfo?.width}×${blueInfo?.height} ${changed.name}`);
+  const swatchTint = async (bytes) => {
+    const [r, g, b] = await Promise.all(["r", "g", "b"].map((channel) => regionStats(changer, bytes, "image/jpeg", { x: 0, y: 0, w: 80, h: 80 }, channel)));
+    return [r.mean, g.mean, b.mean].map(Math.round);
+  };
+  const blue = await swatchTint(changed.bytes);
+  check("background changer: corner is light blue", Math.abs(blue[0] - 0xcf) < 10 && Math.abs(blue[1] - 0xe3) < 10 && Math.abs(blue[2] - 0xf7) < 10, blue.join(","));
+  await changer.getByRole("radio", { name: "Red" }).check({ force: true });
+  await changer.getByRole("button", { name: "Apply changes" }).click();
+  await changer.waitForFunction(() => document.body.innerText.includes("Background changed"));
+  changerLink = changer.getByRole("link", { name: "Download JPG" });
+  await changerLink.waitFor({ timeout: 180_000 });
+  changed = await download(changer, changerLink);
+  const red = await swatchTint(changed.bytes);
+  check("background changer: Red swatch turns the background red", red[0] > 180 && red[1] < 80 && red[2] < 80, red.join(","));
+  await changer.close();
 }
 
 // ---------- Mobile layout ----------
 {
   const mobile = await newContext({ width: 375, height: 812 });
-  for (const route of ["/tools/merge-photo-and-signature", "/tools/add-name-and-date-on-photo", "/tools/change-image-dpi", "/tools/resize-image-in-cm", "/tools/white-background-photo"]) {
+  for (const route of ["/tools/merge-photo-and-signature", "/tools/add-name-and-date-on-photo", "/tools/change-image-dpi", "/tools/resize-image-in-cm", "/tools/white-background-photo", "/tools/photo-background-changer"]) {
     const page = await openPage(route, mobile);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     check(`mobile: ${route} has no horizontal scroll`, overflow <= 0, `${overflow}px`);

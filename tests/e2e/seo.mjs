@@ -94,6 +94,7 @@ const toolPages = [
   "/tools/change-image-dpi",
   "/tools/resize-image-in-cm",
   "/tools/white-background-photo",
+  "/tools/photo-background-changer",
   "/tools/transparent-signature",
   "/tools/signature-maker",
   "/tools/whatsapp-dp-without-crop",
@@ -135,6 +136,7 @@ const overlapPages = [
   "/tools/merge-photo-and-signature",
   "/tools/background-remover",
   "/tools/white-background-photo",
+  "/tools/photo-background-changer",
   "/tools/passport-photo-resizer",
   "/tools/resize-image-in-cm",
   "/tools/change-image-dpi",
@@ -286,7 +288,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 87 && worst.score < 0.15,
+    entries.length === 88 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }

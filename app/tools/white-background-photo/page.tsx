@@ -26,7 +26,7 @@ const faqs: FaqItem[] = [
   {
     question: "Can I use another colour, like light blue?",
     answer:
-      "Yes. Choose Colour under New background and pick any shade, such as the light blue or off-white some forms ask for. Transparent gives a PNG cut-out instead.",
+      "Yes. Choose Colour under New background and pick any shade, or use the photo background changer, which has blue, red and grey ready. Transparent gives a PNG cut-out.",
   },
   {
     question: "Will this work for an exam or ID photo?",

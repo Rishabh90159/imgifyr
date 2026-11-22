@@ -20,23 +20,35 @@ type Output = "image/png" | "image/jpeg";
 
 let modelReady = false;
 
+/** Ready colours on the background changer page; "Custom" opens the colour picker. */
+const SWATCHES = [
+  { color: "#ffffff", label: "White" },
+  { color: "#cfe3f7", label: "Light blue" },
+  { color: "#1f5fbf", label: "Blue" },
+  { color: "#d32f2f", label: "Red" },
+  { color: "#d9d9d9", label: "Grey" },
+] as const;
+
 interface BackgroundRemoverToolProps {
-  tool?: "background-remover" | "white-background-photo";
+  tool?: "background-remover" | "white-background-photo" | "photo-background-changer";
   /** Background chosen when the page opens (the white background page starts on white, saved as JPG). */
   initialBackdrop?: Backdrop;
   initialOutput?: Output;
+  /** Colour chosen when the page opens with initialBackdrop "custom". */
+  initialColor?: string;
 }
 
 export function BackgroundRemoverTool({
   tool: TOOL = "background-remover",
   initialBackdrop = "transparent",
   initialOutput = "image/png",
+  initialColor = "#3b82f6",
 }: BackgroundRemoverToolProps = {}) {
   useToolOpen(TOOL);
   const { source, loading, error, select, clear, setError } = useSourceImage({ tool: TOOL, accept: RASTER_INPUT_FORMATS });
   const colorId = useId();
   const [backdrop, setBackdrop] = useState<Backdrop>(initialBackdrop);
-  const [customColor, setCustomColor] = useState("#3b82f6");
+  const [customColor, setCustomColor] = useState(initialColor);
   const [edges, setEdges] = useState<Edges>("soft");
   const [output, setOutput] = useState<Output>(initialOutput);
   const [quality, setQuality] = useState(0.92);
@@ -47,6 +59,7 @@ export function BackgroundRemoverTool({
 
   useEffect(() => () => controller.current?.abort(), []);
 
+  const CHANGER = TOOL === "photo-background-changer";
   const background = backdrop === "transparent" ? null : backdrop === "white" ? "#ffffff" : customColor;
   const mime: Output = backdrop === "transparent" ? "image/png" : output;
   const keyFor = (image: SourceImage) => JSON.stringify([image.id, background, edges, mime, mime === "image/jpeg" ? quality : null]);
@@ -103,6 +116,7 @@ export function BackgroundRemoverTool({
     clear();
     setResult(null);
     setBackdrop(initialBackdrop);
+    setCustomColor(initialColor);
     setEdges("soft");
   };
 
@@ -114,6 +128,54 @@ export function BackgroundRemoverTool({
           it from this site (up to about 19 MB, then cached). Your photo itself is never uploaded.
         </Alert>
       ) : null}
+      {TOOL === "photo-background-changer" ? (
+        <fieldset className="min-w-0">
+          <legend className="mb-2 text-sm font-medium text-ink">New background colour</legend>
+          <div className="flex flex-wrap gap-2">
+            {SWATCHES.map((swatch) => {
+              const picked = swatch.color === "#ffffff" ? backdrop === "white" : backdrop === "custom" && customColor === swatch.color;
+              return (
+                <label
+                  key={swatch.color}
+                  className={`flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent ${picked ? "border-accent bg-accent-soft font-medium text-ink" : "border-line-strong text-ink"}`}
+                >
+                  <input
+                    type="radio"
+                    name={`${colorId}-swatch`}
+                    className="sr-only"
+                    checked={picked}
+                    onChange={() => {
+                      if (swatch.color === "#ffffff") setBackdrop("white");
+                      else {
+                        setCustomColor(swatch.color);
+                        setBackdrop("custom");
+                      }
+                    }}
+                  />
+                  <span aria-hidden="true" className="h-4 w-4 rounded-full border border-line-strong" style={{ background: swatch.color }} />
+                  {swatch.label}
+                </label>
+              );
+            })}
+            <label className="flex cursor-pointer items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 text-sm text-ink has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-accent">
+              <input
+                type="color"
+                aria-label="Custom background colour"
+                value={customColor}
+                onChange={(event) => {
+                  setCustomColor(event.target.value);
+                  setBackdrop("custom");
+                }}
+                className="h-5 w-6 cursor-pointer rounded border-0 bg-transparent p-0"
+              />
+              Custom
+            </label>
+          </div>
+          <p className="mt-2 text-sm text-muted">
+            Selected: <span className="font-mono">{(background ?? "").toUpperCase()}</span>
+          </p>
+        </fieldset>
+      ) : (
       <Segmented<Backdrop>
         legend="New background"
         value={backdrop}
@@ -124,7 +186,8 @@ export function BackgroundRemoverTool({
           { value: "custom", label: "Colour" },
         ]}
       />
-      {backdrop === "custom" ? (
+      )}
+      {backdrop === "custom" && TOOL !== "photo-background-changer" ? (
         <div className="flex items-center gap-3">
           <input
             id={colorId}
@@ -164,8 +227,8 @@ export function BackgroundRemoverTool({
       ) : (
         <p className="text-sm text-muted">Transparent results are saved as PNG, the format that keeps transparency.</p>
       )}
-      <ActionButton onClick={() => run(source)} busy={busy} busyLabel={modelReady ? "Removing background…" : "Loading model and removing background…"} progress={progress}>
-        {result ? "Apply changes" : "Remove background"}
+      <ActionButton onClick={() => run(source)} busy={busy} busyLabel={modelReady ? CHANGER ? "Changing background…" : "Removing background…" : CHANGER ? "Loading model and changing background…" : "Loading model and removing background…"} progress={progress}>
+        {result ? "Apply changes" : CHANGER ? "Change background" : "Remove background"}
       </ActionButton>
       {busy ? (
         <button type="button" onClick={cancel} className="text-sm font-medium text-accent underline">
@@ -191,17 +254,17 @@ export function BackgroundRemoverTool({
       error={error}
       onFile={onFile}
       onReset={reset}
-      prompt="Drop a photo to remove its background"
+      prompt={CHANGER ? "Drop a photo to change its background" : "Drop a photo to remove its background"}
       controls={controls}
       result={
         source && current ? (
           <ResultPanel
             tool={TOOL}
-            heading="Background removed"
+            heading={CHANGER ? "Background changed" : "Background removed"}
             original={source}
             output={current.image}
             growthExpected
-            fileName={outputFileName(source.name, TOOL === "white-background-photo" && background === "#ffffff" ? "white-background" : "no-background", FORMATS[current.image.mime].extension)}
+            fileName={outputFileName(source.name, background === "#ffffff" && TOOL !== "background-remover" ? "white-background" : CHANGER ? "new-background" : "no-background", FORMATS[current.image.mime].extension)}
             downloadLabel={`Download ${FORMATS[current.image.mime].label}`}
             status={
               subjectWarning ?? (

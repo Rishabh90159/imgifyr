@@ -585,6 +585,15 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/change-image-dpi", "/tools/image-resizer", "/tools/passport-photo-resizer"],
   },
   {
+    path: "/tools/photo-background-changer",
+    primary: "photo background change",
+    // Google India autocomplete, 22 Nov 2026: "photo background change online free", "photo background changer",
+    // "blue background photo passport size", "blue background photo editor".
+    secondary: ["photo background changer", "change photo background", "photo background change online free", "blue background photo", "blue background photo editor", "blue background photo passport size", "change background colour of photo", "red background photo"],
+    intent: "tool",
+    supportedBy: ["/tools/white-background-photo", "/tools/background-remover"],
+  },
+  {
     path: "/tools/white-background-photo",
     primary: "white background photo",
     // Google India autocomplete, 30 Oct 2026: "change photo background to white online free", "white background photo editor free".
