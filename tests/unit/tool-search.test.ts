@@ -36,6 +36,8 @@ describe("site search", () => {
 
   it("finds descriptions, not only names", () => {
     expect(top("white background")).toContain("/tools/white-background-photo");
+    expect(top("blue background photo")).toContain("/tools/photo-background-changer");
+    expect(top("photo background change")).toContain("/tools/photo-background-changer");
     expect(top("transparent signature")).toContain("/tools/transparent-signature");
     expect(first("round profile picture")).toBe("/tools/circle-crop");
     // A "dp" search is about a profile photo: the WhatsApp, Instagram and Telegram DP makers lead, the circle crop follows.

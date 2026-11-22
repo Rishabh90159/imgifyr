@@ -96,6 +96,7 @@ export type ToolId =
   | "change-image-dpi"
   | "resize-image-in-cm"
   | "white-background-photo"
+  | "photo-background-changer"
   | "transparent-signature"
   | "circle-crop"
   | "jpg-to-webp"
@@ -1197,8 +1198,20 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Replace the background of a photo with plain white, or any colour, and save it as a JPG or PNG.",
     linkText: "Change a photo background to white",
     category: "edit",
-    related: ["background-remover", "passport-photo-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb", "png-to-jpg"],
+    related: ["photo-background-changer", "background-remover", "passport-photo-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb"],
     updated: "2026-10-30",
+  },
+  "photo-background-changer": {
+    id: "photo-background-changer",
+    path: "/tools/photo-background-changer",
+    name: "Photo Background Changer",
+    navLabel: "Change background",
+    summary: "Change a photo's background to blue, white, red, grey or any colour, and save it as a JPG or PNG.",
+    linkText: "Change a photo background to blue or any colour",
+    category: "edit",
+    related: ["white-background-photo", "background-remover", "passport-photo-resizer", "add-name-and-date-on-photo", "resize-image-to-kb", "image-cropper"],
+    updated: "2026-11-22",
+    menu: false,
   },
   "transparent-signature": {
     id: "transparent-signature",
@@ -1278,6 +1291,7 @@ export const toolOrder: ToolId[] = [
   "image-quality-enhancer",
   "background-remover",
   "white-background-photo",
+  "photo-background-changer",
   "merge-images",
   "merge-photo-and-signature",
   "thumb-impression-resizer",
