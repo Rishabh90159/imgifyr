@@ -7,6 +7,7 @@ import { allTools, getTool, navGroupOf, toolsIn, type ToolId } from "@/lib/tools
 
 /** Hosts we accept as official sources. Anything else fails the build. */
 const OFFICIAL_HOSTS = [
+  "gprb.gujarat.gov.in",
   "www.ibps.in",
   "sbi.bank.in",
   "afcat.edcil.co.in",
@@ -157,10 +158,10 @@ describe("registry and freshness", () => {
     }
   });
 
-  it("has 99 tools in five navigation groups, each related list pointing to other existing tools", () => {
-    expect(allTools).toHaveLength(99);
+  it("has 100 tools in five navigation groups, each related list pointing to other existing tools", () => {
+    expect(allTools).toHaveLength(100);
     expect(toolsIn("size").map((t) => t.id)).toEqual(["10kb-photo", "20kb-photo", "30kb-photo", "50kb-photo", "100kb-photo", "200kb-photo", "500kb-photo", "200x230-photo", "413x531-photo", "630x810-photo", "600x600-photo", "140x60-signature", "20kb-signature", "30kb-signature", "mb-to-kb-converter"]);
-    expect(toolsIn("application")).toHaveLength(28);
+    expect(toolsIn("application")).toHaveLength(29);
     expect(toolsIn("image")).toHaveLength(32);
     expect(toolsIn("convert")).toHaveLength(13);
     expect(toolsIn("pdf").map((t) => t.id)).toEqual(["word-to-pdf", "pdf-to-word", "merge-pdf", "compress-pdf", "compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "document-scanner", "pdf-to-jpg", "pdf-to-png"]);

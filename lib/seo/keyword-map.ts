@@ -453,6 +453,15 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/140x60-signature", "/tools/signature-resizer"],
   },
   {
+    path: "/tools/gujarat-police-photo",
+    primary: "gujarat police photo size",
+    // Google India autocomplete, 25 Nov 2026: "gujarat police photo and signature size", "gujarat police photo resizer",
+    // "ojas photo size converter", "ojas photo resizer in kb", "ojas photo upload size".
+    secondary: ["gujarat police photo and signature size", "gujarat police photo resizer", "ojas photo size", "ojas photo size converter", "ojas photo resizer in kb", "ojas photo upload size", "lrd photo size", "lokrakshak photo size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/up-police-photo", "/tools/signature-resizer"],
+  },
+  {
     path: "/tools/india-post-gds-photo",
     primary: "gds photo size",
     secondary: ["india post gds photo size", "gds signature size", "gds photo and signature size", "india post gds signature size", "gds photo resize"],

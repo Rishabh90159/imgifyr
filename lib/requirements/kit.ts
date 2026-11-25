@@ -28,6 +28,7 @@ export const KIT_EXAMS: { id: ApplicationId; tool: ToolId; group: KitGroup }[] =
   { id: "upessc", tool: "upessc-photo", group: "Teaching, police and state jobs" },
   { id: "upsssc", tool: "upsssc-photo", group: "Teaching, police and state jobs" },
   { id: "upPolice", tool: "up-police-photo", group: "Teaching, police and state jobs" },
+  { id: "gujaratPolice", tool: "gujarat-police-photo", group: "Teaching, police and state jobs" },
   { id: "dsssb", tool: "dsssb-photo", group: "Teaching, police and state jobs" },
   { id: "kea", tool: "kea-photo", group: "Teaching, police and state jobs" },
   { id: "gds", tool: "india-post-gds-photo", group: "Teaching, police and state jobs" },
