@@ -17,6 +17,7 @@ const SEARCHED = {
   "/tools/20kb-photo": ["resize image to 20kb", "reduce photo size to 20kb", "20kb photo size reducer"],
   "/tools/compress-pdf": ["pdf size reducer", "compress pdf"],
   "/tools/photo-background-changer": ["photo background change", "photo background changer", "change photo background", "blue background photo", "passport size"],
+  "/tools/gujarat-police-photo": ["gujarat police photo size", "photo and signature size", "ojas photo size", "15 kb", "lokrakshak"],
   "/tools/document-scanner": ["document scanner online", "scan document to pdf", "camscanner alternative", "phone photo to scanned pdf", "scan a certificate to a 200 kb pdf"],
   "/tools/compress-pdf-to-100kb": ["compress pdf to 100kb", "reduce pdf size to 100kb", "pdf size reducer"],
   "/tools/compress-pdf-to-200kb": ["compress pdf to 200kb", "reduce pdf size to 200kb", "pdf size reducer to 200kb"],

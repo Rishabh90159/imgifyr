@@ -685,6 +685,58 @@ const UP_POLICE_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- Gujarat Police (GPRB, applications on OJAS)
+// GPRB's detailed advertisement for the 2025 Lokrakshak/PSI recruitment (page 1, in Gujarati) asks for a recent colour
+// passport-size photo and a signature, each a JPG of at most 15 KB. The print sizes, 5 cm × 3.6 cm (photo) and
+// 2.5 cm × 7.5 cm (signature), are printed on the OJAS upload screen (OJAS "How to Apply" guide, page 16). Pixel sizes
+// are derived by the tool at 150 DPI, which keeps both files clear within 15 KB. The 2026-27 recruitment (newspaper
+// advertisement dated 19 Nov 2026) takes applications on OJAS from 26 Nov to 16 Dec 2026; its detailed instructions
+// are due on OJAS on 26 Nov 2026.
+
+const GUJARAT_POLICE_SETS: RequirementSet[] = [
+  {
+    id: "gprb-lokrakshak-technical-2026-27",
+    name: "Gujarat Police Lokrakshak (UPC, APC, SRPF constable) and Technical Cadre 2026-27, GPRB/202627/1–3",
+    photo: {
+      kind: "photo",
+      format: "JPG",
+      physical: "5 cm (height) × 3.6 cm (width)",
+      widthPx: 213,
+      heightPx: 295,
+      pixelBasis: "derived",
+      aspect: 213 / 295,
+      dpi: 150,
+      maxKB: 15,
+      rules: ["Recent colour passport-size photograph", "Quality good enough for you to be identified"],
+    },
+    signature: {
+      kind: "signature",
+      format: "JPG",
+      physical: "2.5 cm (height) × 7.5 cm (width)",
+      widthPx: 443,
+      heightPx: 148,
+      pixelBasis: "derived",
+      aspect: 443 / 148,
+      dpi: 150,
+      maxKB: 15,
+      rules: ["Clearly legible", "Sign on white paper with a dark pen, then scan or photograph it"],
+    },
+    notes: [
+      "3,000 posts: 2,841 Lokrakshak (1,000 unarmed, 1,000 armed and 841 SRPF constables), 133 Head Constable Driver Mechanic and 26 Motor Transport Supervisor.",
+      "Apply online only, on ojas.gujarat.gov.in, from 26 November 2026 (2 pm) to 16 December 2026 (11:59 pm); each cadre needs a separate application.",
+      "If you applied with an OJAS One Time Registration (OTR) number, your photo and signature are already on file; upload again only to change them.",
+      "Confirm the application after uploading and keep a printout; the board asks for it later.",
+    ],
+    source: {
+      title: "GPRB detailed advertisement: PSI and Lokrakshak Cadre recruitment 2025 (photo and signature rules)",
+      url: "https://gprb.gujarat.gov.in/ViewDocument.aspx?CDID=f62cf2f26b5aeaa2e350645cae6581cb",
+      publisher: "Gujarat Police Recruitment Board (GPRB)",
+      section: "Page 1 (15 KB JPG photo and signature, in Gujarati); sizes from the OJAS upload screen (How to Apply guide, page 16); dates from the newspaper advertisement of 19 Nov 2026",
+      lastVerified: "2026-11-25",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- India Post GDS
 // GDS Online Engagement instructions (Annexure II, para 5). Pixel sizes are "recommended", so they are
 // treated as preferred: a clean 300 × 120 signature can't reach 20 KB, and the tool offers a larger copy.
@@ -1218,6 +1270,7 @@ export const APPLICATIONS = {
   afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
   cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
   upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
+  gujaratPolice: { name: "Gujarat Police", fullName: "Gujarat Police Recruitment Board (GPRB), applications on OJAS", sets: GUJARAT_POLICE_SETS },
   gds: { name: "India Post GDS", fullName: "Gramin Dak Sevak online engagement, Department of Posts", sets: GDS_SETS },
   mhtCet: { name: "MHT CET", fullName: "MHT CET, conducted by the State CET Cell, Maharashtra", sets: MHT_CET_SETS },
   kcet: { name: "KCET", fullName: "Karnataka Common Entrance Test (UGCET), conducted by KEA", sets: KCET_SETS },

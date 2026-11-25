@@ -80,6 +80,7 @@ export type ToolId =
   | "cuet-photo"
   | "ctet-photo"
   | "up-police-photo"
+  | "gujarat-police-photo"
   | "india-post-gds-photo"
   | "mht-cet-photo"
   | "kcet-photo"
@@ -1003,6 +1004,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["rrb-photo", "upsssc-photo", "140x60-signature", "signature-resizer", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-14",
   },
+  "gujarat-police-photo": {
+    id: "gujarat-police-photo",
+    path: "/tools/gujarat-police-photo",
+    name: "Gujarat Police Photo & Signature (OJAS)",
+    navLabel: "Gujarat Police photo",
+    summary: "Gujarat Police (GPRB) photo 5 × 3.6 cm and signature 2.5 × 7.5 cm, each a JPG under 15 KB, ready for OJAS.",
+    linkText: "Prepare your Gujarat Police photo and signature",
+    category: "application",
+    related: ["up-police-photo", "ssc-photo", "rrb-photo", "signature-resizer", "image-cropper", "resize-image-to-kb"],
+    updated: "2026-11-25",
+  },
   "india-post-gds-photo": {
     id: "india-post-gds-photo",
     path: "/tools/india-post-gds-photo",
@@ -1374,6 +1386,7 @@ export const toolOrder: ToolId[] = [
   "cuet-photo",
   "ctet-photo",
   "up-police-photo",
+  "gujarat-police-photo",
   "india-post-gds-photo",
   "mht-cet-photo",
   "kcet-photo",

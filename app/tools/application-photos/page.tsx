@@ -38,6 +38,7 @@ const ORDER: { id: ApplicationId; tool: ToolId }[] = [
   { id: "cuet", tool: "cuet-photo" },
   { id: "ctet", tool: "ctet-photo" },
   { id: "upPolice", tool: "up-police-photo" },
+  { id: "gujaratPolice", tool: "gujarat-police-photo" },
   { id: "gds", tool: "india-post-gds-photo" },
   { id: "mhtCet", tool: "mht-cet-photo" },
   { id: "kcet", tool: "kcet-photo" },
