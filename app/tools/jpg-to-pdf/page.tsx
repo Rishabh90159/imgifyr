@@ -36,9 +36,9 @@ const faqs: FaqItem[] = [
       "No. Phones often store a photo sideways with an EXIF orientation note. This converter reads that note and turns the page content to match, while still embedding the original JPG unchanged.",
   },
   {
-    question: "How do I convert JPG to PDF under 200 KB?",
+    question: "How do I convert JPG to PDF under 200 KB or 1 MB?",
     answer:
-      "Add your JPGs and set Maximum PDF size to 200 KB. The tool finds the highest image quality that keeps the whole PDF within 200 KB, shrinking pixel dimensions only if needed. Up to 40 JPGs work with a limit.",
+      "Add your JPGs and set Maximum PDF size (100 KB, 200 KB, 300 KB, 500 KB or 1 MB). The tool keeps the best image quality that fits, shrinking pixel dimensions only if needed. For a 150 KB limit, pick 100 KB. Up to 40 JPGs work with a limit.",
   },
   {
     question: "Are .jpeg and .jfif files accepted?",

@@ -9,10 +9,10 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("compress-pdf-to-500kb");
 
 const description =
-  "Compress PDF to 500KB for multi-page documents: resumes, project reports and application packs. Reduce PDF size to 500KB online, free, without uploading.";
+  "Compress PDF to 500KB for multi-page resumes, reports and application packs. A free PDF compressor for 500 KB limits that works in your browser, without uploading.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Compress PDF to 500KB – Reduce Multi-Page PDF Size Free",
+  title: "Compress PDF to 500KB – PDF Compressor 500 KB, Free",
   description,
   path: tool.path,
 });

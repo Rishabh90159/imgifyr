@@ -9,17 +9,17 @@ import { getTool } from "@/lib/tools/registry";
 const tool = getTool("compress-pdf-to-1mb");
 
 const description =
-  "Compress PDF to 1MB for visa, bank, insurance and job portals or email. Reduce a large PDF to under 1 MB in your browser, free and without uploading it.";
+  "Compress PDF to 1MB free for visa, bank and job portals or email: reduce a large PDF below 1 MB with this 1 MB PDF converter, in your browser, no upload.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Compress PDF to 1MB – Reduce PDF Size Under 1 MB Online",
+  title: "Compress PDF to 1MB Free – Reduce PDF Size Below 1 MB",
   description,
   path: tool.path,
 });
 
 const faqs: FaqItem[] = [
   {
-    question: "How do I reduce a PDF to under 1MB?",
+    question: "How do I compress a PDF file below 1MB?",
     answer: "Add the file here with 1 MB selected and press Compress. Save it once the result shows a size below 1 MB.",
   },
   {
