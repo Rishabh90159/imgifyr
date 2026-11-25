@@ -533,7 +533,8 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/jpg-to-pdf",
     primary: "jpg to pdf",
-    secondary: ["jpg to pdf converter", "jpeg to pdf", "convert jpg to pdf", "jpg to pdf under 200kb", "jpg to pdf 100 kb", "jpg to pdf under 500kb"],
+    // Search Console, 28 days to 22 Nov 2026: "jpg to pdf under 1 mb" (position 8), "jpg to pdf 150 kb".
+    secondary: ["jpg to pdf converter", "jpeg to pdf", "convert jpg to pdf", "jpg to pdf under 200kb", "jpg to pdf 100 kb", "jpg to pdf under 500kb", "jpg to pdf under 1 mb", "jpg to pdf 150 kb"],
     intent: "tool",
     supportedBy: ["/tools/photo-to-pdf", "/tools/jpeg-to-jpg", "/tools/jpg-to-png"],
   },
@@ -660,14 +661,16 @@ export const KEYWORD_MAP: KeywordTarget[] = [
   {
     path: "/tools/compress-pdf-to-500kb",
     primary: "compress pdf to 500kb",
-    secondary: ["reduce pdf size to 500kb", "compress resume pdf to 500kb", "reduce multi page pdf size"],
+    // Search Console, 28 days to 22 Nov 2026: "pdf compressor 500 kb" (a click at position 22).
+    secondary: ["reduce pdf size to 500kb", "compress resume pdf to 500kb", "reduce multi page pdf size", "pdf compressor 500 kb"],
     intent: "file-size",
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
   },
   {
     path: "/tools/compress-pdf-to-1mb",
     primary: "compress pdf to 1mb",
-    secondary: ["reduce pdf size to 1mb", "compress pdf under 1mb", "compress pdf to 1mb for email"],
+    // Search Console, 28 days to 22 Nov 2026: "compress pdf to 1mb free", "compress pdf file below 1mb", "1 mb pdf converter".
+    secondary: ["reduce pdf size to 1mb", "compress pdf under 1mb", "compress pdf to 1mb for email", "compress pdf to 1mb free", "compress pdf file below 1mb", "1 mb pdf converter"],
     intent: "file-size",
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
   },
