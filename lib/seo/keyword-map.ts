@@ -462,6 +462,14 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/application-photos", "/tools/up-police-photo", "/tools/signature-resizer"],
   },
   {
+    path: "/tools/uksssc-photo",
+    primary: "uksssc photo size",
+    // Google India autocomplete, 26 Nov 2026: "uksssc photo and signature size", "uksssc photo resizer online", "uksssc thumb impression".
+    secondary: ["uksssc photo and signature size", "uksssc photo resizer", "uksssc signature size", "uksssc thumb impression", "uttarakhand police constable photo", "uksssc constable photo size", "uksssc si signature size"],
+    intent: "application",
+    supportedBy: ["/tools/application-photos", "/tools/thumb-impression-resizer", "/tools/aadhaar-front-and-back"],
+  },
+  {
     path: "/tools/india-post-gds-photo",
     primary: "gds photo size",
     secondary: ["india post gds photo size", "gds signature size", "gds photo and signature size", "india post gds signature size", "gds photo resize"],

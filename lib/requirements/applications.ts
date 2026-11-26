@@ -685,6 +685,76 @@ const UP_POLICE_SETS: RequirementSet[] = [
   },
 ];
 
+// ---------------------------------------------------------------- UKSSSC (Uttarakhand)
+// Advt. 84/2026 (uniformed constable, 1,694 posts) para 18(v) and Advt. 85/2026 (uniformed sub inspector, 200 posts)
+// para 19(v), both Hindi scans with identical wording: the photo is captured live with face detection; the signature
+// and the left thumb impression are uploaded as JPG/JPEG of 150 (w) × 100 (h) px. No KB limit is stated.
+
+const UKSSSC_SIGNATURE: ImageSpec = {
+  kind: "signature",
+  format: "JPG/JPEG",
+  widthPx: 150,
+  heightPx: 100,
+  pixelBasis: "stated",
+  aspect: 150 / 100,
+  rules: ["Upload as JPG/JPEG, 150 px wide × 100 px high"],
+};
+
+const UKSSSC_THUMB: ImageSpec = {
+  kind: "thumb",
+  format: "JPG/JPEG",
+  widthPx: 150,
+  heightPx: 100,
+  pixelBasis: "stated",
+  aspect: 150 / 100,
+  rules: ["A clear impression of your left thumb, for biometric verification", "Upload as JPG/JPEG, 150 px wide × 100 px high"],
+};
+
+const UKSSSC_LIVE_RULES = [
+  "The photo is taken live with your camera (live photo capture); no photo file is uploaded",
+  "Your face must be clearly visible to the camera: the system confirms it by face detection",
+  "Take it in clear, sufficient light, with your face placed properly inside the frame shown",
+];
+
+const UKSSSC_NOTES = [
+  "Register with your Aadhaar number; one Aadhaar can be used only once. Use your own mobile number and email ID.",
+  "To verify your name and date of birth, upload your High School certificate and a copy of both sides of your Aadhaar card.",
+  "Also upload the certificates for any reservation category or sub-category you claim, and your hill area (parvatiya kshetra) certificate.",
+];
+
+const UKSSSC_SETS: RequirementSet[] = [
+  {
+    id: "uksssc-constable-84-2026",
+    name: "Uniformed Constable (Group C), Advt. 84/UKSSSC/2026: police, PAC/IRB, fireman, forest guard, jail warder and others (1,694 posts)",
+    signature: UKSSSC_SIGNATURE,
+    thumb: UKSSSC_THUMB,
+    livePhotoCapture: { rules: UKSSSC_LIVE_RULES },
+    notes: [...UKSSSC_NOTES, "Apply online on sssc.uk.gov.in from 25 November to 25 December 2026; corrections from 28 to 30 December 2026."],
+    source: {
+      title: "UKSSSC Advertisement No. 84/2026: Uniformed Constable (Group C)",
+      url: "https://cdnbbsr.s3waas.gov.in/s34ffd0e19d2069412274bd3025b0e176c/uploads/2026/11/20261117947374675.pdf",
+      publisher: "Uttarakhand Subordinate Service Selection Commission (UKSSSC)",
+      section: "Para 18(v), page 24, in Hindi",
+      lastVerified: "2026-11-26",
+    },
+  },
+  {
+    id: "uksssc-sub-inspector-85-2026",
+    name: "Uniformed Sub Inspector (Group C), Advt. 85/UKSSSC/2026: SI civil police and intelligence, Platoon Commander and others (200 posts)",
+    signature: UKSSSC_SIGNATURE,
+    thumb: UKSSSC_THUMB,
+    livePhotoCapture: { rules: UKSSSC_LIVE_RULES },
+    notes: [...UKSSSC_NOTES, "Apply online on sssc.uk.gov.in from 1 December to 31 December 2026; corrections from 4 to 6 January 2027."],
+    source: {
+      title: "UKSSSC Advertisement No. 85/2026: Uniformed Sub Inspector (Group C)",
+      url: "https://cdnbbsr.s3waas.gov.in/s34ffd0e19d2069412274bd3025b0e176c/uploads/2026/11/202611251036354999.pdf",
+      publisher: "Uttarakhand Subordinate Service Selection Commission (UKSSSC)",
+      section: "Para 19(v), page 12, in Hindi",
+      lastVerified: "2026-11-26",
+    },
+  },
+];
+
 // ---------------------------------------------------------------- Gujarat Police (GPRB, applications on OJAS)
 // GPRB's detailed advertisement for the 2025 Lokrakshak/PSI recruitment (page 1, in Gujarati) asks for a recent colour
 // passport-size photo and a signature, each a JPG of at most 15 KB. The print sizes, 5 cm × 3.6 cm (photo) and
@@ -1270,6 +1340,7 @@ export const APPLICATIONS = {
   afcat: { name: "AFCAT", fullName: "Air Force Common Admission Test (Indian Air Force)", sets: AFCAT_SETS },
   cuet: { name: "CUET", fullName: "Common University Entrance Test (UG), conducted by NTA", sets: CUET_SETS },
   upPolice: { name: "UP Police", fullName: "Uttar Pradesh Police Recruitment and Promotion Board (UPPRPB)", sets: UP_POLICE_SETS },
+  uksssc: { name: "UKSSSC", fullName: "Uttarakhand Subordinate Service Selection Commission", sets: UKSSSC_SETS },
   gujaratPolice: { name: "Gujarat Police", fullName: "Gujarat Police Recruitment Board (GPRB), applications on OJAS", sets: GUJARAT_POLICE_SETS },
   gds: { name: "India Post GDS", fullName: "Gramin Dak Sevak online engagement, Department of Posts", sets: GDS_SETS },
   mhtCet: { name: "MHT CET", fullName: "MHT CET, conducted by the State CET Cell, Maharashtra", sets: MHT_CET_SETS },

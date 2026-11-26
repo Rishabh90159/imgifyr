@@ -19,6 +19,8 @@ export const OPEN_APPLICATIONS: OpenApplication[] = [
   { tool: "rrb-photo", exam: "RRB Station Master (CEN 08/2026)", closes: "2026-11-25" },
   { tool: "kea-photo", exam: "KEA FDA and SDA 2026 (Karnataka)", closes: "2026-11-25" },
   { tool: "indian-bank-photo", exam: "Indian Bank Apprentice 2026-27", closes: "2026-11-25" },
+  { tool: "uksssc-photo", exam: "UKSSSC Uniformed Constable, Uttarakhand (1,694 posts)", closes: "2026-12-25" },
+  { tool: "uksssc-photo", exam: "UKSSSC Uniformed Sub Inspector, Uttarakhand (200 posts)", closes: "2026-12-31" },
   { tool: "gujarat-police-photo", exam: "Gujarat Police Lokrakshak and Technical Cadre (3,000 posts)", closes: "2026-12-16" },
   { tool: "rrc-apprentice-photo", exam: "Central Railway Act Apprentice (RRC/CR/AA/2026)", closes: "2026-12-02" },
   { tool: "afcat-photo", exam: "AFCAT 01/2027 (Indian Air Force)", closes: "2026-12-11" },
