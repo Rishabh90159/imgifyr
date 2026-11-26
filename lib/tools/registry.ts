@@ -81,6 +81,7 @@ export type ToolId =
   | "ctet-photo"
   | "up-police-photo"
   | "gujarat-police-photo"
+  | "uksssc-photo"
   | "india-post-gds-photo"
   | "mht-cet-photo"
   | "kcet-photo"
@@ -1015,6 +1016,17 @@ export const tools: Record<ToolId, ToolDefinition> = {
     related: ["up-police-photo", "ssc-photo", "rrb-photo", "signature-resizer", "image-cropper", "resize-image-to-kb"],
     updated: "2026-11-25",
   },
+  "uksssc-photo": {
+    id: "uksssc-photo",
+    path: "/tools/uksssc-photo",
+    name: "UKSSSC Photo, Signature & Thumb",
+    navLabel: "UKSSSC photo",
+    summary: "UKSSSC constable and sub inspector forms: live photo rules, and a 150 × 100 px JPG signature and left thumb impression.",
+    linkText: "Prepare your UKSSSC signature and thumb impression",
+    category: "application",
+    related: ["up-police-photo", "gujarat-police-photo", "thumb-impression-resizer", "aadhaar-front-and-back", "signature-resizer", "image-cropper"],
+    updated: "2026-11-26",
+  },
   "india-post-gds-photo": {
     id: "india-post-gds-photo",
     path: "/tools/india-post-gds-photo",
@@ -1387,6 +1399,7 @@ export const toolOrder: ToolId[] = [
   "ctet-photo",
   "up-police-photo",
   "gujarat-police-photo",
+  "uksssc-photo",
   "india-post-gds-photo",
   "mht-cet-photo",
   "kcet-photo",
