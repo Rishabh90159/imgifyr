@@ -54,6 +54,11 @@ function contentSecurityPolicy(): string {
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: {
+    // Server source maps only make server error stack traces readable; they added ~38 MB to every
+    // deployment on Vercel's storage quota. Browser code is unaffected (no browser source maps either way).
+    turbopackSourceMaps: false,
+  },
   // The project's *.vercel.app address serves the same pages as www.imgifyr.com; send visitors and
   // crawlers to the canonical domain so it isn't indexed twice. Preview URLs are unaffected.
   async redirects() {
