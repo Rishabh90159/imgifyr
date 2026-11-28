@@ -35,7 +35,9 @@ const PAGES = [
   { path: "/tools/compress-pdf-to-100kb", label: "100 KB", bytes: 100 * 1024 },
   { path: "/tools/compress-pdf-to-200kb", label: "200 KB", bytes: 200 * 1024 },
   { path: "/tools/compress-pdf-to-500kb", label: "500 KB", bytes: 500 * 1024 },
+  { path: "/tools/compress-pdf-to-300kb", label: "300 KB", bytes: 300 * 1024 },
   { path: "/tools/compress-pdf-to-1mb", label: "1.00 MB", bytes: 1024 * 1024 },
+  { path: "/tools/compress-pdf-to-2mb", label: "2.00 MB", bytes: 2 * 1024 * 1024 },
 ];
 
 for (const p of PAGES) {
@@ -51,6 +53,28 @@ for (const p of PAGES) {
   const bytes = fs.readFileSync(await download.path());
   const pages = (await PDFDocument.load(bytes)).getPageCount();
   check(`${p.path}: 12.6 MB scan comes out within ${p.label}, all ${scanPages} pages kept`, bytes.length <= p.bytes && pages === scanPages, `${Math.round(bytes.length / 1024)} KB, ${pages} pages`);
+  await page.close();
+}
+
+// 50 KB is a one-page target: the first page of the scan, on its own, must come out within 50 KB.
+{
+  const src = await PDFDocument.load(fs.readFileSync(SCAN));
+  const one = await PDFDocument.create();
+  const [first] = await one.copyPages(src, [0]);
+  one.addPage(first);
+  const onePath = "tests/fixtures/generated/pdf-image-tools/scan-page1.pdf";
+  fs.writeFileSync(onePath, await one.save());
+  const page = await context.newPage();
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(BASE + "/tools/compress-pdf-to-50kb", { waitUntil: "networkidle" });
+  await page.locator('input[type="file"]').setInputFiles(onePath);
+  const button = page.getByRole("button", { name: /^Compress to 50(.0)? KB$/ });
+  check("/tools/compress-pdf-to-50kb: starts at 50 KB", await button.isVisible());
+  await button.click();
+  await page.locator("#result-heading").waitFor({ timeout: 180_000 });
+  const [download] = await Promise.all([page.waitForEvent("download"), page.locator('a[download$=".pdf"]').first().click()]);
+  const bytes = fs.readFileSync(await download.path());
+  check("/tools/compress-pdf-to-50kb: one scanned page comes out within 50 KB", bytes.length <= 50 * 1024, `${Math.round(bytes.length / 1024)} KB`);
   await page.close();
 }
 

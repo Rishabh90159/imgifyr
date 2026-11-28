@@ -106,7 +106,8 @@ export default function PhotoToPdfPage() {
 
           <h2>Photo to PDF 200KB, 100KB or any limit</h2>
           <p>
-            Forms that want certificates as one PDF usually cap its size. Pick a cap from 100 KB to 1 MB under{" "}
+            Forms that want certificates as one PDF usually cap its size (for a 150 KB cap, use{" "}
+            <Link href="/tools/photo-to-pdf-in-kb">photo to PDF in KB</Link>). Pick a cap from 100 KB to 1 MB under{" "}
             <strong>Maximum PDF size</strong> and quality is balanced across every page so the file fits. Shoot documents in
             good light and trim them with the <Link href="/tools/image-cropper">image cropper</Link>: less background leaves
             more detail for the writing. Already have a PDF over the limit?{" "}

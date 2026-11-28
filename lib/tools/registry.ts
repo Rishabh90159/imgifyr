@@ -61,10 +61,14 @@ export type ToolId =
   | "pdf-to-word"
   | "merge-pdf"
   | "compress-pdf"
+  | "compress-pdf-to-50kb"
   | "compress-pdf-to-100kb"
   | "compress-pdf-to-200kb"
+  | "compress-pdf-to-300kb"
   | "compress-pdf-to-500kb"
   | "compress-pdf-to-1mb"
+  | "compress-pdf-to-2mb"
+  | "photo-to-pdf-in-kb"
   | "document-scanner"
   | "pdf-to-jpg"
   | "image-to-jpg"
@@ -712,7 +716,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine JPG, PNG, WebP and HEIC photos into one PDF, with page size, orientation, fit and margins.",
     linkText: "Convert photos to a PDF",
     category: "convert",
-    related: ["jpg-to-pdf", "merge-images", "aadhaar-front-and-back", "compress-pdf", "compress-pdf-to-500kb", "merge-pdf"],
+    related: ["jpg-to-pdf", "merge-images", "aadhaar-front-and-back", "photo-to-pdf-in-kb", "compress-pdf-to-500kb", "merge-pdf"],
     updated: "2026-10-18",
   },
   "merge-images": {
@@ -745,7 +749,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn JPG photos and scans into a PDF without recompressing them, one page per image.",
     linkText: "Convert JPG to PDF",
     category: "convert",
-    related: ["photo-to-pdf", "pdf-to-jpg", "compress-pdf", "merge-images", "merge-pdf", "pdf-to-png"],
+    related: ["photo-to-pdf", "pdf-to-jpg", "compress-pdf", "photo-to-pdf-in-kb", "merge-pdf", "pdf-to-png"],
     updated: "2026-10-18",
   },
   "image-size-increase": {
@@ -822,7 +826,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Reduce a PDF to a target size such as 100 KB, 200 KB or 500 KB for upload forms, keeping it as readable as possible.",
     linkText: "Compress a PDF to 100KB, 200KB or any size",
     category: "pdf",
-    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "merge-pdf", "photo-to-pdf"],
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf-to-300kb", "compress-pdf-to-2mb"],
     updated: "2026-11-20",
   },
   "compress-pdf-to-100kb": {
@@ -834,8 +838,20 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Compress a PDF to 100KB",
     category: "pdf",
     menu: false,
-    related: ["compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    related: ["compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "compress-pdf-to-50kb", "photo-to-pdf-in-kb"],
     updated: "2026-11-20",
+  },
+  "compress-pdf-to-50kb": {
+    id: "compress-pdf-to-50kb",
+    path: "/tools/compress-pdf-to-50kb",
+    name: "Compress PDF to 50KB",
+    navLabel: "PDF to 50KB",
+    summary: "Shrink a one-page certificate, ID card or photo copy PDF below a 50 KB upload limit.",
+    linkText: "Compress a PDF to 50KB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "document-scanner", "photo-to-pdf-in-kb", "compress-pdf", "pdf-to-jpg"],
+    updated: "2026-11-28",
   },
   "compress-pdf-to-200kb": {
     id: "compress-pdf-to-200kb",
@@ -846,8 +862,20 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Compress a PDF to 200KB",
     category: "pdf",
     menu: false,
-    related: ["compress-pdf-to-100kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-500kb", "compress-pdf-to-1mb", "compress-pdf", "compress-pdf-to-300kb", "photo-to-pdf"],
     updated: "2026-11-20",
+  },
+  "compress-pdf-to-300kb": {
+    id: "compress-pdf-to-300kb",
+    path: "/tools/compress-pdf-to-300kb",
+    name: "Compress PDF to 300KB",
+    navLabel: "PDF to 300KB",
+    summary: "Bring certificates and short scanned documents under a 300 KB upload limit.",
+    linkText: "Compress a PDF to 300KB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf-to-100kb", "photo-to-pdf-in-kb", "compress-pdf", "merge-pdf"],
+    updated: "2026-11-28",
   },
   "compress-pdf-to-500kb": {
     id: "compress-pdf-to-500kb",
@@ -858,7 +886,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Compress a PDF to 500KB",
     category: "pdf",
     menu: false,
-    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-1mb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-1mb", "compress-pdf", "compress-pdf-to-300kb", "photo-to-pdf"],
     updated: "2026-11-20",
   },
   "compress-pdf-to-1mb": {
@@ -870,8 +898,33 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Compress a PDF to 1MB",
     category: "pdf",
     menu: false,
-    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf", "merge-pdf", "photo-to-pdf"],
+    related: ["compress-pdf-to-100kb", "compress-pdf-to-200kb", "compress-pdf-to-500kb", "compress-pdf", "compress-pdf-to-2mb", "photo-to-pdf"],
     updated: "2026-11-20",
+  },
+  "compress-pdf-to-2mb": {
+    id: "compress-pdf-to-2mb",
+    path: "/tools/compress-pdf-to-2mb",
+    name: "Compress PDF to 2MB",
+    navLabel: "PDF to 2MB",
+    summary: "Reduce long scans, project reports and merged documents to 2 MB or less.",
+    linkText: "Compress a PDF to 2MB",
+    category: "pdf",
+    menu: false,
+    related: ["compress-pdf-to-1mb", "compress-pdf-to-500kb", "merge-pdf", "compress-pdf", "word-to-pdf", "photo-to-pdf"],
+    updated: "2026-11-28",
+  },
+  "photo-to-pdf-in-kb": {
+    id: "photo-to-pdf-in-kb",
+    path: "/tools/photo-to-pdf-in-kb",
+    name: "Photo to PDF in KB",
+    navLabel: "Photo to PDF in KB",
+    summary: "Turn photos or phone scans into one PDF of 100, 150, 200, 300 or 500 KB for upload forms.",
+    linkText: "Make a photo PDF in KB",
+    category: "convert",
+    menu: false,
+    parent: "photo-to-pdf",
+    related: ["photo-to-pdf", "jpg-to-pdf", "compress-pdf-to-300kb", "compress-pdf-to-100kb", "document-scanner", "image-cropper"],
+    updated: "2026-11-28",
   },
   "document-scanner": {
     id: "document-scanner",
@@ -1351,15 +1404,19 @@ export const toolOrder: ToolId[] = [
   "png-to-svg",
   "jpeg-to-jpg",
   "photo-to-pdf",
+  "photo-to-pdf-in-kb",
   "jpg-to-pdf",
   "word-to-pdf",
   "pdf-to-word",
   "merge-pdf",
   "compress-pdf",
+  "compress-pdf-to-50kb",
   "compress-pdf-to-100kb",
   "compress-pdf-to-200kb",
+  "compress-pdf-to-300kb",
   "compress-pdf-to-500kb",
   "compress-pdf-to-1mb",
+  "compress-pdf-to-2mb",
   "document-scanner",
   "pdf-to-jpg",
   "pdf-to-png",
