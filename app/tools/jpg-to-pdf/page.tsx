@@ -108,7 +108,8 @@ export default function JpgToPdfPage() {
           <p>
             Pick the portal&apos;s limit under <strong>Maximum PDF size</strong>: all pages are re-encoded together until the
             file fits. If it can&apos;t fit while staying readable, you get the smallest version and a note. Already have a PDF that&apos;s too big?{" "}
-            <Link href="/tools/compress-pdf">Compress the PDF</Link>. Mixing in PNG, WebP or HEIC? Use{" "}
+            <Link href="/tools/compress-pdf">Compress the PDF</Link>, for example{" "}
+            <Link href="/tools/compress-pdf-to-1mb">to 1MB</Link> or <Link href="/tools/compress-pdf-to-500kb">to 500KB</Link>. Mixing in PNG, WebP or HEIC? Use{" "}
             <Link href="/tools/photo-to-pdf">Photo to PDF</Link>.
           </p>
 

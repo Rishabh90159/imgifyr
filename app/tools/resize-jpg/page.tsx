@@ -87,7 +87,8 @@ export default function ResizeJpgPage() {
 
           <h2>Setting DPI for printing</h2>
           <p>
-            DPI is only a label telling a printer how large to print the pixels, so a JPG at 72 DPI and at 300 DPI look
+            To set only the DPI of an existing image, use <Link href="/tools/change-image-dpi">change image DPI</Link>. DPI
+            is only a label telling a printer how large to print the pixels, so a JPG at 72 DPI and at 300 DPI look
             identical on screen. A sharp print needs enough pixels at around 300 DPI:
           </p>
           <table>

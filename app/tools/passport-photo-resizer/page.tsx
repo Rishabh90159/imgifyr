@@ -129,7 +129,8 @@ export default function PassportPhotoResizerPage() {
 
           <h2>Print sheets and online uploads</h2>
           <p>
-            For millimetre sizes, the JPG carries {PRINT_DPI} DPI, so it prints true to size at &ldquo;actual size&rdquo; or
+            For millimetre sizes, the JPG carries {PRINT_DPI} DPI (<Link href="/tools/change-image-dpi">change image DPI</Link>{" "}
+            sets it on any other photo), so it prints true to size at &ldquo;actual size&rdquo; or
             100%. A 4 × 6 in sheet holds 8 copies of a 35 × 45 mm photo and A4 holds 30, with cutting guides. For online
             forms, pixels and KB are what count: the{" "}
             <Link href="/tools/20kb-photo">20KB photo resizer</Link> and <Link href="/tools/50kb-photo">50KB photo

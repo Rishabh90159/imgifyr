@@ -193,7 +193,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Resize a JPG image",
     category: "resize",
     parent: "image-resizer",
-    related: ["image-compressor", "resize-image-to-kb", "jpg-to-png", "resize-png", "resize-webp", "change-image-dpi"],
+    related: ["image-compressor", "resize-image-to-kb", "resize-gif", "resize-png", "resize-webp", "change-image-dpi"],
     updated: "2026-10-18",
   },
   "resize-png": {
@@ -217,7 +217,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     linkText: "Resize a WebP image",
     category: "resize",
     parent: "image-resizer",
-    related: ["webp-to-jpg", "image-compressor", "resize-jpg", "resize-png", "resize-image-to-kb", "bulk-image-resizer"],
+    related: ["webp-to-jpg", "image-compressor", "resize-jpg", "resize-png", "resize-image-to-kb", "resize-gif"],
     updated: "2026-10-08",
   },
   "resize-gif": {
@@ -298,7 +298,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Reduce the file size of JPG, PNG and WebP images while keeping their dimensions.",
     linkText: "Compress an image",
     category: "compress",
-    related: ["image-resizer", "resize-image-to-kb", "100kb-photo", "50kb-photo", "20kb-photo", "png-to-jpg"],
+    related: ["image-resizer", "resize-image-to-kb", "100kb-photo", "50kb-photo", "20kb-photo", "resize-gif"],
     updated: "2026-10-07",
   },
   "resize-image-to-kb": {
@@ -364,7 +364,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn SVG graphics into PNG images at any pixel size, with a transparent or solid background.",
     linkText: "Convert SVG to PNG at any size",
     category: "convert",
-    related: ["png-to-svg", "image-resizer", "image-compressor"],
+    related: ["png-to-svg", "image-resizer", "image-compressor", "pdf-to-png"],
     updated: "2026-10-06",
   },
   "png-to-svg": {
@@ -375,7 +375,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Trace logos, icons and simple graphics into real vector SVG paths.",
     linkText: "Vectorize a PNG into SVG",
     category: "convert",
-    related: ["svg-to-png", "image-cropper", "circle-crop", "image-compressor"],
+    related: ["svg-to-png", "image-cropper", "circle-crop", "image-compressor", "pdf-to-png"],
     updated: "2026-10-06",
   },
   "image-cropper": {
@@ -397,7 +397,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Crop and resize a photo to a passport or application size in pixels, millimetres and KB.",
     linkText: "Resize a photo for a passport or visa application",
     category: "edit",
-    related: ["passport-photo", "resize-image-in-cm", "signature-resizer", "add-name-and-date-on-photo", "image-cropper", "resize-image-to-kb"],
+    related: ["passport-photo", "resize-image-in-cm", "signature-resizer", "add-name-and-date-on-photo", "change-image-dpi", "resize-image-to-kb"],
     updated: "2026-10-07",
   },
   "signature-maker": {
@@ -635,7 +635,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Make a 200 × 230 px, 20–50 KB photo and a 140 × 60 px signature for IBPS CRP applications.",
     linkText: "Resize a photo for IBPS",
     category: "application",
-    related: ["sbi-photo", "200x230-photo", "140x60-signature", "thumb-impression-resizer", "signature-resizer", "resize-image-to-kb"],
+    related: ["sbi-photo", "200x230-photo", "140x60-signature", "thumb-impression-resizer", "change-image-dpi", "resize-image-to-kb"],
     updated: "2026-10-18",
   },
   "sbi-photo": {
@@ -690,7 +690,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Enlarge an image 2× or 4× with Lanczos resampling and optional sharpening, for crisper results than a plain stretch.",
     linkText: "Upscale an image 2× or 4×",
     category: "resize",
-    related: ["image-size-increase", "image-quality-enhancer", "image-resizer", "image-compressor"],
+    related: ["image-size-increase", "image-quality-enhancer", "image-resizer", "image-compressor", "change-image-dpi"],
     updated: "2026-10-07",
   },
   "background-remover": {
@@ -712,7 +712,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine JPG, PNG, WebP and HEIC photos into one PDF, with page size, orientation, fit and margins.",
     linkText: "Convert photos to a PDF",
     category: "convert",
-    related: ["jpg-to-pdf", "merge-images", "aadhaar-front-and-back", "compress-pdf", "png-to-jpg", "merge-pdf"],
+    related: ["jpg-to-pdf", "merge-images", "aadhaar-front-and-back", "compress-pdf", "compress-pdf-to-500kb", "merge-pdf"],
     updated: "2026-10-18",
   },
   "merge-images": {
@@ -745,7 +745,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn JPG photos and scans into a PDF without recompressing them, one page per image.",
     linkText: "Convert JPG to PDF",
     category: "convert",
-    related: ["photo-to-pdf", "pdf-to-jpg", "compress-pdf", "merge-images", "merge-pdf"],
+    related: ["photo-to-pdf", "pdf-to-jpg", "compress-pdf", "merge-images", "merge-pdf", "pdf-to-png"],
     updated: "2026-10-18",
   },
   "image-size-increase": {
@@ -756,7 +756,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Make an image bigger in pixels, or make the file bigger in KB to meet a minimum upload size.",
     linkText: "Increase image size in pixels or KB",
     category: "resize",
-    related: ["image-upscaler", "image-resizer", "image-quality-enhancer", "resize-image-to-kb"],
+    related: ["image-upscaler", "image-resizer", "image-quality-enhancer", "resize-image-to-kb", "change-image-dpi"],
     updated: "2026-10-07",
   },
   "image-quality-enhancer": {
@@ -767,7 +767,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Improve dull, dark or slightly soft photos with auto levels, contrast, colour, clarity and sharpening.",
     linkText: "Enhance image quality",
     category: "edit",
-    related: ["image-upscaler", "image-compressor", "image-resizer", "background-remover"],
+    related: ["image-upscaler", "image-compressor", "image-resizer", "background-remover", "change-image-dpi"],
     updated: "2026-10-07",
   },
   "mb-to-kb-converter": {
@@ -789,7 +789,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Convert a Word .docx document to PDF in your browser, keeping its page size, tables, lists and images.",
     linkText: "Convert Word DOCX to PDF",
     category: "pdf",
-    related: ["pdf-to-word", "merge-pdf", "jpg-to-pdf", "photo-to-pdf"],
+    related: ["pdf-to-word", "merge-pdf", "jpg-to-pdf", "photo-to-pdf", "compress-pdf-to-1mb", "pdf-to-png"],
     updated: "2026-10-12",
   },
   "pdf-to-word": {
@@ -800,7 +800,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn a text-based PDF into an editable Word .docx with paragraphs, headings, lists and simple tables.",
     linkText: "Convert PDF to editable Word",
     category: "pdf",
-    related: ["word-to-pdf", "merge-pdf", "pdf-to-jpg", "compress-pdf"],
+    related: ["word-to-pdf", "merge-pdf", "pdf-to-jpg", "compress-pdf", "pdf-to-png", "compress-pdf-to-100kb"],
     updated: "2026-10-18",
   },
   "merge-pdf": {
@@ -811,7 +811,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Combine several PDF files into one, in the order you choose, without changing their pages.",
     linkText: "Merge PDF files into one",
     category: "pdf",
-    related: ["compress-pdf", "word-to-pdf", "pdf-to-word", "jpg-to-pdf", "photo-to-pdf"],
+    related: ["compress-pdf", "word-to-pdf", "pdf-to-word", "jpg-to-pdf", "photo-to-pdf", "compress-pdf-to-1mb"],
     updated: "2026-10-18",
   },
   "compress-pdf": {
@@ -881,7 +881,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Turn phone photos of documents into a straight, clean scanned PDF, with an optional size limit such as 200 KB.",
     linkText: "Scan a document to PDF with your phone",
     category: "pdf",
-    related: ["compress-pdf-to-200kb", "photo-to-pdf", "compress-pdf", "merge-pdf", "pdf-to-jpg", "white-background-photo"],
+    related: ["compress-pdf-to-200kb", "photo-to-pdf", "compress-pdf", "merge-pdf", "pdf-to-jpg", "jpg-to-pdf"],
     updated: "2026-11-20",
   },
   "pdf-to-jpg": {
@@ -903,7 +903,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "RRB Group D, NTPC and Station Master take the photo live; prepare the 30–49 KB signature JPG the form asks for.",
     linkText: "Prepare your RRB NTPC or Station Master signature",
     category: "application",
-    related: ["signature-resizer", "rrc-apprentice-photo", "ssc-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    related: ["signature-resizer", "rrc-apprentice-photo", "ssc-photo", "compress-pdf", "jpg-to-pdf", "resize-image-to-kb"],
     updated: "2026-11-17",
   },
   "upsssc-photo": {
@@ -925,7 +925,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The UPESSC myOTR photo, signature and hand-written declaration (10–100 KB each) for UP TGT and every UPESSC exam.",
     linkText: "Prepare your UPESSC OTR photo, signature and declaration",
     category: "application",
-    related: ["upsssc-photo", "signature-resizer", "100kb-photo", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    related: ["upsssc-photo", "signature-resizer", "100kb-photo", "compress-pdf", "compress-pdf-to-1mb", "resize-image-to-kb"],
     updated: "2026-11-18",
   },
   "rrc-apprentice-photo": {
@@ -936,7 +936,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The RRC Central Railway Act Apprentice photo (20–70 KB) and signature (20–30 KB), 3.5 × 3.5 cm JPGs at 100 DPI.",
     linkText: "Prepare your Central Railway apprentice photo and signature",
     category: "application",
-    related: ["rrb-photo", "signature-resizer", "resize-image-in-cm", "change-image-dpi", "compress-pdf", "resize-image-to-kb"],
+    related: ["rrb-photo", "signature-resizer", "resize-image-in-cm", "change-image-dpi", "compress-pdf-to-500kb", "resize-image-to-kb"],
     updated: "2026-11-04",
   },
   "indian-bank-photo": {
@@ -947,7 +947,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The Indian Bank Apprentice 2026-27 photo, signature, left thumb impression and hand-written declaration files.",
     linkText: "Prepare your Indian Bank apprentice photo, signature, thumb and declaration",
     category: "application",
-    related: ["ibps-photo", "sbi-photo", "signature-resizer", "50kb-photo", "image-cropper", "resize-image-to-kb"],
+    related: ["ibps-photo", "sbi-photo", "signature-resizer", "50kb-photo", "change-image-dpi", "resize-image-to-kb"],
     updated: "2026-11-18",
   },
   "kea-photo": {
@@ -958,7 +958,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "The KEA FDA/SDA 2026 photo (50–200 KB, white background) and signature (50–70 KB) as JPEGs.",
     linkText: "Prepare your KEA FDA/SDA photo and signature",
     category: "application",
-    related: ["kcet-photo", "white-background-photo", "signature-resizer", "200kb-photo", "100kb-photo", "resize-image-to-kb"],
+    related: ["kcet-photo", "white-background-photo", "signature-resizer", "200kb-photo", "compress-pdf-to-500kb", "resize-image-to-kb"],
     updated: "2026-11-18",
   },
   "afcat-photo": {
@@ -1145,7 +1145,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "What DSSSB's 2026 advertisements ask for: the photo rules, the signature, and a 15–60 KB scanned photo ID.",
     linkText: "Prepare your DSSSB photo, signature and ID scan",
     category: "application",
-    related: ["signature-resizer", "resize-image-to-kb", "image-cropper", "upsssc-photo", "rrb-photo", "50kb-photo"],
+    related: ["signature-resizer", "resize-image-to-kb", "compress-pdf-to-100kb", "upsssc-photo", "rrb-photo", "50kb-photo"],
     updated: "2026-11-14",
   },
   "image-to-jpg": {
@@ -1178,7 +1178,7 @@ export const tools: Record<ToolId, ToolDefinition> = {
     summary: "Put the front and back of an Aadhaar, PAN or any ID card on one A4 PDF page or one JPG, under a KB limit.",
     linkText: "Combine the front and back of a card in one page",
     category: "edit",
-    related: ["merge-images", "merge-photo-and-signature", "photo-to-pdf", "compress-pdf", "image-cropper", "resize-image-to-kb"],
+    related: ["merge-images", "merge-photo-and-signature", "photo-to-pdf", "compress-pdf", "compress-pdf-to-500kb", "resize-image-to-kb"],
     updated: "2026-11-04",
   },
   "add-name-and-date-on-photo": {

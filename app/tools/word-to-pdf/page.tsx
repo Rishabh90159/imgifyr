@@ -92,8 +92,8 @@ export default function WordToPdfPage() {
           <p>
             The document is laid out as pages in a hidden, sandboxed frame, and macros are never run. Each page is drawn as an
             image with an invisible text layer, so the PDF stays searchable. Need to edit a PDF instead? Use{" "}
-            <Link href="/tools/pdf-to-word">PDF to Word</Link>, or join files with <Link href="/tools/merge-pdf">Merge PDF</Link>
-            .
+            <Link href="/tools/pdf-to-word">PDF to Word</Link>, join files with <Link href="/tools/merge-pdf">Merge PDF</Link>,
+            or save pages as images with <Link href="/tools/pdf-to-png">PDF to PNG</Link>.
           </p>
 
           <section aria-labelledby="privacy-heading">

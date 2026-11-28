@@ -88,7 +88,8 @@ export default function MergePdfPage() {
           <p>
             Have photos or scans instead? Turn them into a PDF with <Link href="/tools/jpg-to-pdf">JPG to PDF</Link> or{" "}
             <Link href="/tools/photo-to-pdf">Photo to PDF</Link>, then merge. For a Word file, use{" "}
-            <Link href="/tools/word-to-pdf">Word to PDF</Link>.
+            <Link href="/tools/word-to-pdf">Word to PDF</Link>. Need the pages as images? Use{" "}
+            <Link href="/tools/pdf-to-png">PDF to PNG</Link>.
           </p>
 
           <section aria-labelledby="privacy-heading">
