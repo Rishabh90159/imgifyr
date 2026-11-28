@@ -63,6 +63,10 @@ const toolPages = [
   "/tools/compress-pdf-to-200kb",
   "/tools/compress-pdf-to-500kb",
   "/tools/compress-pdf-to-1mb",
+  "/tools/compress-pdf-to-50kb",
+  "/tools/compress-pdf-to-300kb",
+  "/tools/compress-pdf-to-2mb",
+  "/tools/photo-to-pdf-in-kb",
   "/tools/document-scanner",
   "/tools/pdf-to-jpg",
   "/tools/image-to-jpg",
@@ -115,6 +119,10 @@ const overlapPages = [
   "/tools/compress-pdf-to-200kb",
   "/tools/compress-pdf-to-500kb",
   "/tools/compress-pdf-to-1mb",
+  "/tools/compress-pdf-to-50kb",
+  "/tools/compress-pdf-to-300kb",
+  "/tools/compress-pdf-to-2mb",
+  "/tools/photo-to-pdf-in-kb",
   "/tools/photo-to-pdf",
   "/tools/jpg-to-pdf",
   "/tools/image-upscaler",
@@ -175,7 +183,7 @@ const applicationPages = ["/tools/ssc-photo", "/tools/upsc-photo", "/tools/ibps-
 const OFFICIAL = /href="https:\/\/(www\.ibps\.in|sbi\.bank\.in|ssc\.gov\.in|neet\.nta\.nic\.in|upsconline\.nic\.in|upsc\.gov\.in|www\.passportindia\.gov\.in|www\.gov\.uk|www\.canada\.ca|rrb\.indianrailways\.gov\.in|upsssc\.gov\.in|dsssb\.delhi\.gov\.in|cdnbbsr\.s3waas\.gov\.in|apply\.upessc\.org|www\.rrccr\.com|indianbank\.bank\.in|cetonline\.karnataka\.gov\.in|sarathi\.parivahan\.gov\.in|voters\.eci\.gov\.in|afcat\.edcil\.co\.in|cdn\.s3waas\.gov\.in|uppbpb\.gov\.in|indiapost\.gov\.in|cetcell\.mahacet\.org|www\.rrbcdg\.gov\.in|tin\.tin\.proteantech\.in|indianvisaonline\.gov\.in|gprb\.gujarat\.gov\.in)\//;
 const DISCLAIMER = "Application requirements can change. Always verify the final image against the latest official";
 const PDF_HUB = "/tools/pdf-tools";
-const pdfPages = ["/tools/word-to-pdf", "/tools/pdf-to-word", "/tools/merge-pdf", "/tools/compress-pdf", "/tools/compress-pdf-to-100kb", "/tools/compress-pdf-to-200kb", "/tools/compress-pdf-to-500kb", "/tools/compress-pdf-to-1mb", "/tools/document-scanner", "/tools/pdf-to-jpg", "/tools/pdf-to-png"];
+const pdfPages = ["/tools/word-to-pdf", "/tools/pdf-to-word", "/tools/merge-pdf", "/tools/compress-pdf", "/tools/compress-pdf-to-100kb", "/tools/compress-pdf-to-200kb", "/tools/compress-pdf-to-500kb", "/tools/compress-pdf-to-1mb", "/tools/compress-pdf-to-50kb", "/tools/compress-pdf-to-300kb", "/tools/compress-pdf-to-2mb", "/tools/document-scanner", "/tools/pdf-to-jpg", "/tools/pdf-to-png"];
 const pages = ["/", "/tools", HUB, PDF_HUB, ...toolPages, "/about", "/methodology", "/privacy", "/terms", "/contact"];
 
 const results = [];
@@ -290,7 +298,7 @@ check("all H1s unique", h1Texts.size === pages.length);
   }
   check(
     "no near-duplicate content between size, application and overlapping-intent pages (6-word overlap < 15%)",
-    entries.length === 90 && worst.score < 0.15,
+    entries.length === 94 && worst.score < 0.15,
     (worst.score * 100).toFixed(1) + "% max (" + worst.pair + ")",
   );
 }

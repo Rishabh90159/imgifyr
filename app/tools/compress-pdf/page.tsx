@@ -105,9 +105,10 @@ export default function CompressPdfPage() {
             <li>PDFs that need a password to open must be unlocked first.</li>
           </ul>
           <p>
-            Popular sizes: <Link href="/tools/compress-pdf-to-100kb">100KB</Link> ·{" "}
-            <Link href="/tools/compress-pdf-to-200kb">200KB</Link> · <Link href="/tools/compress-pdf-to-500kb">500KB</Link> ·{" "}
-            <Link href="/tools/compress-pdf-to-1mb">1MB</Link>. To reduce PDF size further, delete pages the form doesn&apos;t need. Uploading several files as one?{" "}
+            Popular sizes: <Link href="/tools/compress-pdf-to-50kb">50KB</Link> ·{" "}
+            <Link href="/tools/compress-pdf-to-100kb">100KB</Link> · <Link href="/tools/compress-pdf-to-200kb">200KB</Link> ·{" "}
+            <Link href="/tools/compress-pdf-to-300kb">300KB</Link> · <Link href="/tools/compress-pdf-to-500kb">500KB</Link> ·{" "}
+            <Link href="/tools/compress-pdf-to-1mb">1MB</Link> · <Link href="/tools/compress-pdf-to-2mb">2MB</Link>. To reduce PDF size further, delete pages the form doesn&apos;t need. Uploading several files as one?{" "}
             <Link href="/tools/merge-pdf">Merge the PDFs</Link> first, then compress. Form wants an image instead? Use{" "}
             <Link href="/tools/pdf-to-jpg">PDF to JPG</Link>.
           </p>

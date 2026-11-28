@@ -119,6 +119,26 @@ function jpegSize(bytes) {
   await page.close();
 }
 
+// ---------- Photo to PDF in KB: starts at 200 KB, offers 150 KB ----------
+{
+  const page = await open("/tools/photo-to-pdf-in-kb");
+  await page.locator('input[type="file"]').first().setInputFiles(["photo-12mp.jpg", "photo.png"].map((f) => path.join(FIX, f)));
+  check("photo-in-kb: 200 KB preselected", await page.getByRole("radio", { name: "200 KB" }).isChecked());
+  await page.getByText("150 KB", { exact: true }).click();
+  const create = page.getByRole("button", { name: /^Create PDF \(2 pages\)/ });
+  await create.waitFor();
+  await create.click();
+  const result = page.locator('section[aria-labelledby="result-heading"]');
+  await result.waitFor({ timeout: 300_000 });
+  const pdf = await download(page, result.getByRole("link", { name: "Download PDF" }));
+  check("photo-in-kb: 2-page PDF is 150 KB or less", pdf.length <= 150 * KB && (await pdfPages(pdf)) === 2, `${(pdf.length / KB).toFixed(1)} KB`);
+  await page.close();
+  const plain = await open("/tools/photo-to-pdf");
+  await plain.locator('input[type="file"]').first().setInputFiles(path.join(FIX, "photo.png"));
+  check("photo2pdf: still starts with no limit", await plain.getByRole("radio", { name: "No limit" }).isChecked());
+  await plain.close();
+}
+
 // ---------- Merge PDF under 500 KB ----------
 {
   const scan = path.join(PDF_FIX, "scan.pdf");

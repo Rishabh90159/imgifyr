@@ -30,9 +30,10 @@ function parseTarget(preset: string, custom: string, unit: Unit): { bytes: numbe
   return { bytes, error: null };
 }
 
-/** `defaultKB` starts the tool at one of the preset sizes (the "compress PDF to 100KB" pages); `tool` is the page, for analytics. */
+/** `defaultKB` starts the tool at that size (the "compress PDF to 100KB" pages), adding it to the presets if needed; `tool` is the page, for analytics. */
 export function CompressPdfTool({ tool = "compress-pdf", defaultKB = 200 }: { tool?: ToolId; defaultKB?: number } = {}) {
-  const [preset, setPreset] = useState(String(PRESETS_KB.includes(defaultKB) ? defaultKB : 200));
+  const presets = PRESETS_KB.includes(defaultKB) ? PRESETS_KB : [...PRESETS_KB, defaultKB].sort((a, b) => a - b);
+  const [preset, setPreset] = useState(String(defaultKB));
   const [custom, setCustom] = useState("");
   const [unit, setUnit] = useState<Unit>("KB");
   const target = parseTarget(preset, custom, unit);
@@ -89,7 +90,7 @@ export function CompressPdfTool({ tool = "compress-pdf", defaultKB = 200 }: { to
             legend="Target file size"
             value={preset}
             onChange={setPreset}
-            options={[...PRESETS_KB.map((kb) => ({ value: String(kb), label: presetLabel(kb) })), { value: "custom", label: "Custom" }]}
+            options={[...presets.map((kb) => ({ value: String(kb), label: presetLabel(kb) })), { value: "custom", label: "Custom" }]}
           />
           {preset === "custom" ? (
             <div className="flex max-w-xs items-end gap-2">

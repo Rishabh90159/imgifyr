@@ -28,20 +28,24 @@ export interface PdfToolConfig {
   prompt: string;
   /** Most images one PDF can hold (keeps memory use reasonable on phones). */
   maxFiles: number;
+  /** Maximum PDF size choices in KB (default 100, 200, 300, 500 and 1,024). */
+  limitsKB?: number[];
+  /** Size limit preselected on load, in KB; default none. */
+  defaultLimitKB?: number;
 }
 
 type Margin = keyof typeof MARGINS;
 type Quality = "best" | "smaller";
-type Limit = "none" | "100" | "200" | "300" | "500" | "1024";
+type Limit = string; // "none" or a size in KB
 
-const LIMITS_KB: Exclude<Limit, "none">[] = ["100", "200", "300", "500", "1024"];
+const LIMITS_KB = [100, 200, 300, 500, 1024];
 /** Fitting a size limit re-encodes every image on each attempt, so it allows fewer images. */
 const LIMIT_MAX_IMAGES = 40;
 /** Smallest long side an image may be reduced to while fitting a limit; below this, text in photos of documents becomes hard to read. */
 const LIMIT_MIN_SIDE = 500;
 
-function limitLabel(limit: Exclude<Limit, "none">): string {
-  return limit === "1024" ? "1 MB" : `${limit} KB`;
+function limitLabel(kb: number): string {
+  return kb >= 1024 ? `${kb / 1024} MB` : `${kb} KB`;
 }
 
 const QUALITY: Record<Quality, { quality: number; maxSide?: number }> = {
@@ -88,7 +92,7 @@ function PagePreview({ item, options, index }: { item: ListImage; options: PageO
 }
 
 export function PdfTool({ config }: { config: PdfToolConfig }) {
-  const { tool, accept, prompt, maxFiles } = config;
+  const { tool, accept, prompt, maxFiles, limitsKB = LIMITS_KB, defaultLimitKB } = config;
   useToolOpen(tool);
   const list = useImageList({ tool, accept, max: maxFiles });
   const [size, setSize] = useState<PageSize>("a4");
@@ -96,7 +100,7 @@ export function PdfTool({ config }: { config: PdfToolConfig }) {
   const [fit, setFit] = useState<Fit>("fit");
   const [margin, setMargin] = useState<Margin>("small");
   const [quality, setQuality] = useState<Quality>("best");
-  const [limit, setLimit] = useState<Limit>("none");
+  const [limit, setLimit] = useState<Limit>(defaultLimitKB ? String(defaultLimitKB) : "none");
   const limitBytes = limit === "none" ? null : Number(limit) * KB;
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState<number | null>(null);
@@ -259,7 +263,7 @@ export function PdfTool({ config }: { config: PdfToolConfig }) {
                 ? `The PDF will be ${formatBytes(limitBytes)} or less: image quality, then size, are lowered only as far as needed.`
                 : "For upload forms with a limit, such as 200 KB."
             }
-            options={[{ value: "none", label: "No limit" }, ...LIMITS_KB.map((value) => ({ value, label: limitLabel(value) }))]}
+            options={[{ value: "none", label: "No limit" }, ...limitsKB.map((kb) => ({ value: String(kb), label: limitLabel(kb) }))]}
           />
           {limitBytes ? null : (
           <Segmented<Quality>

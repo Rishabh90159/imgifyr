@@ -669,9 +669,25 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
   },
   {
+    path: "/tools/compress-pdf-to-50kb",
+    primary: "compress pdf to 50kb",
+    // Google India autocomplete, 28 Nov 2026: "compress pdf to 50kb", "pdf compressor 50kb", "compress pdf to 50kb to 100kb".
+    secondary: ["pdf compressor 50kb", "reduce pdf size to 50kb", "compress pdf below 50kb", "compress pdf to 50kb to 100kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
     path: "/tools/compress-pdf-to-200kb",
     primary: "compress pdf to 200kb",
     secondary: ["reduce pdf size to 200kb", "pdf size reducer 200kb", "compress certificate pdf to 200kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/compress-pdf-to-300kb",
+    primary: "compress pdf to 300kb",
+    // Google India autocomplete, 28 Nov 2026: "compress pdf to 300kb free", "pdf size reducer 300kb", "...without losing quality".
+    secondary: ["pdf size reducer 300kb", "compress pdf to 300kb online free", "reduce pdf size to 300kb", "compress pdf to 300kb without losing quality"],
     intent: "file-size",
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
   },
@@ -690,6 +706,22 @@ export const KEYWORD_MAP: KeywordTarget[] = [
     secondary: ["reduce pdf size to 1mb", "compress pdf under 1mb", "compress pdf to 1mb for email", "compress pdf to 1mb free", "compress pdf file below 1mb", "1 mb pdf converter"],
     intent: "file-size",
     supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/compress-pdf-to-2mb",
+    primary: "compress pdf to 2mb",
+    // Google India autocomplete, 28 Nov 2026: "compress pdf to 2mb free", "reduce pdf size to 2 mb online free".
+    secondary: ["reduce pdf size to 2mb", "compress pdf to 2mb free", "reduce pdf size to 2 mb online free", "pdf compressor 2mb"],
+    intent: "file-size",
+    supportedBy: ["/tools/compress-pdf", "/tools/pdf-tools"],
+  },
+  {
+    path: "/tools/photo-to-pdf-in-kb",
+    primary: "photo to pdf in kb",
+    // Google India autocomplete, 28 Nov 2026: "photo to pdf in kb", "image to pdf in kb", "photo to pdf in 300 kb", "jpg to pdf 300 kb".
+    secondary: ["image to pdf in kb", "photo to pdf in 200kb", "photo to pdf in 300 kb", "photo to pdf in 100 kb", "photo to pdf in 150 kb", "image to pdf in kb size", "jpg to pdf 300 kb"],
+    intent: "file-size",
+    supportedBy: ["/tools/photo-to-pdf", "/tools/jpg-to-pdf", "/tools/pdf-tools"],
   },
   {
     path: "/tools/document-scanner",
