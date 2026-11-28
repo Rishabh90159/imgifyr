@@ -73,7 +73,9 @@ export default function IndianBankPhotoPage() {
             </li>
           </ol>
           <p>
-            The sizes match IBPS, so the <Link href="/tools/ibps-photo">IBPS files</Link> follow the same rules.
+            The sizes match IBPS, so the <Link href="/tools/ibps-photo">IBPS files</Link> follow the same rules. The thumb and
+            declaration are specified at 200 DPI; the <Link href="/tools/change-image-dpi">DPI checker</Link> shows any
+            image&apos;s DPI.
           </p>
 
           <WhileOpen closes="2026-11-25">
